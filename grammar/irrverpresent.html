@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Irregular Present Forms</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --accent: #e8b84b;
+  --accent-h: #f0cc72;
+  --green: #5aaa85;
+  --red: #d95f5f;
+}
+[data-theme="dark"] {
+  --bg: #0d0d12; --surface: #17171f; --surface2: #1f1f2a;
+  --text: #e8e8f0; --text2: #7a7a96; --border: rgba(255,255,255,0.08);
+}
+[data-theme="light"] {
+  --bg: #f4f3ef; --surface: #ffffff; --surface2: #eceae6;
+  --text: #1a1a24; --text2: #6b6b7e; --border: rgba(0,0,0,0.1);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg); color: var(--text);
+  font-family: 'DM Sans', sans-serif; min-height: 100vh;
+  display: flex; flex-direction: column;
+  transition: background 0.3s, color 0.3s;
+}
+
+header {
+  padding: 1.6rem 2rem; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 1rem;
+}
+header h1 { font-family: 'Playfair Display', serif; font-size: 1.7rem; letter-spacing: -0.5px; }
+header h1 span { color: var(--accent); }
+.header-right { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+
+.theme-switch {
+  position: relative; width: 56px; height: 28px; border-radius: 14px;
+  cursor: pointer; border: none; padding: 0; background: #3a3a4a;
+  transition: background 0.35s; flex-shrink: 0;
+}
+[data-theme="light"] .theme-switch { background: #e8e0d4; }
+.theme-switch-knob {
+  position: absolute; top: 50%; left: 4px; transform: translateY(-50%);
+  width: 22px; height: 22px; border-radius: 50%; background: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; transition: left 0.35s cubic-bezier(.4,0,.2,1);
+  pointer-events: none; line-height: 1; box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+[data-theme="light"] .theme-switch-knob { left: 30px; }
+
+.tabs { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+.tab {
+  padding: 0.45rem 1.1rem; border-radius: 2rem; border: 1px solid var(--border);
+  background: transparent; color: var(--text2); cursor: pointer;
+  font-family: 'DM Sans', sans-serif; font-size: 0.83rem; font-weight: 500;
+  transition: all 0.2s;
+}
+.tab.active { background: var(--accent); color: #000; border-color: var(--accent); }
+.tab:hover:not(.active) { border-color: var(--accent); color: var(--accent); }
+
+main { flex: 1; }
+.panel { display: none; padding: 1.5rem 2rem; }
+.panel.active { display: block; }
+
+.ref-section { margin-bottom: 2.2rem; }
+.ref-section h2 {
+  font-family: 'Playfair Display', serif; font-size: 1.05rem;
+  color: var(--accent); margin-bottom: 1rem; padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+.verb-grid { 
+  display: grid; 
+  grid-template-columns: repeat(2, 1fr); 
+  gap: 0.8rem; 
+}
+.verb-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 0.75rem; overflow: hidden; min-width: 0;
+  width: 100%;
+}
+.verb-card-head {
+  background: var(--surface2); padding: 0.5rem 0.9rem;
+  font-weight: 600; font-size: 0.92rem; color: var(--accent);
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.verb-tag { font-size: 0.65rem; color: var(--text2); font-style: italic; font-weight: 400; }
+.verb-card table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+.verb-card td {
+  padding: 0.45rem 0.9rem; font-size: 0.85rem;
+  border-bottom: 1px solid var(--border);
+  word-break: break-word;
+}
+.verb-card tr:last-child td { border-bottom: none; }
+.verb-card td:first-child { color: var(--text2); width: 35%; }
+.verb-card td:nth-child(2) { font-weight: 500; width: 30%; }
+.verb-card td.neg { color: var(--red); font-size: 0.8rem; width: 35%; }
+
+.mcq-wrap, .gap-wrap { 
+  max-width: 800px; 
+  margin: 0 auto; 
+  width: 100%;
+}
+
+.q-stats { 
+  display: flex; 
+  justify-content: space-between; 
+  font-size: 1rem; 
+  color: var(--text2); 
+  margin-bottom: 0.7rem; 
+}
+
+.q-card {
+  background: var(--surface); 
+  border: 1px solid var(--border); 
+  border-radius: 1rem;
+  padding: 2rem; 
+  margin-bottom: 0.9rem;
+}
+
+.q-label { 
+  font-size: 0.9rem; 
+  text-transform: uppercase; 
+  letter-spacing: 0.08em; 
+  color: var(--text2); 
+  margin-bottom: 0.6rem; 
+}
+
+.q-text { 
+  font-size: 1.25rem; 
+  font-weight: 500; 
+  line-height: 1.5;
+}
+
+.q-options { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 0.8rem; 
+  margin-top: 1.2rem;
+}
+
+.q-opt {
+  padding: 1rem 1.2rem; 
+  border-radius: 0.75rem; 
+  border: 1px solid var(--border);
+  background: var(--surface2); 
+  color: var(--text); 
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif; 
+  font-size: 1.1rem; 
+  text-align: left;
+  transition: all 0.18s;
+}
+
+.q-opt:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+.q-opt.correct { background: rgba(90,170,133,0.15); border-color: var(--green); color: var(--green); }
+.q-opt.wrong   { background: rgba(217,95,95,0.15);  border-color: var(--red);   color: var(--red); }
+.q-feedback { margin-top: 0.8rem; font-size: 1rem; min-height: 1.5em; }
+.q-next-btn {
+  display: none; margin-top: 1.2rem; padding: 0.7rem 1.8rem;
+  border-radius: 2rem; border: none; background: var(--accent); color: #000;
+  cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 500;
+}
+.quiz-done { text-align: center; padding: 3rem 1rem; }
+.quiz-done .big { font-family: 'Playfair Display', serif; font-size: 3.2rem; color: var(--accent); }
+.quiz-restart {
+  margin-top: 1.5rem; padding: 0.7rem 2rem; border-radius: 2rem;
+  border: none; background: var(--accent); color: #000; cursor: pointer;
+  font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 500;
+}
+
+.gap-q {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 1rem;
+  padding: 2rem; margin-bottom: 0.8rem; font-size: 1.25rem; line-height: 2.2;
+}
+.gap-q em { color: var(--text2); font-style: italic; font-size: 0.9rem; display: block; margin-top: 0.3rem; }
+.gap-input {
+  display: inline-block; min-width: 150px; border: none;
+  border-bottom: 2px solid var(--accent); background: transparent;
+  color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 1.25rem;
+  outline: none; padding: 0 0.5rem; text-align: center;
+}
+.gap-input.correct { border-color: var(--green); color: var(--green); }
+.gap-input.wrong   { border-color: var(--red);   color: var(--red); }
+.gap-fb { margin-top: 0.6rem; font-size: 1rem; min-height: 1.5em; }
+.gap-fb.ok { color: var(--green); }
+.gap-fb.no { color: var(--red); }
+.gap-actions { display: flex; gap: 0.8rem; margin-top: 1.2rem; flex-wrap: wrap; }
+.btn-primary {
+  padding: 0.7rem 1.8rem; border-radius: 2rem; border: none;
+  background: var(--accent); color: #000; cursor: pointer;
+  font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 500;
+}
+.btn-sec {
+  padding: 0.7rem 1.8rem; border-radius: 2rem; border: 1px solid var(--border);
+  background: var(--surface); color: var(--text); cursor: pointer;
+  font-family: 'DM Sans', sans-serif; font-size: 1rem;
+  display: none; transition: all 0.2s;
+}
+.btn-sec:hover { border-color: var(--accent); color: var(--accent); }
+.gap-done { text-align: center; padding: 3rem 1rem; }
+.gap-done .big { font-family: 'Playfair Display', serif; font-size: 3.2rem; color: var(--accent); }
+
+footer { padding: 1.2rem 2rem; border-top: 1px solid var(--border); }
+.footer-content { display: flex; align-items: center; justify-content: center; gap: 1.5rem; flex-wrap: wrap; }
+.footer-brand { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--text2); letter-spacing: 0.5px; }
+.footer-brand span { color: var(--accent); }
+.footer-links { display: flex; gap: 0.7rem; }
+.footer-link {
+  padding: 0.3rem 0.9rem; border-radius: 2rem; border: 1px solid var(--border);
+  background: transparent; color: var(--text2); text-decoration: none;
+  font-size: 0.83rem; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.3rem;
+}
+.footer-link:hover { border-color: var(--accent); color: var(--accent); }
+.footer-link.vk:hover  { border-color: var(--accent); color: var(--accent); }
+.footer-link.tg:hover  { border-color: var(--accent); color: var(--accent); }
+
+@media (max-width: 640px) {
+  .verb-grid { grid-template-columns: 1fr; }
+  .panel { padding: 1rem; }
+  header { padding: 1rem; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div style="display:flex;align-items:center;gap:1rem">
+    <button class="theme-switch" onclick="toggleTheme()">
+      <span class="theme-switch-knob" id="themeKnob">🌙</span>
+    </button>
+    <h1>Irregular <span>Present Forms</span></h1>
+  </div>
+  <div class="header-right">
+    <div class="tabs">
+      <button class="tab active" onclick="showTab('ref',this)">Reference</button>
+      <button class="tab" onclick="showTab('mcq',this)">MCQ</button>
+      <button class="tab" onclick="showTab('gap',this)">Fill in the Gap</button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<div class="panel active" id="tab-ref">
+
+  <div class="ref-section">
+    <h2>Special verbs: be &amp; have</h2>
+    <div class="verb-grid">
+      <div class="verb-card">
+        <div class="verb-card-head">be</div>
+        <table>
+          <tr><td>I</td><td>am ('m)</td><td class="neg">am not ('m not)</td></tr>
+          <tr><td>you/we/they</td><td>are ('re)</td><td class="neg">are not (aren't)</td></tr>
+          <tr><td>he/she/it</td><td>is ('s)</td><td class="neg">is not (isn't)</td></tr>
+        </table>
+      </div>
+      <div class="verb-card">
+        <div class="verb-card-head">have</div>
+        <table>
+          <tr><td>I/you/we/they</td><td>have ('ve)</td><td class="neg">have not (haven't)</td></tr>
+          <tr><td>he/she/it</td><td>has ('s)</td><td class="neg">has not (hasn't)</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="ref-section">
+    <h2>Verbs ending in <b style="color:var(--text)">-o</b></h2>
+    <div class="verb-grid">
+      <div class="verb-card">
+        <div class="verb-card-head">do</div>
+        <table>
+          <tr><td>I/you/we/they</td><td>do</td><td class="neg">do not (don't)</td></tr>
+          <tr><td>he/she/it</td><td><b>does</b></td><td class="neg">does not (doesn't)</td></tr>
+        </table>
+      </div>
+      <div class="verb-card">
+        <div class="verb-card-head">go</div>
+        <table>
+          <tr><td>I/you/we/they</td><td>go</td><td class="neg">don't go</td></tr>
+          <tr><td>he/she/it</td><td><b>goes</b></td><td class="neg">doesn't go</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="ref-section">
+    <h2>Verbs ending in <b style="color:var(--text)">consonant + -y</b> <span style="color:var(--text2);font-size:0.8rem">→ -ies</span></h2>
+    <div class="verb-grid">
+      <div class="verb-card">
+        <div class="verb-card-head">fly <span class="verb-tag">y → ies</span></div>
+        <table>
+          <tr><td>I/you/we/they</td><td>fly</td><td class="neg">don't fly</td></tr>
+          <tr><td>he/she/it</td><td><b>flies</b></td><td class="neg">doesn't fly</td></tr>
+        </table>
+      </div>
+      <div class="verb-card">
+        <div class="verb-card-head">study <span class="verb-tag">y → ies</span></div>
+        <table>
+          <tr><td>I/you/we/they</td><td>study</td><td class="neg">don't study</td></tr>
+          <tr><td>he/she/it</td><td><b>studies</b></td><td class="neg">doesn't study</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="ref-section">
+    <h2>Verbs ending in <b style="color:var(--text)">-s, -z, -ch, -sh, -x</b> <span style="color:var(--text2);font-size:0.8rem">→ +es</span></h2>
+    <div class="verb-grid">
+      <div class="verb-card">
+        <div class="verb-card-head">pass <span class="verb-tag">-s +es</span></div>
+        <table>
+          <tr><td>I/you/we/they</td><td>pass</td><td class="neg">don't pass</td></tr>
+          <tr><td>he/she/it</td><td><b>passes</b></td><td class="neg">doesn't pass</td></tr>
+        </table>
+      </div>
+      <div class="verb-card">
+        <div class="verb-card-head">buzz <span class="verb-tag">-z +es</span></div>
+        <table>
+          <tr><td>I/you/we/they</td><td>buzz</td><td class="neg">don't buzz</td></tr>
+          <tr><td>he/she/it</td><td><b>buzzes</b></td><td class="neg">doesn't buzz</td></tr>
+        </table>
+      </div>
+      <div class="verb-card">
+        <div class="verb-card-head">watch <span class="verb-tag">-ch +es</span></div>
+        <table>
+          <tr><td>I/you/we/they</td><td>watch</td><td class="neg">don't watch</td></tr>
+          <tr><td>he/she/it</td><td><b>watches</b></td><td class="neg">doesn't watch</td></tr>
+        </table>
+      </div>
+      <div class="verb-card">
+        <div class="verb-card-head">wish <span class="verb-tag">-sh +es</span></div>
+        <table>
+          <tr><td>I/you/we/they</td><td>wish</td><td class="neg">don't wish</td></tr>
+          <tr><td>he/she/it</td><td><b>wishes</b></td><td class="neg">doesn't wish</td></tr>
+        </table>
+      </div>
+      <div class="verb-card">
+        <div class="verb-card-head">mix <span class="verb-tag">-x +es</span></div>
+        <table>
+          <tr><td>I/you/we/they</td><td>mix</td><td class="neg">don't mix</td></tr>
+          <tr><td>he/she/it</td><td><b>mixes</b></td><td class="neg">doesn't mix</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="panel" id="tab-mcq">
+  <div class="mcq-wrap" id="mcqContent"></div>
+</div>
+
+<div class="panel" id="tab-gap">
+  <div class="gap-wrap" id="gapContent"></div>
+</div>
+
+</main>
+
+<footer>
+  <div class="footer-content">
+    <div class="footer-brand">
+      @ <span>snugenglish</span>
+    </div>
+    <div class="footer-links">
+      <a href="https://vk.com/snugenglish" target="_blank" class="footer-link vk">VK</a>
+      <a href="https://t.me/+wiAl8ae-UoAxMDE6" target="_blank" class="footer-link tg">Telegram</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+const MCQ = [
+  {q:'He _____ to school every day.',            opts:['go','goes','gos','is go'],          ans:'goes'},
+  {q:'She _____ not like coffee.',               opts:['do','is','does','has'],              ans:'does'},
+  {q:'They _____ playing football now.',         opts:['is','am','are','be'],                ans:'are'},
+  {q:'He _____ a dog.',                          opts:["haven't","hasn't","don't have","not have"], ans:"hasn't"},
+  {q:'The bird _____ south in winter.',          opts:['flys','fly','flies','flyes'],        ans:'flies'},
+  {q:'She _____ the bus every morning.',         opts:['miss','misses','mises','missies'],   ans:'misses'},
+  {q:'He _____ the music very loud.',            opts:['mix','mixes','mixs','mixed'],        ans:'mixes'},
+  {q:'I _____ not ready yet.',                   opts:['is','are','am','be'],                ans:'am'},
+  {q:'She _____ her hands before eating.',       opts:['washs','wash','washes','washies'],   ans:'washes'},
+  {q:'He _____ TV every evening.',               opts:['watch','watchs','watches','watche'], ans:'watches'},
+  {q:'They _____ have a car.',                   opts:["don't","doesn't","isn't","aren't"],  ans:"don't"},
+  {q:'She _____ English at university.',         opts:['study','studys','studies','studyes'],ans:'studies'},
+  {q:'He _____ the bus to work.',                opts:['catch','caches','catchs','catches'], ans:'catches'},
+  {q:'The baby _____ all night.',                opts:['cry','crys','cries','cryes'],        ans:'cries'},
+  {q:'She _____ a lot of books.',                opts:['reads','read','reades','is read'],   ans:'reads'},
+];
+
+const GAP = [
+  {s:'She _____ (watch) TV every night.',        ans:'watches'},
+  {s:'He _____ (fly) to London twice a year.',   ans:'flies'},
+  {s:'It _____ (buzz) loudly.',                  ans:'buzzes'},
+  {s:'I _____ (be) a student.',                  ans:'am'},
+  {s:'She _____ (have) two cats.',               ans:'has'},
+  {s:'He _____ (do) his homework every day.',    ans:'does'},
+  {s:'She _____ (go) to the gym on Mondays.',    ans:'goes'},
+  {s:'He _____ (mix) the ingredients carefully.',ans:'mixes'},
+  {s:'She _____ (wish) she could travel more.',  ans:'wishes'},
+  {s:'The team _____ (pass) the ball quickly.',  ans:'passes'},
+  {s:'He _____ (study) medicine at university.', ans:'studies'},
+  {s:'She _____ (catch) the early train.',       ans:'catches'},
+  {s:'The baby _____ (cry) every night.',        ans:'cries'},
+  {s:'He _____ (be) very happy today.',          ans:'is'},
+];
+
+function shuffle(a) { return [...a].sort(() => Math.random() - 0.5); }
+
+function showTab(id, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+  if (id === 'mcq') initMcq();
+  if (id === 'gap') initGap();
+}
+
+let mcqDeck, mcqIdx, mcqScore, mcqAnswered;
+function initMcq() {
+  mcqDeck = shuffle(MCQ); mcqIdx = 0; mcqScore = 0; renderMcq();
+}
+function renderMcq() {
+  const el = document.getElementById('mcqContent');
+  if (mcqIdx >= mcqDeck.length) {
+    const pct = Math.round(mcqScore / mcqDeck.length * 100);
+    el.innerHTML = `<div class="quiz-done">
+      <div class="big">${mcqScore}/${mcqDeck.length}</div>
+      <div style="color:var(--text2);margin-top:0.5rem">${pct}% correct</div>
+      <div style="font-size:1.1rem;margin-top:0.8rem">${pct>=80?'Excellent! 🎉':pct>=50?'Good effort! 💪':'Keep practising! 📚'}</div>
+      <button class="quiz-restart" onclick="initMcq()">Try again</button>
+    </div>`; return;
+  }
+  const item = mcqDeck[mcqIdx];
+  const pct = (mcqIdx / mcqDeck.length * 100).toFixed(0);
+  mcqAnswered = false;
+  // Shuffle options so correct answer position varies each time
+  const shuffledOpts = shuffle(item.opts);
+  el.innerHTML = `
+    <div class="q-stats">
+      <span>Question ${mcqIdx+1} of ${mcqDeck.length}</span>
+      <span>Score: <b>${mcqScore}</b></span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+    <div class="q-card">
+      <div class="q-label">Choose the correct form</div>
+      <div class="q-text">${item.q}</div>
+    </div>
+    <div class="q-options">
+      ${shuffledOpts.map(o => `<button class="q-opt" data-opt="${o.replace(/"/g,'&quot;')}">${o}</button>`).join('')}
+    </div>
+    <div class="q-feedback" id="mcqFB"></div>
+    <button class="q-next-btn" id="mcqNext" onclick="mcqIdx++;renderMcq()">Next →</button>`;
+  // Attach click handlers via JS to avoid any escaping issues
+  el.querySelectorAll('.q-opt').forEach(btn => {
+    btn.addEventListener('click', () => checkMcq(btn, item.ans, btn.dataset.opt));
+  });
+}
+function checkMcq(btn, ans, chosen) {
+  if (mcqAnswered) return; mcqAnswered = true;
+  document.querySelectorAll('.q-opt').forEach(b => b.disabled = true);
+  if (chosen === ans) {
+    btn.classList.add('correct');
+    document.getElementById('mcqFB').style.color='var(--green)';
+    document.getElementById('mcqFB').textContent='✓ Correct!';
+    mcqScore++;
+  } else {
+    btn.classList.add('wrong');
+    document.getElementById('mcqFB').style.color='var(--red)';
+    document.getElementById('mcqFB').textContent='✗ Correct answer highlighted.';
+    document.querySelectorAll('.q-opt').forEach(b => { if(b.dataset.opt === ans) b.classList.add('correct'); });
+  }
+  document.getElementById('mcqNext').style.display='inline-block';
+}
+
+let gapDeck, gapIdx, gapScore, gapAnswered;
+function initGap() {
+  gapDeck = shuffle(GAP); gapIdx = 0; gapScore = 0; renderGap();
+}
+function renderGap() {
+  const el = document.getElementById('gapContent');
+  if (gapIdx >= gapDeck.length) {
+    const pct = Math.round(gapScore / gapDeck.length * 100);
+    el.innerHTML = `<div class="gap-done">
+      <div class="big">${gapScore}/${gapDeck.length}</div>
+      <div style="color:var(--text2);margin-top:0.5rem">${pct}% correct</div>
+      <div style="font-size:1.1rem;margin-top:0.8rem">${pct>=80?'Excellent! 🎉':pct>=50?'Good effort! 💪':'Keep practising! 📚'}</div>
+      <button class="quiz-restart" onclick="initGap()">Try again</button>
+    </div>`; return;
+  }
+  const item = gapDeck[gapIdx];
+  const pct = (gapIdx / gapDeck.length * 100).toFixed(0);
+  gapAnswered = false;
+  el.innerHTML = `
+    <div class="q-stats">
+      <span>Question ${gapIdx+1} of ${gapDeck.length}</span>
+      <span>Score: <b>${gapScore}</b></span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+    <div class="gap-q">
+      ${item.s.replace('_____', '<input class="gap-input" id="gIn" placeholder="…" autocomplete="off">')}
+    </div>
+    <div class="gap-fb" id="gFB"></div>
+    <div class="gap-actions">
+      <button class="btn-primary" onclick="checkGap('${item.ans}')">Check</button>
+      <button class="btn-sec" id="gNext" onclick="gapIdx++;renderGap()">Next →</button>
+    </div>`;
+  const inp = document.getElementById('gIn');
+  inp.focus();
+  inp.addEventListener('keydown', e => { if(e.key==='Enter') checkGap(item.ans); });
+}
+function checkGap(ans) {
+  if (gapAnswered) return; gapAnswered = true;
+  const inp = document.getElementById('gIn');
+  const val = inp.value.trim().toLowerCase();
+  const correct = ans.toLowerCase();
+  if (val === correct) {
+    inp.classList.add('correct');
+    document.getElementById('gFB').className='gap-fb ok';
+    document.getElementById('gFB').textContent='✓ Correct!';
+    gapScore++;
+  } else {
+    inp.classList.add('wrong');
+    document.getElementById('gFB').className='gap-fb no';
+    document.getElementById('gFB').innerHTML=`✗ Correct answer: <b>${ans}</b>`;
+  }
+  inp.disabled = true;
+  document.getElementById('gNext').style.display='inline-block';
+}
+
+let theme = 'dark';
+function toggleTheme() {
+  theme = theme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', theme);
+  document.getElementById('themeKnob').textContent = theme === 'dark' ? '🌙' : '☀️';
+}
+</script>
+</body>
+</html>

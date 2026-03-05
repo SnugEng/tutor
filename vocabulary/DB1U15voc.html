@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="google" content="notranslate">
+<meta http-equiv="Content-Language" content="en">
+<title>Unit 15 – Vocabulary: Buying and selling</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent:   #e8b84b;
+    --accent-h: #f0cc72;
+    --green:    #5aaa85;
+    --red:      #d95f5f;
+  }
+
+  [data-theme="dark"] {
+    --bg:       #0d0d12;
+    --surface:  #17171f;
+    --surface2: #1f1f2a;
+    --text:     #e8e8f0;
+    --text2:    #7a7a96;
+    --border:   rgba(255,255,255,0.08);
+  }
+
+  [data-theme="light"] {
+    --bg:       #f4f3ef;
+    --surface:  #ffffff;
+    --surface2: #eceae6;
+    --text:     #1a1a24;
+    --text2:    #6b6b7e;
+    --border:   rgba(0,0,0,0.1);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  header {
+    padding: 1.6rem 2rem;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  header h1 { font-family: 'Playfair Display', serif; font-size: 1.7rem; letter-spacing: -0.5px; }
+  header h1 span { color: var(--accent); }
+
+  .header-right { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+  .header-title { display: flex; align-items: center; gap: 1rem; }
+
+  .back-btn {
+    padding: 0.4rem 1rem; border-radius: 2rem; border: 1px solid var(--border);
+    background: transparent; color: var(--text2); cursor: pointer;
+    font-family: 'DM Sans', sans-serif; font-size: 0.83rem; font-weight: 500;
+    text-decoration: none; display: inline-flex; align-items: center; gap: 0.3rem;
+    transition: all 0.2s;
+  }
+  .back-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  .theme-switch {
+    position: relative;
+    width: 56px; height: 28px;
+    border-radius: 14px;
+    cursor: pointer;
+    border: none;
+    padding: 0;
+    background: #3a3a4a;
+    transition: background 0.35s;
+    flex-shrink: 0;
+  }
+  [data-theme="light"] .theme-switch { background: #e8e0d4; }
+
+  .theme-switch-knob {
+    position: absolute;
+    top: 50%; left: 4px;
+    transform: translateY(-50%);
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+    transition: left 0.35s cubic-bezier(.4,0,.2,1);
+    pointer-events: none;
+    line-height: 1;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  }
+  [data-theme="light"] .theme-switch-knob { left: 30px; }
+
+  .tabs { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .tab {
+    padding: 0.45rem 1.1rem; border-radius: 2rem; border: 1px solid var(--border);
+    background: transparent; color: var(--text2); cursor: pointer;
+    font-family: 'DM Sans', sans-serif; font-size: 0.83rem; font-weight: 500;
+    transition: all 0.2s;
+  }
+  .tab.active { background: var(--accent); color: #000; border-color: var(--accent); }
+  .tab:hover:not(.active) { border-color: var(--accent); color: var(--accent); }
+
+  main { flex: 1; }
+
+  footer { padding: 1.2rem 2rem; border-top: 1px solid var(--border); }
+  .footer-content { display: flex; align-items: center; justify-content: center; gap: 1.5rem; flex-wrap: wrap; }
+  .footer-brand { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--text2); letter-spacing: 0.5px; }
+  .footer-brand span { color: var(--accent); }
+  .footer-links { display: flex; gap: 0.7rem; }
+  .footer-link {
+    padding: 0.3rem 0.9rem; border-radius: 2rem;
+    border: 1px solid var(--border); background: transparent;
+    color: var(--text2); text-decoration: none; font-size: 0.83rem;
+    transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.3rem;
+  }
+  .footer-link:hover { border-color: var(--accent); color: var(--accent); }
+
+  #dict, #wordForm { padding: 1.5rem 2rem; }
+  .search-bar { display: flex; gap: 0.8rem; margin-bottom: 1.2rem; }
+  .search-bar input {
+    flex: 1; padding: 0.65rem 1rem;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 0.6rem; color: var(--text);
+    font-family: 'DM Sans', sans-serif; font-size: 0.92rem;
+    outline: none; transition: border-color 0.2s;
+  }
+  .search-bar input:focus { border-color: var(--accent); }
+  .filter-btns { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  .filter-btn {
+    padding: 0.35rem 0.85rem; border-radius: 1rem; border: 1px solid var(--border);
+    background: transparent; color: var(--text2); cursor: pointer; font-size: 0.77rem;
+    transition: all 0.2s; font-family: 'DM Sans', sans-serif;
+  }
+  .filter-btn.on { background: var(--red); color: #fff; border-color: var(--red); }
+
+  .dict-table { width: 100%; border-collapse: collapse; }
+  .dict-table th {
+    text-align: left; padding: 0.65rem 1rem;
+    font-size: 0.73rem; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--text2); border-bottom: 1px solid var(--border);
+  }
+  .dict-table td { padding: 0.85rem 1rem; border-bottom: 1px solid var(--border); font-size: 0.9rem; vertical-align: top; }
+  .dict-table tr:hover td { background: var(--surface2); }
+  .word-cell { font-weight: 500; white-space: nowrap; }
+  .pos { font-size: 0.71rem; color: var(--red); font-style: italic; margin-left: 4px; }
+  .def-cell { color: var(--text); opacity: 0.85; }
+  .ex-cell { color: var(--text2); font-style: italic; font-size: 0.84rem; }
+  .no-results { text-align: center; padding: 3rem; color: var(--text2); }
+
+  .speak-btn {
+    background: none; border: none; cursor: pointer;
+    color: var(--text2); font-size: 1rem; padding: 0.2rem 0.3rem;
+    border-radius: 0.3rem; transition: color 0.15s, transform 0.15s;
+    line-height: 1; display: inline-flex; align-items: center;
+  }
+  .speak-btn:hover { color: var(--accent); transform: scale(1.2); }
+  .speak-btn:active { transform: scale(0.95); }
+  .card-speak {
+    margin-top: 0.8rem;
+    background: none; border: 1px solid var(--border); cursor: pointer;
+    color: var(--text2); padding: 0.4rem 0.9rem;
+    border-radius: 2rem; transition: all 0.2s;
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    font-family: 'DM Sans', sans-serif; font-size: 0.82rem;
+  }
+  .card-speak:hover { border-color: var(--accent); color: var(--accent); }
+
+  .wf-forms {
+    color: var(--accent);
+    font-size: 0.9rem;
+    display: flex; flex-wrap: wrap; gap: 0.4rem 0.6rem;
+  }
+  .wf-forms span {
+    background: rgba(232,184,75,0.1);
+    padding: 0.2rem 0.6rem; border-radius: 0.4rem;
+    border: 1px solid rgba(232,184,75,0.25);
+    display: inline-flex; align-items: baseline; gap: 0.3rem;
+  }
+  .wf-pos {
+    font-size: 0.65rem; color: var(--text2);
+    font-style: italic; font-weight: 400;
+  }
+
+  #cards { display: none; padding: 2rem; flex-direction: column; align-items: center; }
+  .card-counter { color: var(--text2); font-size: 0.84rem; margin-bottom: 1.5rem; }
+  .card-wrap { perspective: 1200px; width: 100%; max-width: 560px; height: 350px; cursor: pointer; }
+  .card-inner {
+    position: relative; width: 100%; height: 100%;
+    transform-style: preserve-3d; transition: transform 0.55s cubic-bezier(.4,0,.2,1);
+  }
+  .card-wrap.flipped .card-inner { transform: rotateY(180deg); }
+  .card-face {
+    position: absolute; inset: 0; backface-visibility: hidden;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 1.2rem;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 2.2rem; text-align: center;
+  }
+  .card-face.back { transform: rotateY(180deg); background: var(--surface2); justify-content: flex-start; padding-top: 2rem; overflow-y: auto; }
+  .card-word { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--accent); }
+  .card-pos-badge { margin-top: 0.6rem; padding: 0.2rem 0.7rem; border-radius: 1rem; background: rgba(232,184,75,0.15); color: var(--accent); font-size: 0.8rem; }
+  .card-hint { color: var(--text2); font-size: 0.77rem; margin-top: 1.2rem; }
+  .card-def { font-size: 1.05rem; color: var(--text); line-height: 1.6; padding: 0 0.5rem; }
+  .card-ex { margin-top: 1.2rem; font-style: italic; color: var(--text2); font-size: 1rem; border-top: 1px solid var(--border); padding: 1.2rem 0.5rem 0; width: 100%; }
+  .card-controls { display: flex; gap: 1rem; margin-top: 1.8rem; }
+  .ctrl-btn {
+    padding: 0.6rem 1.5rem; border-radius: 2rem; border: 1px solid var(--border);
+    background: var(--surface); color: var(--text); cursor: pointer;
+    font-family: 'DM Sans', sans-serif; font-size: 0.88rem; transition: all 0.2s;
+  }
+  .ctrl-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .ctrl-btn.primary { background: var(--accent); color: #000; border-color: var(--accent); font-weight: 500; }
+  .ctrl-btn.primary:hover { background: var(--accent-h); }
+  .shuffle-row { margin-top: 1rem; display: flex; gap: 0.7rem; }
+
+  .category-selector { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; justify-content: center; }
+  .category-btn {
+    padding: 0.45rem 1.1rem; border-radius: 2rem; border: 1px solid var(--border);
+    background: var(--surface); color: var(--text2); cursor: pointer;
+    font-family: 'DM Sans', sans-serif; font-size: 0.83rem; transition: all 0.2s;
+  }
+  .category-btn.active { background: var(--accent); color: #000; border-color: var(--accent); }
+  .category-btn.random { background: var(--red); color: #fff; border-color: var(--red); opacity: 0.9; }
+  .category-btn.random.active { opacity: 1; filter: brightness(1.1); }
+
+  .random-controls {
+    display: flex; gap: 0.5rem; align-items: center; margin-bottom: 1rem;
+    background: var(--surface); padding: 0.5rem 1rem;
+    border-radius: 3rem; border: 1px solid var(--border);
+  }
+  .random-input {
+    width: 70px; padding: 0.45rem;
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 1.5rem; color: var(--text); text-align: center;
+    font-family: 'DM Sans', sans-serif; font-size: 0.88rem; outline: none;
+    -moz-appearance: textfield;
+  }
+  .random-input::-webkit-outer-spin-button,
+  .random-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+  .random-input:focus { border-color: var(--accent); }
+  .random-label { color: var(--text2); font-size: 0.88rem; }
+
+  #quiz { display: none; padding: 2rem; max-width: 600px; margin: 0 auto; }
+  .quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+  .quiz-score { font-size: 0.84rem; color: var(--text2); }
+  .score-val { color: var(--accent); font-weight: 600; }
+  .progress-bar { height: 4px; background: var(--surface); border-radius: 2px; margin-bottom: 2rem; }
+  .progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.4s; }
+  .q-card { background: var(--surface); border: 1px solid var(--border); border-radius: 1rem; padding: 1.8rem; margin-bottom: 1.5rem; }
+  .q-label { font-size: 0.71rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text2); margin-bottom: 0.6rem; }
+  .q-text { font-size: 1.1rem; font-weight: 500; line-height: 1.5; }
+  .q-options { display: grid; gap: 0.7rem; }
+  .q-opt {
+    padding: 0.85rem 1.1rem; border-radius: 0.7rem; border: 1px solid var(--border);
+    background: var(--surface2); cursor: pointer; font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem; color: var(--text); transition: all 0.18s; text-align: left;
+  }
+  .q-opt:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+  .q-opt.correct { border-color: var(--green); background: rgba(90,170,133,0.12); color: var(--green); }
+  .q-opt.wrong   { border-color: var(--red);   background: rgba(217,95,95,0.1);   color: var(--red);   }
+  .q-feedback { font-size: 0.84rem; margin-top: 0.5rem; min-height: 1.2em; }
+  .q-next-btn {
+    display: none; width: 100%; padding: 0.85rem; border-radius: 0.7rem; border: none;
+    background: var(--accent); color: #000; font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem; font-weight: 600; cursor: pointer; margin-top: 0.5rem; transition: background 0.2s;
+  }
+  .q-next-btn:hover { background: var(--accent-h); }
+  .quiz-done { text-align: center; padding: 2rem; }
+  .quiz-done .big { font-family: 'Playfair Display', serif; font-size: 3rem; color: var(--accent); }
+  .quiz-restart {
+    margin-top: 1.2rem; padding: 0.7rem 2rem; border-radius: 2rem;
+    border: 1px solid var(--accent); background: transparent; color: var(--accent);
+    cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; transition: all 0.2s;
+  }
+  .quiz-restart:hover { background: var(--accent); color: #000; }
+
+  @media(max-width:600px) {
+    header { padding: 1.2rem; }
+    #dict, #cards, #quiz, #wordForm { padding: 0.75rem; }
+    footer { padding: 1rem; }
+    .footer-content { gap: 1rem; }
+    .card-wrap { height: 400px; }
+    .dict-table thead { display: none; }
+    .dict-table, .dict-table tbody, .dict-table tr, .dict-table td {
+      display: block; width: 100%;
+    }
+    .dict-table tr {
+      border: 1px solid var(--border);
+      border-radius: 0.75rem;
+      margin-bottom: 0.75rem;
+      padding: 0.75rem 0.9rem;
+      background: var(--surface);
+    }
+    .dict-table tr:hover td { background: transparent; }
+    .dict-table td {
+      padding: 0.25rem 0; border-bottom: none; font-size: 0.88rem;
+    }
+    .dict-table td::before {
+      content: attr(data-label);
+      font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em;
+      color: var(--text2); display: block; margin-bottom: 0.15rem;
+    }
+    .word-cell { font-size: 1rem; margin-bottom: 0.4rem; }
+    .def-cell { margin-bottom: 0.4rem; }
+    .ex-cell { display: block !important; }
+  }
+
+  .speak-btn.speak-loading { color: var(--accent); opacity: 0.6; }
+  .card-speak.speak-loading { border-color: var(--accent); color: var(--accent); opacity: 0.7; }
+</style>
+</head>
+<body translate="no">
+
+<header>
+  <div class="header-title">
+    <button class="theme-switch" onclick="toggleTheme()" id="themeBtn" aria-label="Toggle theme">
+      <span class="theme-switch-knob" id="themeKnob">🌙</span>
+    </button>
+    <h1>Unit <span>15</span> — Vocabulary: Buying and selling</h1>
+  </div>
+  <div style="display:flex;align-items:center;gap:0.8rem;flex-wrap:wrap;">
+    <a href="index.html" class="back-btn">← All Units</a>
+    <div class="tabs">
+      <button class="tab active" onclick="showTab('dict',this)">Dictionary</button>
+      <button class="tab" onclick="showTab('cards',this)">Flashcards</button>
+      <button class="tab" onclick="showTab('quiz',this)">Quiz</button>
+      <button class="tab" onclick="showTab('wordForm',this)">Word Formation</button>
+    </div>
+  </div>
+</header>
+
+<main>
+<section id="dict">
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Search word or definition…" oninput="renderDict()">
+  </div>
+  <div class="filter-btns" id="filterBtns"></div>
+  <br>
+  <table class="dict-table">
+    <thead><tr>
+      <th>Word</th><th>Definition</th><th>Example</th>
+    </tr></thead>
+    <tbody id="dictBody"></tbody>
+  </table>
+</section>
+
+<section id="cards" style="display:none; flex-direction:column; align-items:center; padding:2rem;">
+  <div class="category-selector" id="cardCategorySelector">
+    <button class="category-btn active" onclick="selectCardCategory('all', this)">All Words</button>
+    <button class="category-btn" onclick="selectCardCategory('topic', this)">Topic Vocabulary</button>
+    <button class="category-btn" onclick="selectCardCategory('phrasal', this)">Phrasal Verbs</button>
+    <button class="category-btn" onclick="selectCardCategory('prepositional', this)">Prepositional Phrases</button>
+    <button class="category-btn" onclick="selectCardCategory('patterns', this)">Word Patterns</button>
+    <button class="category-btn random" onclick="selectCardCategory('random', this)">Random</button>
+  </div>
+  <div class="random-controls" id="randomControls" style="display: none;">
+    <span class="random-label">Cards:</span>
+    <input type="number" id="randomCount" class="random-input" min="5" max="50" value="15">
+    <button class="ctrl-btn" style="padding:0.4rem 1.2rem;" onclick="updateRandomDeck()">Generate</button>
+  </div>
+  <div class="card-counter" id="cardCounter">Card 1 / 0</div>
+  <div class="card-wrap" id="cardWrap" onclick="this.classList.toggle('flipped')">
+    <div class="card-inner">
+      <div class="card-face front">
+        <div class="card-word" id="cWord"></div>
+        <div class="card-pos-badge" id="cPos"></div>
+        <button class="card-speak" onclick="event.stopPropagation(); speak(document.getElementById('cWord').textContent, this)">🔊 Listen</button>
+        <div class="card-hint">tap card to reveal</div>
+      </div>
+      <div class="card-face back">
+        <div class="card-def" id="cDef"></div>
+        <div class="card-ex" id="cEx"></div>
+      </div>
+    </div>
+  </div>
+  <div class="card-controls">
+    <button class="ctrl-btn" onclick="prevCard()">← Prev</button>
+    <button class="ctrl-btn primary" onclick="nextCard()">Next →</button>
+  </div>
+  <div class="shuffle-row">
+    <button class="ctrl-btn" onclick="shuffleCards()">Shuffle</button>
+    <button class="ctrl-btn" onclick="resetCards()">Reset</button>
+  </div>
+</section>
+
+<section id="quiz" style="display:none; max-width:600px; margin:0 auto; padding:2rem;">
+  <div id="quizContent"></div>
+</section>
+
+<section id="wordForm" style="display:none; padding:2rem;">
+  <div class="search-bar">
+    <input type="text" id="wfSearchInput" placeholder="Search base word or form…" oninput="renderWordForm()">
+  </div>
+  <br>
+  <table class="dict-table">
+    <thead><tr>
+      <th>Base Word</th><th>Word Forms</th>
+    </tr></thead>
+    <tbody id="wfBody"></tbody>
+  </table>
+</section>
+</main>
+
+<footer>
+  <div class="footer-content">
+    <div class="footer-brand">@ <span>snugenglish</span></div>
+    <div class="footer-links">
+      <a href="https://vk.com/snugenglish" target="_blank" class="footer-link vk">VK</a>
+      <a href="https://t.me/+wiAl8ae-UoAxMDE6" target="_blank" class="footer-link tg">Telegram</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+const DATA = [
+  // Topic Vocabulary
+  {w:"advertisement",pos:"n",def:"an announcement in a newspaper, on television, or on the Internet designed to persuade people to buy a product or service",ex:"I saw an advertisement for a new kind of camera.",category:"topic"},
+  {w:"afford",pos:"v",def:"to have enough money to pay for something",ex:"I'm not sure how they're able to afford such expensive holidays.",category:"topic"},
+  {w:"bargain",pos:"n",def:"something you buy that costs much less than normal",ex:"Her dress was a real bargain.",category:"topic"},
+  {w:"brand",pos:"n",def:"a product or group of products that has its own name and is made by one particular company",ex:"I tried using a new brand of soap.",category:"topic"},
+  {w:"catalogue",pos:"n",def:"a book that contains pictures of things that you can buy",ex:"Do you have a catalogue with all your products in it?",category:"topic"},
+  {w:"change",pos:"n",def:"coins rather than notes",ex:"I'm sorry, I haven't got any change.",category:"topic"},
+  {w:"coin",pos:"n",def:"a flat round piece of metal used as money",ex:"Put a coin into the slot.",category:"topic"},
+  {w:"cost",pos:"v",def:"if something costs an amount of money, you need that amount to pay for it",ex:"A new computer costs around €1,000.",category:"topic"},
+  {w:"cost",pos:"n",def:"the amount of money that you need in order to buy something or to do something",ex:"What's the total cost of these three pairs of shoes?",category:"topic"},
+  {w:"customer",pos:"n",def:"a person or company that buys goods or services",ex:"Supermarkets use a variety of ways to attract customers.",category:"topic"},
+  {w:"debt",pos:"n",def:"an amount of money that you owe",ex:"By this time we had debts of over €15,000.",category:"topic"},
+  {w:"demand",pos:"v",def:"to say strongly that you want something",ex:"The teacher demanded an explanation for all the water on the floor.",category:"topic"},
+  {w:"export",pos:"v",def:"to send a product to another country so that it can be sold there",ex:"Their flowers are exported around the world.",category:"topic"},
+  {w:"fee",pos:"n",def:"money that you pay to a professional person or institution for their work",ex:"He will have to pay school fees of €2,000.",category:"topic"},
+  {w:"fortune",pos:"n",def:"a large amount of money",ex:"They must have spent a fortune on flowers.",category:"topic"},
+  {w:"import",pos:"v",def:"to buy a product from another country and bring it to your country",ex:"We import most of our coal from other countries.",category:"topic"},
+  {w:"invest",pos:"v",def:"to use your money with the aim of making a profit from it",ex:"Banks invested €20 million in the scheme.",category:"topic"},
+  {w:"obtain",pos:"v",def:"to get something that you want or need",ex:"She has to obtain her father's permission before she does anything.",category:"topic"},
+  {w:"owe",pos:"v",def:"to have to give someone a particular amount of money because you have bought something from them or borrowed money from them",ex:"Pam still owes me €5.",category:"topic"},
+  {w:"own",pos:"v",def:"to legally have something, especially because you have bought it",ex:"Who owns that house by the lake?",category:"topic"},
+  {w:"profit",pos:"n",def:"money that you get when you sell something for a price higher than the cost of making or buying it",ex:"Investors have made a 14 per cent profit in just three months.",category:"topic"},
+  {w:"property",pos:"n",def:"the things that you own",ex:"The books are my personal property.",category:"topic"},
+  {w:"purchase",pos:"v",def:"to buy something",ex:"She purchased a new lamp for her bedroom.",category:"topic"},
+  {w:"purchase",pos:"n",def:"something that you buy",ex:"Her latest purchase was a long black coat.",category:"topic"},
+  {w:"receipt",pos:"n",def:"a document that you get from someone showing that you have given them money or goods",ex:"Make sure you get a receipt for the taxi.",category:"topic"},
+  {w:"require",pos:"v",def:"to need someone or something",ex:"Working with these children requires a great deal of patience.",category:"topic"},
+  {w:"sale",pos:"n",def:"an event or period of time during which a shop reduces the prices of some of its goods",ex:"The Easter sales start tomorrow.",category:"topic"},
+  {w:"save",pos:"v",def:"to regularly put money in a bank, or to invest it so that you can use it later",ex:"Don't wait until you're 40 to start saving for retirement.",category:"topic"},
+  {w:"select",pos:"v",def:"to choose someone or something from a group",ex:"You can select one of four colours.",category:"topic"},
+  {w:"supply",pos:"v",def:"to provide someone or something with something they need or want",ex:"Our shop supplies things to people all over the country.",category:"topic"},
+  {w:"supply",pos:"n",def:"an amount or quantity of something that is available to use",ex:"We have a good supply of fresh water here.",category:"topic"},
+  {w:"variety",pos:"n",def:"a number of different people or things",ex:"Adults study for a variety of reasons.",category:"topic"},
+  {w:"waste",pos:"v",def:"to use more of something than is necessary, or to use it in a way that does not produce the best results",ex:"Don't waste water like that – turn the tap off when you're not using it!",category:"topic"},
+  {w:"waste",pos:"n",def:"the failure to use something that is valuable or useful in an effective way",ex:"All this uneaten food – what a waste!",category:"topic"},
+  // Phrasal Verbs
+  {w:"add up",pos:"phr v",def:"find the total of",ex:"The shop assistant added up what I'd bought and told me the total.",category:"phrasal"},
+  {w:"come back (from)",pos:"phr v",def:"return (from)",ex:"Give me a call when you come back from Greece.",category:"phrasal"},
+  {w:"give away",pos:"phr v",def:"give something free of charge",ex:"The store was giving away free samples.",category:"phrasal"},
+  {w:"hurry up",pos:"phr v",def:"do something more quickly",ex:"Hurry up, or we'll miss the bus!",category:"phrasal"},
+  {w:"pay back",pos:"phr v",def:"return money to someone",ex:"Did you pay Denise back?",category:"phrasal"},
+  {w:"save up (for)",pos:"phr v",def:"save money for a specific purpose",ex:"I'm saving up for a new electric guitar.",category:"phrasal"},
+  {w:"take back",pos:"phr v",def:"return something to the place it came from",ex:"I'm going to take my library books back.",category:"phrasal"},
+  {w:"take down",pos:"phr v",def:"remove from a high place",ex:"The old man took a large book down from a shelf.",category:"phrasal"},
+  // Prepositional Phrases
+  {w:"by credit card/cheque",pos:"prep phr",def:"using a credit card or cheque as the method of payment",ex:"Can I pay by cheque?",category:"prepositional"},
+  {w:"for rent",pos:"prep phr",def:"available to be rented",ex:"Do you have any rooms for rent?",category:"prepositional"},
+  {w:"for sale",pos:"prep phr",def:"available to be bought",ex:"I'm afraid the pictures on the wall aren't for sale.",category:"prepositional"},
+  {w:"in cash",pos:"prep phr",def:"using coins or notes rather than a card or cheque",ex:"The woman paid for the car in cash, which was unusual.",category:"prepositional"},
+  {w:"in debt",pos:"prep phr",def:"owing money to someone",ex:"It can be very worrying to be in debt.",category:"prepositional"},
+  {w:"in good/bad condition",pos:"prep phr",def:"in a good or bad state of repair",ex:"For sale: camping equipment, in good condition.",category:"prepositional"},
+  // Word Patterns
+  {w:"wrong about/with",pos:"adj phr",def:"incorrect about or having a fault",ex:"I think Serena is wrong about Ian – he seems really nice to me.",category:"patterns"},
+  {w:"belong to",pos:"v phr",def:"to be the property of someone",ex:"Do these belong to you?",category:"patterns"},
+  {w:"borrow sth from",pos:"v phr",def:"to take and use something belonging to someone else, intending to return it",ex:"You can borrow some money from me, if you like.",category:"patterns"},
+  {w:"buy sth from",pos:"v phr",def:"to get something by paying money to a seller",ex:"Where did you buy your new shoes from?",category:"patterns"},
+  {w:"choose between",pos:"v phr",def:"to select one option from two or more possibilities",ex:"I love both my brother and my sister and I can't choose between them.",category:"patterns"},
+  {w:"compare sth to/with",pos:"v phr",def:"to examine the ways in which things are similar or different",ex:"I'd like you to compare your composition to/with your partner's.",category:"patterns"},
+  {w:"decide on",pos:"v phr",def:"to choose one thing from several options",ex:"Have you decided on the music for your party?",category:"patterns"},
+  {w:"lend sth to",pos:"v phr",def:"to give something to someone for a period of time",ex:"I haven't got any money because I lent €100 to Richard.",category:"patterns"},
+  {w:"pay for",pos:"v phr",def:"to give money in exchange for something",ex:"We paid for dinner by credit card and left.",category:"patterns"},
+  {w:"spend sth on",pos:"v phr",def:"to use money to buy or pay for something",ex:"What do you spend your pocket money on each week?",category:"patterns"},
+  {w:"an advert(isement) for",pos:"n phr",def:"a public notice promoting a particular product or service",ex:"Have you seen that really funny advertisement for coffee?",category:"patterns"},
+];
+
+const WORD_FORM_DATA = [
+  {base:"add",pos:"v",forms:[{w:"addition",pos:"n"}]},
+  {base:"afford",pos:"v",forms:[{w:"affordable",pos:"adj"}]},
+  {base:"compare",pos:"v",forms:[{w:"comparison",pos:"n"}]},
+  {base:"decide",pos:"v",forms:[{w:"decision",pos:"n"}]},
+  {base:"expense",pos:"n",forms:[{w:"(in)expensive",pos:"adj"}]},
+  {base:"judge",pos:"v",forms:[{w:"judgement",pos:"n"}]},
+  {base:"serve",pos:"v",forms:[{w:"service",pos:"n"},{w:"servant",pos:"n"}]},
+  {base:"true",pos:"adj",forms:[{w:"truth",pos:"n"},{w:"untrue",pos:"adj"},{w:"truthful",pos:"adj"}]},
+  {base:"use",pos:"v",forms:[{w:"useful",pos:"adj"},{w:"useless",pos:"adj"}]},
+  {base:"value",pos:"n",forms:[{w:"valuable",pos:"adj"}]},
+];
+
+function showTab(name, el) {
+  ['dict','cards','quiz','wordForm'].forEach(t => {
+    document.getElementById(t).style.display = 'none';
+  });
+  const section = document.getElementById(name);
+  if (name === 'dict' || name === 'wordForm') {
+    section.style.display = 'block';
+  } else {
+    section.style.display = 'flex';
+    if (name === 'quiz') section.style.display = 'block';
+  }
+  if(name==='quiz') initQuiz();
+  if(name==='wordForm') renderWordForm();
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+const posTypes = [...new Set(DATA.map(d=>d.pos))];
+let activeFilters = new Set();
+
+function renderFilterBtns() {
+  const c = document.getElementById('filterBtns');
+  c.innerHTML = posTypes.map(p =>
+    `<button class="filter-btn${activeFilters.has(p)?' on':''}" onclick="toggleFilter('${p}')">${p}</button>`
+  ).join('');
+}
+
+function toggleFilter(p) {
+  if(activeFilters.has(p)) activeFilters.delete(p); else activeFilters.add(p);
+  renderFilterBtns(); renderDict();
+}
+
+function renderDict() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  let rows = DATA.filter(d => {
+    const matchSearch = !q || d.w.toLowerCase().includes(q) || d.def.toLowerCase().includes(q);
+    const matchFilter = activeFilters.size === 0 || activeFilters.has(d.pos);
+    return matchSearch && matchFilter;
+  });
+  const tb = document.getElementById('dictBody');
+  if(!rows.length) { tb.innerHTML = `<tr><td colspan="3" class="no-results">No words found.</td></tr>`; return; }
+  tb.innerHTML = rows.map(d =>
+    `<tr>
+      <td class="word-cell" data-label="Word">${d.w}<span class="pos">${d.pos}</span><button class="speak-btn" onclick="speak('${d.w.replace(/'/g,"\\'")}', this)" title="Listen">🔊</button></td>
+      <td class="def-cell" data-label="Definition">${d.def}</td>
+      <td class="ex-cell" data-label="Example">${d.ex}</td>
+    </tr>`
+  ).join('');
+}
+
+renderFilterBtns();
+renderDict();
+
+let cardDeck = [...DATA];
+let cardIdx = 0;
+let currentCategory = 'all';
+
+function filterByCategory(category) {
+  if(category === 'all') return [...DATA];
+  return DATA.filter(d => d.category === category);
+}
+
+function selectCardCategory(category, btn) {
+  currentCategory = category;
+  document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const randomControls = document.getElementById('randomControls');
+  if(category === 'random') {
+    randomControls.style.display = 'flex';
+    updateRandomDeck();
+  } else {
+    randomControls.style.display = 'none';
+    cardDeck = filterByCategory(category);
+    cardIdx = 0;
+    showCard();
+  }
+}
+
+function updateRandomDeck() {
+  const count = parseInt(document.getElementById('randomCount').value) || 15;
+  const shuffled = [...DATA].sort(() => Math.random() - 0.5);
+  cardDeck = shuffled.slice(0, Math.min(count, DATA.length));
+  cardIdx = 0;
+  showCard();
+}
+
+function showCard() {
+  if(cardDeck.length === 0) {
+    document.getElementById('cWord').textContent = 'No cards';
+    document.getElementById('cPos').textContent = '';
+    document.getElementById('cDef').textContent = 'Select a category with words';
+    document.getElementById('cEx').textContent = '';
+    document.getElementById('cardCounter').textContent = `Card 0 / 0`;
+    return;
+  }
+  const c = cardDeck[cardIdx];
+  document.getElementById('cardWrap').classList.remove('flipped');
+  setTimeout(() => {
+    document.getElementById('cWord').textContent = c.w;
+    document.getElementById('cPos').textContent = c.pos;
+    document.getElementById('cDef').textContent = c.def;
+    document.getElementById('cEx').textContent = '"' + c.ex + '"';
+    document.getElementById('cardCounter').textContent = `Card ${cardIdx+1} / ${cardDeck.length}`;
+  }, 180);
+}
+
+function nextCard() {
+  if(cardDeck.length === 0) return;
+  cardIdx = (cardIdx+1) % cardDeck.length;
+  showCard();
+}
+
+function prevCard() {
+  if(cardDeck.length === 0) return;
+  cardIdx = (cardIdx-1+cardDeck.length) % cardDeck.length;
+  showCard();
+}
+
+function shuffleCards() {
+  if(cardDeck.length === 0) return;
+  cardDeck = [...cardDeck].sort(() => Math.random()-0.5);
+  cardIdx = 0;
+  showCard();
+}
+
+function resetCards() {
+  if(currentCategory === 'random') {
+    updateRandomDeck();
+  } else {
+    cardDeck = filterByCategory(currentCategory);
+    cardIdx = 0;
+    showCard();
+  }
+}
+
+showCard();
+
+let qIdx = 0, qScore = 0, qDeck = [], answered = false;
+
+function initQuiz() {
+  qDeck = [...DATA].sort(() => Math.random()-0.5).slice(0,15);
+  qIdx = 0; qScore = 0; renderQuiz();
+}
+
+function renderQuiz() {
+  const c = document.getElementById('quizContent');
+  if(qIdx >= qDeck.length) {
+    const pct = Math.round(qScore/qDeck.length*100);
+    c.innerHTML = `<div class="quiz-done">
+      <div class="big">${qScore}/${qDeck.length}</div>
+      <div style="color:var(--text2);margin-top:0.5rem">${pct}% correct</div>
+      <div style="font-size:1.2rem;margin-top:1rem">${pct>=80?'Excellent!':pct>=50?'Good effort!':'Keep practising!'}</div>
+      <button class="quiz-restart" onclick="initQuiz()">Try again</button>
+    </div>`; return;
+  }
+  const item = qDeck[qIdx];
+  const others = DATA.filter(d => d.def !== item.def).sort(() => Math.random()-0.5).slice(0,3);
+  const opts = [...others, item].sort(() => Math.random()-0.5);
+  const progress = (qIdx/qDeck.length*100).toFixed(1);
+  answered = false;
+
+  c.innerHTML = `
+    <div class="quiz-header">
+      <span style="font-weight:500">Question ${qIdx+1} of ${qDeck.length}</span>
+      <span class="quiz-score">Score: <span class="score-val">${qScore}</span></span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" style="width:${progress}%"></div></div>
+    <div class="q-card">
+      <div class="q-label">What is the definition of…</div>
+      <div class="q-text">${item.w} <span class="pos">(${item.pos})</span></div>
+    </div>
+    <div class="q-options">
+      ${opts.map((o,i)=>`<button class="q-opt" onclick="checkAnswer(this,'${item.def.replace(/'/g,"\\'").replace(/"/g,"&quot;")}','${o.def.replace(/'/g,"\\'").replace(/"/g,"&quot;")}',${i})">${o.def}</button>`).join('')}
+    </div>
+    <div class="q-feedback" id="qFeedback"></div>
+    <button class="q-next-btn" id="qNext" onclick="nextQuestion()">Next →</button>
+  `;
+}
+
+function checkAnswer(btn, correct, chosen, idx) {
+  if(answered) return; answered = true;
+  const opts = document.querySelectorAll('.q-opt');
+  opts.forEach(o => o.disabled = true);
+  const fb = document.getElementById('qFeedback');
+  if(chosen === correct) {
+    btn.classList.add('correct');
+    fb.style.color = '#4caf8a'; fb.textContent = '✓ Correct!';
+    qScore++;
+  } else {
+    btn.classList.add('wrong');
+    fb.style.color = 'var(--red)'; fb.textContent = '✗ The correct answer has been highlighted.';
+    opts.forEach(o => { if(o.textContent.trim() === correct) o.classList.add('correct'); });
+  }
+  document.getElementById('qNext').style.display = 'block';
+}
+
+function nextQuestion() { qIdx++; renderQuiz(); }
+
+function renderWordForm() {
+  const q = document.getElementById('wfSearchInput').value.toLowerCase();
+  let rows = WORD_FORM_DATA.filter(d => {
+    return !q || d.base.toLowerCase().includes(q) || d.forms.some(f => f.w.toLowerCase().includes(q));
+  });
+  const tb = document.getElementById('wfBody');
+  if(!rows.length) { tb.innerHTML = `<tr><td colspan="2" class="no-results">No word formations found.</td></tr>`; return; }
+  tb.innerHTML = rows.map(d =>
+    `<tr>
+      <td class="word-cell">${d.base}<span class="pos">${d.pos}</span><button class="speak-btn" onclick="speak('${d.base}', this)" title="Listen">🔊</button></td>
+      <td class="wf-forms">${d.forms.map(f => `<span>${f.w}<em class="wf-pos">${f.pos}</em><button class="speak-btn" onclick="speak('${f.w}', this)" title="Listen">🔊</button></span>`).join('')}</td>
+    </tr>`
+  ).join('');
+}
+
+const _audioCache = {};
+let _currentAudio = null;
+let _loadingKey = null;
+
+function speak(text, btnEl) {
+  const key = text.toLowerCase().trim();
+  function playAudio(audio) {
+    if (_currentAudio) { _currentAudio.pause(); _currentAudio.currentTime = 0; }
+    _currentAudio = audio;
+    audio.currentTime = 0;
+    audio.play().catch(() => speakFallback(text));
+  }
+  if (_audioCache[key]) { playAudio(_audioCache[key]); return; }
+  if (_loadingKey === key) return;
+  _loadingKey = key;
+  if (btnEl) btnEl.classList.add('speak-loading');
+  const url = `https://translate.google.com/translate_tts?ie=UTF-8&tl=en-GB&client=tw-ob&q=${encodeURIComponent(text)}`;
+  fetch(url)
+    .then(r => { if (!r.ok) throw new Error('fetch failed'); return r.blob(); })
+    .then(blob => {
+      const audio = new Audio(URL.createObjectURL(blob));
+      _audioCache[key] = audio;
+      _loadingKey = null;
+      if (btnEl) btnEl.classList.remove('speak-loading');
+      playAudio(audio);
+    })
+    .catch(() => {
+      _loadingKey = null;
+      if (btnEl) btnEl.classList.remove('speak-loading');
+      speakFallback(text);
+    });
+}
+
+function speakFallback(text) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  function doSpeak() {
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'en-GB'; u.rate = 0.9;
+    window.speechSynthesis.speak(u);
+  }
+  const voices = window.speechSynthesis.getVoices();
+  if (voices.length > 0) { doSpeak(); }
+  else {
+    window.speechSynthesis.onvoiceschanged = () => {
+      window.speechSynthesis.onvoiceschanged = null; doSpeak();
+    };
+    window.speechSynthesis.getVoices();
+  }
+}
+
+let currentTheme = 'dark';
+function toggleTheme() {
+  currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', currentTheme);
+  document.getElementById('themeKnob').textContent = currentTheme === 'dark' ? '🌙' : '☀️';
+}
+</script>
+</body>
+</html>

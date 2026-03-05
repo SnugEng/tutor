@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Irregular Verbs</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --accent: #e8b84b; --accent-h: #f0cc72; --green: #5aaa85; --red: #d95f5f;
+}
+[data-theme="dark"] {
+  --bg: #0d0d12; --surface: #17171f; --surface2: #1f1f2a;
+  --text: #e8e8f0; --text2: #7a7a96; --border: rgba(255,255,255,0.08);
+}
+[data-theme="light"] {
+  --bg: #f4f3ef; --surface: #ffffff; --surface2: #eceae6;
+  --text: #1a1a24; --text2: #6b6b7e; --border: rgba(0,0,0,0.1);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg); color: var(--text);
+  font-family: 'DM Sans', sans-serif; min-height: 100vh;
+  display: flex; flex-direction: column; transition: background 0.3s, color 0.3s;
+}
+header {
+  padding: 1.6rem 2rem; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 1rem;
+}
+header h1 { font-family: 'Playfair Display', serif; font-size: 1.7rem; letter-spacing: -0.5px; }
+header h1 span { color: var(--accent); }
+.header-right { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.theme-switch {
+  position: relative; width: 56px; height: 28px; border-radius: 14px;
+  cursor: pointer; border: none; padding: 0; background: #3a3a4a; transition: background 0.35s; flex-shrink: 0;
+}
+[data-theme="light"] .theme-switch { background: #e8e0d4; }
+.theme-switch-knob {
+  position: absolute; top: 50%; left: 4px; transform: translateY(-50%);
+  width: 22px; height: 22px; border-radius: 50%; background: #fff;
+  display: flex; align-items: center; justify-content: center; font-size: 13px;
+  transition: left 0.35s cubic-bezier(.4,0,.2,1); pointer-events: none;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+[data-theme="light"] .theme-switch-knob { left: 30px; }
+.tabs { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+.tab {
+  padding: 0.45rem 1.1rem; border-radius: 2rem; border: 1px solid var(--border);
+  background: transparent; color: var(--text2); cursor: pointer;
+  font-family: 'DM Sans', sans-serif; font-size: 0.83rem; font-weight: 500; transition: all 0.2s;
+}
+.tab.active { background: var(--accent); color: #000; border-color: var(--accent); }
+.tab:hover:not(.active) { border-color: var(--accent); color: var(--accent); }
+main { flex: 1; }
+.panel { display: none; padding: 1.5rem 2rem; }
+.panel.active { display: block; }
+
+.search-bar { display: flex; gap: 0.8rem; margin-bottom: 1rem; align-items: center; flex-wrap: wrap; }
+.search-bar input {
+  flex: 1; min-width: 180px; padding: 0.65rem 1rem;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 0.6rem; color: var(--text);
+  font-family: 'DM Sans', sans-serif; font-size: 0.92rem; outline: none; transition: border-color 0.2s;
+}
+.search-bar input:focus { border-color: var(--accent); }
+.search-bar .count { font-size: 0.8rem; color: var(--text2); white-space: nowrap; }
+.dict-table { width: 100%; border-collapse: collapse; }
+.dict-table th {
+  text-align: left; padding: 0.65rem 1rem;
+  font-size: 0.73rem; text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--text2); border-bottom: 1px solid var(--border);
+}
+.dict-table td { padding: 0.8rem 1rem; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
+.dict-table tr:hover td { background: var(--surface2); }
+.dict-table td:first-child { font-weight: 500; color: var(--accent); }
+
+.cards-section { display: flex; flex-direction: column; align-items: center; }
+.cat-row { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 1.4rem; justify-content: center; }
+.cat-btn {
+  padding: 0.38rem 0.9rem; border-radius: 2rem; border: 1px solid var(--border);
+  background: transparent; color: var(--text2); cursor: pointer;
+  font-family: 'DM Sans', sans-serif; font-size: 0.78rem; transition: all 0.2s;
+}
+.cat-btn.active { background: var(--accent); color: #000; border-color: var(--accent); }
+.card-counter { color: var(--text2); font-size: 0.84rem; margin-bottom: 1.2rem; }
+.card-wrap { perspective: 1200px; width: 100%; max-width: 520px; height: 290px; cursor: pointer; }
+.card-inner {
+  position: relative; width: 100%; height: 100%;
+  transform-style: preserve-3d; transition: transform 0.55s cubic-bezier(.4,0,.2,1);
+}
+.card-wrap.flipped .card-inner { transform: rotateY(180deg); }
+.card-face {
+  position: absolute; inset: 0; backface-visibility: hidden;
+  background: var(--surface); border: 1px solid var(--border); border-radius: 1.2rem;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 2rem; text-align: center;
+}
+.card-face.back { transform: rotateY(180deg); background: var(--surface2); }
+.card-word { font-family: 'Playfair Display', serif; font-size: 2.4rem; color: var(--accent); }
+.card-sub { color: var(--text2); font-size: 0.78rem; margin-top: 0.4rem; }
+.card-hint-txt { color: var(--text2); font-size: 0.72rem; margin-top: 1rem; }
+.card-forms { display: flex; flex-direction: column; gap: 0.6rem; width: 100%; }
+.card-form-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0.5rem 0.9rem; background: var(--surface); border-radius: 0.5rem; border: 1px solid var(--border);
+}
+.cfl { font-size: 0.75rem; color: var(--text2); }
+.cfv { font-weight: 500; color: var(--accent); }
+.card-controls { display: flex; gap: 0.8rem; margin-top: 1.4rem; flex-wrap: wrap; justify-content: center; }
+.ctrl-btn {
+  padding: 0.55rem 1.3rem; border-radius: 2rem; border: 1px solid var(--border);
+  background: var(--surface); color: var(--text); cursor: pointer;
+  font-family: 'DM Sans', sans-serif; font-size: 0.85rem; transition: all 0.2s;
+}
+.ctrl-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+.ex-wrap { 
+  max-width: 800px; 
+  margin: 0 auto; 
+  width: 100%;
+}
+
+.progress-bar { height: 4px; background: var(--surface2); border-radius: 2px; margin-bottom: 1.1rem; overflow: hidden; }
+.progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.4s; }
+
+.q-stats { 
+  display: flex; 
+  justify-content: space-between; 
+  font-size: 1rem; 
+  color: var(--text2); 
+  margin-bottom: 0.7rem; 
+}
+
+.q-card {
+  background: var(--surface); 
+  border: 1px solid var(--border); 
+  border-radius: 1rem;
+  padding: 2rem; 
+  margin-bottom: 1rem; 
+  font-size: 1.25rem; 
+  line-height: 2;
+}
+
+.gap-input {
+  display: inline-block; min-width: 150px; border: none;
+  border-bottom: 2px solid var(--accent); background: transparent;
+  color: var(--text); font-family: 'DM Sans', sans-serif;
+  font-size: 1.25rem; outline: none; padding: 0 0.5rem; text-align: center;
+}
+.gap-input.correct { border-color: var(--green); color: var(--green); }
+.gap-input.wrong   { border-color: var(--red);   color: var(--red); }
+
+.q-label { 
+  font-size: 0.9rem; 
+  text-transform: uppercase; 
+  letter-spacing: 0.08em; 
+  color: var(--text2); 
+  margin-bottom: 0.6rem; 
+}
+
+.q-text { 
+  font-size: 1.25rem; 
+  font-weight: 500; 
+}
+
+.q-options { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 0.8rem; 
+  margin-top: 1.2rem;
+}
+
+.q-opt {
+  padding: 1rem 1.2rem; 
+  border-radius: 0.75rem; 
+  border: 1px solid var(--border);
+  background: var(--surface2); 
+  color: var(--text); 
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif; 
+  font-size: 1.1rem; 
+  text-align: left; 
+  transition: all 0.18s;
+}
+
+.q-opt:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+.q-opt.correct { background: rgba(90,170,133,0.15); border-color: var(--green); color: var(--green); }
+.q-opt.wrong   { background: rgba(217,95,95,0.15);  border-color: var(--red);   color: var(--red); }
+
+.q-feedback { 
+  margin-top: 0.8rem; 
+  font-size: 1rem; 
+  min-height: 1.5em; 
+}
+
+.q-actions { 
+  display: flex; 
+  gap: 0.8rem; 
+  margin-top: 1.2rem; 
+  flex-wrap: wrap; 
+}
+
+.btn-primary {
+  padding: 0.7rem 1.8rem; 
+  border-radius: 2rem; 
+  border: none;
+  background: var(--accent); 
+  color: #000; 
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif; 
+  font-size: 1rem; 
+  font-weight: 500;
+}
+
+.btn-sec {
+  display: none; 
+  padding: 0.7rem 1.8rem; 
+  border-radius: 2rem;
+  border: 1px solid var(--border); 
+  background: var(--surface); 
+  color: var(--text); 
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif; 
+  font-size: 1rem; 
+  transition: all 0.2s;
+}
+
+.btn-sec:hover { border-color: var(--accent); color: var(--accent); }
+
+.done-block { text-align: center; padding: 3rem 1rem; }
+.done-block .big { font-family: 'Playfair Display', serif; font-size: 3.2rem; color: var(--accent); }
+
+.quiz-restart {
+  margin-top: 1.5rem; padding: 0.7rem 2rem; border-radius: 2rem;
+  border: none; background: var(--accent); color: #000; cursor: pointer;
+  font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 500;
+}
+
+footer { padding: 1.2rem 2rem; border-top: 1px solid var(--border); }
+.footer-content { display: flex; align-items: center; justify-content: center; gap: 1.5rem; flex-wrap: wrap; }
+.footer-brand { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--text2); letter-spacing: 0.5px; }
+.footer-brand span { color: var(--accent); }
+.footer-links { display: flex; gap: 0.7rem; }
+.footer-link {
+  padding: 0.3rem 0.9rem; border-radius: 2rem; border: 1px solid var(--border);
+  background: transparent; color: var(--text2); text-decoration: none;
+  font-size: 0.83rem; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.3rem;
+}
+.footer-link:hover { border-color: var(--accent); color: var(--accent); }
+
+@media (max-width: 600px) {
+  .panel { padding: 1rem; }
+  header { padding: 1rem; }
+  .card-wrap { height: 260px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div style="display:flex;align-items:center;gap:1rem">
+    <button class="theme-switch" onclick="toggleTheme()">
+      <span class="theme-switch-knob" id="themeKnob">🌙</span>
+    </button>
+    <h1>Irregular <span>Verbs</span></h1>
+  </div>
+  <div class="header-right">
+    <div class="tabs">
+      <button class="tab active" onclick="showTab('ref',this)">Reference</button>
+      <button class="tab" onclick="showTab('cards',this)">Flashcards</button>
+      <button class="tab" onclick="showTab('gap',this)">Fill in the Gap</button>
+      <button class="tab" onclick="showTab('mcq',this)">MCQ</button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<div class="panel active" id="tab-ref">
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Search verb…" oninput="renderTable()">
+    <span class="count" id="countEl"></span>
+  </div>
+  <table class="dict-table">
+    <thead><tr><th>Bare infinitive</th><th>Past simple</th><th>Past participle</th></tr></thead>
+    <tbody id="tableBody"></tbody>
+  </table>
+</div>
+
+<div class="panel" id="tab-cards">
+  <div class="cards-section">
+    <div class="cat-row" id="catRow"></div>
+    <div class="card-counter" id="cardCounter">Card 1 / 1</div>
+    <div class="card-wrap" id="cardWrap" onclick="flipCard()">
+      <div class="card-inner" id="cardInner">
+        <div class="card-face front">
+          <div class="card-word" id="cWord">—</div>
+          <div class="card-sub">bare infinitive</div>
+          <div class="card-hint-txt">tap to reveal</div>
+        </div>
+        <div class="card-face back">
+          <div class="card-forms" id="cForms"></div>
+        </div>
+      </div>
+    </div>
+    <div class="card-controls">
+      <button class="ctrl-btn" onclick="cardPrev()">← Prev</button>
+      <button class="ctrl-btn" onclick="cardShuffle()">Shuffle</button>
+      <button class="ctrl-btn" onclick="cardNext()">Next →</button>
+    </div>
+  </div>
+</div>
+
+<div class="panel" id="tab-gap">
+  <div class="ex-wrap" id="gapContent"></div>
+</div>
+
+<div class="panel" id="tab-mcq">
+  <div class="ex-wrap" id="mcqContent"></div>
+</div>
+
+</main>
+
+<footer>
+  <div class="footer-content">
+    <div class="footer-brand">
+      @ <span>snugenglish</span>
+    </div>
+    <div class="footer-links">
+      <a href="https://vk.com/snugenglish" target="_blank" class="footer-link vk">VK</a>
+      <a href="https://t.me/+wiAl8ae-UoAxMDE6" target="_blank" class="footer-link tg">Telegram</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+const IRR = [
+  {inf:'be',      ps:'was / were',        pp:'been'},
+  {inf:'beat',    ps:'beat',              pp:'beaten'},
+  {inf:'become',  ps:'became',            pp:'become'},
+  {inf:'begin',   ps:'began',             pp:'begun'},
+  {inf:'bite',    ps:'bit',               pp:'bitten'},
+  {inf:'blow',    ps:'blew',              pp:'blown'},
+  {inf:'break',   ps:'broke',             pp:'broken'},
+  {inf:'bring',   ps:'brought',           pp:'brought'},
+  {inf:'build',   ps:'built',             pp:'built'},
+  {inf:'burn',    ps:'burnt / burned',    pp:'burnt / burned'},
+  {inf:'buy',     ps:'bought',            pp:'bought'},
+  {inf:'catch',   ps:'caught',            pp:'caught'},
+  {inf:'choose',  ps:'chose',             pp:'chosen'},
+  {inf:'come',    ps:'came',              pp:'come'},
+  {inf:'cost',    ps:'cost',              pp:'cost'},
+  {inf:'cut',     ps:'cut',               pp:'cut'},
+  {inf:'deal',    ps:'dealt',             pp:'dealt'},
+  {inf:'dig',     ps:'dug',               pp:'dug'},
+  {inf:'do',      ps:'did',               pp:'done'},
+  {inf:'draw',    ps:'drew',              pp:'drawn'},
+  {inf:'dream',   ps:'dreamt / dreamed',  pp:'dreamt / dreamed'},
+  {inf:'drink',   ps:'drank',             pp:'drunk'},
+  {inf:'drive',   ps:'drove',             pp:'driven'},
+  {inf:'eat',     ps:'ate',               pp:'eaten'},
+  {inf:'fall',    ps:'fell',              pp:'fallen'},
+  {inf:'feed',    ps:'fed',               pp:'fed'},
+  {inf:'feel',    ps:'felt',              pp:'felt'},
+  {inf:'fight',   ps:'fought',            pp:'fought'},
+  {inf:'find',    ps:'found',             pp:'found'},
+  {inf:'fly',     ps:'flew',              pp:'flown'},
+  {inf:'forget',  ps:'forgot',            pp:'forgotten'},
+  {inf:'forgive', ps:'forgave',           pp:'forgiven'},
+  {inf:'freeze',  ps:'froze',             pp:'frozen'},
+  {inf:'get',     ps:'got',               pp:'got / gotten'},
+  {inf:'give',    ps:'gave',              pp:'given'},
+  {inf:'go',      ps:'went',              pp:'gone / been'},
+  {inf:'grow',    ps:'grew',              pp:'grown'},
+  {inf:'have',    ps:'had',               pp:'had'},
+  {inf:'hear',    ps:'heard',             pp:'heard'},
+  {inf:'hide',    ps:'hid',               pp:'hidden'},
+  {inf:'hit',     ps:'hit',               pp:'hit'},
+  {inf:'hold',    ps:'held',              pp:'held'},
+  {inf:'hurt',    ps:'hurt',              pp:'hurt'},
+  {inf:'keep',    ps:'kept',              pp:'kept'},
+  {inf:'know',    ps:'knew',              pp:'known'},
+  {inf:'lead',    ps:'led',               pp:'led'},
+  {inf:'learn',   ps:'learnt / learned',  pp:'learnt / learned'},
+  {inf:'leave',   ps:'left',              pp:'left'},
+  {inf:'lend',    ps:'lent',              pp:'lent'},
+  {inf:'let',     ps:'let',               pp:'let'},
+  {inf:'lie',     ps:'lay',               pp:'lain'},
+  {inf:'light',   ps:'lit',               pp:'lit'},
+  {inf:'lose',    ps:'lost',              pp:'lost'},
+  {inf:'make',    ps:'made',              pp:'made'},
+  {inf:'mean',    ps:'meant',             pp:'meant'},
+  {inf:'meet',    ps:'met',               pp:'met'},
+  {inf:'pay',     ps:'paid',              pp:'paid'},
+  {inf:'put',     ps:'put',               pp:'put'},
+  {inf:'read',    ps:'read',              pp:'read'},
+  {inf:'ride',    ps:'rode',              pp:'ridden'},
+  {inf:'ring',    ps:'rang',              pp:'rung'},
+  {inf:'rise',    ps:'rose',              pp:'risen'},
+  {inf:'run',     ps:'ran',               pp:'run'},
+  {inf:'say',     ps:'said',              pp:'said'},
+  {inf:'see',     ps:'saw',               pp:'seen'},
+  {inf:'sell',    ps:'sold',              pp:'sold'},
+  {inf:'send',    ps:'sent',              pp:'sent'},
+  {inf:'set',     ps:'set',               pp:'set'},
+  {inf:'shake',   ps:'shook',             pp:'shaken'},
+  {inf:'shine',   ps:'shone',             pp:'shone'},
+  {inf:'shoot',   ps:'shot',              pp:'shot'},
+  {inf:'show',    ps:'showed',            pp:'shown'},
+  {inf:'shut',    ps:'shut',              pp:'shut'},
+  {inf:'sing',    ps:'sang',              pp:'sung'},
+  {inf:'sit',     ps:'sat',               pp:'sat'},
+  {inf:'sleep',   ps:'slept',             pp:'slept'},
+  {inf:'smell',   ps:'smelt / smelled',   pp:'smelt / smelled'},
+  {inf:'speak',   ps:'spoke',             pp:'spoken'},
+  {inf:'spend',   ps:'spent',             pp:'spent'},
+  {inf:'spill',   ps:'spilt / spilled',   pp:'spilt / spilled'},
+  {inf:'stand',   ps:'stood',             pp:'stood'},
+  {inf:'steal',   ps:'stole',             pp:'stolen'},
+  {inf:'sting',   ps:'stung',             pp:'stung'},
+  {inf:'swim',    ps:'swam',              pp:'swum'},
+  {inf:'take',    ps:'took',              pp:'taken'},
+  {inf:'teach',   ps:'taught',            pp:'taught'},
+  {inf:'tear',    ps:'tore',              pp:'torn'},
+  {inf:'tell',    ps:'told',              pp:'told'},
+  {inf:'think',   ps:'thought',           pp:'thought'},
+  {inf:'throw',   ps:'threw',             pp:'thrown'},
+  {inf:'understand',ps:'understood',      pp:'understood'},
+  {inf:'wake',    ps:'woke',              pp:'woken'},
+  {inf:'wear',    ps:'wore',              pp:'worn'},
+  {inf:'win',     ps:'won',               pp:'won'},
+  {inf:'write',   ps:'wrote',             pp:'written'},
+];
+
+const GAP_DATA = [
+  {s:'Yesterday she _____ (go) to the market.',          ans:'went'},
+  {s:'He _____ (break) his phone last week.',            ans:'broke'},
+  {s:'They _____ (write) a letter yesterday.',           ans:'wrote'},
+  {s:'I _____ (buy) a new bag this morning.',            ans:'bought'},
+  {s:'She has _____ (eat) all the cake.',                ans:'eaten'},
+  {s:'We _____ (drive) to Paris last summer.',           ans:'drove'},
+  {s:'He has _____ (speak) to the manager.',             ans:'spoken'},
+  {s:'They _____ (choose) the blue one.',                ans:'chose'},
+  {s:'She has _____ (take) the wrong bus.',              ans:'taken'},
+  {s:'I _____ (find) my keys under the sofa.',           ans:'found'},
+  {s:'He _____ (teach) English for 10 years.',           ans:'taught'},
+  {s:'The pipe has _____ (freeze) overnight.',           ans:'frozen'},
+  {s:'She _____ (know) the answer immediately.',         ans:'knew'},
+  {s:'They have _____ (give) us a lot of help.',         ans:'given'},
+  {s:'He _____ (make) a big mistake yesterday.',         ans:'made'},
+  {s:'We have _____ (see) that film before.',            ans:'seen'},
+  {s:'She _____ (tell) me the truth.',                   ans:'told'},
+  {s:'I have _____ (think) about it carefully.',         ans:'thought'},
+  {s:'He _____ (win) the race last year.',               ans:'won'},
+  {s:'She has _____ (wear) that dress before.',          ans:'worn'},
+];
+
+function shuffle(a) { return [...a].sort(() => Math.random() - 0.5); }
+
+function showTab(id, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+  if (id === 'cards') initCards();
+  if (id === 'gap')   initGap();
+  if (id === 'mcq')   initMcq();
+}
+
+function renderTable() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  const rows = IRR.filter(v => !q || v.inf.includes(q) || v.ps.includes(q) || v.pp.includes(q));
+  document.getElementById('countEl').textContent = rows.length + ' verbs';
+  document.getElementById('tableBody').innerHTML = rows.map(v =>
+    `<tr><td>${v.inf}</td><td>${v.ps}</td><td>${v.pp}</td></tr>`
+  ).join('');
+}
+renderTable();
+
+const CATS = [
+  {label:'A – G', fn: v => v.inf[0] <= 'g'},
+  {label:'H – P', fn: v => v.inf[0] >= 'h' && v.inf[0] <= 'p'},
+  {label:'Q – Z', fn: v => v.inf[0] >= 'q'},
+  {label:'All',   fn: () => true},
+  {label:'Random 20', fn: null},
+];
+let deck = [...IRR], cIdx = 0;
+
+function initCards() {
+  const row = document.getElementById('catRow');
+  row.innerHTML = CATS.map((c,i) =>
+    `<button class="cat-btn${i===3?' active':''}" onclick="selectCat(${i},this)">${c.label}</button>`
+  ).join('');
+  deck = [...IRR]; cIdx = 0; showCard();
+}
+function selectCat(i, btn) {
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  deck = CATS[i].fn === null ? shuffle(IRR).slice(0,20) : IRR.filter(CATS[i].fn);
+  cIdx = 0;
+  document.getElementById('cardWrap').classList.remove('flipped');
+  showCard();
+}
+function showCard() {
+  const v = deck[cIdx];
+  document.getElementById('cardWrap').classList.remove('flipped');
+  setTimeout(() => {
+    document.getElementById('cWord').textContent = v.inf;
+    document.getElementById('cardCounter').textContent = `Card ${cIdx+1} / ${deck.length}`;
+    document.getElementById('cForms').innerHTML =
+      `<div class="card-form-row"><span class="cfl">Past Simple</span><span class="cfv">${v.ps}</span></div>
+       <div class="card-form-row"><span class="cfl">Past Participle</span><span class="cfv">${v.pp}</span></div>`;
+  }, 170);
+}
+function flipCard()    { document.getElementById('cardWrap').classList.toggle('flipped'); }
+function cardNext()    { cIdx = (cIdx+1) % deck.length; showCard(); }
+function cardPrev()    { cIdx = (cIdx-1+deck.length) % deck.length; showCard(); }
+function cardShuffle() { deck = shuffle(deck); cIdx = 0; showCard(); }
+
+let gDeck, gIdx, gScore, gAnswered;
+function initGap() {
+  gDeck = shuffle(GAP_DATA); gIdx = 0; gScore = 0; renderGap();
+}
+function renderGap() {
+  const el = document.getElementById('gapContent');
+  if (gIdx >= gDeck.length) {
+    const pct = Math.round(gScore/gDeck.length*100);
+    el.innerHTML = `<div class="done-block">
+      <div class="big">${gScore}/${gDeck.length}</div>
+      <div style="color:var(--text2);margin-top:0.5rem">${pct}% correct</div>
+      <div style="font-size:1.1rem;margin-top:0.8rem">${pct>=80?'Excellent! 🎉':pct>=50?'Good effort! 💪':'Keep practising! 📚'}</div>
+      <button class="quiz-restart" onclick="initGap()">Try again</button>
+    </div>`; return;
+  }
+  const item = gDeck[gIdx];
+  const pct = (gIdx/gDeck.length*100).toFixed(0);
+  gAnswered = false;
+  el.innerHTML = `
+    <div class="q-stats"><span>Question ${gIdx+1} of ${gDeck.length}</span><span>Score: <b>${gScore}</b></span></div>
+    <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+    <div class="q-card">
+      ${item.s.replace('_____','<input class="gap-input" id="gIn" placeholder="…" autocomplete="off">')}
+    </div>
+    <div class="q-feedback" id="gFB"></div>
+    <div class="q-actions">
+      <button class="btn-primary" onclick="checkGap('${item.ans}')">Check</button>
+      <button class="btn-sec" id="gNext" onclick="gIdx++;renderGap()">Next →</button>
+    </div>`;
+  const inp = document.getElementById('gIn');
+  inp.focus();
+  inp.addEventListener('keydown', e => { if(e.key==='Enter') checkGap(item.ans); });
+}
+function checkGap(ans) {
+  if(gAnswered) return; gAnswered = true;
+  const inp = document.getElementById('gIn');
+  const val = inp.value.trim().toLowerCase();
+  const accepted = ans.toLowerCase().split(' / ').map(s=>s.trim());
+  if(accepted.includes(val)) {
+    inp.classList.add('correct');
+    document.getElementById('gFB').className='q-feedback'; document.getElementById('gFB').style.color='var(--green)';
+    document.getElementById('gFB').textContent='✓ Correct!'; gScore++;
+  } else {
+    inp.classList.add('wrong');
+    document.getElementById('gFB').className='q-feedback'; document.getElementById('gFB').style.color='var(--red)';
+    document.getElementById('gFB').innerHTML=`✗ Correct answer: <b>${ans}</b>`;
+  }
+  inp.disabled=true;
+  document.getElementById('gNext').style.display='inline-block';
+}
+
+let mDeck, mIdx, mScore, mAnswered;
+function buildMcqDeck() {
+  return shuffle(IRR).slice(0, 20).map(v => {
+    const wrongs = shuffle(IRR.filter(x => x.inf!==v.inf && x.ps!==v.ps)).slice(0,3).map(x=>x.ps.split(' / ')[0]);
+    const correct = v.ps.split(' / ')[0];
+    return { q:`What is the Past Simple of <b>${v.inf}</b>?`, opts: shuffle([correct,...wrongs]), ans: correct };
+  });
+}
+function initMcq() {
+  mDeck = buildMcqDeck(); mIdx = 0; mScore = 0; renderMcq();
+}
+function renderMcq() {
+  const el = document.getElementById('mcqContent');
+  if(mIdx >= mDeck.length) {
+    const pct = Math.round(mScore/mDeck.length*100);
+    el.innerHTML = `<div class="done-block">
+      <div class="big">${mScore}/${mDeck.length}</div>
+      <div style="color:var(--text2);margin-top:0.5rem">${pct}% correct</div>
+      <div style="font-size:1.1rem;margin-top:0.8rem">${pct>=80?'Excellent! 🎉':pct>=50?'Good effort! 💪':'Keep practising! 📚'}</div>
+      <button class="quiz-restart" onclick="initMcq()">Try again</button>
+    </div>`; return;
+  }
+  const item = mDeck[mIdx];
+  const pct = (mIdx/mDeck.length*100).toFixed(0);
+  mAnswered = false;
+  el.innerHTML = `
+    <div class="q-stats"><span>Question ${mIdx+1} of ${mDeck.length}</span><span>Score: <b>${mScore}</b></span></div>
+    <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+    <div class="q-card">
+      <div class="q-label">Choose the correct form</div>
+      <div class="q-text">${item.q}</div>
+      <div class="q-options">
+        ${item.opts.map(o=>`<button class="q-opt" data-opt="${o.replace(/"/g,'&quot;')}">${o}</button>`).join('')}
+      </div>
+    </div>
+    <div class="q-feedback" id="mFB"></div>
+    <div class="q-actions"><button class="btn-sec" id="mNext" onclick="mIdx++;renderMcq()">Next →</button></div>`;
+  el.querySelectorAll('.q-opt').forEach(btn => {
+    btn.addEventListener('click', () => checkMcq(btn, item.ans, btn.dataset.opt));
+  });
+}
+function checkMcq(btn, ans, chosen) {
+  if(mAnswered) return; mAnswered = true;
+  document.querySelectorAll('#tab-mcq .q-opt').forEach(b=>b.disabled=true);
+  if(chosen===ans) {
+    btn.classList.add('correct');
+    document.getElementById('mFB').style.color='var(--green)';
+    document.getElementById('mFB').textContent='✓ Correct!'; mScore++;
+  } else {
+    btn.classList.add('wrong');
+    document.getElementById('mFB').style.color='var(--red)';
+    document.getElementById('mFB').textContent='✗ Correct answer highlighted.';
+    document.querySelectorAll('#tab-mcq .q-opt').forEach(b=>{ if(b.dataset.opt===ans) b.classList.add('correct'); });
+  }
+  document.getElementById('mNext').style.display='inline-block';
+}
+
+let theme = 'dark';
+function toggleTheme() {
+  theme = theme==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme', theme);
+  document.getElementById('themeKnob').textContent = theme==='dark'?'🌙':'☀️';
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="google" content="notranslate">
+<meta http-equiv="Content-Language" content="en">
+<title>Unit 39 – Vocabulary: Laughing and crying</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent:   #e8b84b;
+    --accent-h: #f0cc72;
+    --green:    #5aaa85;
+    --red:      #d95f5f;
+  }
+
+  [data-theme="dark"] {
+    --bg:       #0d0d12;
+    --surface:  #17171f;
+    --surface2: #1f1f2a;
+    --text:     #e8e8f0;
+    --text2:    #7a7a96;
+    --border:   rgba(255,255,255,0.08);
+  }
+
+  [data-theme="light"] {
+    --bg:       #f4f3ef;
+    --surface:  #ffffff;
+    --surface2: #eceae6;
+    --text:     #1a1a24;
+    --text2:    #6b6b7e;
+    --border:   rgba(0,0,0,0.1);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  header {
+    padding: 1.6rem 2rem;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  header h1 { font-family: 'Playfair Display', serif; font-size: 1.7rem; letter-spacing: -0.5px; }
+  header h1 span { color: var(--accent); }
+
+  .header-right { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+  .header-title { display: flex; align-items: center; gap: 1rem; }
+
+  .back-btn {
+    padding: 0.4rem 1rem; border-radius: 2rem; border: 1px solid var(--border);
+    background: transparent; color: var(--text2); cursor: pointer;
+    font-family: 'DM Sans', sans-serif; font-size: 0.83rem; font-weight: 500;
+    text-decoration: none; display: inline-flex; align-items: center; gap: 0.3rem;
+    transition: all 0.2s;
+  }
+  .back-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  .theme-switch {
+    position: relative;
+    width: 56px; height: 28px;
+    border-radius: 14px;
+    cursor: pointer;
+    border: none;
+    padding: 0;
+    background: #3a3a4a;
+    transition: background 0.35s;
+    flex-shrink: 0;
+  }
+  [data-theme="light"] .theme-switch { background: #e8e0d4; }
+
+  .theme-switch-knob {
+    position: absolute;
+    top: 50%; left: 4px;
+    transform: translateY(-50%);
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px;
+    transition: left 0.35s cubic-bezier(.4,0,.2,1);
+    pointer-events: none;
+    line-height: 1;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  }
+  [data-theme="light"] .theme-switch-knob { left: 30px; }
+
+  .tabs { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .tab {
+    padding: 0.45rem 1.1rem; border-radius: 2rem; border: 1px solid var(--border);
+    background: transparent; color: var(--text2); cursor: pointer;
+    font-family: 'DM Sans', sans-serif; font-size: 0.83rem; font-weight: 500;
+    transition: all 0.2s;
+  }
+  .tab.active { background: var(--accent); color: #000; border-color: var(--accent); }
+  .tab:hover:not(.active) { border-color: var(--accent); color: var(--accent); }
+
+  main { flex: 1; }
+
+  footer { padding: 1.2rem 2rem; border-top: 1px solid var(--border); }
+  .footer-content { display: flex; align-items: center; justify-content: center; gap: 1.5rem; flex-wrap: wrap; }
+  .footer-brand { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--text2); letter-spacing: 0.5px; }
+  .footer-brand span { color: var(--accent); }
+  .footer-links { display: flex; gap: 0.7rem; }
+  .footer-link {
+    padding: 0.3rem 0.9rem; border-radius: 2rem;
+    border: 1px solid var(--border); background: transparent;
+    color: var(--text2); text-decoration: none; font-size: 0.83rem;
+    transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.3rem;
+  }
+  .footer-link:hover { border-color: var(--accent); color: var(--accent); }
+
+  #dict, #wordForm { padding: 1.5rem 2rem; }
+  .search-bar { display: flex; gap: 0.8rem; margin-bottom: 1.2rem; }
+  .search-bar input {
+    flex: 1; padding: 0.65rem 1rem;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 0.6rem; color: var(--text);
+    font-family: 'DM Sans', sans-serif; font-size: 0.92rem;
+    outline: none; transition: border-color 0.2s;
+  }
+  .search-bar input:focus { border-color: var(--accent); }
+  .filter-btns { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  .filter-btn {
+    padding: 0.35rem 0.85rem; border-radius: 1rem; border: 1px solid var(--border);
+    background: transparent; color: var(--text2); cursor: pointer; font-size: 0.77rem;
+    transition: all 0.2s; font-family: 'DM Sans', sans-serif;
+  }
+  .filter-btn.on { background: var(--red); color: #fff; border-color: var(--red); }
+
+  .dict-table { width: 100%; border-collapse: collapse; }
+  .dict-table th {
+    text-align: left; padding: 0.65rem 1rem;
+    font-size: 0.73rem; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--text2); border-bottom: 1px solid var(--border);
+  }
+  .dict-table td { padding: 0.85rem 1rem; border-bottom: 1px solid var(--border); font-size: 0.9rem; vertical-align: top; }
+  .dict-table tr:hover td { background: var(--surface2); }
+  .word-cell { font-weight: 500; white-space: nowrap; }
+  .pos { font-size: 0.71rem; color: var(--red); font-style: italic; margin-left: 4px; }
+  .def-cell { color: var(--text); opacity: 0.85; }
+  .ex-cell { color: var(--text2); font-style: italic; font-size: 0.84rem; }
+  .no-results { text-align: center; padding: 3rem; color: var(--text2); }
+
+  .speak-btn {
+    background: none; border: none; cursor: pointer;
+    color: var(--text2); font-size: 1rem; padding: 0.2rem 0.3rem;
+    border-radius: 0.3rem; transition: color 0.15s, transform 0.15s;
+    line-height: 1; display: inline-flex; align-items: center;
+  }
+  .speak-btn:hover { color: var(--accent); transform: scale(1.2); }
+  .speak-btn:active { transform: scale(0.95); }
+  .card-speak {
+    margin-top: 0.8rem;
+    background: none; border: 1px solid var(--border); cursor: pointer;
+    color: var(--text2); padding: 0.4rem 0.9rem;
+    border-radius: 2rem; transition: all 0.2s;
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    font-family: 'DM Sans', sans-serif; font-size: 0.82rem;
+  }
+  .card-speak:hover { border-color: var(--accent); color: var(--accent); }
+
+  .wf-forms {
+    color: var(--accent);
+    font-size: 0.9rem;
+    display: flex; flex-wrap: wrap; gap: 0.4rem 0.6rem;
+  }
+  .wf-forms span {
+    background: rgba(232,184,75,0.1);
+    padding: 0.2rem 0.6rem; border-radius: 0.4rem;
+    border: 1px solid rgba(232,184,75,0.25);
+    display: inline-flex; align-items: baseline; gap: 0.3rem;
+  }
+  .wf-pos {
+    font-size: 0.65rem; color: var(--text2);
+    font-style: italic; font-weight: 400;
+  }
+
+  #cards { display: none; padding: 2rem; flex-direction: column; align-items: center; }
+  .card-counter { color: var(--text2); font-size: 0.84rem; margin-bottom: 1.5rem; }
+  .card-wrap { perspective: 1200px; width: 100%; max-width: 560px; height: 350px; cursor: pointer; }
+  .card-inner {
+    position: relative; width: 100%; height: 100%;
+    transform-style: preserve-3d; transition: transform 0.55s cubic-bezier(.4,0,.2,1);
+  }
+  .card-wrap.flipped .card-inner { transform: rotateY(180deg); }
+  .card-face {
+    position: absolute; inset: 0; backface-visibility: hidden;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 1.2rem;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 2.2rem; text-align: center;
+  }
+  .card-face.back { transform: rotateY(180deg); background: var(--surface2); justify-content: flex-start; padding-top: 2rem; overflow-y: auto; }
+  .card-word { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--accent); }
+  .card-pos-badge { margin-top: 0.6rem; padding: 0.2rem 0.7rem; border-radius: 1rem; background: rgba(232,184,75,0.15); color: var(--accent); font-size: 0.8rem; }
+  .card-hint { color: var(--text2); font-size: 0.77rem; margin-top: 1.2rem; }
+  .card-def { font-size: 1.05rem; color: var(--text); line-height: 1.6; padding: 0 0.5rem; }
+  .card-ex { margin-top: 1.2rem; font-style: italic; color: var(--text2); font-size: 1rem; border-top: 1px solid var(--border); padding: 1.2rem 0.5rem 0; width: 100%; }
+  .card-controls { display: flex; gap: 1rem; margin-top: 1.8rem; }
+  .ctrl-btn {
+    padding: 0.6rem 1.5rem; border-radius: 2rem; border: 1px solid var(--border);
+    background: var(--surface); color: var(--text); cursor: pointer;
+    font-family: 'DM Sans', sans-serif; font-size: 0.88rem; transition: all 0.2s;
+  }
+  .ctrl-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .ctrl-btn.primary { background: var(--accent); color: #000; border-color: var(--accent); font-weight: 500; }
+  .ctrl-btn.primary:hover { background: var(--accent-h); }
+  .shuffle-row { margin-top: 1rem; display: flex; gap: 0.7rem; }
+
+  .category-selector { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; justify-content: center; }
+  .category-btn {
+    padding: 0.45rem 1.1rem; border-radius: 2rem; border: 1px solid var(--border);
+    background: var(--surface); color: var(--text2); cursor: pointer;
+    font-family: 'DM Sans', sans-serif; font-size: 0.83rem; transition: all 0.2s;
+  }
+  .category-btn.active { background: var(--accent); color: #000; border-color: var(--accent); }
+  .category-btn.random { background: var(--red); color: #fff; border-color: var(--red); opacity: 0.9; }
+  .category-btn.random.active { opacity: 1; filter: brightness(1.1); }
+
+  .random-controls {
+    display: flex; gap: 0.5rem; align-items: center; margin-bottom: 1rem;
+    background: var(--surface); padding: 0.5rem 1rem;
+    border-radius: 3rem; border: 1px solid var(--border);
+  }
+  .random-input {
+    width: 70px; padding: 0.45rem;
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 1.5rem; color: var(--text); text-align: center;
+    font-family: 'DM Sans', sans-serif; font-size: 0.88rem; outline: none;
+    -moz-appearance: textfield;
+  }
+  .random-input::-webkit-outer-spin-button,
+  .random-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+  .random-input:focus { border-color: var(--accent); }
+  .random-label { color: var(--text2); font-size: 0.88rem; }
+
+  #quiz { display: none; padding: 2rem; max-width: 600px; margin: 0 auto; }
+  .quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+  .quiz-score { font-size: 0.84rem; color: var(--text2); }
+  .score-val { color: var(--accent); font-weight: 600; }
+  .progress-bar { height: 4px; background: var(--surface); border-radius: 2px; margin-bottom: 2rem; }
+  .progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.4s; }
+  .q-card { background: var(--surface); border: 1px solid var(--border); border-radius: 1rem; padding: 1.8rem; margin-bottom: 1.5rem; }
+  .q-label { font-size: 0.71rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text2); margin-bottom: 0.6rem; }
+  .q-text { font-size: 1.1rem; font-weight: 500; line-height: 1.5; }
+  .q-options { display: grid; gap: 0.7rem; }
+  .q-opt {
+    padding: 0.85rem 1.1rem; border-radius: 0.7rem; border: 1px solid var(--border);
+    background: var(--surface2); cursor: pointer; font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem; color: var(--text); transition: all 0.18s; text-align: left;
+  }
+  .q-opt:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+  .q-opt.correct { border-color: var(--green); background: rgba(90,170,133,0.12); color: var(--green); }
+  .q-opt.wrong   { border-color: var(--red);   background: rgba(217,95,95,0.1);   color: var(--red);   }
+  .q-feedback { font-size: 0.84rem; margin-top: 0.5rem; min-height: 1.2em; }
+  .q-next-btn {
+    display: none; width: 100%; padding: 0.85rem; border-radius: 0.7rem; border: none;
+    background: var(--accent); color: #000; font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem; font-weight: 600; cursor: pointer; margin-top: 0.5rem; transition: background 0.2s;
+  }
+  .q-next-btn:hover { background: var(--accent-h); }
+  .quiz-done { text-align: center; padding: 2rem; }
+  .quiz-done .big { font-family: 'Playfair Display', serif; font-size: 3rem; color: var(--accent); }
+  .quiz-restart {
+    margin-top: 1.2rem; padding: 0.7rem 2rem; border-radius: 2rem;
+    border: 1px solid var(--accent); background: transparent; color: var(--accent);
+    cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; transition: all 0.2s;
+  }
+  .quiz-restart:hover { background: var(--accent); color: #000; }
+
+  @media(max-width:600px) {
+    header { padding: 1.2rem; }
+    #dict, #cards, #quiz, #wordForm { padding: 0.75rem; }
+    footer { padding: 1rem; }
+    .footer-content { gap: 1rem; }
+    .card-wrap { height: 400px; }
+    .dict-table thead { display: none; }
+    .dict-table, .dict-table tbody, .dict-table tr, .dict-table td {
+      display: block; width: 100%;
+    }
+    .dict-table tr {
+      border: 1px solid var(--border);
+      border-radius: 0.75rem;
+      margin-bottom: 0.75rem;
+      padding: 0.75rem 0.9rem;
+      background: var(--surface);
+    }
+    .dict-table tr:hover td { background: transparent; }
+    .dict-table td {
+      padding: 0.25rem 0; border-bottom: none; font-size: 0.88rem;
+    }
+    .dict-table td::before {
+      content: attr(data-label);
+      font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em;
+      color: var(--text2); display: block; margin-bottom: 0.15rem;
+    }
+    .word-cell { font-size: 1rem; margin-bottom: 0.4rem; }
+    .def-cell { margin-bottom: 0.4rem; }
+    .ex-cell { display: block !important; }
+  }
+
+  .speak-btn.speak-loading { color: var(--accent); opacity: 0.6; }
+  .card-speak.speak-loading { border-color: var(--accent); color: var(--accent); opacity: 0.7; }
+</style>
+</head>
+<body translate="no">
+
+<header>
+  <div class="header-title">
+    <button class="theme-switch" onclick="toggleTheme()" id="themeBtn" aria-label="Toggle theme">
+      <span class="theme-switch-knob" id="themeKnob">🌙</span>
+    </button>
+    <h1>Unit <span>39</span> — Vocabulary: Laughing and crying</h1>
+  </div>
+  <div style="display:flex;align-items:center;gap:0.8rem;flex-wrap:wrap;">
+    <a href="index.html" class="back-btn">← All Units</a>
+    <div class="tabs">
+      <button class="tab active" onclick="showTab('dict',this)">Dictionary</button>
+      <button class="tab" onclick="showTab('cards',this)">Flashcards</button>
+      <button class="tab" onclick="showTab('quiz',this)">Quiz</button>
+      <button class="tab" onclick="showTab('wordForm',this)">Word Formation</button>
+    </div>
+  </div>
+</header>
+
+<main>
+<section id="dict">
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Search word or definition…" oninput="renderDict()">
+  </div>
+  <div class="filter-btns" id="filterBtns"></div>
+  <br>
+  <table class="dict-table">
+    <thead><tr>
+      <th>Word</th><th>Definition</th><th>Example</th>
+    </tr></thead>
+    <tbody id="dictBody"></tbody>
+  </table>
+</section>
+
+<section id="cards" style="display:none; flex-direction:column; align-items:center; padding:2rem;">
+  <div class="category-selector" id="cardCategorySelector">
+    <button class="category-btn active" onclick="selectCardCategory('all', this)">All Words</button>
+    <button class="category-btn" onclick="selectCardCategory('topic', this)">Topic Vocabulary</button>
+    <button class="category-btn" onclick="selectCardCategory('phrasal', this)">Phrasal Verbs</button>
+    <button class="category-btn" onclick="selectCardCategory('prepositional', this)">Prepositional Phrases</button>
+    <button class="category-btn" onclick="selectCardCategory('patterns', this)">Word Patterns</button>
+    <button class="category-btn random" onclick="selectCardCategory('random', this)">Random</button>
+  </div>
+  <div class="random-controls" id="randomControls" style="display: none;">
+    <span class="random-label">Cards:</span>
+    <input type="number" id="randomCount" class="random-input" min="5" max="50" value="15">
+    <button class="ctrl-btn" style="padding:0.4rem 1.2rem;" onclick="updateRandomDeck()">Generate</button>
+  </div>
+  <div class="card-counter" id="cardCounter">Card 1 / 0</div>
+  <div class="card-wrap" id="cardWrap" onclick="this.classList.toggle('flipped')">
+    <div class="card-inner">
+      <div class="card-face front">
+        <div class="card-word" id="cWord"></div>
+        <div class="card-pos-badge" id="cPos"></div>
+        <button class="card-speak" onclick="event.stopPropagation(); speak(document.getElementById('cWord').textContent, this)">🔊 Listen</button>
+        <div class="card-hint">tap card to reveal</div>
+      </div>
+      <div class="card-face back">
+        <div class="card-def" id="cDef"></div>
+        <div class="card-ex" id="cEx"></div>
+      </div>
+    </div>
+  </div>
+  <div class="card-controls">
+    <button class="ctrl-btn" onclick="prevCard()">← Prev</button>
+    <button class="ctrl-btn primary" onclick="nextCard()">Next →</button>
+  </div>
+  <div class="shuffle-row">
+    <button class="ctrl-btn" onclick="shuffleCards()">Shuffle</button>
+    <button class="ctrl-btn" onclick="resetCards()">Reset</button>
+  </div>
+</section>
+
+<section id="quiz" style="display:none; max-width:600px; margin:0 auto; padding:2rem;">
+  <div id="quizContent"></div>
+</section>
+
+<section id="wordForm" style="display:none; padding:2rem;">
+  <div class="search-bar">
+    <input type="text" id="wfSearchInput" placeholder="Search base word or form…" oninput="renderWordForm()">
+  </div>
+  <br>
+  <table class="dict-table">
+    <thead><tr>
+      <th>Base Word</th><th>Word Forms</th>
+    </tr></thead>
+    <tbody id="wfBody"></tbody>
+  </table>
+</section>
+</main>
+
+<footer>
+  <div class="footer-content">
+    <div class="footer-brand">@ <span>snugenglish</span></div>
+    <div class="footer-links">
+      <a href="https://vk.com/snugenglish" target="_blank" class="footer-link vk">VK</a>
+      <a href="https://t.me/+wiAl8ae-UoAxMDE6" target="_blank" class="footer-link tg">Telegram</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+const DATA = [
+  // Topic Vocabulary
+  {w:"amusing",pos:"adj",def:"funny or entertaining",ex:"Jan sent me an amusing birthday card.",category:"topic"},
+  {w:"annoy",pos:"v",def:"to make someone feel slightly angry or impatient",ex:"I don't dislike her – she just annoys me sometimes.",category:"topic"},
+  {w:"attitude",pos:"n",def:"opinions or feelings that you show by your behaviour",ex:"We can win if we keep a positive attitude.",category:"topic"},
+  {w:"bad-tempered",pos:"adj",def:"made annoyed or angry very easily",ex:"Relax and try not to be so bad-tempered.",category:"topic"},
+  {w:"behave",pos:"v",def:"to do things in a particular way",ex:"The children behaved very badly.",category:"topic"},
+  {w:"bully",pos:"v",def:"to frighten or hurt someone who is smaller or weaker than you",ex:"You shouldn't bully the other children in your class.",category:"topic"},
+  {w:"bully",pos:"n",def:"someone who uses their strength or status to threaten or frighten people",ex:"Leave him alone and don't be such a bully!",category:"topic"},
+  {w:"calm",pos:"adj",def:"not affected by strong emotions",ex:"'Don't move and the snake won't attack,' he said in a calm voice.",category:"topic"},
+  {w:"celebrate",pos:"v",def:"to do something enjoyable in order to show that an occasion or event is special",ex:"Let's have a party to celebrate.",category:"topic"},
+  {w:"character",pos:"n",def:"the qualities that make up someone's personality",ex:"Amy has got a really nice, friendly character.",category:"topic"},
+  {w:"depressed",pos:"adj",def:"very unhappy and without any feelings of hope or enthusiasm",ex:"She got very depressed after her husband left her.",category:"topic"},
+  {w:"embarrassing",pos:"adj",def:"making you feel nervous, ashamed, or stupid",ex:"What's the most embarrassing thing you've ever done?",category:"topic"},
+  {w:"emotion",pos:"n",def:"a feeling that you experience, for example love, fear, or anger",ex:"Jealousy is an uncomfortable emotion.",category:"topic"},
+  {w:"enthusiastic",pos:"adj",def:"very interested in something, or excited by it",ex:"For a while, we were enthusiastic about the idea.",category:"topic"},
+  {w:"feeling",pos:"n",def:"an emotional state, for example anger or happiness",ex:"He found it difficult to express his feelings.",category:"topic"},
+  {w:"glad",pos:"adj",def:"happy and pleased about something",ex:"Maggie was glad to be home.",category:"topic"},
+  {w:"hurt",pos:"v",def:"to feel pain somewhere in your body",ex:"Fred's knees hurt after skiing all day.",category:"topic"},
+  {w:"hurt",pos:"adj",def:"injured, or feeling physical pain",ex:"Two young men were badly hurt in the accident.",category:"topic"},
+  {w:"miserable",pos:"adj",def:"extremely unhappy",ex:"He looked cold and miserable.",category:"topic"},
+  {w:"naughty",pos:"adj",def:"a naughty child behaves badly",ex:"Sally was often naughty and got into trouble at school.",category:"topic"},
+  {w:"noisy",pos:"adj",def:"making a lot of noise, or full of noise",ex:"We have really noisy neighbours.",category:"topic"},
+  {w:"polite",pos:"adj",def:"behaving towards other people in a pleasant way that follows all the usual rules of society",ex:"It's not polite to talk with your mouth full of food.",category:"topic"},
+  {w:"react",pos:"v",def:"to behave in a particular way because of things that are happening around you or things that other people are doing to you",ex:"I wasn't sure how you would react.",category:"topic"},
+  {w:"regret",pos:"v",def:"to feel sorry or sad about something that has happened, or about something that you have done",ex:"We regret any problems because of the delay.",category:"topic"},
+  {w:"regret",pos:"n",def:"a feeling of sadness about something that has happened or something that you have done",ex:"Do you have any regrets about what you did?",category:"topic"},
+  {w:"ridiculous",pos:"adj",def:"silly or unreasonable and deserving to be laughed at",ex:"She looks absolutely ridiculous in that hat.",category:"topic"},
+  {w:"romantic",pos:"adj",def:"involving love, or making you have feelings of love",ex:"We had a romantic dinner in an expensive restaurant.",category:"topic"},
+  {w:"rude",pos:"adj",def:"not polite",ex:"I don't want to seem rude, but I'd rather be alone.",category:"topic"},
+  {w:"sense of humour",pos:"n phr",def:"the ability to laugh at things and recognize when they are funny",ex:"Kev has got a great sense of humour and he makes me laugh all the time.",category:"topic"},
+  {w:"shy",pos:"adj",def:"nervous and embarrassed in the company of other people, especially people you do not know",ex:"I'd love to meet her, but I'm too shy to introduce myself.",category:"topic"},
+  {w:"stress",pos:"n",def:"a worried or nervous feeling that makes you unable to relax, or a situation that makes you feel like this",ex:"Carol's been under a lot of stress lately.",category:"topic"},
+  {w:"tell a joke",pos:"v phr",def:"say a short story with a funny ending to make people laugh",ex:"The kids were telling jokes.",category:"topic"},
+  {w:"upset",pos:"v",def:"to make someone feel sad, worried, or angry",ex:"I'm sorry, I didn't mean to upset you.",category:"topic"},
+  {w:"upset",pos:"adj",def:"sad, worried, or angry about something",ex:"It's nothing to get upset about.",category:"topic"},
+  // Phrasal Verbs
+  {w:"calm down",pos:"phr v",def:"become/make calmer",ex:"The woman finally calmed down and explained what had happened.",category:"phrasal"},
+  {w:"cheer up",pos:"phr v",def:"become/make happier",ex:"I started to cheer up when the sun came out.",category:"phrasal"},
+  {w:"come on",pos:"phr v",def:"be quicker",ex:"Come on, or we'll be late!",category:"phrasal"},
+  {w:"go on",pos:"phr v",def:"continue happening or doing something",ex:"The phone rang, but Mark just carried on watching TV.",category:"phrasal"},
+  {w:"hang on",pos:"phr v",def:"wait",ex:"Hang on a moment – I need to get my keys.",category:"phrasal"},
+  {w:"run away (from)",pos:"phr v",def:"escape by running",ex:"The thief ran away from the police officers.",category:"phrasal"},
+  {w:"shut up",pos:"phr v",def:"stop talking, stop making a noise",ex:"Just shut up a minute and let me tell you what happened!",category:"phrasal"},
+  {w:"speak up",pos:"phr v",def:"talk more loudly so someone can hear you",ex:"You have to speak up a bit because my gran's a bit deaf.",category:"phrasal"},
+  // Prepositional Phrases
+  {w:"at first",pos:"prep phr",def:"at the beginning of a situation or period of time",ex:"I didn't like Mary at first, but then we became friends.",category:"prepositional"},
+  {w:"at least",pos:"prep phr",def:"not less than a particular number or amount; used to make a bad situation seem less bad",ex:"It's cold, but at least it's not raining.",category:"prepositional"},
+  {w:"at times",pos:"prep phr",def:"sometimes, but not always",ex:"I like studying French, but it can be hard work at times.",category:"prepositional"},
+  {w:"in secret",pos:"prep phr",def:"without other people knowing",ex:"We planned a birthday party for Julie in secret.",category:"prepositional"},
+  {w:"in spite of",pos:"prep phr",def:"used to say that something happens even though something else might have prevented it",ex:"Tina seems to be happy, in spite of her recent problems.",category:"prepositional"},
+  {w:"in tears",pos:"prep phr",def:"crying",ex:"When I found Fiona, she was in tears.",category:"prepositional"},
+  // Word Patterns
+  {w:"ashamed of",pos:"adj phr",def:"feeling shame or embarrassment about something",ex:"Aren't you ashamed of what you did?",category:"patterns"},
+  {w:"embarrassed about",pos:"adj phr",def:"feeling nervous, ashamed, or stupid about something",ex:"I'm a bit embarrassed about what I did at the party last night.",category:"patterns"},
+  {w:"frightened of",pos:"adj phr",def:"feeling fear about something",ex:"Are you frightened of flying?",category:"patterns"},
+  {w:"happy about/with",pos:"adj phr",def:"pleased about or satisfied with something",ex:"David seemed to be happy about/with his exam results, anyway.",category:"patterns"},
+  {w:"nervous about",pos:"adj phr",def:"feeling worried or anxious about something",ex:"I'm really nervous about appearing in the school play.",category:"patterns"},
+  {w:"scared of",pos:"adj phr",def:"feeling frightened of something",ex:"Hold my hand – there's nothing to be scared of.",category:"patterns"},
+  {w:"sorry about/for",pos:"adj phr",def:"feeling regret or sympathy about something",ex:"I'm sorry about/for what I said to Susie.",category:"patterns"},
+  {w:"surprised at/by",pos:"adj phr",def:"feeling surprise because of something unexpected",ex:"We were all surprised at/by Tom's decision to give up football.",category:"patterns"},
+  {w:"tired of",pos:"adj phr",def:"bored or annoyed by something that has been happening for a long time",ex:"I'm tired of helping people and not even getting a 'thank you' for it.",category:"patterns"},
+  {w:"congratulate sb on",pos:"v phr",def:"to tell someone how pleased you are about their success or good luck",ex:"The coach congratulated us on winning the final.",category:"patterns"},
+  {w:"laugh at",pos:"v phr",def:"to show that you think someone or something is funny or silly",ex:"Your problems will seem less serious if you can laugh at them.",category:"patterns"},
+  {w:"a joke about",pos:"n phr",def:"something that is said or done to make people laugh about a subject",ex:"Trisha told us a joke about two penguins.",category:"patterns"},
+];
+
+const WORD_FORM_DATA = [
+  {base:"bore",pos:"v",forms:[{w:"boring",pos:"adj"},{w:"bored",pos:"adj"}]},
+  {base:"comedy",pos:"n",forms:[{w:"comedian",pos:"n"}]},
+  {base:"emotion",pos:"n",forms:[{w:"emotional",pos:"adj"}]},
+  {base:"energy",pos:"n",forms:[{w:"energetic",pos:"adj"}]},
+  {base:"excite",pos:"v",forms:[{w:"excitement",pos:"n"},{w:"exciting",pos:"adj"},{w:"excited",pos:"adj"}]},
+  {base:"feel",pos:"v",forms:[{w:"felt",pos:"v"},{w:"feeling(s)",pos:"n"}]},
+  {base:"happy",pos:"adj",forms:[{w:"unhappy",pos:"adj"},{w:"(un)happiness",pos:"n"}]},
+  {base:"hate",pos:"v",forms:[{w:"hatred",pos:"n"}]},
+  {base:"noise",pos:"n",forms:[{w:"noisy",pos:"adj"},{w:"noisily",pos:"adv"}]},
+  {base:"sympathy",pos:"n",forms:[{w:"sympathise",pos:"v"},{w:"sympathetic",pos:"adj"}]},
+];
+
+function showTab(name, el) {
+  ['dict','cards','quiz','wordForm'].forEach(t => {
+    document.getElementById(t).style.display = 'none';
+  });
+  const section = document.getElementById(name);
+  if (name === 'dict' || name === 'wordForm') {
+    section.style.display = 'block';
+  } else {
+    section.style.display = 'flex';
+    if (name === 'quiz') section.style.display = 'block';
+  }
+  if(name==='quiz') initQuiz();
+  if(name==='wordForm') renderWordForm();
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+const posTypes = [...new Set(DATA.map(d=>d.pos))];
+let activeFilters = new Set();
+
+function renderFilterBtns() {
+  const c = document.getElementById('filterBtns');
+  c.innerHTML = posTypes.map(p =>
+    `<button class="filter-btn${activeFilters.has(p)?' on':''}" onclick="toggleFilter('${p}')">${p}</button>`
+  ).join('');
+}
+
+function toggleFilter(p) {
+  if(activeFilters.has(p)) activeFilters.delete(p); else activeFilters.add(p);
+  renderFilterBtns(); renderDict();
+}
+
+function renderDict() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  let rows = DATA.filter(d => {
+    const matchSearch = !q || d.w.toLowerCase().includes(q) || d.def.toLowerCase().includes(q);
+    const matchFilter = activeFilters.size === 0 || activeFilters.has(d.pos);
+    return matchSearch && matchFilter;
+  });
+  const tb = document.getElementById('dictBody');
+  if(!rows.length) { tb.innerHTML = `<tr><td colspan="3" class="no-results">No words found.</td></tr>`; return; }
+  tb.innerHTML = rows.map(d =>
+    `<tr>
+      <td class="word-cell" data-label="Word">${d.w}<span class="pos">${d.pos}</span><button class="speak-btn" onclick="speak('${d.w.replace(/'/g,"\\'")}', this)" title="Listen">🔊</button></td>
+      <td class="def-cell" data-label="Definition">${d.def}</td>
+      <td class="ex-cell" data-label="Example">${d.ex}</td>
+    </tr>`
+  ).join('');
+}
+
+renderFilterBtns();
+renderDict();
+
+let cardDeck = [...DATA];
+let cardIdx = 0;
+let currentCategory = 'all';
+
+function filterByCategory(category) {
+  if(category === 'all') return [...DATA];
+  return DATA.filter(d => d.category === category);
+}
+
+function selectCardCategory(category, btn) {
+  currentCategory = category;
+  document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const randomControls = document.getElementById('randomControls');
+  if(category === 'random') {
+    randomControls.style.display = 'flex';
+    updateRandomDeck();
+  } else {
+    randomControls.style.display = 'none';
+    cardDeck = filterByCategory(category);
+    cardIdx = 0;
+    showCard();
+  }
+}
+
+function updateRandomDeck() {
+  const count = parseInt(document.getElementById('randomCount').value) || 15;
+  const shuffled = [...DATA].sort(() => Math.random() - 0.5);
+  cardDeck = shuffled.slice(0, Math.min(count, DATA.length));
+  cardIdx = 0;
+  showCard();
+}
+
+function showCard() {
+  if(cardDeck.length === 0) {
+    document.getElementById('cWord').textContent = 'No cards';
+    document.getElementById('cPos').textContent = '';
+    document.getElementById('cDef').textContent = 'Select a category with words';
+    document.getElementById('cEx').textContent = '';
+    document.getElementById('cardCounter').textContent = `Card 0 / 0`;
+    return;
+  }
+  const c = cardDeck[cardIdx];
+  document.getElementById('cardWrap').classList.remove('flipped');
+  setTimeout(() => {
+    document.getElementById('cWord').textContent = c.w;
+    document.getElementById('cPos').textContent = c.pos;
+    document.getElementById('cDef').textContent = c.def;
+    document.getElementById('cEx').textContent = '"' + c.ex + '"';
+    document.getElementById('cardCounter').textContent = `Card ${cardIdx+1} / ${cardDeck.length}`;
+  }, 180);
+}
+
+function nextCard() {
+  if(cardDeck.length === 0) return;
+  cardIdx = (cardIdx+1) % cardDeck.length;
+  showCard();
+}
+
+function prevCard() {
+  if(cardDeck.length === 0) return;
+  cardIdx = (cardIdx-1+cardDeck.length) % cardDeck.length;
+  showCard();
+}
+
+function shuffleCards() {
+  if(cardDeck.length === 0) return;
+  cardDeck = [...cardDeck].sort(() => Math.random()-0.5);
+  cardIdx = 0;
+  showCard();
+}
+
+function resetCards() {
+  if(currentCategory === 'random') {
+    updateRandomDeck();
+  } else {
+    cardDeck = filterByCategory(currentCategory);
+    cardIdx = 0;
+    showCard();
+  }
+}
+
+showCard();
+
+let qIdx = 0, qScore = 0, qDeck = [], answered = false;
+
+function initQuiz() {
+  qDeck = [...DATA].sort(() => Math.random()-0.5).slice(0,15);
+  qIdx = 0; qScore = 0; renderQuiz();
+}
+
+function renderQuiz() {
+  const c = document.getElementById('quizContent');
+  if(qIdx >= qDeck.length) {
+    const pct = Math.round(qScore/qDeck.length*100);
+    c.innerHTML = `<div class="quiz-done">
+      <div class="big">${qScore}/${qDeck.length}</div>
+      <div style="color:var(--text2);margin-top:0.5rem">${pct}% correct</div>
+      <div style="font-size:1.2rem;margin-top:1rem">${pct>=80?'Excellent!':pct>=50?'Good effort!':'Keep practising!'}</div>
+      <button class="quiz-restart" onclick="initQuiz()">Try again</button>
+    </div>`; return;
+  }
+  const item = qDeck[qIdx];
+  const others = DATA.filter(d => d.def !== item.def).sort(() => Math.random()-0.5).slice(0,3);
+  const opts = [...others, item].sort(() => Math.random()-0.5);
+  const progress = (qIdx/qDeck.length*100).toFixed(1);
+  answered = false;
+
+  c.innerHTML = `
+    <div class="quiz-header">
+      <span style="font-weight:500">Question ${qIdx+1} of ${qDeck.length}</span>
+      <span class="quiz-score">Score: <span class="score-val">${qScore}</span></span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" style="width:${progress}%"></div></div>
+    <div class="q-card">
+      <div class="q-label">What is the definition of…</div>
+      <div class="q-text">${item.w} <span class="pos">(${item.pos})</span></div>
+    </div>
+    <div class="q-options">
+      ${opts.map((o,i)=>`<button class="q-opt" onclick="checkAnswer(this,'${item.def.replace(/'/g,"\\'").replace(/"/g,"&quot;")}','${o.def.replace(/'/g,"\\'").replace(/"/g,"&quot;")}',${i})">${o.def}</button>`).join('')}
+    </div>
+    <div class="q-feedback" id="qFeedback"></div>
+    <button class="q-next-btn" id="qNext" onclick="nextQuestion()">Next →</button>
+  `;
+}
+
+function checkAnswer(btn, correct, chosen, idx) {
+  if(answered) return; answered = true;
+  const opts = document.querySelectorAll('.q-opt');
+  opts.forEach(o => o.disabled = true);
+  const fb = document.getElementById('qFeedback');
+  if(chosen === correct) {
+    btn.classList.add('correct');
+    fb.style.color = '#4caf8a'; fb.textContent = '✓ Correct!';
+    qScore++;
+  } else {
+    btn.classList.add('wrong');
+    fb.style.color = 'var(--red)'; fb.textContent = '✗ The correct answer has been highlighted.';
+    opts.forEach(o => { if(o.textContent.trim() === correct) o.classList.add('correct'); });
+  }
+  document.getElementById('qNext').style.display = 'block';
+}
+
+function nextQuestion() { qIdx++; renderQuiz(); }
+
+function renderWordForm() {
+  const q = document.getElementById('wfSearchInput').value.toLowerCase();
+  let rows = WORD_FORM_DATA.filter(d => {
+    return !q || d.base.toLowerCase().includes(q) || d.forms.some(f => f.w.toLowerCase().includes(q));
+  });
+  const tb = document.getElementById('wfBody');
+  if(!rows.length) { tb.innerHTML = `<tr><td colspan="2" class="no-results">No word formations found.</td></tr>`; return; }
+  tb.innerHTML = rows.map(d =>
+    `<tr>
+      <td class="word-cell">${d.base}<span class="pos">${d.pos}</span><button class="speak-btn" onclick="speak('${d.base}', this)" title="Listen">🔊</button></td>
+      <td class="wf-forms">${d.forms.map(f => `<span>${f.w}<em class="wf-pos">${f.pos}</em><button class="speak-btn" onclick="speak('${f.w}', this)" title="Listen">🔊</button></span>`).join('')}</td>
+    </tr>`
+  ).join('');
+}
+
+const _audioCache = {};
+let _currentAudio = null;
+let _loadingKey = null;
+
+function speak(text, btnEl) {
+  const key = text.toLowerCase().trim();
+  function playAudio(audio) {
+    if (_currentAudio) { _currentAudio.pause(); _currentAudio.currentTime = 0; }
+    _currentAudio = audio;
+    audio.currentTime = 0;
+    audio.play().catch(() => speakFallback(text));
+  }
+  if (_audioCache[key]) { playAudio(_audioCache[key]); return; }
+  if (_loadingKey === key) return;
+  _loadingKey = key;
+  if (btnEl) btnEl.classList.add('speak-loading');
+  const url = `https://translate.google.com/translate_tts?ie=UTF-8&tl=en-GB&client=tw-ob&q=${encodeURIComponent(text)}`;
+  fetch(url)
+    .then(r => { if (!r.ok) throw new Error('fetch failed'); return r.blob(); })
+    .then(blob => {
+      const audio = new Audio(URL.createObjectURL(blob));
+      _audioCache[key] = audio;
+      _loadingKey = null;
+      if (btnEl) btnEl.classList.remove('speak-loading');
+      playAudio(audio);
+    })
+    .catch(() => {
+      _loadingKey = null;
+      if (btnEl) btnEl.classList.remove('speak-loading');
+      speakFallback(text);
+    });
+}
+
+function speakFallback(text) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  function doSpeak() {
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'en-GB'; u.rate = 0.9;
+    window.speechSynthesis.speak(u);
+  }
+  const voices = window.speechSynthesis.getVoices();
+  if (voices.length > 0) { doSpeak(); }
+  else {
+    window.speechSynthesis.onvoiceschanged = () => {
+      window.speechSynthesis.onvoiceschanged = null; doSpeak();
+    };
+    window.speechSynthesis.getVoices();
+  }
+}
+
+let currentTheme = 'dark';
+function toggleTheme() {
+  currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', currentTheme);
+  document.getElementById('themeKnob').textContent = currentTheme === 'dark' ? '🌙' : '☀️';
+}
+</script>
+</body>
+</html>
