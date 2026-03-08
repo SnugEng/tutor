@@ -1,0 +1,1595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HotSeat · SE</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --cream:   #F7F3EE;
+  --white:   #FFFFFF;
+  --ink:     #1C1917;
+  --sub:     #78716C;
+  --muted:   #A8A29E;
+  --line:    #E7E2DB;
+  --terr:    #C44B2B;
+  --terr-lt: #FDF0EC;
+  --terr-dk: #9C3620;
+  --sage:    #2E6EA6;
+  --sage-lt: #EEF4FB;
+  --amber:   #C07B00;
+  --amber-lt:#FFF8E6;
+  --hard-c:  #8B2FC9;
+  --hard-lt: #F6EEFF;
+  --card-sh: 0 4px 32px rgba(28,25,23,.08), 0 1px 4px rgba(28,25,23,.04);
+  --f-disp:  'Playfair Display', serif;
+  --f-body:  'DM Sans', sans-serif;
+}
+
+html,body{height:100%;overflow:hidden}
+body{
+  font-family:var(--f-body);
+  font-weight:300;
+  background:var(--cream);
+  color:var(--ink);
+  display:flex;
+  flex-direction:column;
+}
+
+body::before{
+  content:'';
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:256px;
+  opacity:.025;
+}
+
+body::after{
+  content:'';
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(28,25,23,.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(28,25,23,.03) 1px, transparent 1px);
+  background-size:60px 60px;
+}
+
+.blob{
+  position:fixed;z-index:0;pointer-events:none;
+  border-radius:50%;
+  filter:blur(90px);
+  animation:blobMove 12s ease-in-out infinite;
+}
+.blob-1{width:500px;height:500px;top:-100px;right:-80px;background:rgba(196,75,43,.07)}
+.blob-2{width:400px;height:400px;bottom:-80px;left:-60px;background:rgba(74,124,89,.05);animation-delay:-5s}
+@keyframes blobMove{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(20px,-15px) scale(1.05)}}
+
+#confetti-canvas{position:fixed;inset:0;z-index:9999;pointer-events:none}
+
+#splash{
+  position:fixed;inset:0;z-index:200;
+  background:var(--ink);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+.splash-bg-grid{
+  position:absolute;inset:0;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(247,243,238,.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(247,243,238,.04) 1px,transparent 1px);
+  background-size:48px 48px;
+}
+.splash-ticker{
+  position:absolute;top:0;left:0;right:0;height:40px;
+  overflow:hidden;border-bottom:1px solid rgba(247,243,238,.08);
+  display:flex;align-items:center;
+}
+.splash-ticker-inner{
+  display:flex;gap:0;white-space:nowrap;
+  animation:tickerScroll 30s linear infinite;
+}
+.splash-ticker-item{
+  font-family:var(--f-body);font-size:10px;font-weight:400;
+  letter-spacing:.2em;text-transform:uppercase;
+  color:rgba(247,243,238,.2);
+  padding:0 28px;
+  border-right:1px solid rgba(247,243,238,.08);
+}
+@keyframes tickerScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+.splash-ticker.bottom{top:auto;bottom:0;border-bottom:none;border-top:1px solid rgba(247,243,238,.08)}
+.splash-ticker.bottom .splash-ticker-inner{animation-direction:reverse}
+
+.splash-num{
+  position:absolute;
+  font-family:var(--f-disp);font-size:clamp(180px,28vw,340px);
+  font-weight:900;line-height:1;letter-spacing:-.04em;
+  color:rgba(247,243,238,.03);
+  pointer-events:none;user-select:none;
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  white-space:nowrap;
+}
+
+.splash-content{
+  position:relative;z-index:1;
+  text-align:center;
+  display:flex;flex-direction:column;align-items:center;gap:0;
+}
+.splash-eyebrow{
+  font-size:10px;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--terr);
+  opacity:0;animation:fadeUp .6s ease .3s forwards;
+}
+.splash-title{
+  font-family:var(--f-disp);font-weight:900;
+  font-size:clamp(60px,10vw,110px);line-height:.9;letter-spacing:-.02em;
+  color:var(--cream);
+  margin-top:18px;
+  opacity:0;animation:fadeUp .7s ease .5s forwards;
+}
+.splash-title span{color:var(--terr);font-style:italic}
+.splash-divider{
+  width:48px;height:2px;background:var(--terr);margin:30px 0;
+  opacity:0;animation:fadeUp .5s ease .9s forwards;
+}
+.splash-sub{
+  font-size:14px;font-weight:300;letter-spacing:.04em;
+  color:rgba(247,243,238,.4);
+  opacity:0;animation:fadeUp .5s ease 1.05s forwards;
+  margin-bottom:40px;
+}
+.splash-start{
+  padding:16px 56px;
+  background:var(--terr);
+  border:none;border-radius:2px;
+  font-family:var(--f-body);font-size:11px;font-weight:500;
+  letter-spacing:.15em;text-transform:uppercase;
+  color:#fff;cursor:pointer;
+  transition:all .2s;
+  opacity:0;animation:fadeUp .5s ease 1.2s forwards;
+  position:relative;overflow:hidden;
+}
+.splash-start::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.1),transparent);
+  transform:translateX(-100%);transition:.5s;
+}
+.splash-start:hover::after{transform:translateX(100%)}
+.splash-start:hover{background:var(--terr-dk);letter-spacing:.2em}
+.splash-start-icon{margin-left:10px;display:inline-block;transition:transform .2s}
+.splash-start:hover .splash-start-icon{transform:translateX(4px)}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+#splash.hide{animation:splashFade .5s ease forwards;pointer-events:none}
+@keyframes splashFade{to{opacity:0;transform:scale(1.015)}}
+
+#topnav{
+  height:58px;flex-shrink:0;
+  background:rgba(247,243,238,.88);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--line);
+  display:flex;align-items:center;
+  padding:0 20px;gap:10px;
+  position:relative;z-index:10;
+  opacity:0;transform:translateY(-8px);
+  transition:opacity .4s,transform .4s;
+}
+#topnav.visible{opacity:1;transform:none}
+
+.logo{
+  font-family:var(--f-disp);font-size:18px;font-weight:700;
+  color:var(--ink);text-decoration:none;letter-spacing:-.01em;
+  white-space:nowrap;
+}
+.logo span{color:var(--terr);font-style:italic}
+.nav-paw{display:flex;align-items:center;color:var(--muted);text-decoration:none;transition:color .2s;flex-shrink:0}
+.nav-paw:hover{color:var(--terr)}
+
+.ndiv{width:1px;height:20px;background:var(--line);flex-shrink:0;margin:0 4px}
+.nav-gap{flex:1}
+
+.sel-wrap{
+  position:relative;flex-shrink:0;
+}
+.sel-btn{
+  display:flex;align-items:center;gap:8px;
+  padding:7px 14px 7px 12px;
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:3px;
+  font-family:var(--f-body);font-size:12px;font-weight:400;
+  color:var(--ink);cursor:pointer;
+  transition:all .15s;white-space:nowrap;
+  user-select:none;
+  min-width:120px;
+}
+.sel-btn:hover{border-color:#ccc5bc}
+.sel-btn.active{border-color:var(--terr);background:var(--terr-lt)}
+.sel-btn-icon{font-size:13px}
+.sel-btn-label{flex:1;text-align:left}
+.sel-btn-arrow{
+  width:16px;height:16px;flex-shrink:0;color:var(--muted);
+  transition:transform .2s;display:flex;align-items:center;justify-content:center;font-size:9px;
+}
+.sel-btn.open .sel-btn-arrow{transform:rotate(180deg)}
+
+.sel-dropdown{
+  position:absolute;top:calc(100% + 6px);left:0;
+  background:var(--white);border:1px solid var(--line);
+  border-radius:6px;min-width:200px;
+  box-shadow:0 8px 32px rgba(28,25,23,.12),0 2px 8px rgba(28,25,23,.06);
+  z-index:200;overflow:hidden;
+  opacity:0;transform:translateY(-6px) scale(.98);pointer-events:none;
+  transition:all .18s cubic-bezier(.22,1,.36,1);
+}
+.sel-dropdown.open{opacity:1;transform:none;pointer-events:all}
+
+.sel-dropdown-header{
+  padding:10px 14px 6px;
+  font-size:9px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--muted);border-bottom:1px solid var(--line);
+}
+.sel-option{
+  display:flex;align-items:center;gap:10px;
+  padding:9px 14px;cursor:pointer;
+  font-size:12.5px;font-weight:400;color:var(--ink);
+  transition:background .1s;
+}
+.sel-option:hover{background:var(--cream)}
+.sel-option.chosen{color:var(--terr);font-weight:500}
+.sel-option-ico{font-size:14px;width:20px;text-align:center;flex-shrink:0}
+.sel-option-check{margin-left:auto;font-size:11px;color:var(--terr)}
+
+.level-group{display:flex;gap:3px}
+.lvl-chip{
+  padding:6px 14px;border-radius:2px;
+  border:1px solid var(--line);
+  background:transparent;
+  font-family:var(--f-body);font-size:11px;font-weight:500;
+  letter-spacing:.05em;text-transform:uppercase;
+  color:var(--sub);cursor:pointer;transition:all .15s;
+}
+.lvl-chip:hover{border-color:#ccc5bc;color:var(--ink)}
+.lvl-chip.on.easy   {background:var(--sage);border-color:var(--sage);color:#fff}
+.lvl-chip.on.medium {background:var(--amber);border-color:var(--amber);color:#fff}
+.lvl-chip.on.hard   {background:var(--hard-c);border-color:var(--hard-c);color:#fff}
+
+.nav-timer{
+  display:flex;align-items:center;gap:8px;
+  padding:5px 12px 5px 10px;
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:3px;
+  flex-shrink:0;
+}
+.tnum{
+  font-family:var(--f-disp);font-size:20px;font-weight:700;
+  font-variant-numeric:tabular-nums;
+  min-width:42px;text-align:center;
+  transition:color .3s;line-height:1;
+}
+.tnum.warn{color:var(--terr)}
+.tnum.done{color:var(--sage)}
+.tbar-wrap{width:120px;height:2px;background:var(--line);border-radius:1px;overflow:hidden}
+.tbar{height:100%;width:100%;background:var(--ink);border-radius:1px;transition:width 1s linear,background .3s}
+.tbar.warn{background:var(--terr)}
+.tpresets{display:flex;gap:2px;margin-top:4px}
+.tp{
+  padding:2px 6px;border-radius:2px;
+  border:1px solid var(--line);background:transparent;
+  font-family:var(--f-body);font-size:10px;color:var(--sub);
+  cursor:pointer;transition:all .12s;
+}
+.tp:hover{color:var(--ink)}
+.tp.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.tbtns{display:flex;gap:3px}
+.tbtn{
+  width:26px;height:26px;border-radius:50%;
+  border:1px solid var(--line);background:var(--white);
+  display:flex;align-items:center;justify-content:center;
+  font-size:10px;cursor:pointer;transition:all .12s;color:var(--sub);
+}
+.tbtn:hover{color:var(--ink);border-color:#ccc5bc}
+.tbtn.go{background:var(--ink);border-color:var(--ink);color:#fff}
+.tbtn.go:hover{background:#333}
+
+#main{
+  flex:1;min-height:0;
+  display:grid;grid-template-columns:1fr 280px;
+  position:relative;z-index:1;
+  opacity:0;transform:translateY(10px);
+  transition:opacity .4s ease .1s,transform .4s ease .1s;
+}
+#main.visible{opacity:1;transform:none}
+
+.panel-left{
+  display:flex;flex-direction:column;
+  padding:24px 28px 20px;gap:18px;overflow:hidden;
+}
+
+.card-label{
+  display:flex;align-items:center;gap:8px;
+  font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--muted);font-weight:500;
+}
+.card-label::before,.card-label::after{content:'';flex:1;height:1px;background:var(--line)}
+
+.stack{flex:1;min-height:0;position:relative}
+
+.ghost{
+  position:absolute;inset:0;border-radius:4px;
+  background:var(--white);border:1px solid var(--line);
+}
+.g1{transform:rotate(1.2deg) translateY(4px) scale(.978);opacity:.7}
+.g2{transform:rotate(-0.7deg) translateY(8px) scale(.956);opacity:.45}
+
+#card{
+  position:absolute;inset:0;border-radius:4px;
+  display:flex;flex-direction:column;
+  background:var(--white);border:1px solid var(--line);
+  box-shadow:var(--card-sh);
+  overflow:hidden;
+  transform-origin:center 65%;
+  animation:bob 5s ease-in-out infinite;
+}
+#card.throwing{animation:throwOut .30s cubic-bezier(.4,0,1,1) forwards !important}
+#card.landing {animation:flyIn   .48s  cubic-bezier(.22,1,.36,1) forwards !important}
+
+#card::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:var(--line);transition:background .3s;z-index:2;
+}
+#card.easy::before{background:var(--sage)}
+#card.medium::before{background:var(--amber)}
+#card.hard::before{background:var(--hard-c)}
+
+.card-inner{
+  flex:1;min-height:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;gap:12px;padding:28px 48px 24px;
+  overflow-y:auto;
+}
+
+.c-eyebrow{
+  font-size:9px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--muted);
+}
+.c-topic{
+  font-family:var(--f-disp);font-weight:700;font-style:italic;
+  font-size:clamp(22px,2.6vw,36px);line-height:1.25;
+  color:var(--ink);max-width:480px;
+}
+.c-task{
+  font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+  padding:5px 14px;border-radius:2px;
+  background:var(--ink);color:var(--cream);
+  align-self:center;
+}
+#card.easy .c-task{background:var(--sage)}
+#card.medium .c-task{background:var(--amber)}
+#card.hard .c-task{background:var(--hard-c)}
+.c-qs{
+  width:100%;max-width:440px;
+  border-top:1px solid var(--line);
+  padding-top:14px;
+  display:flex;flex-direction:column;gap:7px;
+  margin-top:2px;
+}
+.c-q{
+  font-size:12px;line-height:1.6;color:var(--sub);font-weight:300;
+  text-align:left;padding-left:12px;position:relative;
+}
+.c-q::before{
+  content:'';position:absolute;left:0;top:8px;
+  width:4px;height:4px;border-radius:50%;
+  background:var(--muted);
+}
+
+.c-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;
+  padding:4px 12px;border-radius:2px;border:1px solid;
+}
+.c-badge.easy  {color:var(--sage);background:var(--sage-lt);border-color:rgba(46,110,166,.2)}
+.c-badge.medium{color:var(--amber);background:var(--amber-lt);border-color:rgba(192,123,0,.2)}
+.c-badge.hard  {color:var(--hard-c);background:var(--hard-lt);border-color:rgba(139,47,201,.2)}
+
+.empty-state{
+  display:flex;flex-direction:column;align-items:center;gap:12px;
+  opacity:.18;
+}
+.empty-icon{font-size:32px;line-height:1}
+.empty-text{font-family:var(--f-disp);font-size:17px;font-style:italic;color:var(--sub)}
+
+@keyframes throwOut{
+  0%  {opacity:1;transform:scaleY(1) scaleX(1)}
+  35% {opacity:1;transform:scaleY(1.06) scaleX(.97) translateY(-8px)}
+  100%{opacity:0;transform:scaleY(0) scaleX(.92) translateY(-24px)}
+}
+@keyframes flyIn{
+  0%  {opacity:0;transform:scaleY(0) scaleX(.92) translateY(20px)}
+  55% {opacity:1;transform:scaleY(1.04) scaleX(.98) translateY(-4px)}
+  80% {opacity:1;transform:scaleY(.99) scaleX(1.01) translateY(1px)}
+  100%{opacity:1;transform:scaleY(1) scaleX(1) translateY(0)}
+}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+
+.bottom-row{
+  display:flex;align-items:center;gap:12px;flex-shrink:0;
+}
+.b-meta{font-size:11px;color:var(--muted);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.b-count{font-size:11px;color:var(--muted);text-align:right;flex:1;white-space:nowrap}
+
+.btn-gen{
+  padding:13px 40px;
+  background:var(--ink);color:var(--cream);
+  border:none;border-radius:3px;
+  font-family:var(--f-body);font-size:12px;font-weight:500;
+  letter-spacing:.08em;text-transform:uppercase;
+  cursor:pointer;transition:all .15s;
+  position:relative;overflow:hidden;white-space:nowrap;
+  flex-shrink:0;
+}
+.btn-gen::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.06),transparent);
+  transform:translateX(-100%);transition:.5s;
+}
+.btn-gen:hover::after{transform:translateX(100%)}
+.btn-gen:hover{background:#2a2520;transform:translateY(-1px);box-shadow:0 6px 20px rgba(28,25,23,.2)}
+.btn-gen:active{transform:none;box-shadow:none}
+
+.panel-right{
+  background:var(--white);
+  border-left:1px solid var(--line);
+  display:flex;flex-direction:column;
+  overflow:hidden;
+}
+.r-head{
+  padding:16px 18px 13px;
+  border-bottom:1px solid var(--line);
+  flex-shrink:0;
+}
+.r-title{font-family:var(--f-disp);font-size:16px;font-weight:700;color:var(--ink)}
+.r-title span{font-style:italic;color:var(--terr)}
+.r-sub{font-size:11px;color:var(--muted);margin-top:2px}
+
+.acc-scroll{
+  flex:1;min-height:0;overflow-y:auto;
+  scrollbar-width:thin;scrollbar-color:var(--line) transparent;
+}
+.acc-scroll::-webkit-scrollbar{width:3px}
+.acc-scroll::-webkit-scrollbar-thumb{background:var(--line);border-radius:2px}
+
+.acc-group{border-bottom:1px solid var(--line)}
+.acc-head{
+  width:100%;padding:11px 16px;
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  background:none;border:none;cursor:pointer;
+  font-family:var(--f-body);font-size:12px;color:var(--ink);
+  text-align:left;transition:background .12s;user-select:none;
+}
+.acc-head:hover{background:var(--cream)}
+.acc-head.open{background:var(--cream)}
+.acc-label{display:flex;align-items:center;gap:7px}
+.acc-title{font-weight:500;letter-spacing:.01em}
+.acc-count{
+  font-size:10px;color:var(--muted);
+  background:var(--line);border-radius:2px;padding:1px 6px;margin-left:2px;
+}
+.acc-arrow{font-size:9px;color:var(--muted);transition:transform .2s;flex-shrink:0}
+.acc-head.open .acc-arrow{transform:rotate(180deg)}
+.acc-body{
+  max-height:0;overflow:hidden;opacity:0;
+  transition:max-height .32s cubic-bezier(.4,0,.2,1),opacity .25s ease;
+}
+.acc-body.open{max-height:900px;opacity:1}
+.acc-inner{padding:4px 12px 10px;display:flex;flex-direction:column;gap:1px}
+
+.phr{
+  padding:7px 8px 7px 10px;border-radius:3px;
+  cursor:pointer;transition:background .1s;
+  display:flex;align-items:baseline;gap:9px;
+}
+.phr:hover{background:var(--cream)}
+.phr:active{background:var(--line)}
+.phr-dot{
+  width:3px;height:3px;border-radius:50%;
+  background:var(--muted);flex-shrink:0;margin-top:8px;
+  transition:background .2s;
+}
+.phr-text{font-size:12.5px;font-weight:400;color:var(--ink);line-height:1.45;transition:color .2s}
+.phr.copied .phr-text{color:var(--terr)}
+.phr.copied .phr-dot{background:var(--terr)}
+
+#footer{
+  flex-shrink:0;
+  background:rgba(247,243,238,.9);
+  backdrop-filter:blur(8px);
+  border-top:1px solid var(--line);
+  padding:7px 22px;
+  display:flex;align-items:center;justify-content:center;gap:1.2rem;
+  position:relative;z-index:2;
+  opacity:0;transform:translateY(4px);
+  transition:opacity .4s ease .2s,transform .4s ease .2s;
+}
+#footer.visible{opacity:1;transform:none}
+.foot-name{font-family:var(--f-disp);font-size:.9rem;font-style:italic;color:var(--muted)}
+.foot-name span{color:var(--terr);font-style:normal}
+.foot-links{display:flex;gap:.4rem}
+.foot-link{
+  padding:3px 10px;border-radius:2px;border:1px solid var(--line);
+  background:transparent;color:var(--sub);text-decoration:none;
+  font-size:11px;transition:all .2s;
+}
+.foot-link:hover{border-color:var(--terr);color:var(--terr)}
+
+.mob-row{display:none;gap:6px;align-items:center;justify-content:center;width:100%}
+.mob-sel{
+  padding:6px 26px 6px 12px;border-radius:3px;
+  border:1px solid var(--line);background:var(--white);
+  font-family:var(--f-body);font-size:11px;font-weight:400;
+  color:var(--sub);cursor:pointer;
+  appearance:none;-webkit-appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5'%3E%3Cpath d='M0 0l4 5 4-5z' fill='%23A8A29E'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 9px center;
+  transition:all .15s;
+}
+.mob-sel:focus{outline:none;border-color:var(--terr);color:var(--ink)}
+.mob-sel.active{background-color:var(--ink);border-color:var(--ink);color:#fff;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5'%3E%3Cpath d='M0 0l4 5 4-5z' fill='%23fff'/%3E%3C/svg%3E")}
+
+#bottom-sheet{display:none;transform:translateY(100%)}
+#bs-overlay{display:none}
+#phrases-btn{display:none}
+
+@media(max-width:1000px){
+  #topnav{height:auto;padding:10px 14px;gap:6px;flex-wrap:wrap;justify-content:center}
+  .logo,.ndiv,.nav-gap,.level-group,.sel-wrap{display:none}
+  .mob-row{display:flex;order:1}
+  .nav-timer{order:2;margin:0 auto}
+  #main{grid-template-columns:1fr;grid-template-rows:1fr}
+  .panel-right,.b-count,.b-meta,.nav-paw	{display:none}
+  .panel-left{padding:14px 14px 12px}
+  #bs-overlay{
+    display:none;position:fixed;inset:0;z-index:90;
+    background:rgba(28,25,23,.45);
+  }
+  #bs-overlay.open{display:block}
+  #bottom-sheet{
+    display:flex;
+    position:fixed;left:0;right:0;bottom:0;z-index:100;
+    background:var(--white);border-radius:14px 14px 0 0;
+    border-top:1px solid var(--line);
+    box-shadow:0 -8px 48px rgba(28,25,23,.14);
+    transform:translateY(100%);
+    transition:transform .36s cubic-bezier(.22,1,.36,1);
+    flex-direction:column;max-height:76vh;
+  }
+  #bottom-sheet.open{transform:translateY(0)}
+  #bs-handle-wrap{padding:10px 0 3px;text-align:center;cursor:pointer;flex-shrink:0}
+  #bs-handle{width:36px;height:4px;border-radius:2px;background:var(--line);display:inline-block}
+  #bs-head{padding:5px 18px 11px;border-bottom:1px solid var(--line);display:flex;align-items:flex-start;justify-content:space-between;flex-shrink:0}
+  #bs-close{width:26px;height:26px;border-radius:50%;border:1px solid var(--line);background:transparent;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--sub);cursor:pointer}
+  #bs-content{flex:1;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+  #phrases-btn{
+    display:flex;align-items:center;gap:5px;
+    padding:6px 12px;background:var(--white);border:1px solid var(--line);border-radius:3px;
+    font-family:var(--f-body);font-size:11px;color:var(--sub);cursor:pointer;transition:all .15s;white-space:nowrap;flex-shrink:0;
+  }
+  #phrases-btn:hover{border-color:var(--terr);color:var(--terr)}
+}
+@media(min-width:1001px){
+  #bottom-sheet,#bs-overlay,#phrases-btn{display:none !important}
+}
+</style>
+</head>
+<body>
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+<canvas id="confetti-canvas"></canvas>
+
+<div id="splash">
+  <div class="splash-bg-grid"></div>
+  <div class="splash-ticker">
+    <div class="splash-ticker-inner">
+      <span class="splash-ticker-item">Change My Mind</span>
+      <span class="splash-ticker-item">Play Devil's Advocate</span>
+      <span class="splash-ticker-item">Finish This Thought</span>
+      <span class="splash-ticker-item">Guilty Pleasure Defence</span>
+      <span class="splash-ticker-item">What Nobody Mentions</span>
+      <span class="splash-ticker-item">Explain It To Your Grandparent</span>
+      <span class="splash-ticker-item">Sell It</span>
+      <span class="splash-ticker-item">The Dumb Question</span>
+      <span class="splash-ticker-item">Change My Mind</span>
+      <span class="splash-ticker-item">Play Devil's Advocate</span>
+      <span class="splash-ticker-item">Finish This Thought</span>
+      <span class="splash-ticker-item">Guilty Pleasure Defence</span>
+      <span class="splash-ticker-item">What Nobody Mentions</span>
+      <span class="splash-ticker-item">Explain It To Your Grandparent</span>
+      <span class="splash-ticker-item">Sell It</span>
+      <span class="splash-ticker-item">The Dumb Question</span>
+    </div>
+  </div>
+  <div class="splash-num">SS</div>
+  <div class="splash-content">
+    <p class="splash-eyebrow">Speaking Activity · Teenagers</p>
+    <h1 class="splash-title">Social<span>Speak</span></h1>
+    <div class="splash-divider"></div>
+    <p class="splash-sub">Pick a topic. Set a timer. Say what you actually think.</p>
+    <button class="splash-start" onclick="startApp()">
+      Enter <span class="splash-start-icon">→</span>
+    </button>
+  </div>
+  <div class="splash-ticker bottom">
+    <div class="splash-ticker-inner">
+      <span class="splash-ticker-item">Easy</span>
+      <span class="splash-ticker-item">Medium</span>
+      <span class="splash-ticker-item">Hard</span>
+      <span class="splash-ticker-item">1 minute</span>
+      <span class="splash-ticker-item">2 minutes</span>
+      <span class="splash-ticker-item">3 minutes</span>
+      <span class="splash-ticker-item">STAR</span>
+      <span class="splash-ticker-item">PREP</span>
+      <span class="splash-ticker-item">Opinion</span>
+      <span class="splash-ticker-item">Agree</span>
+      <span class="splash-ticker-item">Disagree</span>
+      <span class="splash-ticker-item">Easy</span>
+      <span class="splash-ticker-item">Medium</span>
+      <span class="splash-ticker-item">Hard</span>
+      <span class="splash-ticker-item">1 minute</span>
+      <span class="splash-ticker-item">2 minutes</span>
+      <span class="splash-ticker-item">3 minutes</span>
+      <span class="splash-ticker-item">STAR</span>
+      <span class="splash-ticker-item">PREP</span>
+      <span class="splash-ticker-item">Opinion</span>
+      <span class="splash-ticker-item">Agree</span>
+      <span class="splash-ticker-item">Disagree</span>
+    </div>
+  </div>
+</div>
+
+<nav id="topnav">
+  <a class="nav-paw" href="https://t.me/+wiAl8ae-UoAxMDE6" target="_blank">
+    <svg width="15" height="15" viewBox="0 0 48 48" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M45.9719 17.1331c-0.5203 -1.2365 -1.3846 -2.128 -2.5001 -2.577l-0.015 -0.0056c-0.5077 -0.1989 -1.0483 -0.3007 -1.5936 -0.3h-0.06c-2.5536 0.0384 -5.1606 2.2086 -6.4861 5.4005 -0.9721 2.3342 -1.0836 4.8446 -0.2981 6.7157 0.5194 1.2374 1.3855 2.1289 2.5058 2.578l0.0121 0.0046c0.5079 0.1988 1.0484 0.3005 1.5937 0.3 2.5779 0 5.2121 -2.1701 6.562 -5.4042 0.9599 -2.3314 1.0658 -4.84 0.2793 -6.712Z"/><path d="M35.7694 30.9008c-1.4728 -0.885 -2.865 -1.7222 -3.7744 -3.2259C29.4863 23.5125 27.9713 21 23.9992 21s-5.4909 2.5125 -8.0052 6.6749c-0.9112 1.5056 -2.3062 2.3437 -3.7837 3.2325 -1.694 1.0181 -3.44437 2.0699 -4.19999 4.1399 -0.29375 0.7463 -0.44173 1.5418 -0.43593 2.3437 0 3.3703 2.62502 6.1125 5.84992 6.1125 1.6641 0 3.435 -0.5766 5.309 -1.1869 1.8019 -0.5869 3.6647 -1.1934 5.2753 -1.1934 1.6106 0 3.4687 0.6065 5.264 1.1934 1.8703 0.6065 3.6327 1.1831 5.3015 1.1831 3.2202 0 5.8405 -2.7422 5.8405 -6.1124 0.0026 -0.8025 -0.1486 -1.5982 -0.4453 -2.3437 -0.7556 -2.0719 -2.5068 -3.1247 -4.1999 -4.1428Z"/><path d="M14.0629 17.7041c1.1155 1.3996 2.531 2.1702 3.9859 2.1702 0.1986 0 0.397 -0.0147 0.5934 -0.0441 3.0344 -0.4462 4.9252 -4.149 4.3046 -8.4368 -0.2596 -1.80269 -0.9533 -3.48162 -1.947 -4.72652 -1.1137 -1.39676 -2.531 -2.16639 -3.985 -2.16639 -0.1985 0.00001 -0.3969 0.01473 -0.5934 0.04406 -3.0344 0.44621 -4.9252 4.14905 -4.3046 8.43685 0.2587 1.7998 0.9524 3.4769 1.9461 4.7227Z"/><path d="M29.3589 19.8301c0.1965 0.0293 0.3949 0.0441 0.5934 0.0441 1.4558 0 2.8704 -0.7706 3.9859 -2.1702 0.9928 -1.2458 1.6827 -2.9229 1.9452 -4.7246 0.6206 -4.28588 -1.2702 -7.98872 -4.3047 -8.43681 -0.1963 -0.02933 -0.3947 -0.04405 -0.5933 -0.04405 -1.454 0.00187 -2.8714 0.7715 -3.985 2.16826 -0.9937 1.2449 -1.6874 2.92379 -1.9461 4.7283 -0.6206 4.286 1.2702 7.9888 4.3046 8.435Z"/><path d="m10.4613 28.9493 0.0131 -0.0046c1.1184 -0.4491 1.9836 -1.3396 2.502 -2.5761 0.7856 -1.8748 0.675 -4.3825 -0.2953 -6.7167 -1.3433 -3.2303 -3.97658 -5.4014 -6.55169 -5.4014 -0.54532 -0.0008 -1.08592 0.101 -1.59363 0.3l-0.01312 0.0047c-1.11554 0.4452 -1.98079 1.3395 -2.49918 2.576 -0.78557 1.8749 -0.67495 4.3825 0.29529 6.7167 1.34333 3.2303 3.97656 5.4014 6.55167 5.4014 0.5444 0.0005 1.08398 -0.1013 1.59086 -0.3Z"/></svg>
+  </a>  <a class="logo" href="#" onclick="return false">Hot<span>Seat</span></a>
+  <div class="ndiv"></div>
+
+  
+  <div class="level-group">
+    <button class="lvl-chip easy"       onclick="setLevel('easy',this)">Easy</button>
+    <button class="lvl-chip medium on"  onclick="setLevel('medium',this)">Medium</button>
+    <button class="lvl-chip hard"       onclick="setLevel('hard',this)">Hard</button>
+  </div>
+
+  <div class="ndiv"></div>
+
+  
+  <div class="sel-wrap" id="cat-wrap">
+    <button class="sel-btn" id="cat-btn" onclick="toggleDrop('cat')">
+      <span class="sel-btn-icon" id="cat-ico">🎯</span>
+      <span class="sel-btn-label" id="cat-lbl">All Topics</span>
+      <span class="sel-btn-arrow">▼</span>
+    </button>
+    <div class="sel-dropdown" id="cat-drop">
+      <div class="sel-dropdown-header">Choose category</div>
+      
+    </div>
+  </div>
+
+  <div class="nav-gap"></div>
+
+  
+  <div class="mob-row">
+    <select class="mob-sel active" id="m-lvl" onchange="setLevelMob(this.value)">
+      <option value="easy">Easy</option>
+      <option value="medium" selected>Medium</option>
+      <option value="hard">Hard</option>
+    </select>
+    <select class="mob-sel active" id="m-cat" onchange="setCatMob(this.value)">
+      <option value="all">All Topics</option>
+    </select>
+  </div>
+
+  
+  <div class="nav-timer">
+    <div class="tnum" id="tnum">1:00</div>
+    <div>
+      <div class="tbar-wrap"><div class="tbar" id="tbar"></div></div>
+      <div class="tpresets">
+        <button class="tp on" onclick="setTime(60,this)">1m</button>
+        <button class="tp"    onclick="setTime(90,this)">1:30</button>
+        <button class="tp"    onclick="setTime(120,this)">2m</button>
+        <button class="tp"    onclick="setTime(180,this)">3m</button>
+      </div>
+    </div>
+    <div class="tbtns">
+      <button class="tbtn go" id="tplaybtn" onclick="tToggle()">▶</button>
+      <button class="tbtn"    onclick="tReset()">↺</button>
+    </div>
+  </div>
+</nav>
+
+<div id="main">
+  <div class="panel-left">
+    <div class="card-label">
+      <span id="cat-label-text">All Topics · Medium</span>
+    </div>
+
+    <div class="stack">
+      <div class="ghost g2"></div>
+      <div class="ghost g1"></div>
+      <div id="card">
+        <div class="card-inner" id="ci">
+          <div class="empty-state">
+            <div class="empty-icon">💬</div>
+            <div class="empty-text">Press the button to get your topic</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-row">
+      <div class="b-meta" id="meta"></div>
+      <button class="btn-gen" onclick="gen()">Get Topic →</button>
+      <div style="display:flex;align-items:center;gap:6px;flex:1;justify-content:flex-end">
+        <div class="b-count" id="cnt"></div>
+        <button id="phrases-btn" onclick="openBS()">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Phrases
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel-right">
+    <div class="r-head">
+      <div class="r-title">Discussion <span>Phrases</span></div>
+      <div class="r-sub">Click any phrase to copy it</div>
+    </div>
+    <div class="acc-scroll" id="acc-scroll"></div>
+  </div>
+</div>
+
+<div id="bs-overlay" onclick="closeBS()"></div>
+<div id="bottom-sheet">
+  <div id="bs-handle-wrap" onclick="closeBS()"><span id="bs-handle"></span></div>
+  <div id="bs-head">
+    <div><div class="r-title">Discussion <span>Phrases</span></div><div class="r-sub">Tap to copy</div></div>
+    <button id="bs-close" onclick="closeBS()">✕</button>
+  </div>
+  <div id="bs-content" class="acc-scroll"></div>
+</div>
+
+<footer id="footer">
+  <div class="foot-name"><span>@snugenglish</span></div>
+  <div class="foot-links">
+    <a class="foot-link" href="https://vk.com/snugenglish"     target="_blank">VK</a>
+    <a class="foot-link" href="https://t.me/+wiAl8ae-UoAxMDE6" target="_blank">Telegram</a>
+  </div>
+</footer>
+
+<script>
+
+const CATS = [
+  {id:'all',     icon:'🎯', label:'All Topics'},
+  {id:'change',  icon:'💬', label:'Change My Mind'},
+  {id:'devil',   icon:'😈', label:"Play Devil's Advocate"},
+  {id:'finish',  icon:'💭', label:'Finish This Thought'},
+  {id:'guilty',  icon:'😅', label:'Guilty Pleasure Defence'},
+  {id:'nobody',  icon:'🤫', label:'What Nobody Mentions'},
+  {id:'grandpa', icon:'👴', label:'Explain It To Your Grandparent'},
+  {id:'sell',    icon:'🎤', label:'Sell It'},
+  {id:'dumb',    icon:'❓', label:'The Dumb Question'},
+];
+
+const D = {
+  change:{
+    easy:[
+      {t:"Breakfast is the most overrated meal.",a:"Challenge the claim and provide a counter-argument.",q:["Can you be productive on just coffee?","Why do they say it's the \"most important\"?","What's the best alternative to a full breakfast?"]},
+      {t:"Cats make better roommates than dogs.",a:"Challenge the claim and provide a counter-argument.",q:["Do cats actually like people?","Is a dog too much work for a busy person?","What makes a pet a \"good roommate\"?"]},
+      {t:"Summer is the worst season.",a:"Challenge the claim and provide a counter-argument.",q:["Is heat worse than cold?","Can you enjoy summer without air conditioning?","Why do people think summer is \"perfect\"?"]},
+      {t:"Pineapple belongs on pizza.",a:"Challenge the claim and provide a counter-argument.",q:["Is fruit on bread a crime?","Why is this the most famous food debate?","Have you actually tried it?"]},
+      {t:"Making your bed is a waste of time.",a:"Challenge the claim and provide a counter-argument.",q:["Does it change your mood?","Who is going to see it anyway?","Is an unmade bed a sign of a creative mind?"]},
+      {t:"Tea is better than coffee.",a:"Challenge the claim and provide a counter-argument.",q:["Does tea actually give you energy?","Why is coffee culture so big?","Is it about the taste or the ritual?"]},
+      {t:"E-books are better than paper books.",a:"Challenge the claim and provide a counter-argument.",q:["Can you feel the \"soul\" of a digital file?","Is carrying 1000 books in your pocket better than the smell of paper?","Which one is better for the environment?"]},
+      {t:"Friday is better than Saturday.",a:"Challenge the claim and provide a counter-argument.",q:["Is the \"feeling\" of the weekend better than the weekend itself?","Why is Saturday so stressful sometimes?","Is Friday the most productive day?"]},
+      {t:"Dark chocolate is the only real chocolate.",a:"Challenge the claim and provide a counter-argument.",q:["Is milk chocolate just sugar?","Why do people like the bitter taste?","Can chocolate be \"healthy\"?"]},
+      {t:"Living in a city is too stressful.",a:"Challenge the claim and provide a counter-argument.",q:["Can you find peace in a big city?","Is \"boring\" better than \"stressful\"?","Why does everyone move to cities if they are so bad?"]},
+      {t:"Taking a nap is for kids, not adults.",a:"Challenge the claim and provide a counter-argument.",q:["What does science say about napping?","Why do we associate naps with laziness?","Which cultures normalise adult naps?"]},
+      {t:"Chocolate ice cream is better than vanilla.",a:"Challenge the claim and provide a counter-argument.",q:["Is this about taste or what each flavour represents?","Why is vanilla the default?","Can you make the case for vanilla?"]},
+      {t:"Walking to work is better than driving.",a:"Challenge the claim and provide a counter-argument.",q:["In what conditions is this true?","What are the actual benefits?","Does \"better\" mean healthier, cheaper, or more enjoyable?"]},
+      {t:"Traveling alone is boring.",a:"Challenge the claim and provide a counter-argument.",q:["What do you lose when there's no one to share it with?","Is boredom the real fear?","What can solo travel teach you?"]},
+      {t:"Big cities are better than small villages.",a:"Challenge the claim and provide a counter-argument.",q:["Better for whom?","What does village life offer that cities can't?","Is the appeal of cities about opportunity or stimulation?"]},
+      {t:"We should stop using cash completely.",a:"Challenge the claim and provide a counter-argument.",q:["Who would be most affected if cash disappeared?","What does cash do that digital payment doesn't?","Is this about convenience or control?"]},
+      {t:"Learning a language is easier for kids.",a:"Challenge the claim and provide a counter-argument.",q:["What does research say about adult learners?","What advantages do adults have that children don't?","Is \"easier\" even the right measure?"]},
+      {t:"Watching sports is a waste of time.",a:"Challenge the claim and provide a counter-argument.",q:["What counts as a \"waste\" of time?","What do people get from watching sport?","Is spectating ever as valuable as doing?"]},
+      {t:"Every house should have a cat.",a:"Challenge the claim and provide a counter-argument.",q:["What are the actual barriers — allergies, lifestyle, cost?","Are there better options?","Is this about the animal or the idea?"]},
+      {t:"Cooking at home is better than ordering pizza.",a:"Challenge the claim and provide a counter-argument.",q:["Better in what sense?","Is the process part of the value?","When is ordering genuinely the better choice?"]},
+    ],
+    medium:[
+      {t:"Remote work kills creativity.",a:"Challenge the claim and provide a counter-argument.",q:["Is \"water-cooler talk\" really necessary?","Can you brainstorm effectively via Zoom?","Does an office environment force you to be \"fake\"?"]},
+      {t:"Social media has made us more lonely.",a:"Challenge the claim and provide a counter-argument.",q:["Is 1000 online friends better than 1 real friend?","Why do we feel lonely while looking at happy photos?","Can social media be a tool for true connection?"]},
+      {t:"Everyone should work in retail/service once.",a:"Challenge the claim and provide a counter-argument.",q:["Does it build character?","Would people be nicer if they knew the job?","What is the most valuable lesson you learn there?"]},
+      {t:"Modern movies are too long.",a:"Challenge the claim and provide a counter-argument.",q:["Is a 3-hour movie ever necessary?","Why can't directors tell a story in 90 minutes?","Does \"long\" mean \"epic\" or just \"boring\"?"]},
+      {t:"Boredom is good for you.",a:"Challenge the claim and provide a counter-argument.",q:["When was the last time you were truly bored?","Does silence help the brain recharge?","Is \"scrolling\" the enemy of creativity?"]},
+      {t:"We should stop celebrating New Year's.",a:"Challenge the claim and provide a counter-argument.",q:["Is it just a \"holiday of disappointment\"?","Why do we wait for a specific date to change our lives?","Is the party worth the hangover?"]},
+      {t:"\"Follow your passion\" is bad advice.",a:"Challenge the claim and provide a counter-argument.",q:["Should a hobby stay a hobby?","Is it better to be good at your job or love your job?","Can \"passion\" pay the bills?"]},
+      {t:"Minimalism is just for rich people.",a:"Challenge the claim and provide a counter-argument.",q:["Is it easier to \"own nothing\" when you can buy anything?","Is having \"less\" a choice or a trend?","What is the true cost of owning things?"]},
+      {t:"Smartwatches make us more anxious.",a:"Challenge the claim and provide a counter-argument.",q:["Do you really need to know your heart rate while watching TV?","Is \"gamifying\" health healthy?","When does a gadget become a distraction?"]},
+      {t:"The 9-to-5 workday is obsolete.",a:"Challenge the claim and provide a counter-argument.",q:["Why are we still using a 100-year-old system?","Does \"hours worked\" equal \"results\"?","What would a better schedule look like?"]},
+      {t:"Group projects in school should be banned.",a:"Challenge the claim and provide a counter-argument.",q:["What are group projects supposed to teach?","Who carries most of the weight?","Is the problem the format or how it's assessed?"]},
+      {t:"We should stop tipping at restaurants.",a:"Challenge the claim and provide a counter-argument.",q:["Who benefits most from tipping culture?","What would happen to wages if tipping was abolished?","Is the system broken or just misunderstood?"]},
+      {t:"Podcasts are better than music for long trips.",a:"Challenge the claim and provide a counter-argument.",q:["What does music give you that podcasts can't?","Does the purpose of the trip change the answer?","Is passive vs. active listening the real distinction?"]},
+      {t:"We should work 4 days a week instead of 5.",a:"Challenge the claim and provide a counter-argument.",q:["What did trials in Iceland and Japan find?","What would workers do with the extra day?","Who would resist this change most, and why?"]},
+      {t:"Living in a \"smart home\" is actually annoying.",a:"Challenge the claim and provide a counter-argument.",q:["What problem do smart home devices actually solve?","When does automation create more friction than it removes?","Is the annoyance about the tech or the expectation?"]},
+      {t:"Influencer culture is dying.",a:"Challenge the claim and provide a counter-argument.",q:["What has changed about how people consume influencer content?","What would need to happen for it to actually die?","Is the problem influencers or the attention economy?"]},
+      {t:"Being a \"jack of all trades\" is a disadvantage.",a:"Challenge the claim and provide a counter-argument.",q:["In what fields is depth more valuable than breadth?","Has the answer changed in the modern job market?","Can you name someone who succeeded by being a generalist?"]},
+      {t:"Taking notes by hand is better than typing.",a:"Challenge the claim and provide a counter-argument.",q:["What does research say about retention and handwriting?","Is the benefit about the act of writing or the inability to type everything?","When is typing clearly the better tool?"]},
+      {t:"Reading news every day is bad for your health.",a:"Challenge the claim and provide a counter-argument.",q:["What is the difference between being informed and overexposed?","Does the format — social media vs. long-form — change the impact?","Is ignorance a realistic alternative?"]},
+    ],
+    hard:[
+      {t:"Work-life balance is a corporate myth.",a:"Challenge the claim and provide a counter-argument.",q:["Can you truly \"switch off\" in a digital world?","Is work a part of life or an enemy of it?","Does the phrase \"balance\" create more stress?"]},
+      {t:"Meritocracy is a lie.",a:"Challenge the claim and provide a counter-argument.",q:["Is success really about \"hard work\"?","How much does luck play a role in where we are?","Does believing in meritocracy make us less empathetic?"]},
+      {t:"Travel is just a form of consumerism.",a:"Challenge the claim and provide a counter-argument.",q:["Do we visit places or just \"consume\" them for photos?","Can you \"find yourself\" in a tourist trap?","Is the carbon footprint of travel worth the \"experience\"?"]},
+      {t:"Privacy is no longer a human right.",a:"Challenge the claim and provide a counter-argument.",q:["Have we already traded privacy for convenience?","Is it possible to live \"offline\" in 2026?","If you have nothing to hide, do you still need privacy?"]},
+      {t:"Traditional degrees are becoming obsolete.",a:"Challenge the claim and provide a counter-argument.",q:["Is a 4-year degree too slow for the modern world?","What can a university teach that YouTube can't?","Is \"networking\" the only reason to go to college?"]},
+      {t:"Optimism is a form of denial.",a:"Challenge the claim and provide a counter-argument.",q:["Is \"realistic\" just a nice word for \"pessimistic\"?","Does positive thinking prevent us from solving problems?","Can you be happy without being an optimist?"]},
+      {t:"AI art isn't actually \"art.\"",a:"Challenge the claim and provide a counter-argument.",q:["Does art require a soul or just a result?","Is a prompt-engineer an artist?","What happens to human creativity when machines can do it better?"]},
+      {t:"Nostalgia is a barrier to progress.",a:"Challenge the claim and provide a counter-argument.",q:["Why do we think the past was \"better\"?","Does romanticizing history stop us from building the future?","Is nostalgia just a marketing tool for old brands?"]},
+      {t:"Intellectual property stifles innovation.",a:"Challenge the claim and provide a counter-argument.",q:["Should ideas be \"owned\"?","Does a 70-year copyright help or hurt creators?","What would happen if all knowledge was free?"]},
+      {t:"Authenticity is just a performance.",a:"Challenge the claim and provide a counter-argument.",q:["Can you be \"yourself\" when someone is watching?","Is \"being authentic\" just another social media trend?","Do we ever stop acting?"]},
+      {t:"The pursuit of happiness is what makes us unhappy.",a:"Challenge the claim and provide a counter-argument.",q:["What is the difference between pursuing happiness and experiencing it?","What should people pursue instead?","Is this a Western problem or a universal one?"]},
+      {t:"Meritocracy is a flawed concept.",a:"Challenge the claim and provide a counter-argument.",q:["What does meritocracy assume about equal starting conditions?","Can you have a fair competition inside an unfair system?","Is the alternative to meritocracy worse?"]},
+      {t:"Over-specialization is a threat to human survival.",a:"Challenge the claim and provide a counter-argument.",q:["What happens to a civilization that can't adapt across domains?","Is this a risk at the individual or systemic level?","What would a well-rounded person need to know right now?"]},
+      {t:"Digital immortality — uploading a brain — is a nightmare, not a dream.",a:"Challenge the claim and provide a counter-argument.",q:["Is a perfect digital copy of you actually you?","What is lost in the translation from biological to digital?","Who controls the version of you that gets uploaded?"]},
+      {t:"Our obsession with productivity is a form of modern slavery.",a:"Challenge the claim and provide a counter-argument.",q:["What is the difference between chosen work and compelled work?","Is it slavery if we consented to the system?","What would it feel like to genuinely stop being productive?"]},
+      {t:"Most \"charity\" is just PR for corporations.",a:"Challenge the claim and provide a counter-argument.",q:["What is the difference between charity as PR and charity with genuine impact?","Does motive matter if the outcome is positive?","Who benefits most from corporate charitable giving?"]},
+      {t:"We shouldn't strive for a \"perfect\" life.",a:"Challenge the claim and provide a counter-argument.",q:["What does \"perfect\" mean in this context?","Is the pursuit of perfection always harmful?","Can high standards and wellbeing coexist?"]},
+    ]
+  },
+  devil:{
+    easy:[
+      {t:"Losing is better than winning.",a:"Steel-man the argument (defend the unpopular side).",q:["Do we learn more from a mistake?","Is winning too much pressure?"]},
+      {t:"Rainy days are better than sunny days.",a:"Steel-man the argument (defend the unpopular side).",q:["Does it feel \"cosy\" to stay inside?","Is the sun too loud/bright sometimes?"]},
+      {t:"We should stop exercising.",a:"Steel-man the argument (defend the unpopular side).",q:["Is it a waste of time you could use for reading?","Is \"natural movement\" enough?"]},
+      {t:"Fast food is the greatest invention.",a:"Steel-man the argument (defend the unpopular side).",q:["Does it save time for busy families?","Is the taste engineered to be perfect?"]},
+      {t:"Being late is a sign of a busy person.",a:"Steel-man the argument (defend the unpopular side).",q:["Does it mean your time is very valuable?","Are \"on-time\" people just bored?"]},
+      {t:"Mismatched socks are a fashion statement.",a:"Steel-man the argument (defend the unpopular side).",q:["Why waste time searching for a pair?","Does it show you are a rebel?"]},
+      {t:"Winter is better for your health.",a:"Steel-man the argument (defend the unpopular side).",q:["Does the cold \"wake up\" your brain?","Do you sleep better in a cold room?"]},
+      {t:"Talking to strangers is a good idea.",a:"Steel-man the argument (defend the unpopular side).",q:["Could a stranger be your next best friend?","Does it improve your social skills?"]},
+      {t:"Flip phones should come back.",a:"Steel-man the argument (defend the unpopular side).",q:["Is a screen-free life more peaceful?","Do we miss the \"click\" of closing a phone?"]},
+      {t:"Messy desks are for geniuses.",a:"Steel-man the argument (defend the unpopular side).",q:["Does a clean desk mean an empty mind?","Is \"organized chaos\" more productive?"]},
+      {t:"Why we should stop going to the gym.",a:"Steel-man the argument (defend the unpopular side).",q:["Is \"natural movement\" enough?","Is the gym culture more harmful than helpful?"]},
+      {t:"It's good to wake up at noon.",a:"Steel-man the argument (defend the unpopular side).",q:["Does the brain do its best work at night?","Is the \"early bird\" idea just a cultural myth?"]},
+      {t:"Plastic bottles are better than glass ones.",a:"Steel-man the argument (defend the unpopular side).",q:["How do transport emissions compare?","What is the actual environmental cost of each?"]},
+      {t:"We should never share our snacks.",a:"Steel-man the argument (defend the unpopular side).",q:["Is sharing food always a social obligation?","What are the hygiene arguments here?"]},
+      {t:"Being loud in public is okay.",a:"Steel-man the argument (defend the unpopular side).",q:["What counts as \"too loud\" — and who decides?","Is the demand for silence always reasonable?"]},
+      {t:"Reading \"trashy\" magazines is good.",a:"Steel-man the argument (defend the unpopular side).",q:["What does escapism actually do for us?","Is there cultural literacy in knowing celebrity gossip?"]},
+      {t:"Everyone should wear the same clothes.",a:"Steel-man the argument (defend the unpopular side).",q:["Would mandatory clothing reduce inequality?","What would we lose if we dressed identically?"]},
+    ],
+    medium:[
+      {t:"Clickbait is actually useful.",a:"Steel-man the argument (defend the unpopular side).",q:["Does it make boring news more exciting?","If the content is good, does the title matter?"]},
+      {t:"Office gossip is good for culture.",a:"Steel-man the argument (defend the unpopular side).",q:["Is it the only way to know what's really going on?","Does it build trust between coworkers?"]},
+      {t:"Bad reviews are more helpful than good ones.",a:"Steel-man the argument (defend the unpopular side).",q:["Are good reviews just fake marketing?","Does \"hate\" reveal the truth about a product?"]},
+      {t:"We should stop trying to be happy.",a:"Steel-man the argument (defend the unpopular side).",q:["Is \"contentment\" better than \"happiness\"?","Does the pressure to be happy make us sad?"]},
+      {t:"Luxury brands are a waste of money.",a:"Steel-man the argument (defend the unpopular side).",q:["Are you paying for the quality or the logo?","Is it just a way to feel superior?"]},
+      {t:"Kids shouldn't have summer holidays.",a:"Steel-man the argument (defend the unpopular side).",q:["Do they forget everything they learned?","Is a 3-month break too long for a routine?"]},
+      {t:"Plagiarism is just \"extreme inspiration.\"",a:"Steel-man the argument (defend the unpopular side).",q:["Is anything truly \"original\" anymore?","Why not build on a great idea?"]},
+      {t:"Robots should replace all waiters.",a:"Steel-man the argument (defend the unpopular side).",q:["Do robots ever have a \"bad mood\"?","Is the service faster and more accurate?"]},
+      {t:"Sleeping in is a sign of high intelligence.",a:"Steel-man the argument (defend the unpopular side).",q:["Does the brain do its best work at night?","Why follow a \"peasant\" sunrise schedule?"]},
+      {t:"Censorship can be a tool for stability.",a:"Steel-man the argument (defend the unpopular side).",q:["Is \"too much truth\" dangerous for society?","Should we limit hate speech to stay safe?"]},
+      {t:"Working in a noisy office is better than a quiet one.",a:"Steel-man the argument (defend the unpopular side).",q:["What does ambient noise do to concentration?","Why do some people work better with background noise?"]},
+      {t:"We should charge people to use social media.",a:"Steel-man the argument (defend the unpopular side).",q:["What does \"free\" actually cost users right now?","Would a fee reduce harmful behaviour?"]},
+      {t:"Failing a project is better for your career than succeeding.",a:"Steel-man the argument (defend the unpopular side).",q:["What does failure teach that success hides?","When does failure become genuinely educational?"]},
+      {t:"Gossip is a vital tool for social bonding.",a:"Steel-man the argument (defend the unpopular side).",q:["What function does gossip serve in groups?","Is there a difference between gossip and social information?"]},
+      {t:"A \"bad\" movie is more interesting than a \"perfect\" one.",a:"Steel-man the argument (defend the unpopular side).",q:["What do flawed films reveal that polished ones hide?","Is unpredictability more entertaining than craft?"]},
+      {t:"Procrastination leads to better results.",a:"Steel-man the argument (defend the unpopular side).",q:["What does deadline pressure do to decision-making?","Are you really procrastinating, or waiting for clarity?"]},
+    ],
+    hard:[
+      {t:"Total surveillance makes us safer.",a:"Steel-man the argument (defend the unpopular side).",q:["If you're doing nothing wrong, why hide?","Could crime vanish if we were always watched?"]},
+      {t:"Lying is a moral necessity.",a:"Steel-man the argument (defend the unpopular side).",q:["Is total honesty actually \"cruelty\"?","Can a polite society survive without white lies?"]},
+      {t:"We should stop trying to \"save the planet.\"",a:"Steel-man the argument (defend the unpopular side).",q:["Is Earth fine, but humans are the problem?","Should we focus on adapting rather than saving?"]},
+      {t:"Monopolies are more efficient than competition.",a:"Steel-man the argument (defend the unpopular side).",q:["Does one big company provide better standards?","Is competition just a waste of resources?"]},
+      {t:"Failure should be punished.",a:"Steel-man the argument (defend the unpopular side).",q:["Does \"celebrating failure\" make us lazy?","Does fear drive people to perfection?"]},
+      {t:"\"Authenticity\" is a marketing trick.",a:"Steel-man the argument (defend the unpopular side).",q:["Is a brand \"being real\" just a way to sell more?","Is there any true self behind the brand?"]},
+      {t:"We should stop exploring space.",a:"Steel-man the argument (defend the unpopular side).",q:["Why look at stars when the oceans are a mess?","Is it just a \"billionaire's playground\"?"]},
+      {t:"Extreme inequality drives progress.",a:"Steel-man the argument (defend the unpopular side).",q:["Does the desire for wealth move the world?","Would anyone work hard if everyone was equal?"]},
+      {t:"History should be rewritten for the present.",a:"Steel-man the argument (defend the unpopular side).",q:["Is history just a story we tell ourselves?","Should we remove the \"bad\" parts to move on?"]},
+      {t:"Digital anonymity is dangerous.",a:"Steel-man the argument (defend the unpopular side).",q:["Does \"no name\" lead to \"no accountability\"?","Should the internet be a \"real name only\" zone?"]},
+      {t:"We should embrace \"forgetting\" instead of digital archiving.",a:"Steel-man the argument (defend the unpopular side).",q:["What does forgetting make possible that perfect memory destroys?","Is the right to be forgotten more important than the record?"]},
+      {t:"Competition is more moral than cooperation.",a:"Steel-man the argument (defend the unpopular side).",q:["Does competition produce better outcomes than cooperation?","Is cooperation just organized self-interest?"]},
+    ]
+  },
+  finish:{
+    easy:[
+      {t:"The perfect weekend always starts with...",a:"Complete the sentence and justify your choice.",q:[]},
+      {t:"If I could eat only one thing for a month, it would be...",a:"Complete the sentence and justify your choice.",q:[]},
+      {t:"My secret talent that no one knows about is...",a:"Complete the sentence and justify your choice.",q:[]},
+      {t:"The best way to wake up in the morning is...",a:"Complete the sentence and justify your choice.",q:[]},
+      {t:"If I were a movie character, I'd be...",a:"Complete the sentence and justify your choice.",q:[]},
+      {t:"The most annoying sound in the world is...",a:"Complete the sentence and justify your choice.",q:[]},
+      {t:"My idea of a perfect holiday is...",a:"Complete the sentence and justify your choice.",q:[]},
+      {t:"If I won a million dollars today, I would...",a:"Complete the sentence and justify your choice.",q:[]},
+      {t:"The weirdest dream I ever had was...",a:"Complete the sentence and justify your choice.",q:[]},
+      {t:"I feel most productive when...",a:"Complete the sentence and justify your choice.",q:[]},
+      {t:"My favorite way to spend a rainy day is...",a:"Complete the sentence and justify your choice.",q:[]},
+      {t:"If I could go back to being 5 years old, I would...",a:"Complete the sentence and justify your choice.",q:[]},
+      {t:"The best thing about being an adult is...",a:"Complete the sentence and justify your choice.",q:[]},
+      {t:"If I had a robot that could do one chore, it would...",a:"Complete the sentence and justify your choice.",q:[]},
+      {t:"I feel most creative when...",a:"Complete the sentence and justify your choice.",q:[]},
+      {t:"The first thing I look for in a new friend is...",a:"Complete the sentence and justify your choice.",q:[]},
+      {t:"A perfect dinner must include...",a:"Complete the sentence and justify your choice.",q:[]},
+      {t:"I am always happy when I see...",a:"Complete the sentence and justify your choice.",q:[]},
+    ],
+    medium:[
+      {t:"If AI could do 90% of our jobs, humans would...",a:"Complete the sentence and justify your choice.",q:[]},
+      {t:"The biggest mistake people make in their 20s is...",a:"Complete the sentence and justify your choice.",q:[]},
+      {t:"If I could live in any era of history, I'd choose...",a:"Complete the sentence and justify your choice.",q:[]},
+      {t:"The most important quality in a friend is...",a:"Complete the sentence and justify your choice.",q:[]},
+      {t:"If I could delete one app from everyone's phone, it would be...",a:"Complete the sentence and justify your choice.",q:[]},
+      {t:"Real success feels like...",a:"Complete the sentence and justify your choice.",q:[]},
+      {t:"The one thing that always makes me nostalgic is...",a:"Complete the sentence and justify your choice.",q:[]},
+      {t:"If I had to start my career over from scratch, I'd...",a:"Complete the sentence and justify your choice.",q:[]},
+      {t:"The problem with modern dating is...",a:"Complete the sentence and justify your choice.",q:[]},
+      {t:"Education should focus less on facts and more on...",a:"Complete the sentence and justify your choice.",q:[]},
+      {t:"If I could download a new skill into my brain instantly, it would be...",a:"Complete the sentence and justify your choice.",q:[]},
+      {t:"The world would be a lot quieter if we all...",a:"Complete the sentence and justify your choice.",q:[]},
+      {t:"The biggest lesson I learned from a mistake was...",a:"Complete the sentence and justify your choice.",q:[]},
+      {t:"Success is not about money, it's about...",a:"Complete the sentence and justify your choice.",q:[]},
+      {t:"If I could meet my 80-year-old self, I would ask...",a:"Complete the sentence and justify your choice.",q:[]},
+      {t:"The most annoying modern invention is...",a:"Complete the sentence and justify your choice.",q:[]},
+      {t:"I think the best age to be is... because...",a:"Complete the sentence and justify your choice.",q:[]},
+      {t:"People spend too much time worrying about...",a:"Complete the sentence and justify your choice.",q:[]},
+      {t:"If I were the leader of my own island, the first rule would be...",a:"Complete the sentence and justify your choice.",q:[]},
+    ],
+    hard:[
+      {t:"The true measure of a successful society isn't GDP, but...",a:"Complete the sentence and justify your choice.",q:[]},
+      {t:"Human nature is fundamentally...",a:"Complete the sentence and justify your choice.",q:[]},
+      {t:"The biggest threat to our future isn't climate change, it's...",a:"Complete the sentence and justify your choice.",q:[]},
+      {t:"If we discovered we were living in a simulation, I would...",a:"Complete the sentence and justify your choice.",q:[]},
+      {t:"The legacy I want to leave behind is...",a:"Complete the sentence and justify your choice.",q:[]},
+      {t:"Power eventually corrupts even the best people because...",a:"Complete the sentence and justify your choice.",q:[]},
+      {t:"Life would be much simpler if we stopped...",a:"Complete the sentence and justify your choice.",q:[]},
+      {t:"Freedom of speech should only be limited when...",a:"Complete the sentence and justify your choice.",q:[]},
+      {t:"The most misunderstood concept in philosophy is...",a:"Complete the sentence and justify your choice.",q:[]},
+      {t:"If we achieved immortality tomorrow, the world would...",a:"Complete the sentence and justify your choice.",q:[]},
+      {t:"True freedom is impossible without...",a:"Complete the sentence and justify your choice.",q:[]},
+      {t:"The paradox of the modern world is that we have more... but less...",a:"Complete the sentence and justify your choice.",q:[]},
+      {t:"The legacy of our generation will most likely be...",a:"Complete the sentence and justify your choice.",q:[]},
+      {t:"Silence is often more powerful than words when...",a:"Complete the sentence and justify your choice.",q:[]},
+      {t:"We often mistake \"convenience\" for \"progress,\" but...",a:"Complete the sentence and justify your choice.",q:[]},
+      {t:"The most profound realization I've ever had about life is...",a:"Complete the sentence and justify your choice.",q:[]},
+    ]
+  },
+  guilty:{
+    easy:[
+      {t:"Eating cold pizza for breakfast.",a:"Defend a habit that is usually considered \"cringe\" or a waste of time.",q:["Why is it better than a bowl of cereal?"]},
+      {t:"Watching cartoons as an adult.",a:"Defend a habit that is usually considered \"cringe\" or a waste of time.",q:["Is it better than the news?"]},
+      {t:"Singing loudly in the shower.",a:"Defend a habit that is usually considered \"cringe\" or a waste of time.",q:["Is it your private concert?"]},
+      {t:"Wearing pajamas all day.",a:"Defend a habit that is usually considered \"cringe\" or a waste of time.",q:["Is it the ultimate form of freedom?"]},
+      {t:"Putting ketchup on everything.",a:"Defend a habit that is usually considered \"cringe\" or a waste of time.",q:["Does it make life better?"]},
+      {t:"Sleeping with a stuffed animal.",a:"Defend a habit that is usually considered \"cringe\" or a waste of time.",q:["Is it a sign of emotional health?"]},
+      {t:"Listening to \"cheesy\" pop songs.",a:"Defend a habit that is usually considered \"cringe\" or a waste of time.",q:["Why does everyone secretly love them?"]},
+      {t:"Buying things I don't need on sale.",a:"Defend a habit that is usually considered \"cringe\" or a waste of time.",q:["Is the \"win\" better than the item?"]},
+      {t:"Watching \"satisfying\" videos for hours.",a:"Defend a habit that is usually considered \"cringe\" or a waste of time.",q:["Is it a form of meditation?"]},
+      {t:"Dipping fries in a milkshake.",a:"Defend a habit that is usually considered \"cringe\" or a waste of time.",q:["Why is sweet and salty the best combo?"]},
+      {t:"Buying things just because they are \"cute.\"",a:"Defend a habit that is usually considered \"cringe\" or a waste of time.",q:["Does owning something beautiful have value?"]},
+      {t:"Singing in the car when alone.",a:"Defend a habit that is usually considered \"cringe\" or a waste of time.",q:["Is it the best private concert?"]},
+      {t:"Dancing in front of a mirror.",a:"Defend a habit that is usually considered \"cringe\" or a waste of time.",q:["Is it a confidence boost or just fun?"]},
+      {t:"Eating cereal for dinner.",a:"Defend a habit that is usually considered \"cringe\" or a waste of time.",q:["Is it the ultimate act of adult freedom?"]},
+      {t:"Watching funny cat videos for an hour.",a:"Defend a habit that is usually considered \"cringe\" or a waste of time.",q:["Is this the internet at its purest?"]},
+      {t:"Reading the end of the book first.",a:"Defend a habit that is usually considered \"cringe\" or a waste of time.",q:["Does knowing the ending ruin or improve the journey?"]},
+      {t:"Talking to your computer when it's slow.",a:"Defend a habit that is usually considered \"cringe\" or a waste of time.",q:["Does it actually help?"]},
+    ],
+    medium:[
+      {t:"Following celebrity drama like it's news.",a:"Defend a habit that is usually considered \"cringe\" or a waste of time.",q:["Is it just a modern soap opera?"]},
+      {t:"Binge-watching reality TV shows.",a:"Defend a habit that is usually considered \"cringe\" or a waste of time.",q:["Is it a study of human behavior?"]},
+      {t:"Doomscrolling on social media.",a:"Defend a habit that is usually considered \"cringe\" or a waste of time.",q:["Is it our way of \"staying alert\"?"]},
+      {t:"Reading the comments section.",a:"Defend a habit that is usually considered \"cringe\" or a waste of time.",q:["Is it more interesting than the article?"]},
+      {t:"Using \"baby talk\" with pets.",a:"Defend a habit that is usually considered \"cringe\" or a waste of time.",q:["Do they understand the love in the tone?"]},
+      {t:"Buying overpriced coffee every day.",a:"Defend a habit that is usually considered \"cringe\" or a waste of time.",q:["Is it a $5 therapy session?"]},
+      {t:"Looking at houses I can't afford.",a:"Defend a habit that is usually considered \"cringe\" or a waste of time.",q:["Is dreaming a productive hobby?"]},
+      {t:"Wearing \"ugly\" but comfortable shoes.",a:"Defend a habit that is usually considered \"cringe\" or a waste of time.",q:["Should we stop suffering for fashion?"]},
+      {t:"Ordering delivery when the kitchen is full.",a:"Defend a habit that is usually considered \"cringe\" or a waste of time.",q:["Is \"peace of mind\" worth the fee?"]},
+      {t:"Re-watching the same sitcom for the 15th time.",a:"Defend a habit that is usually considered \"cringe\" or a waste of time.",q:["Is it a \"comfort blanket\" for the brain?"]},
+      {t:"Watching \"restoration\" videos of old rusty tools.",a:"Defend a habit that is usually considered \"cringe\" or a waste of time.",q:["What does watching things get fixed do for the brain?"]},
+      {t:"Using way too many filters on photos.",a:"Defend a habit that is usually considered \"cringe\" or a waste of time.",q:["Is it art or just vanity?"]},
+      {t:"Buying expensive notebooks and never writing in them.",a:"Defend a habit that is usually considered \"cringe\" or a waste of time.",q:["Is the potential of a blank page its own value?"]},
+      {t:"Watching reality TV just to judge the people.",a:"Defend a habit that is usually considered \"cringe\" or a waste of time.",q:["Is judgment a form of moral education?"]},
+      {t:"Making a to-do list of things already done.",a:"Defend a habit that is usually considered \"cringe\" or a waste of time.",q:["Is retroactive planning actually smart?"]},
+      {t:"Spending too much time on a morning coffee \"ritual.\"",a:"Defend a habit that is usually considered \"cringe\" or a waste of time.",q:["Is a slow morning the secret to a good day?"]},
+      {t:"Re-watching the same movie every single year.",a:"Defend a habit that is usually considered \"cringe\" or a waste of time.",q:["What does repetition give you that novelty can't?"]},
+    ],
+    hard:[
+      {t:"Using \"lazy\" slang in work emails.",a:"Defend a habit that is usually considered \"cringe\" or a waste of time.",q:["Is it more authentic?"]},
+      {t:"Reading \"trashy\" novels over \"classics.\"",a:"Defend a habit that is usually considered \"cringe\" or a waste of time.",q:["Is entertainment more important than education?"]},
+      {t:"Defending a \"problematic\" childhood movie.",a:"Defend a habit that is usually considered \"cringe\" or a waste of time.",q:["Can we separate the art from the time?"]},
+      {t:"\"Rotting\" in bed all day to recharge.",a:"Defend a habit that is usually considered \"cringe\" or a waste of time.",q:["Is it a rebellion against productivity?"]},
+      {t:"Aesthetics over functionality.",a:"Defend a habit that is usually considered \"cringe\" or a waste of time.",q:["Should we live in a museum if it looks good?"]},
+      {t:"Ghosting people when socially exhausted.",a:"Defend a habit that is usually considered \"cringe\" or a waste of time.",q:["Is it self-care or a social crime?"]},
+      {t:"Paying for a gym you never use.",a:"Defend a habit that is usually considered \"cringe\" or a waste of time.",q:["Is the \"hope\" of fitness worth the price?"]},
+      {t:"Loving the villain more than the hero.",a:"Defend a habit that is usually considered \"cringe\" or a waste of time.",q:["Are villains more realistic?"]},
+      {t:"Keeping sentimental junk.",a:"Defend a habit that is usually considered \"cringe\" or a waste of time.",q:["When does \"meaningful\" become \"hoarding\"?"]},
+      {t:"Using AI for personal messages.",a:"Defend a habit that is usually considered \"cringe\" or a waste of time.",q:["Is it \"thoughtful\" if it's efficient?"]},
+      {t:"Indulging in \"doomscrolling\" to feel a sense of perspective.",a:"Defend a habit that is usually considered \"cringe\" or a waste of time.",q:["Can knowing the worst make you feel better about your own life?"]},
+      {t:"Finding comfort in highly predictable \"trashy\" sitcoms.",a:"Defend a habit that is usually considered \"cringe\" or a waste of time.",q:["Is predictability a feature, not a bug?"]},
+      {t:"Prioritizing \"aesthetic vibes\" over practical living.",a:"Defend a habit that is usually considered \"cringe\" or a waste of time.",q:["Does your environment shape your identity?"]},
+      {t:"Romanticizing a time period you never actually lived in.",a:"Defend a habit that is usually considered \"cringe\" or a waste of time.",q:["Is historical nostalgia a form of creativity?"]},
+    ]
+  },
+  nobody:{
+    easy:[
+      {t:"Adulting is 90% thinking about what to cook.",a:"Discuss the \"unspoken\" or awkward truth.",q:["Why is this so hard?"]},
+      {t:"New shoes always hurt. No matter the price.",a:"Discuss the \"unspoken\" or awkward truth.",q:["Why?"]},
+      {t:"Living alone means you kill the spiders.",a:"Discuss the \"unspoken\" or awkward truth.",q:["Is that the hardest part?"]},
+      {t:"Traveling is mostly waiting in lines.",a:"Discuss the \"unspoken\" or awkward truth.",q:["Is the photo worth the wait?"]},
+      {t:"Your parents were just guessing.",a:"Discuss the \"unspoken\" or awkward truth.",q:["When did you realize they didn't know everything?"]},
+      {t:"\"One size fits all\" fits no one.",a:"Discuss the \"unspoken\" or awkward truth.",q:["Why do they still say it?"]},
+      {t:"Public transport is mostly avoiding eye contact.",a:"Discuss the \"unspoken\" or awkward truth.",q:["Is it a social skill?"]},
+      {t:"Healthy smoothies often taste like grass.",a:"Discuss the \"unspoken\" or awkward truth.",q:["Why do we lie to ourselves?"]},
+      {t:"Housework never ends.",a:"Discuss the \"unspoken\" or awkward truth.",q:["Is it the most boring \"game\" ever?"]},
+      {t:"Your first car is always your favorite. Even if it was terrible.",a:"Discuss the \"unspoken\" or awkward truth.",q:["Why?"]},
+      {t:"Being a tourist is actually very tiring.",a:"Discuss the \"unspoken\" or awkward truth.",q:["What does a holiday look like vs. what it feels like?"]},
+      {t:"Cooking takes an hour, but eating takes 5 minutes.",a:"Discuss the \"unspoken\" or awkward truth.",q:["Is the effort worth it?"]},
+      {t:"Clothes never look as good on you as they do in the store.",a:"Discuss the \"unspoken\" or awkward truth.",q:["Why do we keep buying them?"]},
+      {t:"Having a big house means more cleaning.",a:"Discuss the \"unspoken\" or awkward truth.",q:["Is bigger always better?"]},
+      {t:"Most \"fun\" hobbies are actually quite expensive.",a:"Discuss the \"unspoken\" or awkward truth.",q:["Is passion a luxury?"]},
+      {t:"Going to bed early is the best feeling in the world.",a:"Discuss the \"unspoken\" or awkward truth.",q:["Why does no one talk about this?"]},
+      {t:"Learning to cook is mostly just washing dishes.",a:"Discuss the \"unspoken\" or awkward truth.",q:["Is the mess part of the skill?"]},
+    ],
+    medium:[
+      {t:"Meetings could have been an email.",a:"Discuss the \"unspoken\" or awkward truth.",q:["Why do we waste time in circles?"]},
+      {t:"Talent is useless without luck.",a:"Discuss the \"unspoken\" or awkward truth.",q:["Is hard work only half the story?"]},
+      {t:"Remote work means your office is always \"on.\"",a:"Discuss the \"unspoken\" or awkward truth.",q:["Is the boundary gone?"]},
+      {t:"Networking is just making \"strategic\" friends.",a:"Discuss the \"unspoken\" or awkward truth.",q:["Does it feel fake?"]},
+      {t:"Being \"busy\" is often poor management.",a:"Discuss the \"unspoken\" or awkward truth.",q:["Is it a status symbol?"]},
+      {t:"Nostalgia makes bad memories look good.",a:"Discuss the \"unspoken\" or awkward truth.",q:["Does the brain lie to us?"]},
+      {t:"The best jobs are never on LinkedIn.",a:"Discuss the \"unspoken\" or awkward truth.",q:["Is it all about \"who you know\"?"]},
+      {t:"We all judge people by their tech.",a:"Discuss the \"unspoken\" or awkward truth.",q:["Phone case, laptop brand — why?"]},
+      {t:"\"Authenticity\" is often a brand strategy.",a:"Discuss the \"unspoken\" or awkward truth.",q:["Can a person be \"real\" online?"]},
+      {t:"True friends are the ones you can be silent with.",a:"Discuss the \"unspoken\" or awkward truth.",q:["Is talking overrated?"]},
+      {t:"Networking is mostly just talking about the weather with strangers.",a:"Discuss the \"unspoken\" or awkward truth.",q:["What is networking actually for?"]},
+      {t:"Most \"productive\" people are just good at hiding their procrastination.",a:"Discuss the \"unspoken\" or awkward truth.",q:["Is productivity performance or reality?"]},
+      {t:"Most of our childhood memories are based on photos, not real memory.",a:"Discuss the \"unspoken\" or awkward truth.",q:["Do we remember the moment or the photo?"]},
+      {t:"Adult friendships require more \"scheduling\" than actual \"fun.\"",a:"Discuss the \"unspoken\" or awkward truth.",q:["When did friendships become calendar events?"]},
+      {t:"Your \"dream job\" will still have a boss and deadlines.",a:"Discuss the \"unspoken\" or awkward truth.",q:["Is passion enough to survive the reality?"]},
+      {t:"Social media is just a competition for attention.",a:"Discuss the \"unspoken\" or awkward truth.",q:["Are we performing or connecting?"]},
+      {t:"We buy things to impress people we don't even like.",a:"Discuss the \"unspoken\" or awkward truth.",q:["Who are we actually buying for?"]},
+      {t:"\"Thinking for yourself\" is much harder than it sounds.",a:"Discuss the \"unspoken\" or awkward truth.",q:["How much of what you think is actually yours?"]},
+      {t:"We are all just pretending to know what we are doing.",a:"Discuss the \"unspoken\" or awkward truth.",q:["At what point does pretending become real?"]},
+    ],
+    hard:[
+      {t:"Higher education is a \"sorting hat\" for the elite.",a:"Discuss the \"unspoken\" or awkward truth.",q:["Is it about learning or status?"]},
+      {t:"Compassion fatigue is real.",a:"Discuss the \"unspoken\" or awkward truth.",q:["Can we stop caring if we see too much pain?"]},
+      {t:"Ambition is often a form of trauma.",a:"Discuss the \"unspoken\" or awkward truth.",q:["Are we achieving or running away?"]},
+      {t:"Success often alienates you.",a:"Discuss the \"unspoken\" or awkward truth.",q:["Is it lonely at the top?"]},
+      {t:"\"Innovation\" is just making things cheaper.",a:"Discuss the \"unspoken\" or awkward truth.",q:["Have we stopped inventing real things?"]},
+      {t:"Professionalism is just \"acting\" for 8 hours.",a:"Discuss the \"unspoken\" or awkward truth.",q:["Who are we underneath?"]},
+      {t:"We are addicted to our own outrage.",a:"Discuss the \"unspoken\" or awkward truth.",q:["Do we look for things to be mad at?"]},
+      {t:"The \"digital detox\" is a luxury for the rich.",a:"Discuss the \"unspoken\" or awkward truth.",q:["Can a normal worker afford to go offline?"]},
+      {t:"Most original ideas are just forgotten thefts.",a:"Discuss the \"unspoken\" or awkward truth.",q:["Is there any new thought?"]},
+      {t:"Privacy is a privilege, not a right anymore.",a:"Discuss the \"unspoken\" or awkward truth.",q:["Who can afford to be invisible?"]},
+      {t:"The psychological cost of \"constantly optimizing\" your life.",a:"Discuss the \"unspoken\" or awkward truth.",q:["What do you lose when everything becomes a system to improve?"]},
+      {t:"Empathy is a finite resource that can lead to burnout.",a:"Discuss the \"unspoken\" or awkward truth.",q:["Can caring too much make us care less?"]},
+      {t:"Most \"innovations\" are just solutions to problems we didn't have.",a:"Discuss the \"unspoken\" or awkward truth.",q:["Is Silicon Valley solving real problems?"]},
+      {t:"We are becoming more \"connected\" but less \"intimate.\"",a:"Discuss the \"unspoken\" or awkward truth.",q:["What is the difference between connection and intimacy?"]},
+      {t:"The burden of having \"too many choices\" is a real mental health crisis.",a:"Discuss the \"unspoken\" or awkward truth.",q:["Does freedom of choice make us happier?"]},
+      {t:"We don't fear failure; we fear the judgment that follows it.",a:"Discuss the \"unspoken\" or awkward truth.",q:["What specifically are we afraid of?"]},
+    ]
+  },
+  grandpa:{
+    easy:[
+      {t:"A Selfie.",a:"Simplify the concept without using jargon.",q:["How would you describe it using a \"mirror\"?"]},
+      {t:"An Emoji.",a:"Simplify the concept without using jargon.",q:["Is it like a digital face expression?"]},
+      {t:"A Podcast.",a:"Simplify the concept without using jargon.",q:["Is it just radio on your phone?"]},
+      {t:"Wi-Fi.",a:"Simplify the concept without using jargon.",q:["How do you explain \"invisible internet strings\"?"]},
+      {t:"Online Shopping.",a:"Simplify the concept without using jargon.",q:["Is it like a catalog that never ends?"]},
+      {t:"A Meme.",a:"Simplify the concept without using jargon.",q:["A picture that's a joke for everyone?"]},
+      {t:"Netflix.",a:"Simplify the concept without using jargon.",q:["A library of movies that live inside the TV?"]},
+      {t:"A Hashtag.",a:"Simplify the concept without using jargon.",q:["A way to put things into boxes?"]},
+      {t:"A Smartwatch.",a:"Simplify the concept without using jargon.",q:["A doctor and a phone on your wrist?"]},
+      {t:"Google Maps.",a:"Simplify the concept without using jargon.",q:["A map that knows exactly where you are?"]},
+      {t:"A Power bank.",a:"Simplify the concept without using jargon.",q:["A spare battery you carry in your pocket?"]},
+      {t:"A Touchscreen.",a:"Simplify the concept without using jargon.",q:["A screen that responds to your finger like a button?"]},
+      {t:"A Vlog.",a:"Simplify the concept without using jargon.",q:["A video diary that anyone can watch?"]},
+      {t:"Wireless headphones.",a:"Simplify the concept without using jargon.",q:["Headphones without a wire — how does the sound get there?"]},
+      {t:"An App store.",a:"Simplify the concept without using jargon.",q:["A shop where everything is free or cheap and lives on your phone?"]},
+      {t:"Online dating.",a:"Simplify the concept without using jargon.",q:["Choosing a date from a catalog before meeting them?"]},
+      {t:"A \"Smart\" TV.",a:"Simplify the concept without using jargon.",q:["A TV that connects to the internet — why does a TV need that?"]},
+      {t:"A Notification.",a:"Simplify the concept without using jargon.",q:["Your phone tapping you on the shoulder?"]},
+    ],
+    medium:[
+      {t:"The Cloud.",a:"Simplify the concept without using jargon.",q:["Where does a photo go when it leaves the phone?"]},
+      {t:"Cryptocurrency.",a:"Simplify the concept without using jargon.",q:["Money that isn't paper or in a bank?"]},
+      {t:"The Gig Economy.",a:"Simplify the concept without using jargon.",q:["Working for an app instead of a boss?"]},
+      {t:"Influencers.",a:"Simplify the concept without using jargon.",q:["People whose job is to be \"cool\"?"]},
+      {t:"Algorithms.",a:"Simplify the concept without using jargon.",q:["A robot that chooses what you like?"]},
+      {t:"Virtual Reality.",a:"Simplify the concept without using jargon.",q:["Glasses that put you in another world?"]},
+      {t:"5G.",a:"Simplify the concept without using jargon.",q:["Why do we need the internet to be \"faster than fast\"?"]},
+      {t:"Cancel Culture.",a:"Simplify the concept without using jargon.",q:["When a group stops liking someone at once?"]},
+      {t:"A Subscription.",a:"Simplify the concept without using jargon.",q:["Why do we pay for things we don't own?"]},
+      {t:"Cyberbullying.",a:"Simplify the concept without using jargon.",q:["Being mean through a screen?"]},
+      {t:"A Viral meme.",a:"Simplify the concept without using jargon.",q:["A joke that the whole internet shares at once?"]},
+      {t:"Streaming music (Spotify).",a:"Simplify the concept without using jargon.",q:["Renting music instead of buying it?"]},
+      {t:"Facial Recognition.",a:"Simplify the concept without using jargon.",q:["A camera that can identify who you are just by looking at you?"]},
+      {t:"\"Work from Home\" culture.",a:"Simplify the concept without using jargon.",q:["Why do people now work in their pajamas?"]},
+      {t:"Personal Data.",a:"Simplify the concept without using jargon.",q:["The digital footprint you leave everywhere you go online?"]},
+    ],
+    hard:[
+      {t:"NFTs.",a:"Simplify the concept without using jargon.",q:["Digital art that you \"own\" but can't touch?"]},
+      {t:"Deepfakes.",a:"Simplify the concept without using jargon.",q:["A video that lies to your eyes?"]},
+      {t:"Generative AI.",a:"Simplify the concept without using jargon.",q:["A machine that thinks it can write like a human?"]},
+      {t:"Blockchain.",a:"Simplify the concept without using jargon.",q:["A chain of digital promises that can't be broken?"]},
+      {t:"The Metaverse.",a:"Simplify the concept without using jargon.",q:["Living a second life inside a computer?"]},
+      {t:"Quantum Computing.",a:"Simplify the concept without using jargon.",q:["A computer that can be in two places at once?"]},
+      {t:"Universal Basic Income.",a:"Simplify the concept without using jargon.",q:["Getting paid just for being alive?"]},
+      {t:"Genetic Engineering.",a:"Simplify the concept without using jargon.",q:["Editing the \"code\" of a living person?"]},
+      {t:"Carbon Footprint.",a:"Simplify the concept without using jargon.",q:["The \"shadow\" of pollution we leave behind?"]},
+      {t:"Algorithmic Bias.",a:"Simplify the concept without using jargon.",q:["Can a machine be \"racist\" or \"unfair\"?"]},
+    ]
+  },
+  sell:{
+    easy:[
+      {t:"A rock from your garden.",a:"Convince the audience to buy or do the impossible.",q:["Why is it the perfect \"pet\"?"]},
+      {t:"A pen with no ink.",a:"Convince the audience to buy or do the impossible.",q:["Is it a \"stress-relief tool\"?"]},
+      {t:"A map of the moon.",a:"Convince the audience to buy or do the impossible.",q:["Why is this the best gift for a dreamer?"]},
+      {t:"An invisible umbrella.",a:"Convince the audience to buy or do the impossible.",q:["Does it protect your \"energy\"?"]},
+      {t:"A used tea bag.",a:"Convince the audience to buy or do the impossible.",q:["Is it a \"vintage aroma\" for your room?"]},
+      {t:"A box of \"winter air.\"",a:"Convince the audience to buy or do the impossible.",q:["Can it wake you up in the summer?"]},
+      {t:"A chair with 3 legs.",a:"Convince the audience to buy or do the impossible.",q:["Is it an \"active sitting\" device?"]},
+      {t:"A clock that shows the wrong time.",a:"Convince the audience to buy or do the impossible.",q:["Why is it better for \"living in the moment\"?"]},
+      {t:"A book with blank pages.",a:"Convince the audience to buy or do the impossible.",q:["Is it a \"freedom journal\"?"]},
+      {t:"Single socks.",a:"Convince the audience to buy or do the impossible.",q:["Why is having two different socks \"cool\"?"]},
+      {t:"A pencil that is only 2 cm long.",a:"Convince the audience to buy or do the impossible.",q:["It's not small — what is it?"]},
+      {t:"A book with no title.",a:"Convince the audience to buy or do the impossible.",q:["Is the mystery the product?"]},
+      {t:"A hat with ears.",a:"Convince the audience to buy or do the impossible.",q:["Who is wearing this, and where?"]},
+      {t:"A mug without a handle.",a:"Convince the audience to buy or do the impossible.",q:["Is it a mindfulness tool?"]},
+      {t:"A key that opens nothing.",a:"Convince the audience to buy or do the impossible.",q:["What does owning this key make you feel?"]},
+    ],
+    medium:[
+      {t:"A subscription to a \"mystery sound\" app.",a:"Convince the audience to buy or do the impossible.",q:["Why do you need a new sound every day?"]},
+      {t:"The \"luxury\" of sleeping on the floor.",a:"Convince the audience to buy or do the impossible.",q:["Is it better for your spine and soul?"]},
+      {t:"A tour of a boring supermarket.",a:"Convince the audience to buy or do the impossible.",q:["Why is it a \"cultural experience\"?"]},
+      {t:"A perfume that smells like \"old library.\"",a:"Convince the audience to buy or do the impossible.",q:["Who doesn't want to smell like wisdom?"]},
+      {t:"A 2000-piece puzzle of a white wall.",a:"Convince the audience to buy or do the impossible.",q:["Is it the ultimate test of patience?"]},
+      {t:"An \"offline\" weekend for $500.",a:"Convince the audience to buy or do the impossible.",q:["Why pay to lose your phone?"]},
+      {t:"A degree in \"Advanced Relaxation.\"",a:"Convince the audience to buy or do the impossible.",q:["Why is doing nothing a skill?"]},
+      {t:"Insurance for your dreams.",a:"Convince the audience to buy or do the impossible.",q:["What if you lose your imagination?"]},
+      {t:"A diet of only colorful food.",a:"Convince the audience to buy or do the impossible.",q:["Is \"eating the rainbow\" the secret to health?"]},
+      {t:"A \"smart\" rock that does nothing.",a:"Convince the audience to buy or do the impossible.",q:["Is it the perfect anti-tech gadget?"]},
+      {t:"A subscription to a \"daily mystery sound.\"",a:"Convince the audience to buy or do the impossible.",q:["Why do your ears deserve a surprise every day?"]},
+      {t:"The idea of waking up at 4 AM every day.",a:"Convince the audience to buy or do the impossible.",q:["Is it a competitive advantage?"]},
+      {t:"A \"smart\" rock that does nothing.",a:"Convince the audience to buy or do the impossible.",q:["Is it the perfect anti-tech gadget?"]},
+      {t:"A perfume that smells like \"rain on asphalt.\"",a:"Convince the audience to buy or do the impossible.",q:["Is it a memory in a bottle?"]},
+      {t:"A class on \"How to do nothing.\"",a:"Convince the audience to buy or do the impossible.",q:["Is doing nothing the world's most underrated skill?"]},
+      {t:"A pillow that is slightly too hard.",a:"Convince the audience to buy or do the impossible.",q:["Is discomfort the secret to better sleep?"]},
+    ],
+    hard:[
+      {t:"Failure as a luxury product.",a:"Convince the audience to buy or do the impossible.",q:["Why should we pay to fail?"]},
+      {t:"Taxes as a \"civilization subscription.\"",a:"Convince the audience to buy or do the impossible.",q:["How do you make people love paying?"]},
+      {t:"A city built entirely underground.",a:"Convince the audience to buy or do the impossible.",q:["Why is it the future of living?"]},
+      {t:"The \"four-day work week\" to a CEO.",a:"Convince the audience to buy or do the impossible.",q:["How will it make him richer?"]},
+      {t:"\"Useless\" art to a utilitarian world.",a:"Convince the audience to buy or do the impossible.",q:["Why do we need things that do nothing?"]},
+      {t:"A \"digital-free\" retirement home.",a:"Convince the audience to buy or do the impossible.",q:["Why is the past the best future?"]},
+      {t:"Space tourism to a skeptic.",a:"Convince the audience to buy or do the impossible.",q:["Why leave Earth if it's beautiful here?"]},
+      {t:"The concept of \"failing fast\" to a perfectionist.",a:"Convince the audience to buy or do the impossible.",q:["How to sell the \"mistake\"?"]},
+      {t:"Slow-living in a fast economy.",a:"Convince the audience to buy or do the impossible.",q:["How do you sell \"taking your time\"?"]},
+      {t:"A \"privacy-free\" social media.",a:"Convince the audience to buy or do the impossible.",q:["Why is being watched the best way to live?"]},
+      {t:"The concept of \"failing fast\" to a risk-averse CEO.",a:"Convince the audience to buy or do the impossible.",q:["What does \"fast\" mean here — and why does speed reduce risk?"]},
+      {t:"A radical, minimalist lifestyle to a maximalist.",a:"Convince the audience to buy or do the impossible.",q:["What would they keep — and why?"]},
+      {t:"The beauty of \"useless\" knowledge in a utilitarian world.",a:"Convince the audience to buy or do the impossible.",q:["What does useless knowledge do for the person who holds it?"]},
+      {t:"The necessity of \"boredom\" to a generation addicted to screens.",a:"Convince the audience to buy or do the impossible.",q:["What does boredom actually produce in the brain?"]},
+      {t:"The importance of slow-living in a fast-paced economy.",a:"Convince the audience to buy or do the impossible.",q:["How do you sell \"taking your time\"?"]},
+    ]
+  },
+  dumb:{
+    easy:[
+      {t:"Why is a pizza round, in a square box, and eaten in triangles?",a:"Overthink a simple/silly observation.",q:[]},
+      {t:"Is a hotdog a sandwich?",a:"Overthink a simple/silly observation.",q:[]},
+      {t:"Why do we say \"heads up\" when we should duck?",a:"Overthink a simple/silly observation.",q:[]},
+      {t:"If a tomato is a fruit, is ketchup a smoothie?",a:"Overthink a simple/silly observation.",q:[]},
+      {t:"Do animals think we are the \"weird\" ones?",a:"Overthink a simple/silly observation.",q:[]},
+      {t:"Why is there a light in the fridge but not the freezer?",a:"Overthink a simple/silly observation.",q:[]},
+      {t:"Why do we \"go to sleep\" if we are already there?",a:"Overthink a simple/silly observation.",q:[]},
+      {t:"Is cereal a cold soup?",a:"Overthink a simple/silly observation.",q:[]},
+      {t:"Why are they called \"apartments\" if they are together?",a:"Overthink a simple/silly observation.",q:[]},
+      {t:"Why do we \"take a seat\" if we don't go anywhere with it?",a:"Overthink a simple/silly observation.",q:[]},
+      {t:"Why do we say \"cool\" for things that are \"good\"?",a:"Overthink a simple/silly observation.",q:[]},
+      {t:"Why do we call them \"sunglasses\" if they don't help us see the sun?",a:"Overthink a simple/silly observation.",q:[]},
+      {t:"If a turtle loses its shell, is it naked or homeless?",a:"Overthink a simple/silly observation.",q:[]},
+      {t:"Why do we cook \"bacon\" and bake \"cookies\"?",a:"Overthink a simple/silly observation.",q:[]},
+    ],
+    medium:[
+      {t:"Why do we \"clean\" towels if we are clean when we use them?",a:"Overthink a simple/silly observation.",q:[]},
+      {t:"If you buy a larger bed, you have more bed-room but less bedroom. Why?",a:"Overthink a simple/silly observation.",q:[]},
+      {t:"Why is \"abbreviated\" such a long word?",a:"Overthink a simple/silly observation.",q:[]},
+      {t:"If \"practice makes perfect\" but \"nobody is perfect,\" why practice?",a:"Overthink a simple/silly observation.",q:[]},
+      {t:"Why do we press harder on the remote when the batteries are dying?",a:"Overthink a simple/silly observation.",q:[]},
+      {t:"If we can't see air, can fish see water?",a:"Overthink a simple/silly observation.",q:[]},
+      {t:"Why is \"common sense\" not that common?",a:"Overthink a simple/silly observation.",q:[]},
+      {t:"If you try to fail and you succeed, which one did you do?",a:"Overthink a simple/silly observation.",q:[]},
+      {t:"Why is it called \"after midnight\" when it's always after midnight?",a:"Overthink a simple/silly observation.",q:[]},
+      {t:"Why do we call it a \"building\" if it's already built?",a:"Overthink a simple/silly observation.",q:[]},
+      {t:"If an orange is a fruit, why is an apple just an apple?",a:"Overthink a simple/silly observation.",q:[]},
+      {t:"Why do we say \"after midnight\" when it's technically always after midnight?",a:"Overthink a simple/silly observation.",q:[]},
+    ],
+    hard:[
+      {t:"If every part of a ship is replaced, is it still the same ship?",a:"Overthink a simple/silly observation.",q:[]},
+      {t:"Is math a language we invented or a law of the universe?",a:"Overthink a simple/silly observation.",q:[]},
+      {t:"Can we think without using any language?",a:"Overthink a simple/silly observation.",q:[]},
+      {t:"Does the universe exist if there is no one to watch it?",a:"Overthink a simple/silly observation.",q:[]},
+      {t:"If time is a dimension, why can we only move forward?",a:"Overthink a simple/silly observation.",q:[]},
+      {t:"If we have free will, why can't we choose what we like?",a:"Overthink a simple/silly observation.",q:[]},
+      {t:"Is \"nothing\" actually \"something\"?",a:"Overthink a simple/silly observation.",q:[]},
+      {t:"If an AI simulates a feeling perfectly, is it a real feeling?",a:"Overthink a simple/silly observation.",q:[]},
+      {t:"If everyone told the truth for 24 hours, would society collapse?",a:"Overthink a simple/silly observation.",q:[]},
+      {t:"Does a word have meaning if no one is there to hear it?",a:"Overthink a simple/silly observation.",q:[]},
+      {t:"Does a word have a meaning if nobody uses it?",a:"Overthink a simple/silly observation.",q:[]},
+      {t:"If everyone had a \"perfect\" memory, would we still have stories?",a:"Overthink a simple/silly observation.",q:[]},
+      {t:"If we have free will, why can't we choose what we find attractive?",a:"Overthink a simple/silly observation.",q:[]},
+      {t:"If the universe is infinite, does everything happen somewhere?",a:"Overthink a simple/silly observation.",q:[]},
+    ]
+  }
+};
+
+const PHRASES=[
+  {id:"start", label:"Getting started", items:[
+    "The first thing that comes to mind is…",
+    "Let me think about this for a second…",
+    "My gut reaction to this is…",
+    "Off the top of my head, I'd say…",
+    "What strikes me most about this is…",
+    "I'm not sure where to start, but I think…",
+    "There are a few ways to look at this…",
+    "The thing that jumps out at me is…",
+  ]},
+  {id:"opinion", label:"Giving your opinion", items:[
+    "I think… and the reason for that is…",
+    "What I actually believe is…",
+    "The way I see it…",
+    "Personally, I'd say… because…",
+    "I'm fairly convinced that…",
+    "My honest opinion is…",
+    "I'd probably argue that…",
+    "It seems to me that…",
+  ]},
+  {id:"build", label:"Adding & building", items:[
+    "And on top of that…",
+    "What makes this even stronger is…",
+    "Another thing worth saying is…",
+    "This also connects to…",
+    "Not only that, but…",
+    "And if you take it one step further…",
+    "What's more…",
+    "There's also the fact that…",
+  ]},
+  {id:"time", label:"Buying time", items:[
+    "That's a good point — let me think…",
+    "How do I put this…",
+    "I'm not sure exactly, but something like…",
+    "It's hard to put into words, but…",
+    "I know what I want to say, just…",
+    "That's tricky — I'd probably say…",
+    "I've never thought about it this way, but…",
+    "Give me a second…",
+  ]},
+  {id:"disagree", label:"Disagreeing", items:[
+    "I see your point, but…",
+    "I'd actually argue the opposite…",
+    "The problem with that is…",
+    "I'm not fully convinced, because…",
+    "That's one way to look at it, but…",
+    "I think that misses something important…",
+    "With respect, I don't think that holds because…",
+    "I can see why you'd say that, but…",
+  ]},
+  {id:"concede", label:"Conceding a point", items:[
+    "You're right that… but still…",
+    "Fair point — I'll give you that. However…",
+    "I hadn't thought of it that way, but even so…",
+    "That's true, and yet…",
+    "I can't argue with that, but…",
+    "Okay, that's a good point. What I'd say though is…",
+    "I'll admit that… but I still think…",
+    "Even if that's true…",
+  ]},
+  {id:"example", label:"Giving examples", items:[
+    "For example…",
+    "A good case of this is…",
+    "Take… for instance.",
+    "Think about what happens when…",
+    "Just look at…",
+    "This is exactly what happened with…",
+    "A real example of this would be…",
+    "You can see this with…",
+  ]},
+  {id:"speculate", label:"Speculating", items:[
+    "I imagine that…",
+    "My guess would be…",
+    "It seems likely that…",
+    "I suppose it depends on…",
+    "There's a good chance that…",
+    "It wouldn't surprise me if…",
+    "I'd expect that…",
+    "Who knows, but probably…",
+  ]},
+  {id:"wrap", label:"Wrapping up", items:[
+    "So overall, I think…",
+    "To sum it up…",
+    "My main point is…",
+    "At the end of the day…",
+    "What it comes down to is…",
+    "I suppose what I'm really saying is…",
+    "To put it simply…",
+    "When you think about it…",
+  ]},
+];
+const CL={change:'Change My Mind',devil:"Play Devil's Advocate",finish:'Finish This Thought',guilty:'Guilty Pleasure Defence',nobody:'What Nobody Mentions',grandpa:'Explain It To Your Grandparent',sell:'Sell It',dumb:'The Dumb Question'};
+const LL={easy:'Easy',medium:'Medium',hard:'Hard'};
+
+let lvl='medium', cat='all';
+let deck=[], dkey='';
+let openAcc='start';
+
+function pkey(){return cat+'|'+lvl}
+function pool(){
+  const cs=cat==='all'?Object.keys(D):[cat];
+  return cs.flatMap(c=>(D[c]?.[lvl]||[]).map(x=>({...x,c})));
+}
+function shuffle(a){
+  a=[...a];
+  for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}
+  return a;
+}
+function next(){
+  const k=pkey();
+  if(k!==dkey||!deck.length){deck=shuffle(pool());dkey=k;}
+  return deck.pop();
+}
+
+function setLevel(l,b){
+  lvl=l;
+  document.querySelectorAll('.lvl-chip').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on');deck=[];updateCnt();updateLabel();
+}
+
+let dropOpen=null;
+
+function buildDropdown(){
+  const drop=document.getElementById('cat-drop');
+  drop.innerHTML='<div class="sel-dropdown-header">Choose category</div>'+
+    CATS.map(c=>`
+      <div class="sel-option${cat===c.id?' chosen':''}" id="opt-${c.id}" onclick="selectCat('${c.id}')">
+        <span class="sel-option-ico">${c.icon}</span>
+        <span>${c.label}</span>
+        ${cat===c.id?'<span class="sel-option-check">✓</span>':''}
+      </div>`).join('');
+  
+  const ms=document.getElementById('m-cat');
+  ms.innerHTML=CATS.map(c=>`<option value="${c.id}"${cat===c.id?' selected':''}>${c.label}</option>`).join('');
+}
+
+function toggleDrop(id){
+  const btn=document.getElementById(id+'-btn');
+  const drop=document.getElementById(id+'-drop');
+  const isOpen=drop.classList.contains('open');
+  closeAllDrops();
+  if(!isOpen){
+    drop.classList.add('open');
+    btn.classList.add('open');
+    dropOpen=id;
+  }
+}
+function closeAllDrops(){
+  document.querySelectorAll('.sel-dropdown').forEach(d=>d.classList.remove('open'));
+  document.querySelectorAll('.sel-btn').forEach(b=>b.classList.remove('open'));
+  dropOpen=null;
+}
+document.addEventListener('click',e=>{
+  if(!e.target.closest('.sel-wrap'))closeAllDrops();
+});
+
+function selectCat(id){
+  cat=id;
+  const c=CATS.find(x=>x.id===id);
+  document.getElementById('cat-ico').textContent=c.icon;
+  document.getElementById('cat-lbl').textContent=c.label;
+  document.getElementById('cat-btn').classList.toggle('active',id!=='all');
+  buildDropdown();
+  closeAllDrops();
+  deck=[];updateCnt();updateLabel();
+}
+function setCatMob(id){cat=id;deck=[];updateCnt();updateLabel()}
+function setLevelMob(l){
+  lvl=l;
+  document.querySelectorAll('.lvl-chip').forEach(x=>{
+    x.classList.toggle('on', x.classList.contains(l));
+  });
+  deck=[];updateCnt();updateLabel();
+}
+
+function updateLabel(){
+  const c=CATS.find(x=>x.id===cat);
+  document.getElementById('cat-label-text').textContent=(c?c.label:'All Topics')+' · '+LL[lvl];
+}
+function updateCnt(){
+  const n=pool().length;
+  document.getElementById('cnt').textContent=n+' topic'+(n!==1?'s':'');
+}
+
+function gen(){
+  const p=next();if(!p)return;
+  const card=document.getElementById('card');
+  const ci=document.getElementById('ci');
+  card.classList.remove('throwing','landing');
+  void card.offsetWidth;
+  card.classList.add('throwing');
+  setTimeout(()=>{
+    const task=p.a||'Discuss it';
+    const qs=p.q.map(q=>`<div class="c-q">${q}</div>`).join('');
+    ci.innerHTML=
+      '<div class="c-task">'+task+'</div>'+
+      '<div class="c-topic">'+p.t+'</div>'+
+      '<div class="c-qs">'+qs+'</div>'+
+      '<div class="c-badge '+lvl+'">'+LL[lvl]+'</div>';
+    card.classList.remove('easy','medium','hard','throwing');
+    card.classList.add(lvl);
+    void card.offsetWidth;
+    card.classList.add('landing');
+    setTimeout(()=>card.classList.remove('landing'),500);
+  },285);
+  document.getElementById('meta').textContent=CL[p.c]+' · '+LL[lvl];
+}
+
+function buildPhrHTML(pfx){
+  return PHRASES.map(sec=>{
+    const isOpen=sec.id===openAcc;
+    return`<div class="acc-group" id="${pfx}ag-${sec.id}">
+      <button class="acc-head${isOpen?' open':''}" onclick="toggleAcc('${sec.id}')">
+        <span class="acc-label">
+          <span class="acc-title">${sec.label}</span>
+          <span class="acc-count">${sec.items.length}</span>
+        </span>
+        <span class="acc-arrow">▼</span>
+      </button>
+      <div class="acc-body${isOpen?' open':''}" id="${pfx}ab-${sec.id}">
+        <div class="acc-inner">
+          ${sec.items.map((t,i)=>`
+            <div class="phr" id="${pfx}phr-${sec.id}-${i}" onclick="copyPhr('${sec.id}',${i})">
+              <div class="phr-dot"></div>
+              <div class="phr-text">${t}</div>
+            </div>`).join('')}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+function renderPhrases(){
+  const d=document.getElementById('acc-scroll');if(d)d.innerHTML=buildPhrHTML('d-');
+  const b=document.getElementById('bs-content');if(b)b.innerHTML=buildPhrHTML('bs-');
+}
+function toggleAcc(id){
+  const was=openAcc===id;
+  ['d-','bs-'].forEach(p=>{
+    if(openAcc){
+      document.getElementById(p+'ab-'+openAcc)?.classList.remove('open');
+      document.querySelector('#'+p+'ag-'+openAcc+' .acc-head')?.classList.remove('open');
+    }
+  });
+  openAcc=was?null:id;
+  ['d-','bs-'].forEach(p=>{
+    if(openAcc){
+      document.getElementById(p+'ab-'+openAcc)?.classList.add('open');
+      document.querySelector('#'+p+'ag-'+openAcc+' .acc-head')?.classList.add('open');
+    }
+  });
+}
+function copyPhr(sid,idx){
+  const sec=PHRASES.find(s=>s.id===sid);if(!sec)return;
+  navigator.clipboard.writeText(sec.items[idx]).catch(()=>{});
+  ['d-','bs-'].forEach(p=>{
+    const el=document.getElementById(`${p}phr-${sid}-${idx}`);
+    if(!el)return;
+    el.classList.add('copied');
+    setTimeout(()=>el.classList.remove('copied'),1200);
+  });
+}
+function openBS(){document.getElementById('bottom-sheet').classList.add('open');document.getElementById('bs-overlay').classList.add('open');document.body.style.overflow='hidden'}
+function closeBS(){document.getElementById('bottom-sheet').classList.remove('open');document.getElementById('bs-overlay').classList.remove('open');document.body.style.overflow=''}
+
+let td=60,tr=60,tiInt=null,trun=false;
+function setTime(s,b){
+  document.querySelectorAll('.tp').forEach(x=>x.classList.toggle('on',x.getAttribute('onclick')===`setTime(${s},this)`));
+  td=s;tr=s;if(trun){clearInterval(tiInt);trun=false;}drawT(true);barSet(1);
+  const pb=document.getElementById('tplaybtn');pb.textContent='▶';pb.classList.add('go');
+}
+function tToggle(){trun?tPause():tStart()}
+function tStart(){
+  if(trun)return;trun=true;
+  document.getElementById('tplaybtn').textContent='⏸';
+  tiInt=setInterval(()=>{
+    if(tr<=0){
+      clearInterval(tiInt);trun=false;
+      document.getElementById('tplaybtn').textContent='▶';
+      document.getElementById('tnum').textContent='0:00';
+      document.getElementById('tnum').className='tnum done';
+      document.getElementById('tbar').style.width='0%';
+      playDone();launchConfetti();return;
+    }
+    tr--;drawT(false);barSet(tr/td);
+    if(tr<=3&&tr>0)playTick();
+  },1000);
+}
+function tPause(){clearInterval(tiInt);trun=false;document.getElementById('tplaybtn').textContent='▶'}
+function tReset(){clearInterval(tiInt);trun=false;tr=td;document.getElementById('tplaybtn').textContent='▶';drawT(true);barSet(1)}
+function drawT(idle){
+  const el=document.getElementById('tnum');
+  if(idle){el.textContent=fmt(td);el.className='tnum';return}
+  el.textContent=fmt(tr);el.className='tnum'+(tr<=10?' warn':'');
+}
+function barSet(f){
+  const b=document.getElementById('tbar');
+  b.style.width=(f*100)+'%';
+  b.className='tbar'+(tr<=10&&f<1?' warn':'');
+}
+function fmt(s){return(s/60|0)+':'+String(s%60).padStart(2,'0')}
+
+let audioCtx=null;
+function getACtx(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();return audioCtx}
+function playTick(){
+  try{const c=getACtx(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=880;o.type='sine';g.gain.setValueAtTime(.15,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.08);o.start(c.currentTime);o.stop(c.currentTime+.08)}catch(e){}
+}
+function playDone(){
+  try{const c=getACtx();[[523,0],[659,.12],[784,.24],[1047,.38]].forEach(([f,d])=>{const o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=f;o.type='triangle';const t=c.currentTime+d;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.22,t+.04);g.gain.exponentialRampToValueAtTime(.001,t+.35);o.start(t);o.stop(t+.35)})}catch(e){}
+}
+
+function launchConfetti(){
+  const cv=document.getElementById('confetti-canvas');
+  const W=cv.width=window.innerWidth,H=cv.height=window.innerHeight;
+  const cx=cv.getContext('2d');
+  const COLS=['#C44B2B','#F7F3EE','#E7E2DB','#4A7C59','#B45309','#1C1917','#F4D8CF'];
+  const ps=Array.from({length:130},()=>({
+    x:Math.random()*W,y:-10-Math.random()*80,
+    vx:(Math.random()-.5)*4,vy:2+Math.random()*4,
+    rot:Math.random()*360,rv:(Math.random()-.5)*8,
+    w:6+Math.random()*8,h:3+Math.random()*4,
+    col:COLS[Math.random()*COLS.length|0],alpha:1
+  }));
+  let fr=0;
+  function draw(){
+    cx.clearRect(0,0,W,H);let alive=false;
+    ps.forEach(p=>{
+      p.x+=p.vx;p.y+=p.vy;p.rot+=p.rv;p.vy+=.08;
+      if(p.y<H+20)alive=true;
+      p.alpha=Math.max(0,1-Math.max(0,(p.y-H*.6)/(H*.4)));
+      cx.save();cx.translate(p.x,p.y);cx.rotate(p.rot*Math.PI/180);
+      cx.globalAlpha=p.alpha;cx.fillStyle=p.col;
+      cx.fillRect(-p.w/2,-p.h/2,p.w,p.h);cx.restore();
+    });
+    if(alive&&fr<220){fr++;requestAnimationFrame(draw)}else cx.clearRect(0,0,W,H);
+  }
+  draw();
+}
+
+function startApp(){
+  document.getElementById('splash').classList.add('hide');
+  setTimeout(()=>{
+    document.getElementById('splash').style.display='none';
+    document.getElementById('topnav').classList.add('visible');
+    document.getElementById('main').classList.add('visible');
+    document.getElementById('footer').classList.add('visible');
+  },450);
+}
+
+buildDropdown();
+updateCnt();
+updateLabel();
+renderPhrases();
+
+</script>
+</body>
+</html>

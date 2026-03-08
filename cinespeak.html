@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CineSpeak · SE</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Geologica:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+
+:root {
+  --f-serif: 'Cormorant Garamond', serif;
+  --f-sans:  'Geologica', sans-serif;
+  --bg:      #F8F7F4;
+  --white:   #FFFFFF;
+  --ink:     #181818;
+  --sub:     #888;
+  --muted:   #C0BFB8;
+  --line:    #E8E6E1;
+  --hover:   #EFEDE6;
+  --gold:    #C9A84C;
+  --easy:    #1A7F4B; --easy-bg: #EDFBF3;
+  --med:     #9A5800; --med-bg:  #FFF8ED;
+  --hard:    #B82828; --hard-bg: #FFF0F0;
+}
+
+html, body { height:100%; overflow:hidden; }
+body {
+  font-family:var(--f-sans); font-weight:300;
+  background:var(--bg); color:var(--ink);
+  display:flex; flex-direction:column;
+}
+
+#splash {
+  position:fixed; inset:0; z-index:200; background:var(--ink);
+  display:flex; flex-direction:column;
+}
+.film-strip {
+  width:100%; height:44px; flex-shrink:0;
+  display:flex; align-items:center; overflow:hidden;
+  background:#111;
+  border-bottom:1px solid #2a2a2a;
+}
+.film-strip.bottom { border-bottom:none; border-top:1px solid #2a2a2a; }
+.film-hole {
+  width:30px; height:20px; flex-shrink:0;
+  border:1.5px solid #2e2e2e; border-radius:3px; margin:0 7px; background:#0a0a0a;
+}
+.splash-body {
+  flex:1; display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  gap:0; padding:0 40px; text-align:center; position:relative;
+  overflow:hidden;
+}
+.splash-vignette {
+  position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(ellipse at center, transparent 35%, rgba(0,0,0,.55) 100%);
+}
+.splash-lines {
+  position:absolute; inset:0; pointer-events:none;
+  background:repeating-linear-gradient(0deg,
+    transparent,transparent 3px,rgba(255,255,255,.014) 3px,rgba(255,255,255,.014) 4px);
+}
+.splash-grain {
+  position:absolute; inset:0; pointer-events:none; opacity:.04;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size:200px;
+}
+
+.splash-rule {
+  width:1px; height:60px; background:linear-gradient(to bottom, transparent, rgba(201,168,76,.25), transparent);
+  position:absolute; left:50%; top:0; opacity:0; animation:aUp .8s ease 1.4s forwards;
+}
+.splash-hline {
+  width:160px; height:1px; background:linear-gradient(to right, transparent, rgba(201,168,76,.18), transparent);
+  margin:28px 0 26px;
+  opacity:0; animation:aUp .6s ease .95s forwards;
+}
+.splash-tag {
+  font-size:10px; letter-spacing:.28em; text-transform:uppercase; color:var(--gold);
+  opacity:0; animation:aUp .6s ease .3s forwards;
+  position:relative; z-index:1;
+}
+.splash-title {
+  font-family:var(--f-serif); font-weight:300;
+  font-size:clamp(52px,9vw,96px); line-height:.92; letter-spacing:-.02em; color:#fff;
+  opacity:0; animation:aUp .8s ease .5s forwards;
+  margin-top:14px;
+  position:relative; z-index:1;
+  text-shadow:0 2px 60px rgba(0,0,0,.6);
+}
+.splash-title em { font-style:italic; color:var(--gold); }
+.splash-sub {
+  font-size:13px; font-weight:300; letter-spacing:.05em; color:#666;
+  opacity:0; animation:aUp .6s ease 1.05s forwards;
+  position:relative; z-index:1;
+  margin-bottom:32px;
+}
+.splash-credits {
+  position:absolute; bottom:28px; left:0; right:0;
+  display:flex; justify-content:center; gap:28px;
+  opacity:0; animation:aUp .5s ease 1.3s forwards;
+}
+.splash-credit-item {
+  font-size:9px; letter-spacing:.16em; text-transform:uppercase; color:#3a3a3a;
+}
+.splash-btn {
+  margin-top:0; padding:15px 52px;
+  background:transparent; border:1px solid rgba(201,168,76,.5);
+  color:var(--gold); border-radius:1px;
+  font-family:var(--f-sans); font-size:11px; font-weight:400;
+  letter-spacing:.18em; text-transform:uppercase; cursor:pointer; transition:all .25s;
+  opacity:0; animation:aUp .6s ease 1.2s forwards;
+  position:relative; z-index:1;
+}
+.splash-btn:hover { background:var(--gold); color:var(--ink); border-color:var(--gold); }
+.splash-btn:hover .splash-btn-arrow { transform:translateX(4px); }
+.splash-btn-arrow { display:inline-block; margin-left:8px; transition:transform .25s; }
+@keyframes aUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:none} }
+#splash.hide { animation:splashOut .5s ease forwards; pointer-events:none; }
+@keyframes splashOut { to{opacity:0;transform:scale(1.02)} }
+
+#confetti-canvas {
+  position:fixed; inset:0; z-index:9999; pointer-events:none;
+}
+
+#topnav {
+  height:54px; flex-shrink:0;
+  background:var(--white); border-bottom:1px solid var(--line);
+  display:flex; align-items:center; padding:0 22px; gap:14px;
+  opacity:0; transform:translateY(-6px); transition:opacity .4s,transform .4s;
+}
+#topnav.visible { opacity:1; transform:none; }
+
+.logo {
+  font-family:var(--f-serif); font-size:17px; font-weight:400;
+  letter-spacing:-.01em; white-space:nowrap; color:var(--ink); text-decoration:none;
+}
+.logo em { font-style:italic; color:var(--gold); }
+.nav-paw {
+  display:flex; align-items:center; color:var(--muted);
+  text-decoration:none; transition:color .2s; flex-shrink:0;
+}
+.nav-paw:hover { color:var(--gold); }
+
+.ndiv { width:1px; height:18px; background:var(--line); flex-shrink:0; }
+
+.chip-group { display:flex; gap:3px; align-items:center; }
+.glabel { font-size:10px; letter-spacing:.09em; text-transform:uppercase; color:var(--muted); margin-right:4px; }
+.chip {
+  padding:5px 13px; border-radius:20px; border:1px solid var(--line);
+  background:transparent; font-family:var(--f-sans); font-size:11px; font-weight:400;
+  color:var(--sub); cursor:pointer; transition:all .15s; white-space:nowrap;
+}
+.chip:hover { border-color:#ccc; color:var(--ink); }
+.chip.on              { background:var(--ink);  border-color:var(--ink);  color:#fff; }
+.chip.on.easy         { background:var(--easy); border-color:var(--easy); }
+.chip.on.medium       { background:var(--med);  border-color:var(--med);  }
+.chip.on.hard         { background:var(--hard); border-color:var(--hard); }
+
+.nav-gap { flex:1; }
+
+.nav-timer {
+  display:flex; align-items:center; gap:10px;
+  background:var(--bg); border:1px solid var(--line);
+  border-radius:24px; padding:5px 14px 5px 10px; flex-shrink:0;
+}
+.tnum {
+  font-family:var(--f-sans); font-size:22px; font-weight:400;
+  font-variant-numeric:tabular-nums; line-height:1; min-width:42px; text-align:center; transition:color .3s;
+}
+.tnum.warn { color:var(--hard); }
+.tnum.done { color:var(--easy); }
+.tbar-wrap { width:135px; height:2px; background:var(--line); border-radius:1px; overflow:hidden; }
+.tbar { height:100%; width:100%; background:var(--ink); border-radius:1px; transition:width 1s linear,background .3s; }
+.tbar.warn { background:var(--hard); }
+.tpresets-nav { display:flex; gap:2px; margin-top:4px; }
+.tp {
+  padding:2px 7px; border-radius:10px; border:1px solid var(--line);
+  background:transparent; font-family:var(--f-sans); font-size:10px; color:var(--sub);
+  cursor:pointer; transition:all .12s;
+}
+.tp:hover { color:var(--ink); }
+.tp.on { background:var(--ink); border-color:var(--ink); color:#fff; }
+.tbtns { display:flex; gap:4px; }
+.tbtn {
+  width:24px; height:24px; border-radius:50%; border:1px solid var(--line);
+  background:var(--white); display:flex; align-items:center; justify-content:center;
+  font-size:9px; cursor:pointer; transition:all .12s; color:var(--sub);
+}
+.tbtn:hover { color:var(--ink); border-color:#bbb; }
+.tbtn.go { background:var(--ink); border-color:var(--ink); color:#fff; }
+.tbtn.go:hover { background:#333; }
+
+#main {
+  flex:1; min-height:0;
+  display:grid; grid-template-columns:1fr 272px;
+  opacity:0; transform:translateY(8px);
+  transition:opacity .4s ease .1s,transform .4s ease .1s;
+}
+#main.visible { opacity:1; transform:none; }
+
+.panel-left {
+  display:flex; flex-direction:column;
+  padding:22px 24px 18px; gap:16px; overflow:hidden;
+}
+
+.stack {
+  flex:1; min-height:0; position:relative; display:flex; align-items:stretch;
+}
+.ghost {
+  position:absolute; inset:0; border-radius:12px;
+  background:var(--white); border:1px solid var(--line);
+}
+.g1 { transform:rotate(1.6deg) translateY(5px) scale(.975); }
+.g2 { transform:rotate(-1deg) translateY(9px) scale(.95); }
+
+#card {
+  position:absolute; inset:0; border-radius:12px;
+  display:flex; flex-direction:column; overflow:hidden;
+  background:var(--white); border:1px solid var(--line);
+  box-shadow:0 6px 28px rgba(0,0,0,.07),0 2px 8px rgba(0,0,0,.04);
+  transform-origin:center 60%;
+  animation:bob 4s ease-in-out infinite;
+}
+#card.throwing { animation:throwOut .34s cubic-bezier(.4,0,1,1) forwards !important; }
+#card.landing  { animation:flyIn   .48s cubic-bezier(.22,1,.36,1) forwards !important; }
+
+#card::before, #card::after {
+  content:''; position:absolute; top:0; bottom:0; width:14px;
+  background-image:repeating-linear-gradient(to bottom,
+    transparent 0,transparent 8px,
+    rgba(0,0,0,.04) 8px,rgba(0,0,0,.04) 18px,
+    transparent 18px,transparent 26px);
+  pointer-events:none; z-index:3;
+}
+#card::before { left:0; border-right:1px solid rgba(0,0,0,.04); }
+#card::after  { right:0; border-left:1px solid rgba(0,0,0,.04); }
+
+.stripe { height:4px; flex-shrink:0; background:var(--muted); transition:background .3s; }
+#card.easy   .stripe { background:var(--easy); }
+#card.medium .stripe { background:var(--med);  }
+#card.hard   .stripe { background:var(--hard); }
+
+.topic-zone {
+  flex:1; min-height:0;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; gap:13px; padding:28px 44px 24px;
+  overflow-y:auto; position:relative; z-index:1;
+}
+.tcat { font-size:10px; font-weight:400; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); }
+.ttext {
+  font-family:var(--f-serif); font-size:clamp(22px,2.8vw,38px);
+  font-weight:400; line-height:1.3; color:var(--ink); max-width:500px;
+}
+.thint { font-size:13px; line-height:1.7; color:var(--sub); max-width:400px; }
+
+.tbadge {
+  font-size:10px; font-weight:500; letter-spacing:.06em;
+  padding:4px 14px; border-radius:20px; border:1px solid;
+}
+.tbadge.easy   { color:var(--easy); background:var(--easy-bg); border-color:rgba(26,127,75,.25); }
+.tbadge.medium { color:var(--med);  background:var(--med-bg);  border-color:rgba(154,88,0,.25); }
+.tbadge.hard   { color:var(--hard); background:var(--hard-bg); border-color:rgba(184,40,40,.25); }
+
+.empty-ico { font-size:36px; opacity:.12; line-height:1; }
+.empty-lbl { font-family:var(--f-serif); font-size:18px; font-style:italic; color:var(--muted); }
+
+@keyframes throwOut {
+  0%   { opacity:1; transform:none; }
+  35%  { opacity:1; transform:rotate(7deg) translateX(45px) translateY(-14px); }
+  100% { opacity:0; transform:rotate(14deg) translateX(108%) translateY(-10px) scale(.9); }
+}
+@keyframes flyIn {
+  0%   { opacity:0; transform:rotate(-5deg) translateX(-70%) translateY(25px) scale(.91); }
+  65%  { opacity:1; transform:rotate(.8deg) translateX(2px) translateY(-2px) scale(1.01); }
+  100% { opacity:1; transform:none; }
+}
+@keyframes bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
+
+.bottom-row { display:flex; align-items:center; gap:12px; flex-shrink:0; }
+.meta  { font-size:11px; color:var(--muted); flex:1; }
+.count { font-size:11px; color:var(--muted); text-align:right; flex:1; }
+.btn-gen {
+  padding:12px 100px; background:var(--ink); color:#fff;
+  border:none; border-radius:6px;
+  font-family:var(--f-sans); font-size:13px; font-weight:400;
+  letter-spacing:.03em; cursor:pointer; transition:all .15s;
+  position:relative; overflow:hidden; white-space:nowrap;
+}
+.btn-gen::after {
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.08),transparent);
+  transform:translateX(-100%); transition:transform .5s;
+}
+.btn-gen:hover::after { transform:translateX(100%); }
+.btn-gen:hover { background:#2a2a2a; box-shadow:0 4px 16px rgba(0,0,0,.15); transform:translateY(-1px); }
+.btn-gen:active { transform:none; box-shadow:none; }
+
+.panel-right {
+  background:var(--white); border-left:1px solid var(--line);
+  display:flex; flex-direction:column; overflow:hidden;
+}
+.right-head {
+  padding:15px 18px 12px; border-bottom:1px solid var(--line); flex-shrink:0;
+}
+.right-title { font-family:var(--f-serif); font-size:16px; font-weight:400; color:var(--ink); }
+.right-title em { font-style:italic; color:var(--gold); }
+.right-sub { font-size:11px; color:var(--muted); margin-top:2px; }
+
+.acc-scroll {
+  flex:1; min-height:0; overflow-y:auto;
+  scrollbar-width:thin; scrollbar-color:var(--line) transparent;
+}
+.acc-scroll::-webkit-scrollbar { width:3px; }
+.acc-scroll::-webkit-scrollbar-thumb { background:var(--line); border-radius:2px; }
+
+.acc-group { border-bottom:1px solid var(--line); }
+
+.acc-head {
+  width:100%; padding:11px 16px;
+  display:flex; align-items:center; justify-content:space-between; gap:8px;
+  background:none; border:none; cursor:pointer;
+  font-family:var(--f-sans); font-size:12px; color:var(--ink);
+  text-align:left; transition:background .12s; user-select:none;
+}
+.acc-head:hover { background:var(--bg); }
+.acc-head.open  { background:var(--bg); }
+
+.acc-label { display:flex; align-items:center; gap:7px; }
+.acc-emoji { font-size:13px; line-height:1; display:none; }
+.acc-title { font-weight:500; letter-spacing:.01em; }
+.acc-count {
+  font-size:10px; color:var(--muted);
+  background:var(--line); border-radius:20px;
+  padding:1px 7px; margin-left:2px;
+}
+.acc-arrow { font-size:9px; color:var(--muted); transition:transform .2s; flex-shrink:0; }
+.acc-head.open .acc-arrow { transform:rotate(180deg); }
+
+.acc-body {
+  max-height:0; overflow:hidden;
+  transition:max-height .28s cubic-bezier(.4,0,.2,1);
+}
+.acc-body.open { max-height:800px; }
+
+.acc-inner { padding:4px 12px 10px; display:flex; flex-direction:column; gap:1px; }
+
+.phr {
+  padding:7px 8px 7px 10px; border-radius:6px;
+  cursor:pointer; transition:background .1s;
+  display:flex; align-items:baseline; gap:9px;
+}
+.phr:hover { background:var(--hover); }
+.phr:active { background:var(--line); }
+
+.phr-dot {
+  width:4px; height:4px; border-radius:50%;
+  background:var(--muted); flex-shrink:0; margin-top:7px;
+  transition:background .2s;
+}
+.phr-text {
+  font-size:12.5px; font-weight:400; color:var(--ink); line-height:1.45;
+  transition:color .2s;
+}
+.phr.copied .phr-text { color:var(--easy); }
+.phr.copied .phr-dot  { background:var(--easy); }
+
+#footer {
+  flex-shrink:0; background:var(--white); border-top:1px solid var(--line);
+  padding:7px 22px;
+  display:flex; align-items:center; justify-content:center; gap:1.2rem;
+  opacity:0; transform:translateY(4px);
+  transition:opacity .4s ease .2s,transform .4s ease .2s;
+}
+#footer.visible { opacity:1; transform:none; }
+.foot-name { font-family:var(--f-serif); font-size:.95rem; color:var(--muted); }
+.foot-name span { color:var(--gold); }
+.foot-links { display:flex; gap:.4rem; }
+.foot-link {
+  padding:3px 11px; border-radius:20px; border:1px solid var(--line);
+  background:transparent; color:var(--sub); text-decoration:none;
+  font-size:11px; transition:all .2s;
+}
+.foot-link:hover { border-color:var(--gold); color:var(--gold); }
+
+.acc-body {
+  max-height:0; overflow:hidden;
+  transition:max-height .38s cubic-bezier(.4,0,.2,1), opacity .3s ease;
+  opacity:0;
+}
+.acc-body.open { max-height:900px; opacity:1; }
+
+.mob-select {
+  display:none;
+  padding:6px 28px 6px 13px; border-radius:20px;
+  border:1px solid var(--line); background:var(--white);
+  font-family:var(--f-sans); font-size:11px; font-weight:400;
+  color:var(--sub); cursor:pointer;
+  appearance:none; -webkit-appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5'%3E%3Cpath d='M0 0l4 5 4-5z' fill='%23C0BFB8'/%3E%3C/svg%3E");
+  background-repeat:no-repeat; background-position:right 10px center;
+  transition:border-color .15s, background-color .12s, color .15s;
+  letter-spacing:.01em;
+}
+.mob-select:focus { outline:none; border-color:var(--gold); color:var(--ink); }
+.mob-select:hover { border-color:#ccc; color:var(--ink); }
+.mob-select.sel-active {
+  background-color:var(--ink); border-color:var(--ink); color:#fff;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='5'%3E%3Cpath d='M0 0l4 5 4-5z' fill='%23ffffff'/%3E%3C/svg%3E");
+}
+.mob-selects-row {
+  display:none; gap:6px; align-items:center; justify-content:center; width:100%;
+}
+.mob-sel-label {
+  font-size:10px; letter-spacing:.09em; text-transform:uppercase; color:var(--muted);
+}
+
+@media (max-width:1000px) {
+  #topnav {
+    height:auto; padding:10px 14px 10px; gap:8px;
+    flex-direction:column; align-items:center; justify-content:center;
+  }
+  .meta, .btn-gen::after, .count, .chip-group, .glabel, .ndiv, .nav-paw, .logo, .nav-gap, .mob-sel-label { display:none; }
+
+  .mob-selects-row { display:flex; order:1; justify-content:center; gap:6px; }
+  .mob-select { display:inline-block; }
+  .nav-timer {
+    flex-shrink:0; padding:5px 12px 5px 10px; gap:8px;
+    margin-left:0; order:2;
+    border-radius:20px;
+    align-self:center;
+  }
+  .tnum { font-family:var(--f-sans);font-size:18px; min-width:32px; }
+  .tbar-wrap { width:100px; }
+  .tp { padding:2px 6px; font-size:9px; }
+  .tbtn { width:22px; height:22px; font-size:9px; }
+  .tbtns { gap:3px; }
+
+  #main { grid-template-columns:1fr; grid-template-rows:1fr; }
+  .panel-right { display:none; }
+  .panel-left { padding:14px 14px 12px; }
+
+  #bs-overlay {
+    display:none; position:fixed; inset:0; z-index:90;
+    background:rgba(0,0,0,.45);
+  }
+  #bs-overlay.open { display:block; }
+
+  #bottom-sheet {
+    position:fixed; left:0; right:0; bottom:0; z-index:100;
+    background:var(--white); border-radius:18px 18px 0 0;
+    border-top:1px solid var(--line);
+    box-shadow:0 -8px 48px rgba(0,0,0,.14);
+    transform:translateY(100%);
+    transition:transform .36s cubic-bezier(.22,1,.36,1);
+    flex-direction:column; max-height:76vh;
+  }
+  #bottom-sheet.open { transform:translateY(0); }
+
+  #bs-handle-wrap {
+    padding:10px 0 3px; text-align:center; cursor:pointer; flex-shrink:0;
+  }
+  #bs-handle {
+    width:36px; height:4px; border-radius:2px;
+    background:var(--line); display:inline-block;
+  }
+  #bs-head {
+    padding:5px 18px 11px; border-bottom:1px solid var(--line);
+    display:flex; align-items:flex-start; justify-content:space-between; flex-shrink:0;
+  }
+  #bs-close {
+    width:26px; height:26px; border-radius:50%;
+    border:1px solid var(--line); background:transparent;
+    display:flex; align-items:center; justify-content:center;
+    font-size:11px; color:var(--sub); cursor:pointer; flex-shrink:0;
+  }
+  #bs-content {
+    flex:1; overflow-y:auto; overscroll-behavior:contain;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:thin; scrollbar-color:var(--line) transparent;
+  }
+  #bs-content .acc-head { padding:13px 16px; font-size:13px; }
+  #bs-content .phr-text { font-size:13.5px; line-height:1.5; }
+  #bs-content .acc-inner { padding:6px 14px 12px; gap:2px; }
+
+  #phrases-btn {
+    display:flex; align-items:center; gap:5px;
+    padding:6px 13px; background:var(--white);
+    border:1px solid var(--line); border-radius:20px;
+    font-family:var(--f-sans); font-size:11px; color:var(--sub);
+    cursor:pointer; transition:all .15s; white-space:nowrap; flex-shrink:0;
+  }
+  #phrases-btn:hover { border-color:var(--gold); color:var(--gold); }
+}
+
+#bottom-sheet { display:none; transform:translateY(100%); }
+#bs-overlay   { display:none; }
+#phrases-btn  { display:none; }
+
+@media (max-width:1000px) {
+  #bottom-sheet { display:flex; }
+  #phrases-btn  { display:flex; }
+}
+
+@media (min-width:1000px) {
+  #bottom-sheet { display:none !important; }
+  #bs-overlay   { display:none !important; }
+  #phrases-btn  { display:none !important; }
+}
+</style>
+</head>
+<body>
+
+<canvas id="confetti-canvas"></canvas>
+<div id="splash">
+  <div class="film-strip">
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div>
+  </div>
+  <div class="splash-body">
+    <div class="splash-vignette"></div>
+    <div class="splash-lines"></div>
+    <div class="splash-grain"></div>
+    <div class="splash-tag">Film &amp; Series · Discussion Topics</div>
+    <div class="splash-title">Cine<em>Speak</em></div>
+    <div class="splash-hline"></div>
+    <div class="splash-sub">Speak freely. Think critically. Watch differently.</div>
+    <button class="splash-btn" onclick="startApp()">Start Speaking <span class="splash-btn-arrow">→</span></button>
+    <div class="splash-credits">
+      <span class="splash-credit-item">Films</span>
+      <span class="splash-credit-item">Series</span>
+      <span class="splash-credit-item">Industry</span>
+    </div>
+  </div>
+  <div class="film-strip bottom">
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div><div class="film-hole"></div>
+    <div class="film-hole"></div><div class="film-hole"></div>
+  </div>
+</div>
+
+<nav id="topnav">
+<a class="nav-paw" href="https://t.me/+wiAl8ae-UoAxMDE6" target="_blank" title="Telegram channel">
+    <svg width="15" height="15" viewBox="0 0 48 48" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M45.9719 17.1331c-0.5203 -1.2365 -1.3846 -2.128 -2.5001 -2.577l-0.015 -0.0056c-0.5077 -0.1989 -1.0483 -0.3007 -1.5936 -0.3h-0.06c-2.5536 0.0384 -5.1606 2.2086 -6.4861 5.4005 -0.9721 2.3342 -1.0836 4.8446 -0.2981 6.7157 0.5194 1.2374 1.3855 2.1289 2.5058 2.578l0.0121 0.0046c0.5079 0.1988 1.0484 0.3005 1.5937 0.3 2.5779 0 5.2121 -2.1701 6.562 -5.4042 0.9599 -2.3314 1.0658 -4.84 0.2793 -6.712Z"/><path d="M35.7694 30.9008c-1.4728 -0.885 -2.865 -1.7222 -3.7744 -3.2259C29.4863 23.5125 27.9713 21 23.9992 21s-5.4909 2.5125 -8.0052 6.6749c-0.9112 1.5056 -2.3062 2.3437 -3.7837 3.2325 -1.694 1.0181 -3.44437 2.0699 -4.19999 4.1399 -0.29375 0.7463 -0.44173 1.5418 -0.43593 2.3437 0 3.3703 2.62502 6.1125 5.84992 6.1125 1.6641 0 3.435 -0.5766 5.309 -1.1869 1.8019 -0.5869 3.6647 -1.1934 5.2753 -1.1934 1.6106 0 3.4687 0.6065 5.264 1.1934 1.8703 0.6065 3.6327 1.1831 5.3015 1.1831 3.2202 0 5.8405 -2.7422 5.8405 -6.1124 0.0026 -0.8025 -0.1486 -1.5982 -0.4453 -2.3437 -0.7556 -2.0719 -2.5068 -3.1247 -4.1999 -4.1428Z"/><path d="M14.0629 17.7041c1.1155 1.3996 2.531 2.1702 3.9859 2.1702 0.1986 0 0.397 -0.0147 0.5934 -0.0441 3.0344 -0.4462 4.9252 -4.149 4.3046 -8.4368 -0.2596 -1.80269 -0.9533 -3.48162 -1.947 -4.72652 -1.1137 -1.39676 -2.531 -2.16639 -3.985 -2.16639 -0.1985 0.00001 -0.3969 0.01473 -0.5934 0.04406 -3.0344 0.44621 -4.9252 4.14905 -4.3046 8.43685 0.2587 1.7998 0.9524 3.4769 1.9461 4.7227Z"/><path d="M29.3589 19.8301c0.1965 0.0293 0.3949 0.0441 0.5934 0.0441 1.4558 0 2.8704 -0.7706 3.9859 -2.1702 0.9928 -1.2458 1.6827 -2.9229 1.9452 -4.7246 0.6206 -4.28588 -1.2702 -7.98872 -4.3047 -8.43681 -0.1963 -0.02933 -0.3947 -0.04405 -0.5933 -0.04405 -1.454 0.00187 -2.8714 0.7715 -3.985 2.16826 -0.9937 1.2449 -1.6874 2.92379 -1.9461 4.7283 -0.6206 4.286 1.2702 7.9888 4.3046 8.435Z"/><path d="m10.4613 28.9493 0.0131 -0.0046c1.1184 -0.4491 1.9836 -1.3396 2.502 -2.5761 0.7856 -1.8748 0.675 -4.3825 -0.2953 -6.7167 -1.3433 -3.2303 -3.97658 -5.4014 -6.55169 -5.4014 -0.54532 -0.0008 -1.08592 0.101 -1.59363 0.3l-0.01312 0.0047c-1.11554 0.4452 -1.98079 1.3395 -2.49918 2.576 -0.78557 1.8749 -0.67495 4.3825 0.29529 6.7167 1.34333 3.2303 3.97656 5.4014 6.55167 5.4014 0.5444 0.0005 1.08398 -0.1013 1.59086 -0.3Z"/></svg>
+  </a>  <a class="logo" href="https://t.me/+6JRA3AbAyAZkN2Ni" onclick="return false;">Cine<em>Speak</em></a>
+  <div class="ndiv"></div>
+
+  <div class="chip-group">
+    <span class="glabel">Level</span>
+    <button class="chip easy"      onclick="setLevel('easy',this)">Easy</button>
+    <button class="chip medium on" onclick="setLevel('medium',this)">Medium</button>
+    <button class="chip hard"      onclick="setLevel('hard',this)">Hard</button>
+  </div>
+
+  <div class="ndiv"></div>
+
+  <div class="chip-group">
+    <span class="glabel">Topic</span>
+    <button class="chip on" onclick="setCat('all',this)">All</button>
+    <button class="chip"    onclick="setCat('films',this)">Films</button>
+    <button class="chip"    onclick="setCat('series',this)">Series</button>
+    <button class="chip"    onclick="setCat('industry',this)">Industry</button>
+  </div>
+
+  <div class="mob-selects-row">
+    <span class="mob-sel-label">Level</span>
+    <select class="mob-select sel-active" id="sel-level" onchange="setLevelSel(this.value)">
+      <option value="easy">Easy</option>
+      <option value="medium" selected>Medium</option>
+      <option value="hard">Hard</option>
+    </select>
+    <span class="mob-sel-label">Topic</span>
+    <select class="mob-select sel-active" id="sel-cat" onchange="setCatSel(this.value)">
+      <option value="all" selected>All topics</option>
+      <option value="films">Films</option>
+      <option value="series">Series</option>
+      <option value="industry">Industry</option>
+    </select>
+  </div>
+
+  <div class="nav-gap"></div>
+
+  <div class="nav-timer">
+    <div class="tnum" id="tnum">1:00</div>
+    <div>
+      <div class="tbar-wrap"><div class="tbar" id="tbar"></div></div>
+      <div class="tpresets-nav">
+        <button class="tp on" onclick="setTime(60,this)">1m</button>
+        <button class="tp"    onclick="setTime(90,this)">1:30</button>
+        <button class="tp"    onclick="setTime(120,this)">2m</button>
+        <button class="tp"    onclick="setTime(180,this)">3m</button>
+      </div>
+    </div>
+    <div class="tbtns">
+      <button class="tbtn go" id="tplaybtn" onclick="tToggle()">▶</button>
+      <button class="tbtn" onclick="tReset()">↺</button>
+    </div>
+  </div>
+</nav>
+
+<div id="main">
+
+  
+  <div class="panel-left">
+    <div class="stack">
+      <div class="ghost g2"></div>
+      <div class="ghost g1"></div>
+      <div id="card">
+        <div class="stripe"></div>
+        <div class="topic-zone" id="tz">
+          <div class="empty-ico">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity=".18"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 8h20M6 4v4M10 4v4M14 4v4M18 4v4"/></svg>
+          </div>
+          <div class="empty-lbl">Press the button to get your topic</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-row">
+      <div class="meta" id="meta"></div>
+      <button class="btn-gen" onclick="gen()">Get a Topic</button>
+      <div style="display:flex;align-items:center;gap:8px;flex:1;justify-content:flex-end">
+        <div class="count" id="cnt"></div>
+        <button id="phrases-btn" onclick="openBS()">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Phrases
+        </button>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="panel-right">
+    <div class="right-head">
+      <div class="right-title">Discussion <em>Phrases</em></div>
+      <div class="right-sub">Click to copy</div>
+    </div>
+    <div class="acc-scroll" id="acc-scroll"></div>
+  </div>
+
+</div>
+
+<div id="bs-overlay" onclick="closeBS()"></div>
+<div id="bottom-sheet">
+  <div id="bs-handle-wrap" onclick="closeBS()"><span id="bs-handle"></span></div>
+  <div id="bs-head">
+    <div>
+      <div class="right-title">Discussion <em>Phrases</em></div>
+      <div class="right-sub">Tap to copy</div>
+    </div>
+    <button id="bs-close" onclick="closeBS()">✕</button>
+  </div>
+  <div id="bs-content" class="acc-scroll"></div>
+</div>
+
+<footer id="footer">
+  <div class="foot-name"> <span>@snugenglish</span></div>
+  <div class="foot-links">
+    <a class="foot-link" href="https://vk.com/snugenglish"     target="_blank">VK</a>
+    <a class="foot-link" href="https://t.me/+wiAl8ae-UoAxMDE6" target="_blank">Telegram</a>
+  </div>
+</footer>
+
+<script>
+
+const D = {
+  films:{
+    easy:[
+      {t:"What is your favourite film — and why?",                   h:"Talk about the plot, atmosphere, or characters. What made it stick?"},
+      {t:"Cinema or home — where do you prefer to watch films?",     h:"Compare atmosphere, price, and comfort of each"},
+      {t:"Is there a genre you never watch? Why?",                   h:"Horror? Romance? What puts you off?"},
+      {t:"A film you've watched more than once",                     h:"Why do you keep coming back to it?"},
+      {t:"Should films always have a happy ending?",                 h:"Realism vs the pleasure of watching"},
+      {t:"The most overrated film you've ever seen",                 h:"What exactly disappointed you?"},
+      {t:"A film that made you cry — and why?",                      h:"What scene, moment, or line got to you?"},
+      {t:"Describe a film using only three words",                   h:"Which film? Why those three words?"},
+      {t:"Would you rather watch a comedy or a thriller tonight?",   h:"Tell your partner what you're in the mood for and why"},
+      {t:"A film you watched as a child that you still remember",    h:"What do you think of it now as an adult?"},
+      {t:"The best film you've seen this year",                      h:"What made it stand out from everything else?"},
+      {t:"Do you read reviews before watching a film?",              h:"Do critics actually influence your choice?"},
+      {t:"A film with the best villain you've ever seen",            h:"What made them memorable — scary, funny, or tragic?"},
+      {t:"Would you rather watch a film alone or with friends?",     h:"What changes about the experience?"},
+      {t:"A film that surprised you — the ending was unexpected",    h:"Without spoilers — how did it make you feel?"},
+      {t:"Do you prefer subtitles or dubbing? Why?",                 h:"Language, authenticity, and the viewing experience"},
+      {t:"A film you'd recommend to someone who 'doesn't like films'",h:"What makes it accessible even to non-film fans?"},
+      {t:"Animated films — are they just for children?",             h:"Think of examples that work for adults too"},
+      {t:"A scene from a film you'll never forget",                  h:"Describe it. Why did it stay with you?"},
+      {t:"If you could live inside any film world, which would it be?",h:"What appeals to you about that world?"},
+    ],
+    medium:[
+      {t:"Does a film's soundtrack affect you more than the visuals?",      h:"Think of times when music completely changed a scene"},
+      {t:"Can a remake be considered an original work?",                     h:"Raise the question of authorship and originality"},
+      {t:"Why are book adaptations almost always worse than the original?",  h:"Or is that a myth? Which ones proved the exception?"},
+      {t:"Has Hollywood changed for the better in the last 20 years?",      h:"Franchises, streaming, diversity — what won, what lost?"},
+      {t:"What makes a film truly 'auteur'?",                               h:"Directorial vision, or the absence of commercial compromise?"},
+      {t:"Is colour grading the most underrated craft in filmmaking?",      h:"How a colour palette creates mood and meaning"},
+      {t:"Do film ratings actually protect children — or just restrict adults?",h:"Who decides what's appropriate, and how?"},
+      {t:"Why do audiences love unreliable narrators so much?",             h:"Gone Girl, Fight Club, The Usual Suspects — what's the appeal?"},
+      {t:"Is it possible to enjoy a film if you dislike its director?",     h:"Art vs artist — can they really be separated?"},
+      {t:"What makes a film 'rewatchable'?",                                h:"Is it plot, character, atmosphere, or something else?"},
+      {t:"Should films carry content warnings?",                            h:"Protection vs artistic integrity — where is the line?"},
+      {t:"How does setting shape a film's identity?",                       h:"Could Blade Runner exist without Los Angeles? Heat without Miami?"},
+      {t:"Is the 'three-act structure' a formula or a foundation?",         h:"When does structure help — and when does it limit?"},
+      {t:"Why do some films feel timeless while others date instantly?",    h:"Think about aesthetics, themes, and cultural references"},
+      {t:"Do actors deserve their fame — or is it the director's vision?",  h:"Who really creates a memorable performance?"},
+      {t:"Has CGI made modern cinema worse?",                               h:"Practical effects vs digital — what do we lose?"},
+      {t:"Is the 'foreign film' label a barrier or an invitation?",         h:"How subtitles and marketing affect audience choice"},
+      {t:"What role does silence play in a great film?",                    h:"Think of scenes where nothing is said but everything is felt"},
+      {t:"Why is horror the most culturally specific genre?",               h:"What scares one culture may not scare another at all"},
+      {t:"Can a film be both commercial and artistically significant?",     h:"Is box office success evidence of quality or the opposite?"},
+    ],
+    hard:[
+      {t:"Is Marvel cinema — or just an expensive theme park ride?",       h:"Take Scorsese's side or the audience's — and defend your position"},
+      {t:"Is it ethical to make biopics about living people?",             h:"The right to interpret vs invasion of privacy"},
+      {t:"Is Netflix's algorithm killing original filmmaking?",            h:"Data-driven content vs artistic risk"},
+      {t:"The Oscars are not a measure of quality. Prove it.",             h:"Voting mechanics, lobbying, and cultural biases"},
+      {t:"Does AI threaten the screenwriter's profession?",                h:"ChatGPT writes scripts, Sora generates footage — what is lost?"},
+      {t:"Is cinema the last truly collective art form — and is it dying?",h:"The social ritual of watching together vs atomised streaming"},
+      {t:"Does a film have a moral responsibility to its audience?",       h:"Propaganda, glorification, and the ethics of representation"},
+      {t:"Can violence in film ever be justified artistically?",           h:"Tarantino, Haneke, von Trier — exploitation or expression?"},
+      {t:"Is the male gaze still the default lens of mainstream cinema?",  h:"Camera work, character agency, and who the film is 'for'"},
+      {t:"Why do prestige films cluster around the same aesthetic?",       h:"Slow cinema, muted colours, naturalistic acting — who decides 'quality'?"},
+      {t:"Is nostalgia the biggest enemy of original storytelling?",       h:"Sequels, reboots, IP — what does cinema lose when it looks backwards?"},
+      {t:"Should films made with public funding have a public obligation?", h:"State-funded cinema, national identity, and artistic freedom"},
+      {t:"Is film criticism still relevant in the age of Letterboxd?",     h:"Professional critics vs audience scores — what do we trust?"},
+      {t:"Can cinema ever represent trauma honestly?",                     h:"The ethics of aestheticising suffering on screen"},
+      {t:"Is the auteur theory misogynist by design?",                    h:"A canon built on male directors — who was left out and why?"},
+      {t:"Does a film's country of origin change how we read it?",         h:"Context, politics, and the assumptions we bring to foreign cinema"},
+      {t:"Has the blockbuster model permanently altered what stories get told?",h:"Risk-aversion, IP dominance, and the mid-budget film's extinction"},
+      {t:"Is cinematic realism always more honest than stylisation?",      h:"Neorealism vs expressionism — what truth does each mode reveal?"},
+      {t:"Can satire survive in an era of post-irony?",                    h:"When reality outpaces fiction, can Dr. Strangelove still land?"},
+      {t:"Should historically inaccurate films carry a disclaimer?",       h:"Creative liberty vs misinformation — where does responsibility begin?"},
+    ]
+  },
+  series:{
+    easy:[
+      {t:"A series you'd recommend to absolutely anyone",           h:"Why this one? What makes it universally appealing?"},
+      {t:"Binge-watching — pleasure or problem?",                   h:"All in one weekend vs the weekly wait"},
+      {t:"Which series had the most disappointing finale?",         h:"Game of Thrones, Dexter, Lost — what went wrong?"},
+      {t:"Series or films — where do characters develop better?",   h:"Is 10+ hours of screen time an advantage or a risk?"},
+      {t:"What was the last series you couldn't stop watching?",    h:"What kept you hooked — plot, characters, or something else?"},
+      {t:"A series character you'd want as a friend",               h:"What qualities do they have? Would you actually get on?"},
+      {t:"Do you prefer series with one long story or separate episodes?",h:"Serialised vs anthology — what works better for you?"},
+      {t:"A series that everyone loved but you didn't",             h:"What was the hype about — and why didn't it click for you?"},
+      {t:"What makes a good cliffhanger?",                          h:"Think of a moment that made you immediately press 'next episode'"},
+      {t:"A series you'd love to see continued",                    h:"Why was it cancelled? What story was left unfinished?"},
+      {t:"Do you skip intro sequences? Why?",                       h:"Theme songs, opening credits — do they add to the experience?"},
+      {t:"Real events vs fictional stories — which make better series?",h:"True crime, historical drama — what draws audiences in?"},
+      {t:"A series you watched with family or friends",             h:"How did watching together change the experience?"},
+      {t:"Which genre works best as a series — and why?",           h:"Crime, drama, comedy, fantasy — what suits the long format?"},
+      {t:"A series that changed how you think about something",     h:"Did it shift your perspective on a person, job, or place?"},
+      {t:"Would you rather rewatch a favourite series or try something new?",h:"Comfort viewing vs discovery — what mood are you in?"},
+      {t:"A series with the best friendship or team dynamic",       h:"What made the chemistry between characters so good?"},
+      {t:"How long is too long for a series?",                      h:"When does a story overstay its welcome?"},
+      {t:"A series you started but never finished",                 h:"Why did you stop? Would you go back to it?"},
+      {t:"What's more important in a series — plot or characters?", h:"Can great characters save a weak story? Or vice versa?"},
+    ],
+    medium:[
+      {t:"Why did Korean dramas conquer the global audience?",            h:"Squid Game, Netflix, and South Korea's soft power"},
+      {t:"Has streaming killed the culture of 'event' television?",      h:"People used to watch together — is that still a thing?"},
+      {t:"Why is an anti-hero more compelling than a hero?",             h:"Walter White, Tony Soprano — why do we root for them?"},
+      {t:"Are series deliberately dragged out for money?",               h:"Stranger Things, The Walking Dead — when should they stop?"},
+      {t:"Six episodes or a full season of twenty — which works better?",h:"Pacing, script quality, and the viewer's experience"},
+      {t:"Does a series' setting become a character in itself?",         h:"Think of how New York shapes Succession or Chernobyl shapes its story"},
+      {t:"Why are limited series so satisfying?",                        h:"One story, one ending — what does constraint do for quality?"},
+      {t:"Has TV surpassed cinema as a storytelling medium?",            h:"Depth, complexity, and the long-form advantage"},
+      {t:"Why do we get attached to fictional characters?",              h:"Psychology of parasocial relationships with TV characters"},
+      {t:"Is diversity in casting genuine progress or box-ticking?",     h:"Representation, authenticity, and audience expectations"},
+      {t:"How does the weekly release model change viewer behaviour?",   h:"Discussion culture, fan theories, and the communal experience"},
+      {t:"Why do crime series dominate streaming charts everywhere?",    h:"True crime psychology and our appetite for moral complexity"},
+      {t:"What makes a series villain truly terrifying?",                h:"Menace, ideology, or relatability — what creates real dread?"},
+      {t:"Can a series recover from losing its main character?",         h:"Think of shows that survived — or didn't — a major cast change"},
+      {t:"Is 'slow burn' storytelling a virtue or a test of patience?",  h:"When does deliberate pacing reward viewers — and when does it lose them?"},
+      {t:"Why do workplace dramas resonate so universally?",             h:"The Office, Succession, The Bear — work as a mirror of life"},
+      {t:"What do dystopian series tell us about current anxieties?",    h:"Black Mirror, The Handmaid's Tale — fiction as social warning"},
+      {t:"Should series be released all at once or weekly?",             h:"Binge culture vs sustained engagement — what serves the story?"},
+      {t:"Why has prestige television moved to streaming?",              h:"Networks, budgets, creative freedom, and the shift in power"},
+      {t:"How do series handle the problem of aging actors?",            h:"Time skips, recasting, writing characters out — what works?"},
+    ],
+    hard:[
+      {t:"Who wins the streaming wars — Netflix, HBO, or Disney+?",              h:"Content, finances, exclusives, and subscription fatigue"},
+      {t:"Are showrunners responsible for the cultural norms their series promote?",h:"Representation, stereotypes, and influence on young audiences"},
+      {t:"The 'Peak TV' era is over — what happened to quality?",                h:"Content overproduction and the falling average standard"},
+      {t:"Is a documentary series journalism — or manipulation?",                h:"Think about how editing constructs 'truth'"},
+      {t:"Does serialised television exploit psychological addiction?",          h:"Cliffhangers, variable reward, and the Netflix autoplay mechanism"},
+      {t:"Is fan culture making series worse?",                                  h:"Writer's rooms, fan service, and the death of authorial vision"},
+      {t:"Can a series with a bad ending retroactively ruin itself?",            h:"Game of Thrones, Dexter, Lost — does the finale reframe everything?"},
+      {t:"Does the prestige TV model privilege certain kinds of suffering?",      h:"Whose trauma gets the HBO treatment — and whose doesn't?"},
+      {t:"Should streaming platforms be regulated like broadcasters?",           h:"Public interest obligations, national quotas, and content standards"},
+      {t:"Is the showrunner system producing better television — or just more?", h:"Creative control, writer's rooms, and the industrialisation of TV"},
+      {t:"What does the global success of non-English series mean for Hollywood?",h:"Squid Game, Money Heist, Dark — is English-language dominance ending?"},
+      {t:"Are true crime series exploiting victims for entertainment?",          h:"Consent, dignity, and the ethics of restaging real violence"},
+      {t:"Does prestige television's complexity exclude working-class audiences?",h:"Dense narratives, cultural references, and who TV is being made for"},
+      {t:"Is 'cinematic television' a genre or just a marketing term?",          h:"Production value, auteur directors, and what distinguishes TV from film"},
+      {t:"Can satire on television still change public opinion?",                h:"From Yes Minister to Succession — what does political comedy achieve?"},
+      {t:"Should platforms be transparent about their algorithm recommendations?",h:"Filter bubbles, content diversity, and who decides what we watch"},
+      {t:"Is the cancellation culture around series artistically destructive?",  h:"Audience metrics, early cancellations, and stories left unresolved"},
+      {t:"Does television create more empathy than any other medium?",           h:"Long-form exposure to characters — does it actually change how we see others?"},
+      {t:"Are showbiz unions changing the economics of television permanently?", h:"WGA, SAG-AFTRA, AI clauses, and the redistribution of streaming revenue"},
+      {t:"What is television's responsibility during a cultural or political crisis?",h:"Coverage, fiction, distraction — what should the medium do in dark times?"},
+    ]
+  },
+  industry:{
+    easy:[
+      {t:"Why are cinema tickets so expensive?",                    h:"Production costs, distribution, and the survival of cinemas"},
+      {t:"Should actors earn millions of dollars?",                 h:"Market logic, star power, and fairness"},
+      {t:"Which streaming service offers the best content?",        h:"Compare the library, originals, price, and ease of use"},
+      {t:"Would you pay more to watch a new film in cinemas on release day?",h:"The premium experience vs waiting for streaming"},
+      {t:"What makes someone a movie star — not just a good actor?",h:"Charisma, brand, marketability — what's the difference?"},
+      {t:"Is popcorn an essential part of the cinema experience?",  h:"Rituals, snacks, and what makes going to the cinema special"},
+      {t:"Do trailers give away too much?",                         h:"Marketing vs mystery — when does a trailer spoil a film?"},
+      {t:"Should cinemas show more independent films?",             h:"Multiplex programming, audience demand, and what we're missing"},
+      {t:"What job in the film industry would you most want to have?",h:"Director, actor, composer, editor — and why?"},
+      {t:"Are sequels ever as good as the original?",               h:"Think of examples. What does a sequel need to succeed?"},
+      {t:"Would you rather own a streaming subscription or buy individual films?",h:"Value, ownership, and how we think about media"},
+      {t:"Has social media made it harder to avoid film spoilers?",  h:"Algorithms, fan accounts, and the death of surprise"},
+      {t:"Is the film poster still an important art form?",          h:"Iconic designs, modern laziness, and what a good poster does"},
+      {t:"Should actors do their own stunts?",                      h:"Safety, authenticity, and what it adds to a performance"},
+      {t:"What's more important for a film — cast or budget?",      h:"Think of expensive flops and cheap hits"},
+      {t:"Do award ceremonies make you more likely to watch a film?",h:"Oscars, BAFTAs, Cannes — do they matter to regular viewers?"},
+      {t:"Is going to the cinema alone strange — or actually better?",h:"Social pressure, focus, and the solo cinema experience"},
+      {t:"What's lost when a film goes straight to streaming?",      h:"The cinema experience, communal viewing, and the big screen"},
+      {t:"Which country makes the most interesting films right now?",h:"Your personal view — and why that industry stands out"},
+      {t:"Should films come with a recommended age — or a content description?",h:"Rating systems, parental guidance, and viewer autonomy"},
+    ],
+    medium:[
+      {t:"Are franchises killing original cinema?",                     h:"Marvel, DC, Fast & Furious — the market refuses to take risks"},
+      {t:"Why are there so few female directors in mainstream cinema?",  h:"Structural barriers, funding gaps, and industry bias"},
+      {t:"How has TikTok changed the way films are marketed?",          h:"Viral moments, the algorithm, and traditional advertising"},
+      {t:"Is the film festival circuit still relevant to mainstream audiences?",h:"Cannes, Venice, Sundance — gatekeepers or irrelevant elites?"},
+      {t:"Why do blockbusters dominate summer but arthouse wins awards?",h:"Two cinemas existing in parallel — who are they for?"},
+      {t:"Should streaming platforms invest more in local-language content?",h:"Cultural identity, global reach, and the economics of production"},
+      {t:"How has the pandemic permanently changed cinema-going habits?",h:"Streaming acceleration, theatrical windows, and what didn't recover"},
+      {t:"Is product placement ruining the authenticity of film?",      h:"Brand integration, creative compromise, and audience awareness"},
+      {t:"Why do so many promising directors end up making sequels?",   h:"Financial pressure, studio control, and the path of least resistance"},
+      {t:"Is the 'star system' dead — or just transformed?",            h:"Social media celebrities, franchise players, and what draws audiences"},
+      {t:"Should film schools be free?",                                h:"Access, diversity of voice, and who gets to tell stories"},
+      {t:"How do studios decide which stories get made?",               h:"Development, greenlight culture, and the risk calculus of Hollywood"},
+      {t:"Is the superhero genre in decline — or just evolving?",       h:"Audience fatigue, box office data, and what comes next"},
+      {t:"Why does Hollywood keep remaking Asian films?",               h:"Cultural exchange vs appropriation — Oldboy, Ringu, The Departed"},
+      {t:"How has Cannes shaped our idea of what 'good cinema' is?",    h:"Prestige, politics, and the European taste that still sets the agenda"},
+      {t:"Can a film marketing campaign hurt a film's reception?",      h:"Overhyping, misleading trailers, and audience disappointment"},
+      {t:"Why do actors 'go Hollywood' — and what do they lose?",       h:"Arthouse credibility vs mainstream success — a necessary trade-off?"},
+      {t:"Is the 45-day theatrical window dead?",                       h:"Streaming deals, studio pressure, and what cinemas are fighting for"},
+      {t:"What would a truly diverse film industry look like?",         h:"On screen, behind camera, in executive suites — how far is the gap?"},
+      {t:"Has music licensing become the biggest creative constraint in film?",h:"Rights costs, clearances, and why music choices sometimes feel wrong"},
+    ],
+    hard:[
+      {t:"Did the WGA strike of 2023 change Hollywood permanently?",        h:"AI in contracts, streaming royalties, and the power of studios"},
+      {t:"Can non-Western cinema take over the global market?",             h:"Bollywood, Nollywood, K-drama as alternative centres of power"},
+      {t:"Is vertical integration in entertainment a threat to creative freedom?",h:"When studios own streamers own cinemas — who controls the story?"},
+      {t:"Should AI be permitted to write scripts or generate footage commercially?",h:"Labour displacement, intellectual property, and creative authorship"},
+      {t:"Is the Hollywood studio system structurally racist?",             h:"Greenlight culture, representation data, and systemic change vs optics"},
+      {t:"Has the #MeToo movement permanently restructured power in Hollywood?",h:"Institutional change, backlash, and what the industry actually looks like now"},
+      {t:"Is cinema a soft power tool — and should it be?",                h:"State funding, national narratives, and the geopolitics of film"},
+      {t:"Can independent film survive the streaming era economically?",    h:"Distribution, revenue models, and the collapse of the theatrical middle"},
+      {t:"Is the blockbuster's dominance a symptom of cultural risk aversion?",h:"IP safety nets, franchise logic, and what the market is actually saying"},
+      {t:"Should film criticism be taught in schools?",                     h:"Media literacy, visual culture, and the civic value of cinematic thinking"},
+      {t:"Does the globalisation of streaming homogenise world cinema?",    h:"Netflix aesthetics, international co-productions, and the loss of local voice"},
+      {t:"Is box office a valid measure of a film's cultural impact?",      h:"Commercial success, critical legacy, and what actually lasts"},
+      {t:"Are entertainment conglomerates too powerful?",                   h:"Disney, Warner Bros Discovery, Comcast — market concentration and creative risk"},
+      {t:"Should actors have creative approval over how their work is used by AI?",h:"Digital likeness, posthumous performance, and ownership of a face"},
+      {t:"Is the 'awards season' industrial complex corrupting film culture?",h:"Campaigns, lobbying, and how a film's narrative is managed for prizes"},
+      {t:"What would a post-Hollywood global film industry look like?",     h:"Decentralised production, multilingual audiences, and shifting cultural gravity"},
+      {t:"Are film schools producing graduates for an industry that no longer exists?",h:"Disruption, new gatekeepers, and what skills actually matter now"},
+      {t:"Should there be international co-production quotas for streaming?",h:"Cultural policy, market distortion, and protecting local storytelling"},
+      {t:"Is the celebrity interview circuit destroying honest film promotion?",h:"PR management, safe questions, and what audiences are actually being sold"},
+      {t:"Can cinema compete with gaming as the dominant narrative medium of this century?",h:"Immersion, agency, and where the next generation is spending its attention"},
+    ]
+  }
+};
+
+const PHRASES = [
+  {
+    id:"start", emoji:"", label:"Starting",
+    items:[
+      "I'd like to start by saying that…",
+      "The first thing that comes to mind is…",
+      "This is interesting because…",
+      "To approach this topic, I think we should consider…",
+      "Let me think about this for a second…",
+      "Off the top of my head, I'd say…",
+      "What strikes me most about this is…",
+      "There are a few angles to look at this from…",
+    ]
+  },
+  {
+    id:"opinion", emoji:"", label:"Opinion",
+    items:[
+      "In my opinion / In my view…",
+      "I strongly believe that…",
+      "It seems to me that…",
+      "Personally, I feel that…",
+      "As far as I'm concerned…",
+      "From my perspective…",
+      "I tend to think that…",
+      "What I find most compelling is…",
+    ]
+  },
+  {
+    id:"agree", emoji:"", label:"Agree",
+    items:[
+      "I completely agree with that.",
+      "That's a really good point.",
+      "Exactly — and I'd add that…",
+      "You make a fair point. I also think…",
+      "I see where you're coming from.",
+      "That's true, especially when you consider…",
+      "I couldn't agree more.",
+    ]
+  },
+  {
+    id:"disagree", emoji:"", label:"Disagree",
+    items:[
+      "I'm not sure I agree because…",
+      "I see your point, but…",
+      "I'd actually argue the opposite…",
+      "That's one way to look at it, but…",
+      "With all due respect, I disagree because…",
+      "I can see both sides, but ultimately…",
+      "That's interesting, but have you considered…?",
+    ]
+  }
+];
+
+const CL = {films:"Films",series:"Series",industry:"Industry"};
+const LL = {easy:"Easy",medium:"Medium",hard:"Hard"};
+
+let lvl = "medium", cat = "all";
+let deck = [], dkey = "";
+
+function pkey(){ return cat+"|"+lvl; }
+function pool(){
+  const cs = cat==="all" ? ["films","series","industry"] : [cat];
+  return cs.flatMap(c=>(D[c]?.[lvl]||[]).map(x=>({...x,c})));
+}
+function shuffle(a){
+  a=[...a];
+  for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}
+  return a;
+}
+function next(){
+  const k=pkey();
+  if(k!==dkey||!deck.length){ deck=shuffle(pool()); dkey=k; }
+  return deck.pop();
+}
+
+function setLevel(l,b){
+  lvl=l;
+  document.querySelectorAll("[onclick*=setLevel]").forEach(x=>x.classList.remove("on"));
+  b.classList.add("on"); deck=[]; updateCnt();
+}
+function setCat(c,b){
+  cat=c;
+  document.querySelectorAll("[onclick*=setCat]").forEach(x=>x.classList.remove("on"));
+  b.classList.add("on"); deck=[]; updateCnt();
+}
+function setLevelSel(l){
+  lvl=l; deck=[]; updateCnt();
+  syncSelActive();
+}
+function setCatSel(c){
+  cat=c; deck=[]; updateCnt();
+  syncSelActive();
+}
+function syncSelActive(){
+  ['sel-level','sel-cat'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.classList.add("sel-active");
+  });
+}
+function updateCnt(){
+  const n=pool().length;
+  document.getElementById("cnt").textContent=n+" topic"+(n!==1?"s":"");
+}
+
+function gen(){
+  const p=next(); if(!p) return;
+  const card=document.getElementById("card");
+  const tz=document.getElementById("tz");
+  card.classList.remove("throwing","landing");
+  void card.offsetWidth;
+  card.classList.add("throwing");
+  setTimeout(()=>{
+    tz.innerHTML=
+      '<div class="tcat">'+CL[p.c]+'</div>'+
+      '<div class="ttext">'+p.t+'</div>'+
+      '<div class="thint">'+p.h+'</div>'+
+      '<div class="tbadge '+lvl+'">'+LL[lvl]+'</div>';
+    card.classList.remove("easy","medium","hard","throwing");
+    card.classList.add(lvl);
+    void card.offsetWidth;
+    card.classList.add("landing");
+    setTimeout(()=>card.classList.remove("landing"),500);
+  },320);
+  document.getElementById("meta").textContent=CL[p.c]+" · "+LL[lvl];
+}
+
+let openAcc = "start";
+
+function buildPhrasesHTML(pfx){
+  return PHRASES.map(sec=>{
+    const isOpen = sec.id === openAcc;
+    return `<div class="acc-group" id="${pfx}ag-${sec.id}">
+      <button class="acc-head${isOpen?" open":""}" onclick="toggleAcc('${sec.id}')">
+        <span class="acc-label">
+          <span class="acc-emoji">${sec.emoji}</span>
+          <span class="acc-title">${sec.label}</span>
+          <span class="acc-count">${sec.items.length}</span>
+        </span>
+        <span class="acc-arrow">▼</span>
+      </button>
+      <div class="acc-body${isOpen?" open":""}" id="${pfx}ab-${sec.id}">
+        <div class="acc-inner">
+          ${sec.items.map((text,i)=>`
+            <div class="phr" id="${pfx}phr-${sec.id}-${i}" onclick="copyPhr('${sec.id}',${i})">
+              <div class="phr-dot"></div>
+              <div class="phr-text">${text}</div>
+            </div>`).join("")}
+        </div>
+      </div>
+    </div>`;
+  }).join("");
+}
+
+function renderPhrases(){
+  const d = document.getElementById("acc-scroll");
+  if(d) d.innerHTML = buildPhrasesHTML("d-");
+  const bs = document.getElementById("bs-content");
+  if(bs) bs.innerHTML = buildPhrasesHTML("bs-");
+}
+
+function toggleAcc(id){
+  const wasOpen = openAcc === id;
+  ["d-","bs-"].forEach(p=>{
+    if(openAcc){
+      document.getElementById(p+"ab-"+openAcc)?.classList.remove("open");
+      document.querySelector("#"+p+"ag-"+openAcc+" .acc-head")?.classList.remove("open");
+    }
+  });
+  openAcc = wasOpen ? null : id;
+  ["d-","bs-"].forEach(p=>{
+    if(openAcc){
+      document.getElementById(p+"ab-"+openAcc)?.classList.add("open");
+      document.querySelector("#"+p+"ag-"+openAcc+" .acc-head")?.classList.add("open");
+    }
+  });
+}
+
+function copyPhr(secId,idx){
+  const sec = PHRASES.find(s=>s.id===secId); if(!sec) return;
+  navigator.clipboard.writeText(sec.items[idx]).catch(()=>{});
+  ["d-","bs-"].forEach(p=>{
+    const el = document.getElementById(`${p}phr-${secId}-${idx}`);
+    if(!el) return;
+    el.classList.add("copied");
+    setTimeout(()=>el.classList.remove("copied"),1200);
+  });
+}
+
+function openBS(){
+  document.getElementById("bottom-sheet").classList.add("open");
+  document.getElementById("bs-overlay").classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+function closeBS(){
+  document.getElementById("bottom-sheet").classList.remove("open");
+  document.getElementById("bs-overlay").classList.remove("open");
+  document.body.style.overflow = "";
+}
+
+let td=60, tr=60, tiInt=null, trun=false;
+
+function setTime(s,b){
+  document.querySelectorAll(".tp").forEach(x=>{
+    x.classList.toggle("on", x.getAttribute("onclick")===`setTime(${s},this)`);
+  });
+  td=s; tr=s;
+  if(trun){ clearInterval(tiInt); trun=false; }
+  drawT(true); barSet(1);
+  const pb=document.getElementById("tplaybtn");
+  pb.textContent="▶"; pb.classList.add("go");
+}
+
+function tToggle(){ trun ? tPause() : tStart(); }
+
+function tStart(){
+  if(trun) return; trun=true;
+  document.getElementById("tplaybtn").textContent="⏸";
+  tiInt=setInterval(()=>{
+    if(tr<=0){
+      clearInterval(tiInt); trun=false;
+      document.getElementById("tplaybtn").textContent="▶";
+      document.getElementById("tnum").textContent="0:00";
+      document.getElementById("tnum").className="tnum done";
+      document.getElementById("tbar").style.width="0%";
+      playDoneSound();
+      launchConfetti();
+      return;
+    }
+    tr--; drawT(false); barSet(tr/td);
+    if(tr<=3 && tr>0) playTickSound();
+  },1000);
+}
+
+function tPause(){
+  clearInterval(tiInt); trun=false;
+  document.getElementById("tplaybtn").textContent="▶";
+}
+
+function tReset(){
+  clearInterval(tiInt); trun=false; tr=td;
+  document.getElementById("tplaybtn").textContent="▶";
+  drawT(true); barSet(1);
+}
+
+function drawT(idle){
+  const el=document.getElementById("tnum");
+  if(idle){ el.textContent=fmt(td); el.className="tnum"; return; }
+  el.textContent=fmt(tr);
+  el.className="tnum"+(tr<=10?" warn":"");
+}
+function barSet(frac){
+  const b=document.getElementById("tbar");
+  b.style.width=(frac*100)+"%";
+  b.className="tbar"+(tr<=10&&frac<1?" warn":"");
+}
+function fmt(s){ return (s/60|0)+":"+String(s%60).padStart(2,"0"); }
+
+let audioCtx = null;
+function getAudioCtx(){
+  if(!audioCtx) audioCtx = new (window.AudioContext||window.webkitAudioContext)();
+  return audioCtx;
+}
+function playTickSound(){
+  try{
+    const ctx = getAudioCtx();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.frequency.value = 880;
+    osc.type = 'sine';
+    gain.gain.setValueAtTime(.15, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(.001, ctx.currentTime + .08);
+    osc.start(ctx.currentTime);
+    osc.stop(ctx.currentTime + .08);
+  } catch(e){}
+}
+function playDoneSound(){
+  try{
+    const ctx = getAudioCtx();
+    
+    [[523,0],[659,.12],[784,.24],[1047,.38]].forEach(([freq,delay])=>{
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.frequency.value = freq;
+      osc.type = 'triangle';
+      const t = ctx.currentTime + delay;
+      gain.gain.setValueAtTime(0, t);
+      gain.gain.linearRampToValueAtTime(.22, t + .04);
+      gain.gain.exponentialRampToValueAtTime(.001, t + .35);
+      osc.start(t); osc.stop(t + .35);
+    });
+  } catch(e){}
+}
+
+function launchConfetti(){
+  const canvas = document.getElementById('confetti-canvas');
+  const W = canvas.width  = window.innerWidth;
+  const H = canvas.height = window.innerHeight;
+  const ctx = canvas.getContext('2d');
+  const COLS = ['#C9A84C','#fff','#E8E6E1','#1A7F4B','#B82828','#3a7bd5','#f5a623'];
+  const parts = Array.from({length:120},()=>({
+    x: Math.random()*W, y: -10 - Math.random()*80,
+    vx: (Math.random()-.5)*4,
+    vy: 2 + Math.random()*4,
+    rot: Math.random()*360,
+    rv: (Math.random()-.5)*8,
+    w: 7+Math.random()*8, h: 4+Math.random()*4,
+    col: COLS[Math.random()*COLS.length|0],
+    alpha:1
+  }));
+  let frame = 0;
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    let alive = false;
+    parts.forEach(p=>{
+      p.x += p.vx; p.y += p.vy; p.rot += p.rv;
+      p.vy += .08; 
+      if(p.y < H + 20) alive = true;
+      p.alpha = Math.max(0, 1 - Math.max(0,(p.y - H*.6)/(H*.4)));
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot * Math.PI/180);
+      ctx.globalAlpha = p.alpha;
+      ctx.fillStyle = p.col;
+      ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+      ctx.restore();
+    });
+    if(alive && frame < 220){ frame++; requestAnimationFrame(draw); }
+    else { ctx.clearRect(0,0,W,H); }
+  }
+  draw();
+}
+
+function startApp(){
+  document.getElementById("splash").classList.add("hide");
+  setTimeout(()=>{
+    document.getElementById("splash").style.display="none";
+    document.getElementById("topnav").classList.add("visible");
+    document.getElementById("main").classList.add("visible");
+    document.getElementById("footer").classList.add("visible");
+  },450);
+}
+
+updateCnt();
+renderPhrases();
+</script>
+</body>
+</html>
