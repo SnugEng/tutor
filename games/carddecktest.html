@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Card Deck · SE</title>
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;700;800&display=swap');
+:root{
+  --bg:#12111e;--surf:#1d1b2e;--bord:#2e2c46;
+  --acc:#e8b84b;--txt:#f0eff8;--dim:#7a798f;
+  --grn:#3db88a;--red:#d9547a;
+  --front:#fdfcf5;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--txt);touch-action:manipulation}
+.scr{display:none;position:fixed;top:0;left:0;right:0;bottom:0;width:100%;height:100%;flex-direction:column}
+.scr.on{display:flex;flex-direction:column}
+
+#sLobby{overflow-y:auto;flex-direction:column;align-items:center;padding:28px 16px 60px;background:radial-gradient(ellipse at 20% 10%,#7b2fff22,transparent 50%),radial-gradient(ellipse at 80% 90%,#4cc9f018,transparent 50%),var(--bg)}
+.logo{font-family:'DM Serif Display',serif;font-size:clamp(2rem,7vw,3.2rem);color:var(--acc);text-align:center;letter-spacing:-1px;text-shadow:0 0 40px rgba(247,201,72,.3)}
+.logo-sub{font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:3px;text-transform:uppercase;color:var(--dim);text-align:center;margin-top:4px;margin-bottom:22px}
+.lcard{background:var(--surf);border:1px solid var(--bord);border-radius:18px;padding:20px;width:100%;max-width:520px;display:flex;flex-direction:column;gap:16px}
+.lbl{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:3px;text-transform:uppercase;color:var(--dim);margin-bottom:6px}
+.topic-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.tpill{padding:9px;border-radius:9px;border:1.5px solid var(--bord);background:#16213e;color:var(--dim);font-family:'DM Sans',sans-serif;font-size:.74rem;font-weight:700;cursor:pointer;transition:all .2s;text-align:center}
+.tpill.sel{border-color:var(--acc);background:rgba(247,201,72,.14);color:var(--txt)}
+.count-row{display:flex;gap:6px;flex-wrap:wrap}
+.cpill{padding:7px 14px;border-radius:9px;border:1.5px solid var(--bord);background:#16213e;color:var(--dim);font-family:'DM Mono',monospace;font-size:.76rem;cursor:pointer;transition:all .2s}
+.cpill.sel{border-color:var(--acc);background:rgba(247,201,72,.14);color:var(--acc)}
+.prow{display:flex;align-items:center;gap:7px;background:#16213e;border:1.5px solid var(--bord);border-radius:10px;padding:7px 10px;margin-bottom:5px}
+.pav{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;border:2px solid var(--bord);background:var(--bg);flex-shrink:0;overflow:hidden}
+.pav img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.pname{flex:1;background:transparent;border:none;outline:none;color:var(--txt);font-family:'DM Sans',sans-serif;font-size:.84rem;font-weight:700;min-width:0}
+.pname::placeholder{color:var(--dim);font-weight:400}
+.pdot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.prmv{background:none;border:none;color:var(--dim);cursor:pointer;font-size:.78rem;padding:3px;flex-shrink:0}
+.addp{background:#16213e;border:1px dashed var(--bord);border-radius:9px;padding:8px;color:var(--dim);font-size:.76rem;cursor:pointer;width:100%;font-family:'DM Sans',sans-serif;transition:all .2s}
+.addp:hover{border-color:var(--acc);color:var(--acc)}
+.startbtn{background:linear-gradient(135deg,#f7c948,#ff9f1c);border:none;border-radius:12px;padding:14px;color:#0f0e17;font-family:'DM Serif Display',serif;font-size:1rem;cursor:pointer;box-shadow:0 4px 24px rgba(247,201,72,.35);transition:transform .15s}
+.startbtn:active{transform:translateY(1px)}
+
+#sTable{overflow:hidden;background:#0a0913}
+
+.tbar{background:#0a0913;border-bottom:1px solid var(--bord);padding:8px 10px;display:flex;align-items:center;gap:6px;flex-shrink:0;min-height:62px;overflow:hidden}
+.tbar-title{font-family:'DM Serif Display',serif;font-size:.85rem;color:var(--acc);flex-shrink:0;display:none}
+.schips{display:flex;gap:6px;flex:1;overflow-x:auto;min-width:0;justify-content:center;align-items:center;padding:2px 0;scrollbar-width:none;-ms-overflow-style:none}
+.schip{display:flex;align-items:center;gap:6px;padding:6px 12px 6px 8px;border-radius:28px;background:#1e1c2e;border:2px solid var(--bord);font-weight:700;white-space:nowrap;flex-shrink:1;min-width:0;max-width:180px;transition:all .35s cubic-bezier(.34,1.56,.64,1);position:relative}
+.schip.cur{border-color:var(--acc);background:rgba(232,184,75,.12);box-shadow:0 0 14px rgba(232,184,75,.35);transform:scale(1.08)}
+.schip-av{width:32px;height:32px;border-radius:50%;object-fit:cover;flex-shrink:0;display:block}
+.schip-name{font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;flex:1}
+.ssc{font-family:'DM Mono',monospace;font-size:.92rem;font-weight:900;padding:3px 9px;border-radius:8px;background:rgba(255,255,255,.1);flex-shrink:0}
+.ssc.p{color:#3db88a}.ssc.n{color:#d9547a}.ssc.z{color:var(--dim)}
+
+.score-pop{position:fixed;pointer-events:none;font-family:'DM Mono',monospace;font-weight:900;font-size:1.2rem;z-index:9998;animation:scorePop 1.1s ease forwards;white-space:nowrap;text-shadow:0 2px 8px rgba(0,0,0,.7)}
+.score-pop.pos{color:#06d6a0}.score-pop.neg{color:#f72585}
+@keyframes scorePop{0%{opacity:0;transform:translateY(0) scale(.4)}20%{opacity:1;transform:translateY(-14px) scale(1.5)}70%{opacity:1;transform:translateY(-40px) scale(1)}100%{opacity:0;transform:translateY(-70px) scale(.6)}}
+
+.tbar-right{display:flex;gap:5px;flex-shrink:0}
+.tbtn{padding:4px 9px;border-radius:6px;border:1.5px solid var(--bord);background:transparent;color:var(--dim);font-size:.64rem;font-weight:700;cursor:pointer;flex-shrink:0;transition:all .2s;white-space:nowrap}
+.tbtn:hover{border-color:var(--acc);color:var(--acc)}
+.tbtn.rd{border-color:#7f1d1d;color:#fca5a5}.tbtn.rd:hover{background:#7f1d1d;color:#fff}
+
+#cardGrid{flex:1;display:grid;gap:8px;padding:8px;overflow:hidden}
+
+.tc{background:linear-gradient(145deg,#1a1930,#14203a);border:2px solid var(--bord);border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;position:relative;overflow:hidden;width:100%;height:100%;transition:border-color .2s,box-shadow .22s,transform .2s,background .2s}
+.tc::before{content:'';position:absolute;inset:0;border-radius:10px;background:repeating-linear-gradient(45deg,transparent,transparent 12px,rgba(255,255,255,.018) 12px,rgba(255,255,255,.018) 24px)}
+.tc:hover{border-color:var(--acc);box-shadow:0 0 24px rgba(232,184,75,.4),0 6px 20px rgba(0,0,0,.5);transform:translateY(-3px) scale(1.03);background:linear-gradient(145deg,#22203d,#192840)}
+.tc:active{transform:translateY(-1px) scale(.99)}
+.tc.done{opacity:.18;pointer-events:none;filter:grayscale(1)}
+.tc-num{font-family:'DM Serif Display',serif;font-size:clamp(1.8rem,5vw,5.5rem);color:rgba(255,255,255,.88);z-index:1;line-height:1;text-shadow:0 2px 16px rgba(0,0,0,.5);transition:color .2s,transform .2s}
+.tc-pts{font-family:'DM Mono',monospace;font-size:clamp(.65rem,1.4vw,1rem);color:rgba(255,255,255,.4);z-index:1;margin-top:2px;font-weight:700}
+.tc:hover .tc-num{color:#fff;transform:scale(1.06)}
+
+#sCard{z-index:100;overflow:hidden;background:#f7f6ee}
+
+.card-player-bar{background:#0a0913;border-bottom:1px solid var(--bord);padding:8px 12px;display:flex;align-items:center;gap:6px;flex-shrink:0;min-height:62px}
+.card-schips{display:flex;gap:6px;flex:1;overflow-x:auto;justify-content:center;align-items:center;scrollbar-width:none}
+.card-schip{display:flex;align-items:center;gap:6px;padding:6px 12px 6px 8px;border-radius:28px;background:#1e1c2e;border:2px solid var(--bord);font-weight:700;white-space:nowrap;flex-shrink:1;min-width:0;max-width:180px;transition:all .3s}
+.card-schip.cur{border-color:var(--acc);background:rgba(232,184,75,.12);box-shadow:0 0 12px rgba(232,184,75,.35);transform:scale(1.06)}
+.card-schip-av{width:32px;height:32px;border-radius:50%;object-fit:cover;flex-shrink:0;display:block}
+.card-schip-name{font-size:.88rem;font-weight:700;color:var(--txt);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;flex:1}
+.card-schip-score{font-family:'DM Mono',monospace;font-size:.92rem;font-weight:900;padding:3px 9px;border-radius:8px;background:rgba(255,255,255,.1);flex-shrink:0}
+.card-schip-score.p{color:#3db88a}.card-schip-score.n{color:#d9547a}.card-schip-score.z{color:var(--dim)}
+.card-tbar-right{display:flex;gap:5px;flex-shrink:0}
+
+.cm-wrap{display:flex;flex-direction:column;flex:1;min-height:0;width:100%;overflow:hidden;background:#f7f6ee}
+.cm-hd{
+  flex-shrink:0;width:100%;
+  padding:14px 20px 12px;
+  display:flex;align-items:center;gap:10px;
+  background:var(--tc,#888);
+  position:relative;overflow:hidden
+}
+.cm-hd::after{
+  content:'';position:absolute;right:-30px;top:-30px;
+  width:120px;height:120px;border-radius:50%;
+  background:rgba(255,255,255,.08);pointer-events:none
+}
+.hd-dot{display:none}
+.hd-type{
+  font-family:'DM Mono',monospace;font-size:.65rem;
+  letter-spacing:3px;text-transform:uppercase;
+  color:rgba(255,255,255,.9);font-weight:700
+}
+.hd-pts-badge{
+  margin-left:auto;
+  font-family:'DM Mono',monospace;font-size:.78rem;font-weight:800;
+  color:rgba(255,255,255,.95);
+  background:rgba(255,255,255,.2);
+  padding:5px 14px;border-radius:20px;
+  border:1.5px solid rgba(255,255,255,.25);
+  backdrop-filter:blur(4px)
+}
+.hd-num{
+  font-family:'DM Mono',monospace;font-size:.6rem;
+  color:rgba(255,255,255,.45);flex-shrink:0
+}
+
+.cm-scroll{flex:1;overflow-y:auto;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#f7f6ee;padding:clamp(10px,2vh,20px) clamp(10px,3vw,28px)}
+
+.cm-body{width:100%;max-width:min(94vw,720px);display:flex;flex-direction:column;gap:clamp(10px,1.8vh,18px);padding:clamp(18px,3.5vw,44px) clamp(18px,3.5vw,48px);background:#fff;border-radius:22px;border:2px solid #e8e6d8;box-shadow:0 4px 24px rgba(0,0,0,.08)}
+
+.cm-ft-wrap{width:100%;display:flex;justify-content:center;background:#f0efe6;border-top:2px solid rgba(0,0,0,.07);flex-shrink:0}
+.cm-ft{
+  padding:12px clamp(12px,3vw,24px) 16px;
+  display:flex;gap:8px;flex-wrap:wrap;
+  width:100%;max-width:min(94vw,720px);margin:0 auto
+}
+.cm-q{font-family:'DM Serif Display',serif;font-size:clamp(1.1rem,2.8vw,1.55rem);line-height:1.6;color:#18172e;text-align:justify;hyphens:auto}
+
+/* verb pill inside gap chip — serif, italic, white bg, dark text */
+.gap-verb-pill{
+  font-family:'DM Serif Display',serif;
+  font-style:italic;
+  font-size:2em;
+  background:#fff;
+  color:#18172e;
+  border-radius:20px;
+  padding:1px 10px 2px;
+  display:inline-block;
+  line-height:1.35;
+  letter-spacing:.3px;
+    text-transform: lowercase;
+}
+/* dark-text variant for light-colored chips (yellow, mint, etc) */
+.cm-instr--dk{color:#18172e!important}
+.cm-instr--dk svg{stroke:#18172e!important}
+.speak-badge--dk{color:#18172e!important}
+.speak-badge--dk svg{stroke:#18172e!important}
+/* speak-quote: use card color for bg but ensure readable contrast */
+.speak-quote{
+  font-family:'DM Mono',monospace;
+  font-size:.88em;
+  background:color-mix(in srgb,var(--tc,#888) 15%,#fff);
+  color:#18172e;
+  border:1.5px solid color-mix(in srgb,var(--tc,#888) 40%,transparent);
+  border-radius:8px;
+  padding:2px 10px;
+  display:inline-block;
+  line-height:1.45;
+  font-style:normal;
+}
+
+.cm-instr{
+  font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:2px;text-transform:uppercase;
+  color:#fff;font-weight:700;
+  padding:6px 14px 6px 10px;
+  background:var(--tc,#555);
+  border-radius:100px;
+  display:inline-flex;align-items:center;gap:6px;align-self:flex-start;
+  line-height:1.5;
+  box-shadow:0 2px 8px color-mix(in srgb,var(--tc,#555) 35%,transparent)
+}
+
+.mc-opts{display:flex;flex-direction:column;gap:11px}
+.mc-opt{
+  padding:clamp(14px,2.2vh,20px) clamp(18px,3vw,26px);
+  border-radius:14px;border:2px solid #e2e0d4;
+  background:#fff;
+  cursor:pointer;font-family:'DM Mono',monospace;font-size:clamp(.88rem,1.9vw,1.08rem);font-weight:500;color:#22203a;
+  transition:border-color .18s,background .18s,transform .15s,box-shadow .18s;
+  text-align:left;display:flex;align-items:center;gap:14px;width:100%;
+  box-shadow:0 1px 4px rgba(0,0,0,.05)
+}
+.mc-opt:hover{
+  border-color:var(--tc,#888);
+  background:color-mix(in srgb,var(--tc,#888) 6%,#fff);
+  transform:translateX(5px);
+  box-shadow:0 4px 16px rgba(0,0,0,.1)
+}
+.opt-l{
+  font-family:'DM Mono',monospace;font-size:.78rem;font-weight:800;
+  width:34px;height:34px;border-radius:9px;
+  background:#eeecdf;color:#888;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  transition:background .18s,color .18s,transform .18s
+}
+.mc-opt:hover .opt-l{background:var(--tc,#888);color:#fff;transform:scale(1.1)}
+.mc-opt.correct{border-color:#06d6a0!important;background:#eafaf4!important;color:#027a5a;pointer-events:none;transform:translateX(5px);box-shadow:0 4px 16px rgba(6,214,160,.18)!important}
+.mc-opt.correct .opt-l{background:#06d6a0;color:#fff}
+.mc-opt.wrong{border-color:#f72585!important;background:#fdeef4!important;color:#a00050;pointer-events:none}
+.mc-opt.wrong .opt-l{background:#f72585;color:#fff}
+.mc-opt.reveal{border-color:#06d6a0!important;background:#eafaf4!important;pointer-events:none}
+.mc-opt[disabled]{pointer-events:none}
+
+.gap-ctx{font-family:'DM Serif Display',serif;font-size:clamp(1.1rem,2.8vw,1.7rem);color:#18172e;line-height:1.9;padding:18px 22px;background:#f7f6ee;border-radius:14px;border:2px solid #e2e0d4;box-shadow:0 1px 4px rgba(0,0,0,.05);text-align:justify}
+.gap-lbl{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:2px;text-transform:uppercase;color:#aaa;margin-bottom:7px}
+.gap-in{width:100%;border:2px solid #ddd;border-radius:12px;padding:15px 20px;font-family:'DM Mono',monospace;font-size:clamp(1rem,2.2vw,1.2rem);color:#18172e;background:#fff;outline:none;transition:border-color .2s,box-shadow .2s;box-shadow:0 1px 4px rgba(0,0,0,.05)}
+.gap-in:focus{border-color:var(--tc,#888);box-shadow:0 0 0 3px color-mix(in srgb,var(--tc,#888) 20%,transparent)}
+.gap-in.ok{border-color:#06d6a0;background:#eafaf4;color:#027a5a;box-shadow:0 0 0 3px rgba(6,214,160,.15)}
+.gap-in.no{border-color:#f72585;background:#fdeef4;color:#a00050;box-shadow:0 0 0 3px rgba(247,37,133,.12)}
+
+.wo-area{display:flex;flex-direction:column;gap:12px}
+.wo-label{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:2px;text-transform:uppercase;color:#aaa;margin-bottom:2px}
+.wo-zone{min-height:56px;border:2px dashed #d4d2c0;border-radius:14px;padding:10px 12px;display:flex;flex-wrap:wrap;gap:7px;align-items:center;background:#fff;transition:border-color .2s,box-shadow .2s}
+.wo-zone:has(.ww){border-color:#c8c6b4;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.wo-zone.done{border-style:solid}
+.wo-ph{font-family:'DM Mono',monospace;font-size:.68rem;color:#ccc;pointer-events:none;user-select:none}
+.wo-bank{display:flex;flex-wrap:wrap;gap:7px;min-height:50px;padding:10px 12px;background:#eeeede;border-radius:12px;border:1.5px solid #e0dec8}
+.ww{padding:8px 14px;border-radius:10px;background:#fff;font-family:'DM Sans',sans-serif;font-size:clamp(.95rem,1.9vw,1.2rem);font-weight:700;color:#22203a;cursor:pointer;border:2px solid #e0dec8;transition:all .2s;user-select:none;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.ww.punct{padding:8px 7px;min-width:0}
+.ww:hover{border-color:var(--tc,#888);transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.12)}
+.ww:active{transform:scale(.95)}
+.ww.placed{background:#f0f0e8;border-color:#c8c6b4;color:#22203a}
+.ww.placed:hover{background:#e8e6d8;border-color:#aaa;transform:translateY(-2px)}
+
+.wo-slot{
+  min-width:52px;height:38px;border-radius:10px;
+  border:2px dashed #d0cec0;background:#f7f6ee;
+  display:inline-flex;align-items:center;justify-content:center;
+  cursor:default;transition:border-color .15s
+}
+.wo-slot.filled{border:none;padding:0;min-width:0;height:auto;background:none}
+
+.ww-locked{background:#f0efe6!important;border-color:#d0cec0!important;color:#aaa!important;cursor:default!important;pointer-events:none;box-shadow:none!important;transform:none!important}
+.ww.w-ok{border-color:#06d6a0!important;background:#eafaf4!important;color:#027a5a!important;box-shadow:0 2px 8px rgba(6,214,160,.25)!important}
+.ww.w-no{border-color:#f72585!important;background:#fdeef4!important;color:#a00050!important;box-shadow:0 2px 8px rgba(247,37,133,.2)!important}
+
+.ooo-opts{display:flex;flex-direction:column;gap:11px}
+.ooo-opt{
+  padding:clamp(14px,2.2vh,20px) clamp(18px,3vw,26px);
+  border-radius:14px;border:2px solid #e2e0d4;background:#fff;
+  cursor:pointer;font-family:'DM Mono',monospace;
+  font-size:clamp(.88rem,1.9vw,1.08rem);font-weight:500;color:#22203a;
+  transition:border-color .18s,background .18s,transform .15s,box-shadow .18s;
+  text-align:left;display:flex;align-items:center;gap:14px;width:100%;
+  box-shadow:0 1px 4px rgba(0,0,0,.05)
+}
+.ooo-opt:hover{border-color:var(--tc,#888);background:color-mix(in srgb,var(--tc,#888) 6%,#fff);transform:translateX(5px);box-shadow:0 4px 14px rgba(0,0,0,.1)}
+.ooo-l{
+  font-family:'DM Mono',monospace;font-size:.78rem;font-weight:800;
+  width:34px;height:34px;border-radius:9px;
+  background:#eeecdf;color:#888;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  transition:background .18s,color .18s,transform .18s
+}
+.ooo-opt:hover .ooo-l{background:var(--tc,#888);color:#fff;transform:scale(1.1)}
+.ooo-opt.correct{border-color:#06d6a0!important;background:#eafaf4!important;color:#027a5a;pointer-events:none;transform:translateX(5px)}
+.ooo-opt.correct .ooo-l{background:#06d6a0;color:#fff}
+.ooo-opt.wrong{border-color:#f72585!important;background:#fdeef4!important;color:#a00050;pointer-events:none}
+.ooo-opt.wrong .ooo-l{background:#f72585;color:#fff}
+.ooo-opt.reveal{border-color:#06d6a0!important;background:#eafaf4!important;pointer-events:none}
+.ooo-opt.reveal .ooo-l{background:#06d6a0;color:#fff}
+
+.err-sent{font-family:'DM Serif Display',serif;font-size:clamp(1.1rem,2.8vw,1.7rem);line-height:2.1;padding:18px 22px;background:#f7f6ee;border-radius:14px;border:2px solid #e2e0d4;box-shadow:0 1px 4px rgba(0,0,0,.05);color:#18172e;word-spacing:2px;text-align:justify}
+.ew{cursor:pointer;padding:3px 6px;border-radius:7px;transition:all .18s;border-bottom:2.5px solid transparent;color:#18172e;display:inline}
+.ew.punct{padding:3px 1px;margin-left:-4px}
+.ew:hover{background:#fdecc8;border-bottom-color:#d97706;color:#18172e}
+.ew.sel{background:#fde8b8;border-bottom-color:#d97706;color:#92400e}
+.ew.correct{background:#eafaf4;color:#027a5a!important;border-bottom-color:#06d6a0;pointer-events:none}
+.ew.wrong{background:#fdeef4;color:#a00050!important;border-bottom-color:#f72585;pointer-events:none}
+.ew.reveal-c{background:#eafaf4;color:#027a5a!important;border-bottom-color:#06d6a0;pointer-events:none}
+.err-in{width:100%;border:2px solid #ddd;border-radius:12px;padding:15px 20px;font-family:'DM Mono',monospace;font-size:clamp(1rem,2.2vw,1.2rem);color:#18172e;background:#fff;outline:none;transition:border-color .2s,box-shadow .2s;box-shadow:0 1px 4px rgba(0,0,0,.05)}
+.err-in:focus{border-color:var(--tc,#888);box-shadow:0 0 0 3px color-mix(in srgb,var(--tc,#888) 20%,transparent)}
+.err-in.ok{border-color:#06d6a0;background:#eafaf4;color:#027a5a}
+.err-in.no{border-color:#f72585;background:#fdeef4;color:#a00050}
+
+.read-txt{background:#f7f6ee;border-left:5px solid var(--tc,#888);border-radius:0 14px 14px 0;padding:clamp(16px,2.2vh,26px) clamp(18px,3vw,30px);font-size:clamp(1.05rem,2.5vw,1.3rem);line-height:2.1;color:#18172e;display:flex;flex-wrap:wrap;gap:0 4px;align-items:baseline;box-shadow:0 1px 6px rgba(0,0,0,.06)}
+.rw{cursor:pointer;padding:2px 5px;border-radius:5px;transition:background .15s;border-bottom:2px solid transparent;display:inline-block;color:#18172e}
+.rw:hover{background:#fdecc8;border-bottom-color:#d97706}
+.rw.sel{background:#fde8b8;border-bottom-color:#d97706;font-weight:700}
+.read-hint{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:2px;text-transform:uppercase;color:#bbb;margin-top:-8px}
+.read-q{font-family:'DM Mono',monospace;font-size:clamp(.82rem,2vw,1rem);line-height:1.6;color:#444;padding:10px 0 0;border-top:2px solid #e8e6d8;margin-top:4px}
+.find-txt{background:#f7f6ee;border-left:5px solid var(--tc,#888);border-radius:0 14px 14px 0;padding:clamp(16px,2.2vh,26px) clamp(18px,3vw,30px);font-size:clamp(1.05rem,2.5vw,1.3rem);line-height:2.1;color:#18172e;display:flex;flex-wrap:wrap;gap:0 4px;align-items:baseline;box-shadow:0 1px 6px rgba(0,0,0,.06)}
+.fw{cursor:pointer;padding:2px 5px;border-radius:5px;transition:background .15s;border-bottom:2px solid transparent;display:inline-block;color:#18172e}
+.fw:hover{background:#fdecc8;border-bottom-color:#d97706}
+.fw.sel{background:#fde8b8;border-bottom-color:#d97706;font-weight:700}
+.fw.correct{background:#eafaf4;color:#027a5a;border-bottom-color:#06d6a0;pointer-events:none}
+.fw.wrong{background:#fdeef4;color:#a00050;border-bottom-color:#f72585;pointer-events:none}
+.find-task{font-family:'DM Mono',monospace;font-size:clamp(.82rem,2vw,1rem);line-height:1.6;color:#444;padding:10px 0 0;border-top:2px solid #e8e6d8;margin-top:4px}
+.find-hint{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:2px;text-transform:uppercase;color:#bbb;margin-top:-4px}
+.find-count{
+  font-family:'DM Mono',monospace;font-size:.62rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  color:#fff;
+  padding:6px 14px 6px 10px;
+  background:var(--tc,#555);
+  border-radius:100px;
+  display:inline-flex;align-items:center;gap:6px;align-self:flex-start;
+  box-shadow:0 2px 8px color-mix(in srgb,var(--tc,#555) 35%,transparent)
+}
+
+.speak-badge{
+  font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:2px;text-transform:uppercase;
+  color:#fff;font-weight:700;
+  padding:6px 14px 6px 10px;
+  background:var(--tc,#555);
+  border-radius:100px;
+  display:inline-flex;align-items:center;gap:6px;align-self:flex-start;
+  line-height:1.5;
+  box-shadow:0 2px 8px color-mix(in srgb,var(--tc,#555) 35%,transparent)
+}
+.speak-task{font-family:'DM Serif Display',serif;font-size:clamp(1.25rem,3vw,1.85rem);color:#18172e;line-height:1.75}
+.speak-task em{font-style:italic;color:var(--tc,#888)}
+
+.fb{display:none;padding:15px 20px;border-radius:13px;font-family:'DM Mono',monospace;font-size:clamp(.78rem,1.8vw,.92rem);line-height:1.75;border:1.5px solid;word-break:break-word;overflow-wrap:break-word;hyphens:auto}
+.fb.show{display:block;animation:fuD .3s cubic-bezier(.34,1.56,.64,1)}
+.fb.ok{background:#eafaf4;border-color:#3db88a;color:#1a6b4a}
+.fb.no{background:#fdeef4;border-color:#d9547a;color:#8b1a3a}
+@keyframes fuD{from{opacity:0;transform:translateY(8px) scale(.97)}to{opacity:1;transform:none}}
+
+.ftb{
+  flex:1;min-width:70px;
+  padding:clamp(14px,2.2vh,19px);
+  border-radius:13px;border:2px solid transparent;
+  cursor:pointer;font-family:'DM Sans',sans-serif;
+  font-size:clamp(.95rem,1.8vw,1.15rem);font-weight:700;
+  transition:all .18s;white-space:nowrap
+}
+.ftb-back{background:rgba(0,0,0,.06);border-color:rgba(0,0,0,.1);color:#888;flex:0 0 auto;padding:12px 16px;font-size:.82rem}
+.ftb-back:hover{background:rgba(0,0,0,.11);color:#555}
+.ftb-chk{background:#fff;border-color:#d0cec0;color:#333;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.ftb-chk:hover{border-color:#888;background:#f5f4ec}
+.ftb-show{background:#fff;border-color:#d0cec0;color:#333;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.ftb-show:hover{border-color:#888;background:#f5f4ec}
+.ftb-ok{background:#eafaf4;border-color:#06d6a0;color:#027a5a;box-shadow:0 2px 8px rgba(6,214,160,.15)}
+.ftb-ok:hover{background:#06d6a0;color:#fff;border-color:#06d6a0;transform:translateY(-2px);box-shadow:0 5px 16px rgba(6,214,160,.3)}
+.ftb-no{background:#fdeef4;border-color:#f72585;color:#c0005a;box-shadow:0 2px 8px rgba(247,37,133,.1)}
+.ftb-no:hover{background:#f72585;color:#fff;border-color:#f72585;transform:translateY(-2px);box-shadow:0 5px 16px rgba(247,37,133,.28)}
+
+#avModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:300;align-items:center;justify-content:center}
+#avModal.on{display:flex}
+.av-box{background:var(--surf);border:1px solid var(--bord);border-radius:15px;padding:16px;width:288px}
+.av-box h3{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:3px;text-transform:uppercase;color:var(--dim);margin-bottom:11px}
+.av-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
+.av-o{width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;cursor:pointer;border:2px solid transparent;background:#16213e;transition:all .15s}
+.av-o:hover{border-color:var(--acc);transform:scale(1.1)}
+
+#sWin{overflow-y:auto;align-items:center;justify-content:center;padding:40px 20px;background:radial-gradient(ellipse at center,#7b2fff22,var(--bg) 70%)}
+.wbox{text-align:center;max-width:400px;width:100%}
+.wtrophy{font-size:4rem;margin-bottom:8px}
+.wtitle{font-family:'DM Serif Display',serif;font-size:2rem;color:var(--acc);text-shadow:0 0 30px rgba(247,201,72,.4);margin-bottom:18px}
+.wlist{display:flex;flex-direction:column;gap:6px;margin-bottom:22px}
+.wrow{display:flex;align-items:center;gap:9px;background:var(--surf);border:1px solid var(--bord);border-radius:10px;padding:9px 13px}
+.wrank{font-family:'DM Mono',monospace;font-size:.7rem;color:var(--dim);width:20px}
+.wav{width:32px;height:32px;border-radius:50%;object-fit:cover;flex-shrink:0}
+.wname{flex:1;font-weight:700;text-align:left}
+.wpts{font-family:'DM Mono',monospace;font-size:.86rem;color:var(--acc)}
+
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%) translateY(8px);background:var(--surf);border:1px solid var(--bord);color:var(--txt);font-family:'DM Mono',monospace;font-size:.66rem;padding:7px 16px;border-radius:30px;z-index:9999;opacity:0;transition:all .3s;pointer-events:none;white-space:nowrap;max-width:90vw;text-align:center}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+.conf{position:fixed;pointer-events:none;z-index:9999;font-size:1.3rem;animation:cfA 1.3s ease forwards}
+@keyframes cfA{0%{transform:translateY(-10px) rotate(0);opacity:1}100%{transform:translateY(90px) rotate(360deg);opacity:0}}
+::-webkit-scrollbar{width:3px;height:3px}::-webkit-scrollbar-thumb{background:var(--bord);border-radius:2px}
+
+@media(max-width:480px){
+  .tbar{padding:6px 8px;min-height:54px;gap:4px}
+  .tbar-right{gap:3px}
+  .tbtn{padding:3px 7px;font-size:.58rem}
+  .schip{padding:4px 9px 4px 6px;max-width:130px;gap:5px}
+  .schip-av{width:26px;height:26px}
+  .schip-name{font-size:.78rem}
+  .ssc{font-size:.78rem;padding:2px 6px}
+  .card-player-bar{padding:6px 8px;min-height:54px}
+  .card-schip{padding:4px 9px 4px 6px;max-width:130px;gap:5px}
+  .card-schip-av{width:26px;height:26px}
+  .card-schip-name{font-size:.78rem}
+  .card-schip-score{font-size:.78rem;padding:2px 6px}
+  .hd-pts-badge{font-size:.62rem;padding:2px 8px}
+  .cm-body{padding:14px 14px;gap:10px;border-radius:16px}
+  .cm-scroll{padding:8px}
+  .cm-q{font-size:clamp(.95rem,4vw,1.25rem)}
+  .mc-opt{font-size:clamp(.8rem,3.5vw,.96rem);padding:10px 12px;gap:10px}
+  .ooo-opt{font-size:clamp(.8rem,3.5vw,.96rem);padding:10px 12px;gap:10px}
+  .opt-l,.ooo-l{width:28px;height:28px;font-size:.72rem}
+  .ftb{font-size:clamp(.78rem,3vw,.95rem);padding:10px}
+  .speak-task{font-size:clamp(1.1rem,4.5vw,1.5rem)}
+  .speak-quote{font-size:.82em;padding:1px 7px}
+  .read-txt,.find-txt{font-size:clamp(.95rem,3.5vw,1.15rem);padding:12px 14px}
+  .gap-ctx{font-size:clamp(1rem,4vw,1.3rem);padding:14px 16px}
+  .err-sent{font-size:clamp(1rem,3.8vw,1.3rem);padding:14px 16px}
+  .gap-in,.err-in{padding:12px 14px;font-size:clamp(.9rem,3.5vw,1.05rem)}
+}
+@media(max-width:380px){
+  .schip-name{max-width:44px}
+  .card-schip-name{max-width:44px}
+  .schip{max-width:90px}
+  .card-schip{max-width:90px}
+}
+.hd-pts-badge{font-size:clamp(.72rem,1.8vw,1rem);padding:4px 12px;font-weight:900}
+.score-pop{font-size:1.5rem}
+</style>
+</head>
+<body>
+
+<div id="sLobby" class="scr on">
+  <div class="logo">Card Deck</div>
+  <div class="logo-sub">Past Tenses · Adverbs of Manner</div>
+  <div class="lcard">
+    <div>
+      <div class="lbl">Topic</div>
+      <div class="topic-grid" id="topicGrid">
+        <button class="tpill sel" data-t="all">All topics</button>
+        <button class="tpill" data-t="ps">Past Simple</button>
+        <button class="tpill" data-t="pc">Past Continuous</button>
+        <button class="tpill" data-t="pspc">Simple + Continuous</button>
+        <button class="tpill" data-t="adv" style="grid-column:span 2">Adverbs of Manner</button>
+      </div>
+    </div>
+    <div>
+      <div class="lbl">Number of cards</div>
+      <div class="count-row">
+        <button class="cpill" data-n="6">6</button>
+        <button class="cpill sel" data-n="9">9</button>
+        <button class="cpill" data-n="12">12</button>
+        <button class="cpill" data-n="16">16</button>
+        <button class="cpill" data-n="20">20</button>
+      </div>
+    </div>
+    <div>
+      <div class="lbl">Players</div>
+      <div id="pList"></div>
+      <button class="addp" id="addPBtn">+ Add player</button>
+    </div>
+    <button class="startbtn" id="startBtn">Deal Cards →</button>
+    <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-top:4px">
+      <img src="/assets/favicon.png" style="width:18px;height:18px;border-radius:4px;opacity:.6" alt="">
+      <a href="https://vk.com/snugenglish" target="_blank" style="font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--dim);text-decoration:none;border:1px solid var(--bord);border-radius:20px;padding:3px 10px;transition:all .2s" onmouseover="this.style.borderColor='var(--acc)';this.style.color='var(--acc)'" onmouseout="this.style.borderColor='var(--bord)';this.style.color='var(--dim)'">VK</a>
+      <a href="https://t.me/+wiAl8ae-UoAxMDE6" target="_blank" style="font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:2px;text-transform:uppercase;color:var(--dim);text-decoration:none;border:1px solid var(--bord);border-radius:20px;padding:3px 10px;transition:all .2s" onmouseover="this.style.borderColor='var(--acc)';this.style.color='var(--acc)'" onmouseout="this.style.borderColor='var(--bord)';this.style.color='var(--dim)'">Telegram</a>
+    </div>
+  </div>
+</div>
+
+<div id="sTable" class="scr">
+  <div class="tbar">
+    <div class="tbar-title">Card Deck</div>
+    <div class="schips" id="scoreChips"></div>
+    <div class="tbar-right">
+      <button class="tbtn" id="nextPBtn">Next</button>
+      <button class="tbtn rd" id="endBtn">End</button>
+    </div>
+  </div>
+  <div id="cardGrid"></div>
+</div>
+
+<div id="sCard" class="scr">
+  <div class="card-player-bar">
+    <div class="card-schips" id="cardScoreChips"></div>
+    <div class="card-tbar-right">
+      <button class="tbtn" onclick="closeCard()" style="font-size:.6rem;padding:4px 8px">✕</button>
+    </div>
+  </div>
+  <div class="cm-wrap" id="cardModal"></div>
+</div>
+
+<div id="sWin" class="scr">
+  <div class="wbox">
+    <div class="wtrophy">🏆</div>
+    <div class="wtitle">Game over!</div>
+    <div class="wlist" id="winList"></div>
+    <button class="startbtn" onclick="location.reload()">New Game</button>
+    <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-top:18px">
+      <img src="/assets/favicon.png" style="width:20px;height:20px;border-radius:4px;opacity:.7" alt="">
+      <a href="https://vk.com/snugenglish" target="_blank" style="font-family:'DM Mono',monospace;font-size:.64rem;letter-spacing:2px;text-transform:uppercase;color:var(--dim);text-decoration:none;border:1px solid var(--bord);border-radius:20px;padding:3px 11px;transition:all .2s" onmouseover="this.style.borderColor='var(--acc)';this.style.color='var(--acc)'" onmouseout="this.style.borderColor='var(--bord)';this.style.color='var(--dim)'">VK</a>
+      <a href="https://t.me/+wiAl8ae-UoAxMDE6" target="_blank" style="font-family:'DM Mono',monospace;font-size:.64rem;letter-spacing:2px;text-transform:uppercase;color:var(--dim);text-decoration:none;border:1px solid var(--bord);border-radius:20px;padding:3px 11px;transition:all .2s" onmouseover="this.style.borderColor='var(--acc)';this.style.color='var(--acc)'" onmouseout="this.style.borderColor='var(--bord)';this.style.color='var(--dim)'">Telegram</a>
+    </div>
+  </div>
+</div>
+
+<div id="avModal">
+  <div class="av-box">
+    <h3>Choose avatar</h3>
+    <div class="av-grid" id="avGrid"></div>
+  </div>
+</div>
+<div class="toast" id="toastEl"></div>
+
+<script>
+
+let AC=null;
+function getAC(){
+  if(!AC){try{AC=new(window.AudioContext||window.webkitAudioContext)();}catch(e){}}
+  return AC;
+}
+function playTone(freq,type,dur,vol=0.18,delay=0){
+  try{
+    const ac=getAC();if(!ac)return;
+    if(ac.state==='suspended')ac.resume();
+    const o=ac.createOscillator(),g=ac.createGain();
+    o.connect(g);g.connect(ac.destination);
+    o.type=type;o.frequency.setValueAtTime(freq,ac.currentTime+delay);
+    g.gain.setValueAtTime(0,ac.currentTime+delay);
+    g.gain.linearRampToValueAtTime(vol,ac.currentTime+delay+0.01);
+    g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+delay+dur);
+    o.start(ac.currentTime+delay);o.stop(ac.currentTime+delay+dur+0.05);
+  }catch(e){}
+}
+const SFX={
+  click(){playTone(640,'sine',.04,.05)},
+  place(){playTone(520,'sine',.05,.06);playTone(780,'sine',.04,.05,.04)},
+  correct(){[0,.08,.16].forEach((d,i)=>playTone([523,659,784][i],'sine',.12,.07,d))},
+  wrong(){playTone(300,'sine',.1,.06);playTone(260,'sine',.12,.06,.07)},
+  cardFlip(){playTone(900,'sine',.03,.05);playTone(1200,'sine',.025,.04,.03)},
+  confetti(){[0,.06,.12,.18,.24].forEach((d,i)=>playTone([784,1047,1319,1568,2093][i],'sine',.08,.06,d))},
+  back(){playTone(420,'sine',.06,.06)},
+  nextPlayer(){playTone(660,'sine',.04,.07);playTone(880,'sine',.04,.07,.07)}
+};
+
+const CD=[
+
+{type:'mc',topic:'ps',col:'#4A90E2',pts:10,q:'She ___ the whole night to finish the project before the deadline.',opts:['work','works','worked','was work'],ans:2,exp:'"Worked" is Past Simple of the regular verb "work". Completed past action.'},
+{type:'mc',topic:'ps',col:'#4A90E2',pts:10,q:'He ___ his wallet on the train and had to cancel all his cards.',opts:['leave','leaved','left','lefted'],ans:2,exp:'"Leave" is irregular: leave → left. ❌ "Leaved" and "lefted" don\'t exist.'},
+
+{type:'mc',topic:'pc',col:'#50E3C2',pts:10,q:'At midnight, the whole city ___ while the storm grew stronger.',opts:['sleeps','slept','was sleeping','is sleeping'],ans:2,exp:'"At midnight" = a specific ongoing moment → Past Continuous: was sleeping.'},
+{type:'mc',topic:'pc',col:'#50E3C2',pts:10,q:'The audience ___ not paying attention when the speaker made the key point.',opts:['did','was','were','is'],ans:2,exp:'Negative Past Continuous with "the audience" (they) → were not.'},
+
+{type:'mc',topic:'adv',col:'#F5A623',pts:10,q:'She drew the picture ___ so she wouldn\'t make any mistakes.',opts:['careful','carefully','more careful','carefulness'],ans:1,exp:'After a verb, use an adverb of manner: carefully. "Careful" is an adjective.'},
+{type:'mc',topic:'adv',col:'#F5A623',pts:10,q:'The engine runs really ___. There must be something wrong.',opts:['loudly','loud','louder','loudness'],ans:0,exp:'"Loud" is an adjective. After a verb we need an adverb: loudly.'},
+
+{type:'mc',topic:'all',col:'#D0021B',pts:20,q:'While the technician ___ the server, the whole network went down.',opts:['restarted','restarts','was restarting','is restarting'],ans:2,exp:'"While" + an ongoing background action interrupted by a sudden event → Past Continuous.'},
+{type:'mc',topic:'all',col:'#D0021B',pts:20,q:'The soloist performed really ___ at the opening night.',opts:['brilliant','brilliantly','brilliance','more brilliant'],ans:1,exp:'After a verb we need an adverb: brilliantly (= in a brilliant way).'},
+
+{type:'gap',topic:'ps',col:'#4A90E2',pts:15,before:'The committee',after:'the proposal after three hours of debate.',verb:'reject',ans:'rejected',exp:'Regular verb: reject → rejected. Completed past action.'},
+{type:'gap',topic:'ps',col:'#4A90E2',pts:15,before:'He',after:'the wrong turn and ended up completely lost.',verb:'take',ans:'took',exp:'"Take" is irregular: take → took.'},
+
+{type:'gap',topic:'pc',col:'#50E3C2',pts:15,before:'She',after:'to the radio when the breaking news came on.',verb:'listen',ans:'was listening',exp:'Ongoing action interrupted → Past Continuous: was listening.'},
+{type:'gap',topic:'pc',col:'#50E3C2',pts:15,before:'It',after:'heavily when the match finally started.',verb:'rain',ans:'was raining',exp:'"When the match started" = the interruption → the ongoing action is Past Continuous.'},
+
+{type:'gap',topic:'adv',col:'#F5A623',pts:15,before:'He introduced himself',after:'and shook everyone\'s hand.',verb:'confident',ans:'confidently',exp:'"Confident" → "confidently". Most adjectives form adverbs by adding -ly.'},
+{type:'gap',topic:'adv',col:'#F5A623',pts:15,before:'He stared at her',after:'and refused to apologise.',verb:'cold',ans:'coldly',exp:'"Cold" → "coldly" (regular -ly adverb).'},
+
+{type:'gap',topic:'all',col:'#D0021B',pts:25,before:'While I',after:'through the crowded station, someone grabbed my bag.',verb:'walk',ans:'was walking',exp:'"While" + ongoing background action → Past Continuous.'},
+{type:'gap',topic:'all',col:'#D0021B',pts:25,before:'I',after:'nervously in the waiting room while my name was called.',verb:'sit',ans:'was sitting',exp:'Ongoing action → Past Continuous: was sitting. "Nervously" is the adverb of manner.'},
+
+{type:'wo',topic:'ps',col:'#4A90E2',pts:20,words:['She','moved','to','a','new','school','last','Friday','.'],ans:'She moved to a new school last Friday .',exp:'Past Simple: subject + verb + prepositional phrase + time expression.'},
+{type:'wo',topic:'ps',col:'#4A90E2',pts:20,words:['Where','did','the','investigation','lead','in','the','end','?'],ans:'Where did the investigation lead in the end ?',exp:'Wh-question in Past Simple: Wh + did + subject + base verb.'},
+{type:'wo',topic:'pc',col:'#50E3C2',pts:20,words:['She','was','reviewing','the','contract','when','her','phone','rang','.'],ans:'She was reviewing the contract when her phone rang .',exp:'Past Continuous interrupted by Past Simple.'},
+{type:'wo',topic:'pc',col:'#50E3C2',pts:20,words:['What','were','you','working','on','at','three','o\'clock','?'],ans:'What were you working on at three o\'clock ?',exp:'Wh-question in Past Continuous.'},
+
+{type:'wo',topic:'adv',col:'#F5A623',pts:20,words:['He','explained','the','procedure','very','clearly','.'],ans:'He explained the procedure very clearly .',exp:'Adverb of manner after the verb phrase. "Very" is a degree adverb.'},
+{type:'wo',topic:'adv',col:'#F5A623',pts:20,words:['Please','drive','more','carefully','on','the','motorway','.'],ans:'Please drive more carefully on the motorway .',exp:'Comparative adverb: more + adverb. Imperative structure.'},
+
+{type:'wo',topic:'all',col:'#D0021B',pts:30,words:['I','was','walking','quickly','through','the','park','when','it','started','to','rain','.'],ans:'I was walking quickly through the park when it started to rain .',exp:'Past Continuous + adverb of manner, interrupted by Past Simple.'},
+{type:'wo',topic:'all',col:'#D0021B',pts:30,words:['She','ran','fast','to','catch','the','last','train','.'],ans:'She ran fast to catch the last train .',exp:'Past Simple + "fast" as adverb (no -ly needed).'},
+
+{type:'ooo',topic:'ps',col:'#4A90E2',pts:15,q:'Which word is NOT in the Past Simple?',opts:['resigned','inspected','submits','rejected'],ans:2,exp:'"Submits" is Present Simple (3rd person). Resigned, inspected, rejected are all Past Simple forms.'},
+{type:'ooo',topic:'ps',col:'#4A90E2',pts:15,q:'Which sentence is grammatically CORRECT?',opts:['Did she went to the hearing?','She didn\'t testified.','She testified, didn\'t she?','He didn\'t reported it.'],ans:2,exp:'"Didn\'t she?" is the correct question tag after positive Past Simple. The others use wrong verb forms.'},
+
+{type:'ooo',topic:'pc',col:'#50E3C2',pts:20,q:'Which verb CANNOT be used in Past Continuous?',opts:['talk','run','own','laugh'],ans:2,exp:'"Own" is a stative verb (possession). Stative verbs have no continuous form. "I was owning" is incorrect.'},
+{type:'ooo',topic:'pc',col:'#50E3C2',pts:20,q:'Which sentence uses Past Continuous CORRECTLY?',opts:['She was cook the dinner.','They were play football.','He was reviewing the files.','We was waiting.'],ans:2,exp:'"He was reviewing the files" is correct: was + verb-ING. Cook→cooking, play→playing, was→were (we).'},
+
+{type:'ooo',topic:'adv',col:'#F5A623',pts:15,q:'Which word is NOT an adverb of manner?',opts:['quickly','loudly','carefully','careful'],ans:3,exp:'"Careful" is an adjective. Quickly, loudly, carefully are all adverbs of manner.'},
+{type:'ooo',topic:'adv',col:'#F5A623',pts:15,q:'Which word is an adjective, NOT an adverb?',opts:['well','badly','thorough','carefully'],ans:2,exp:'"Thorough" is an adjective. The correct adverb is "thoroughly". Well, badly, carefully are adverbs.'},
+
+{type:'ooo',topic:'all',col:'#D0021B',pts:20,q:'Which sentence is CORRECT?',opts:['She was singing brilliant.','He spoke to his teacher angry.','They finished the project quickly.','I worked hardly all week.'],ans:2,exp:'"Finished quickly" is correct. Brilliant→brilliantly, angry→angrily, hardly≠hard.'},
+{type:'ooo',topic:'all',col:'#D0021B',pts:20,q:'Which adverb is used INCORRECTLY?',opts:['He drove recklessly.','She answered hesitantly.','They late arrived.','He spoke unexpectedly calmly.'],ans:2,exp:'"Late arrived" is wrong word order. Correct: "They arrived late." Adverbs of time go after the verb.'},
+
+{type:'err',topic:'ps',col:'#BD10E0',pts:20,sentence:['She','goed','to','the','wrong','terminal','and','missed','her','flight','.'],errIdx:1,fix:'went',exp:'"Go" is irregular: go → went. ❌ "Goed" doesn\'t exist.'},
+{type:'err',topic:'ps',col:'#BD10E0',pts:20,sentence:['Did','your','sister','went','to','the','party','last','night','?'],errIdx:3,fix:'go',exp:'After "did" always use the base verb: Did your sister go?'},
+
+{type:'err',topic:'pc',col:'#BD10E0',pts:20,sentence:['I','were','reviewing','the','files','when','the','call','came','.'],errIdx:1,fix:'was',exp:'"Were" is for you/we/they. "I" needs "was".'},
+{type:'err',topic:'pc',col:'#BD10E0',pts:20,sentence:['He','was','argue','with','the','referee','when','the','second','card','came','.'],errIdx:2,fix:'arguing',exp:'Past Continuous = was/were + verb-ING: was arguing.'},
+
+{type:'err',topic:'adv',col:'#BD10E0',pts:20,sentence:['She','presented','the','data','very','clear','.'],errIdx:5,fix:'clearly',exp:'After a verb, use an adverb: clear → clearly.'},
+{type:'err',topic:'adv',col:'#BD10E0',pts:20,sentence:['She','smiled','confident','at','the','camera','and','walked','off','stage','.'],errIdx:2,fix:'confidently',exp:'After a verb, use an adverb: confident → confidently.'},
+
+{type:'err',topic:'all',col:'#BD10E0',pts:30,sentence:['While','she','was','brilliant','singing',',','the','whole','crowd','fell','silent','.'],errIdx:3,fix:'brilliantly',exp:'"Brilliantly" (adverb) modifies "singing" (verb form). "Brilliant" is an adjective.'},
+{type:'err',topic:'all',col:'#BD10E0',pts:30,sentence:['I','woke','up','late',',','packed','quick','and','rushed','out','the','door','.'],errIdx:6,fix:'quickly',exp:'After a verb, use an adverb: quick → quickly.'},
+
+{type:'read',topic:'ps',col:'#9013FE',pts:30,text:'Last weekend, a group of students organised a charity bake sale at school. They arrived early, set up the tables carefully and decorated the room with balloons. By lunchtime, they sold everything and raised over two hundred pounds. The teachers clapped and some students even cried with happiness.',q:'Retell the story in your own words. Use at least FOUR Past Simple verbs.',example:'They organised a bake sale, arrived early, set up tables, decorated the room. They sold everything and raised money. Teachers clapped.'},
+{type:'read',topic:'ps',col:'#9013FE',pts:30,text:'The expedition set off in April. The team crossed two mountain ranges, survived a violent storm and ran out of supplies twice. On the forty-third day, they finally reached the summit. The leader planted the flag, took a photo and sat down in silence. She later said it was the hardest thing she had ever done.',q:'Find FOUR Past Simple verbs that describe completed actions.',example:'Set off, crossed, survived, ran out, reached, planted, took, sat — all Past Simple. All describe completed, sequential events.'},
+{type:'read',topic:'pc',col:'#9013FE',pts:30,text:'When the teacher walked into the classroom, everyone was busy. Two students were whispering near the window. A girl was drawing something in her notebook. Someone was eating crisps at the back. The teacher said nothing and simply watched.',q:'Describe THREE things that were happening when the teacher arrived. Why is Past Continuous used here?',example:'"Were whispering", "was drawing", "was eating" — PC shows ongoing background actions at the exact moment of interruption.'},
+{type:'read',topic:'pc',col:'#9013FE',pts:30,text:'At half past three last Friday, the school canteen was very noisy. Some students were playing cards at a table. Others were listening to music and singing along. Two boys were arguing about a football match. Then the head teacher walked in and everything went silent.',q:'What was happening at half past three? Find THREE Past Continuous verbs and explain what they show.',example:'"Were playing", "were listening", "were arguing" — PC shows simultaneous ongoing actions at a specific past moment.'},
+{type:'read',topic:'adv',col:'#9013FE',pts:30,text:'The new student walked into the classroom calmly, sat down quietly and waited patiently for the lesson to start. When the teacher asked a question, she raised her hand confidently and answered clearly. Everyone listened attentively.',q:'Find FOUR adverbs of manner. What does each one modify?',example:'calmly (walked), quietly (sat down), patiently (waited), confidently (raised her hand), clearly (answered), attentively (listened).'},
+{type:'read',topic:'adv',col:'#9013FE',pts:30,text:'"Hard" and "hardly" look similar but mean completely different things. "He trained hard every day" means he put in great effort. "He hardly trained" means he did almost nothing. The same trap exists with "late" and "lately": "She arrived late" means she wasn\'t on time; "She\'s been busy lately" means recently.',q:'What is the difference between "hard" and "hardly"? Give one example of each from the text.',example:'"Hard" = with effort: "he trained hard." "Hardly" = almost not: "he hardly trained." They are NOT interchangeable.'},
+{type:'read',topic:'all',col:'#9013FE',pts:30,text:'I was cycling quickly through a narrow street when a car door suddenly swung open. I braked sharply but still clipped the door and fell off. I lay on the ground for a moment, then got up carefully and checked my bike. Luckily, nothing was badly damaged — just a few scratches.',q:'Find ONE Past Continuous verb and ONE Past Simple verb. Then find TWO adverbs of manner.',example:'PC: "was cycling quickly". PS: "swung", "braked", "fell", "got up", "checked". Adverbs: quickly, sharply, carefully, badly.'},
+{type:'read',topic:'all',col:'#9013FE',pts:30,text:'The fire alarm went off at two in the morning. Everyone was sleeping soundly when the noise started. People ran out of their rooms quickly and gathered in the car park. Some were still dressed in pyjamas. The fire turned out to be a small kitchen fire — it was dealt with efficiently in minutes.',q:'Find ONE Past Continuous verb and ONE Past Simple verb. Then find TWO adverbs of manner.',example:'PC: "was sleeping soundly". PS: "went off", "ran out", "gathered". Adverbs: soundly, quickly, efficiently.'},
+
+{type:'speak',topic:'ps',col:'#7C3AED',pts:30,prompt:'Tell us about something memorable that happened to you — a trip, an event, or an unexpected moment. Use at least THREE different Past Simple verbs.',example:'e.g. Last summer I travelled to a city I\'d never visited before. I got lost twice, found a great street market and ended up staying an extra day.'},
+{type:'speak',topic:'ps',col:'#7C3AED',pts:30,prompt:'Tell us about a time something went unexpectedly wrong. What happened, step by step? Use a sequence of Past Simple verbs.',example:'e.g. I missed my bus, walked to the station in the rain and realised I\'d left my ticket at home. I had to buy a new one.'},
+{type:'speak',topic:'pc',col:'#7C3AED',pts:30,prompt:'Describe a moment when you walked into a room or a place and things were already happening. Use Past Continuous for at least THREE things.',example:'e.g. When I walked into the kitchen, my brother was eating cereal noisily, the radio was playing and my dog was staring at me hopefully.'},
+{type:'speak',topic:'pc',col:'#7C3AED',pts:30,prompt:'Tell us about a time something unexpected happened while you were doing something else. Use "I was ...ing when ..."',example:'e.g. I was having a quiet lunch when my old school friend walked into the same café. / I was reading on the bus when it suddenly stopped and everyone had to get off.'},
+{type:'speak',topic:'adv',col:'#7C3AED',pts:30,prompt:'Describe how you do three different things in your life. Use a different adverb of manner each time.',example:'e.g. I speak quietly in meetings. I work quickly under pressure. I pack obsessively before any trip.'},
+{type:'speak',topic:'adv',col:'#7C3AED',pts:30,prompt:'Think of someone you know well. How do they speak, move, react to stress or surprises? Use at least FOUR adverbs of manner.',example:'e.g. My brother drives recklessly, eats incredibly fast, reacts calmly to everything — except when someone touches his stuff, then he reacts badly.'},
+{type:'speak',topic:'all',col:'#7C3AED',pts:30,prompt:'Tell a short story about something that went wrong or surprised you. Use Past Continuous (what was happening), Past Simple (what happened), and at least two adverbs of manner.',example:'e.g. I was walking confidently into my exam when I suddenly realised I had the wrong date. I left quickly, went home and studied frantically.'},
+{type:'speak',topic:'all',col:'#7C3AED',pts:30,prompt:'Describe a photo — real or imaginary. What was happening? What happened next? Use PS, PC, and at least one adverb of manner.',example:'e.g. In this photo I was standing nervously on a stage. Behind me, the audience was watching quietly. Then I started speaking and completely forgot my lines.'},
+
+{type:'find',topic:'ps',col:'#4A90E2',pts:20,count:4,text:'She got up early, made breakfast quickly and walked to school. On the way she met her friend and they ran to catch the bus together.',q:'Find 4 Past Simple verbs.',answers:['got','made','walked','met','ran'],exp:'Got (get), made (make), walked (regular), met (meet), ran (run) — all Past Simple.'},
+{type:'find',topic:'ps',col:'#4A90E2',pts:20,count:3,text:'My brother woke up late, forgot his bag, took the wrong bus and arrived at school an hour late. The teacher was not happy.',q:'Find 3 irregular Past Simple verbs.',answers:['woke','forgot','took'],exp:'Woke (wake), forgot (forget), took (take) — irregular. Arrived is regular.'},
+{type:'find',topic:'pc',col:'#50E3C2',pts:20,count:3,text:'When I arrived at the park, lots of things were happening. Some kids were playing football near the gate. A dog was chasing a ball across the grass. Two old men were sitting on a bench.',q:'Find 3 Past Continuous verbs.',answers:['were','playing','chasing','sitting'],exp:'Were playing, was chasing, were sitting — all Past Continuous, showing ongoing actions at that moment.'},
+{type:'find',topic:'pc',col:'#50E3C2',pts:20,count:2,text:'She was listening to music and doing her homework at the same time. Her brother was playing video games in the next room. Suddenly the lights went out.',q:'Find 2 Past Continuous verbs.',answers:['was','listening','doing','playing'],exp:'Was listening, was doing, was playing — Past Continuous, actions in progress when the lights went out.'},
+{type:'find',topic:'adv',col:'#F5A623',pts:20,count:3,text:'She walked slowly to the front of the class, took a deep breath and spoke clearly. Everyone listened quietly. The teacher smiled and nodded.',q:'Find 3 adverbs of manner.',answers:['slowly','clearly','quietly'],exp:'Slowly (walked), clearly (spoke), quietly (listened) — adverbs of manner ending in -ly.'},
+{type:'find',topic:'adv',col:'#F5A623',pts:25,count:5,text:'My sister is a very good dancer. She moves gracefully, jumps high, lands softly and always smiles naturally. Yesterday she performed brilliantly at the school show.',q:'Find 5 adverbs of manner.',answers:['gracefully','high','softly','naturally','brilliantly'],exp:'Gracefully, high, softly, naturally, brilliantly — all describe HOW the actions are performed.'},
+{type:'find',topic:'all',col:'#D0021B',pts:30,count:4,text:'While Sam was walking quickly through the park, he suddenly heard a noise. He stopped and looked around carefully. A small cat was sitting nervously on a branch above him.',q:'Find 2 adverbs of manner and 2 Past Continuous verbs.',answers:['was','walking','quickly','carefully','nervously','sitting'],exp:'Adverbs: quickly, carefully, nervously. PC verbs: was walking, was sitting.'},
+{type:'find',topic:'all',col:'#D0021B',pts:30,count:3,text:'It was a busy morning. Mum was cooking noisily in the kitchen. Dad ran out of the house suddenly, forgetting his keys. I walked to school slowly because I was still half asleep.',q:'Find 1 Past Continuous verb and 2 adverbs of manner.',answers:['was','cooking','noisily','suddenly','slowly'],exp:'PC: was cooking. Adverbs: noisily, suddenly, slowly.'},
+{type:'speak',topic:'adv',col:'#7C3AED',pts:30,prompt:'Tell your partner about a sports moment or PE lesson. Use at least FOUR adverbs of manner to describe how people moved, played or reacted.',example:'e.g. Our team played brilliantly. I ran fast and kicked the ball hard. The goalkeeper dived desperately but the ball went in. Everyone screamed loudly.'},
+{type:'speak',topic:'adv',col:'#7C3AED',pts:30,prompt:'Describe someone you know well — how do they walk, talk, laugh or react? Use at least FOUR adverbs of manner.',example:'e.g. My gran walks slowly but she talks incredibly fast. She laughs loudly at everything and always hugs you tightly when she says hello.'},
+{type:'speak',topic:'ps',col:'#7C3AED',pts:30,prompt:'Tell us about your last birthday or a special day. What happened? Use at least FOUR Past Simple verbs.',example:'e.g. I woke up early and found presents on my bed. We went to a cafe, ate cake and stayed there for hours. I got home really late.'},
+{type:'speak',topic:'pc',col:'#7C3AED',pts:30,prompt:'Describe what was happening at school at lunchtime yesterday. Use Past Continuous for at least THREE different activities.',example:'e.g. In the canteen, some kids were playing cards. Others were listening to music. My friend was telling a funny story and everyone was laughing.'},
+];
+
+const TN={mc:'Multiple Choice',gap:'Fill the Gap',wo:'Word Order',ooo:'Odd One Out',err:'Fix the Error',read:'Read & Answer',find:'Find It!',speak:'Speak!'};
+const PC=['#f7c948','#4cc9f0','#f72585','#06d6a0','#a78bfa','#fb923c'];
+let EM=[];
+(async()=>{
+  const MAX=30,PICK=9;
+  const probes=Array.from({length:MAX},(_,i)=>`/assets/av${i+1}.png`);
+  const results=await Promise.all(probes.map(src=>new Promise(res=>{
+    const img=new Image();img.onload=()=>res(src);img.onerror=()=>res(null);img.src=src;
+  })));
+  const found=results.filter(Boolean);
+  for(let i=found.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[found[i],found[j]]=[found[j],found[i]];}
+  EM=found.slice(0,PICK);
+  // Re-render players with fresh avatars
+  players.forEach((p,i)=>{if(EM[i])p.av=EM[i];});
+  renderP();
+})();
+
+let topic='all',cardCount=9,players=[],curP=0,deck=[],doneSet=new Set(),avIdx=null;
+
+document.querySelectorAll('.tpill').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('.tpill').forEach(x=>x.classList.remove('sel'));
+  b.classList.add('sel');topic=b.dataset.t;
+}));
+document.querySelectorAll('.cpill').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('.cpill').forEach(x=>x.classList.remove('sel'));
+  b.classList.add('sel');cardCount=+b.dataset.n;
+}));
+
+function addP(n,em){
+  if(players.length>=6)return;
+  const i=players.length;
+  players.push({name:n||'Player '+(i+1),av:em||EM[i]||'😊',color:PC[i%PC.length],score:0});
+  renderP();
+}
+function renderP(){
+  const el=document.getElementById('pList');el.innerHTML='';
+  players.forEach((p,i)=>{
+    const r=document.createElement('div');r.className='prow';
+    r.innerHTML=`<div class="pav" data-i="${i}"><img src="${p.av}" alt=""></div>
+      <input class="pname" value="${p.name}" placeholder="Name" data-i="${i}" maxlength="16">
+      <div class="pdot" style="background:${p.color}"></div>
+      ${players.length>1?`<button class="prmv" data-i="${i}">✕</button>`:''}`;
+    el.appendChild(r);
+  });
+  el.querySelectorAll('.pav').forEach(e=>e.addEventListener('click',()=>openAv(+e.dataset.i)));
+  el.querySelectorAll('.pname').forEach(e=>e.addEventListener('input',()=>{players[+e.dataset.i].name=e.value||'Player '+(+e.dataset.i+1);}));
+  el.querySelectorAll('.prmv').forEach(e=>e.addEventListener('click',()=>{players.splice(+e.dataset.i,1);renderP();}));
+}
+function openAv(i){
+  avIdx=i;
+  const g=document.getElementById('avGrid');g.innerHTML='';
+  EM.forEach(src=>{
+    const d=document.createElement('div');d.className='av-o';
+    d.style.cssText='overflow:hidden;padding:0';
+    d.innerHTML=`<img src="${src}" style="width:100%;height:100%;object-fit:cover;border-radius:50%" alt="">`;
+    d.onclick=()=>{players[avIdx].av=src;renderP();document.getElementById('avModal').classList.remove('on');};
+    g.appendChild(d);
+  });
+  document.getElementById('avModal').classList.add('on');
+}
+document.getElementById('avModal').addEventListener('click',e=>{if(e.target===document.getElementById('avModal'))document.getElementById('avModal').classList.remove('on');});
+document.getElementById('addPBtn').addEventListener('click',()=>addP());
+addP('Player 1');addP('Player 2');
+
+document.getElementById('startBtn').addEventListener('click',()=>{
+  const pool=(topic==='all'?CD:CD.filter(c=>c.topic===topic)).sort(()=>Math.random()-.5).slice(0,cardCount);
+  if(!pool.length){toast('No cards for this topic!');return;}
+  deck=pool;doneSet=new Set();curP=0;
+  players.forEach(p=>p.score=0);
+  showScr('sTable');buildGrid();renderChips();
+});
+
+function buildGrid(){
+  const grid=document.getElementById('cardGrid');
+  if(!grid)return;
+  grid.innerHTML='';
+  const n=deck.length;
+  if(!n)return;
+  const tbar=document.querySelector('.tbar');
+  const tbarH=tbar?tbar.getBoundingClientRect().height:52;
+  const W=Math.max(window.innerWidth||320,200);
+  const H=Math.max((window.innerHeight||600)-tbarH,100);
+  const GAP=10;
+  
+  let bestCols=1,bestScore=-1;
+  
+  let perfectCols=[];
+  for(let cols=1;cols<=12;cols++){
+    if(n%cols===0)perfectCols.push(cols);
+  }
+  for(let cols=1;cols<=12;cols++){
+    const rows=Math.ceil(n/cols);
+    const cw=(W-GAP*(cols+1))/cols;
+    const ch=(H-GAP*(rows+1))/rows;
+    if(cw<60||ch<50)continue;
+    const aspect=cw/ch;
+    const aspectPenalty=aspect<0.5||aspect>2.5?0.2:aspect<0.7||aspect>2?0.7:1;
+    const remainder=n%cols;
+    const waste=remainder===0?0:(cols-remainder)/cols;
+    
+    const wastePenalty=remainder===0?1.5:1-waste*0.8;
+    const score=cw*ch*aspectPenalty*wastePenalty;
+    if(score>bestScore){bestScore=score;bestCols=cols;}
+  }
+  const rows=Math.ceil(n/bestCols);
+  const remainder=n%bestCols;
+  const lastRowStart=remainder===0?-1:n-remainder; 
+  grid.style.cssText=[
+    'display:grid',
+    `grid-template-columns:repeat(${bestCols},1fr)`,
+    `grid-template-rows:repeat(${rows},1fr)`,
+    `gap:${GAP}px`,
+    `padding:${GAP}px`,
+    'flex:1',
+    'overflow:hidden',
+    `height:${H}px`,
+    'width:100%',
+    'box-sizing:border-box'
+  ].join(';')+';';
+  deck.forEach((c,i)=>{
+    const el=document.createElement('div');
+    el.className='tc'+(doneSet.has(i)?' done':'');
+    el.id='tc'+i;
+    el.innerHTML=`<div class="tc-num">${i+1}</div>`;
+    
+    if(lastRowStart>0&&i>=lastRowStart){
+      
+      const lastCount=remainder;
+      const span=Math.floor(bestCols/lastCount);
+      const extra=bestCols%lastCount;
+      const posInRow=i-lastRowStart;
+      const mySpan=posInRow<extra?span+1:span;
+      el.style.gridColumn='span '+mySpan;
+    }
+    el.addEventListener('click',()=>{SFX.cardFlip();openCard(i);});
+    grid.appendChild(el);
+  });
+}
+function reGrid(){if(deck.length)buildGrid();}
+window.addEventListener('resize',reGrid);
+
+document.getElementById('nextPBtn').addEventListener('click',()=>{
+  curP=(curP+1)%players.length;
+  SFX.nextPlayer();renderChips();
+  toast(`${players[curP].av} ${players[curP].name}'s turn!`);
+});
+document.getElementById('endBtn').addEventListener('click',showWin);
+
+function renderChips(){
+  
+  const el=document.getElementById('scoreChips');el.innerHTML='';
+  players.forEach((p,i)=>{
+    const c=document.createElement('div');c.className='schip'+(i===curP?' cur':'');
+    const cls=p.score>0?'p':p.score<0?'n':'z';
+    const shortName=p.name.length>10?p.name.slice(0,9)+'…':p.name;
+    c.innerHTML=`<img class="schip-av" src="${p.av}" alt=""><span class="schip-name">${shortName}</span><span class="ssc ${cls}">${p.score>0?'+':''}${p.score}</span>`;
+    el.appendChild(c);
+  });
+  renderCardChips();
+}
+
+function renderCardChips(){
+  const el=document.getElementById('cardScoreChips');if(!el)return;
+  el.innerHTML='';
+  players.forEach((p,i)=>{
+    const c=document.createElement('div');c.className='card-schip'+(i===curP?' cur':'');
+    const cls=p.score>0?'p':p.score<0?'n':'z';
+    const shortName=p.name.length>10?p.name.slice(0,9)+'…':p.name;
+    c.innerHTML=`<img class="card-schip-av" src="${p.av}" alt=""><span class="card-schip-name">${shortName}</span><span class="card-schip-score ${cls}">${p.score>0?'+':''}${p.score}</span>`;
+    el.appendChild(c);
+  });
+}
+
+function animateScore(txt,isOk){
+  
+  const allChips=[...document.querySelectorAll('.schip,.card-schip')];
+  let found=false;
+  allChips.forEach((chip,idx)=>{
+    const nameEl=chip.querySelector('.schip-name,.card-schip-name');
+    if(nameEl&&nameEl.textContent===players[curP].name&&!found){
+      found=true;
+      const pop=document.createElement('div');
+      pop.className='score-pop '+(isOk?'pos':'neg');
+      pop.textContent=txt;
+      const r=chip.getBoundingClientRect();
+      pop.style.left=(r.left+r.width/2-20)+'px';
+      pop.style.top=(r.top)+'px';
+      document.body.appendChild(pop);
+      setTimeout(()=>pop.remove(),1200);
+    }
+  });
+}
+
+// Light color → dark text needed for contrast
+function needsDarkText(hex){
+  if(!hex||hex[0]!=='#')return false;
+  const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);
+  return(0.299*r+0.587*g+0.114*b)/255>0.58;
+}
+
+function openCard(i){
+  selFW=[];
+  const c=deck[i];
+  renderCardChips();
+  showScr('sCard');
+
+  const dk=needsDarkText(c.col);
+  const chipCls=dk?'cm-instr cm-instr--dk':'cm-instr';
+  const hdTxtStyle=dk?'color:rgba(0,0,0,.72)':'';
+  const hdBadgeStyle=dk?'color:#18172e;background:rgba(0,0,0,.13);border-color:rgba(0,0,0,.18)':'';
+
+  const hd=`<div class="cm-hd" style="--tc:${c.col}">
+    <div class="hd-dot"></div>
+    <div class="hd-type" style="${hdTxtStyle}">${TN[c.type]}</div>
+    <div style="flex:1"></div>
+    <div class="hd-pts-badge" style="${hdBadgeStyle}">+${c.pts} pts</div>
+    <div class="hd-num" style="${dk?'color:rgba(0,0,0,.38)':''}">#${i+1}</div>
+  </div>`;
+
+  let body='',foot='';
+
+  if(c.type==='mc'){
+    const opts=c.opts.map((o,j)=>`<button class="mc-opt" data-j="${j}" onclick="doMC(${i},${j})"><span class="opt-l">${'ABCD'[j]}</span>${o}</button>`).join('');
+    body=`<div class="${chipCls}" style="--tc:${c.col}"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Choose the correct answer</div>
+      <div class="cm-q">${c.q}</div>
+      <div class="mc-opts">${opts}</div>
+      <div class="fb" id="fb"></div>`;
+    foot=`<div class="cm-ft"><button class="ftb ftb-back" onclick="closeCard()">✕ Back</button></div>`;
+  }
+  else if(c.type==='gap'){
+    body=`<div class="${chipCls}" style="--tc:${c.col}"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg> Fill in the correct form of <span class="gap-verb-pill">${c.verb}</span></div>
+      <div class="gap-ctx">${c.before} <strong>_______</strong> ${c.after}</div>
+      <div><div class="gap-lbl">Your answer</div>
+      <input id="gapIn" class="gap-in" style="--tc:${c.col}" placeholder="type here…" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"></div>
+      <div class="fb" id="fb"></div>`;
+    foot=`<div class="cm-ft"><button class="ftb ftb-back" onclick="closeCard()">✕ Back</button><button class="ftb ftb-chk" onclick="doGap(${i})">Check ✓</button></div>`;
+  }
+  else if(c.type==='wo'){
+    const words=c.words;
+    const isPunct=w=>/^[.,!?;:,]$/.test(w);
+    const bankWords=[...words].filter(w=>!isPunct(w)).sort(()=>Math.random()-.5);
+    const bankChips=bankWords.map((w,j)=>`<div class="ww" data-w="${w}" onclick="woClick(this,${i})">${w}</div>`).join('');
+    const dropItems=words.map((w,pos)=>{
+      if(isPunct(w)){return `<div class="ww ww-locked punct" data-w="${w}" data-pos="${pos}">${w}</div>`;}
+      else{return `<div class="wo-slot" data-pos="${pos}" onclick="woSlotClick(this,${i})"></div>`;}
+    }).join('');
+    body=`<div class="${chipCls}" style="--tc:${c.col}"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/></svg> Put the words in the correct order</div>
+      <div class="wo-area">
+        <div class="wo-label">Your sentence — tap a word to add it:</div>
+        <div class="wo-zone" id="woDrop" style="--tc:${c.col}">${dropItems}</div>
+        <div id="woBankWrap"><div class="wo-label">Word bank — tap to add:</div>
+        <div class="wo-bank" id="woBank">${bankChips}</div></div>
+      </div>
+      <div class="fb" id="fb"></div>`;
+    foot=`<div class="cm-ft">
+      <button class="ftb ftb-back" onclick="closeCard()">✕ Back</button>
+      <button class="ftb ftb-chk" style="background:rgba(0,0,0,.06);border-color:#ccc;color:#666" onclick="woClear()">↺ Reset</button>
+      <button class="ftb ftb-chk" onclick="doWO(${i})">Check ✓</button>
+    </div>`;
+  }
+  else if(c.type==='ooo'){
+    const opts=c.opts.map((o,j)=>`<button class="ooo-opt" data-j="${j}" onclick="doOOO(${i},${j})"><span class="ooo-l">${'ABCD'[j]}</span>${o}</button>`).join('');
+    body=`<div class="${chipCls}" style="--tc:${c.col}"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg> Find the odd one out</div>
+      <div class="cm-q">${c.q}</div>
+      <div class="ooo-opts">${opts}</div>
+      <div class="fb" id="fb"></div>`;
+    foot=`<div class="cm-ft"><button class="ftb ftb-back" onclick="closeCard()">✕ Back</button></div>`;
+  }
+  else if(c.type==='err'){
+    const words=c.sentence.map((w,j)=>{
+      const isPunct=/^[.,!?;:]$/.test(w);
+      return `<span class="ew${isPunct?' punct':''}" data-j="${j}" onclick="pickEW(this,${c.errIdx})">${w}</span>`;
+    }).join(' ');
+    body=`<div class="${chipCls}" style="--tc:${c.col}"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg> Tap the wrong word, then type the correction</div>
+      <div class="err-sent" style="--tc:${c.col}">${words}</div>
+      <input id="errIn" class="err-in" style="--tc:${c.col}" placeholder="type the correct word…" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+      <div class="fb" id="fb"></div>`;
+    foot=`<div class="cm-ft"><button class="ftb ftb-back" onclick="closeCard()">✕ Back</button><button class="ftb ftb-chk" onclick="doErr(${i})">Check ✓</button></div>`;
+  }
+  else if(c.type==='read'){
+    const parts=c.text.split(/(\s+)/);
+    const clickable=parts.map(w=>/^\s+$/.test(w)?w:`<span class="rw" onclick="rwClick(this)">${w}</span>`).join('');
+    // example shown UNDER the text, replacing the task after "Show answer"
+    body=`<div class="${chipCls}" style="--tc:${c.col}"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg> Read &amp; Answer</div>
+      <div class="read-txt" id="readTxt" style="--tc:${c.col}">${clickable}</div>
+      <div class="read-q" id="readQ">${c.q}</div>
+      <div class="read-hint" id="readHint"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 11V6a2 2 0 00-4 0v5"/><path d="M14 10V4a2 2 0 00-4 0v2"/><path d="M10 10.5V6a2 2 0 00-4 0v8l-1-1a2 2 0 00-3 3l3 3a6 6 0 006 0h4a6 6 0 006-6v-2a2 2 0 00-4 0"/></svg> Tap words to highlight your answer</div>
+      <div class="fb" id="fb"></div>`;
+    foot=`<div class="cm-ft">
+      <button class="ftb ftb-back" onclick="closeCard()">✕ Back</button>
+      <button class="ftb ftb-show" id="showEx">Show answer</button>
+    </div>`;
+  }
+  else if(c.type==='find'){
+    const parts=c.text.split(/(\s+)/);
+    const clickable=parts.map(w=>/^\s+$/.test(w)?w:`<span class="fw" onclick="fwClick(this)">${w}</span>`).join('');
+    const plural=c.count>1?'s':'';
+    body=`<div class="${chipCls}" style="--tc:${c.col}"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Find ${c.count} word${plural}</div>
+      <div class="find-txt" id="findTxt" style="--tc:${c.col}">${clickable}</div>
+      <div class="find-task" id="findTask">${c.q}</div>
+      <div class="find-hint" id="findHint"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 11V6a2 2 0 00-4 0v5"/><path d="M14 10V4a2 2 0 00-4 0v2"/><path d="M10 10.5V6a2 2 0 00-4 0v8l-1-1a2 2 0 00-3 3l3 3a6 6 0 006 0h4a6 6 0 006-6v-2a2 2 0 00-4 0"/></svg> Tap words to mark your answer</div>
+      <div class="fb" id="fb"></div>`;
+    foot=`<div class="cm-ft">
+      <button class="ftb ftb-back" onclick="closeCard()">✕ Back</button>
+      <button class="ftb ftb-chk" onclick="doFind(${i})">Check ✓</button>
+    </div>`;
+  }
+  else if(c.type==='speak'){
+    const spCls=dk?'speak-badge speak-badge--dk':'speak-badge';
+    const highlighted=c.prompt
+      .replace(/(Past Simple|Past Continuous|adverb[s]? of manner|adverbs|adverb|TWO|THREE|FOUR|ONE)/g,'<em>$1</em>')
+      .replace(/"([^"]+)"/g,'<span class="speak-quote">"$1"</span>');
+    body=`<div class="${spCls}" style="--tc:${c.col}"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg> Speak!</div>
+      <div class="speak-task" style="--tc:${c.col}">${highlighted}</div>
+      <div class="fb" id="fb"></div>`;
+    foot=`<div class="cm-ft">
+      <button class="ftb ftb-back" onclick="closeCard()">✕ Back</button>
+      <button class="ftb ftb-show" id="showEx">Show example</button>
+    </div>`;
+  }
+
+  selFW=[];
+  document.getElementById('cardModal').innerHTML=
+    hd+
+    `<div class="cm-scroll"><div class="cm-body">${body}</div></div>`+
+    `<div class="cm-ft-wrap">${foot}</div>`;
+  
+  const se=document.getElementById('showEx');
+  if(se) se.addEventListener('click',()=>{
+    // Hide task/hint, show example IN PLACE of them
+    const rq=document.getElementById('readQ')||document.getElementById('findTask');
+    const rh=document.getElementById('readHint')||document.getElementById('findHint');
+    if(rq)rq.style.display='none';
+    if(rh)rh.style.display='none';
+
+    const fb=document.getElementById('fb');
+    fb.className='fb show ok';
+    fb.innerHTML='<strong>Answer / Example:</strong><br>'+c.example;
+    se.style.display='none';
+    
+    const ft=document.querySelector('.cm-ft');
+    if(ft&&!ft.querySelector('.ftb-ok')){
+      ft.insertAdjacentHTML('beforeend',`
+        <button class="ftb ftb-no" onclick="autoGrade(${i},false)">✗ Wrong</button>
+        <button class="ftb ftb-ok" onclick="autoGrade(${i},true)">✓ Correct</button>`);
+    }
+  });
+}
+
+function closeCard(){SFX.back();showScr('sTable');}
+
+let woSelected=null;
+window.woClick=function(chip){
+  SFX.place();
+  if(chip.classList.contains('ww-locked'))return;
+  const bank=document.getElementById('woBank');
+  const drop=document.getElementById('woDrop');
+  if(!bank||!drop)return;
+  if(chip.parentElement===bank){
+    
+    const emptySlot=drop.querySelector('.wo-slot:not(.filled)');
+    if(!emptySlot)return;
+    chip.classList.add('placed');
+    emptySlot.classList.add('filled');
+    emptySlot.appendChild(chip);
+  } else {
+    
+    const slot=chip.parentElement;
+    chip.classList.remove('placed','w-ok','w-no');
+    bank.appendChild(chip);
+    slot.classList.remove('filled');
+    slot.innerHTML='';
+  }
+};
+window.woSlotClick=function(slot){
+  
+  const chip=slot.querySelector('.ww');
+  if(chip)woClick(chip);
+};
+window.woClear=function(){
+  SFX.click();
+  const bank=document.getElementById('woBank'),drop=document.getElementById('woDrop');
+  if(!bank||!drop)return;
+  drop.querySelectorAll('.wo-slot.filled').forEach(slot=>{
+    const chip=slot.querySelector('.ww');
+    if(chip){chip.classList.remove('placed','w-ok','w-no');bank.appendChild(chip);}
+    slot.classList.remove('filled');slot.innerHTML='';
+  });
+  drop.querySelectorAll('.ww-locked').forEach(ch=>{ch.classList.remove('w-ok','w-no');});
+  drop.classList.remove('done');
+};
+window.doWO=function(ci){
+  SFX.click();
+  const c=deck[ci];
+  const drop=document.getElementById('woDrop');
+  
+  const tokens=[...drop.children].map(el=>{
+    if(el.classList.contains('ww-locked'))return el.dataset.w;
+    if(el.classList.contains('wo-slot')){
+      const chip=el.querySelector('.ww');
+      return chip?chip.dataset.w:'';
+    }
+    return '';
+  });
+  const placed=tokens.join(' ').trim();
+  const ok=placed===c.ans.trim();
+  drop.classList.add('done');
+  
+  drop.querySelectorAll('.wo-slot.filled .ww').forEach(ch=>{
+    ch.style.pointerEvents='none';
+    ch.classList.add(ok?'w-ok':'w-no');
+  });
+  
+  document.querySelectorAll('#woBank .ww').forEach(ch=>ch.style.pointerEvents='none');
+  document.querySelectorAll('.wo-slot:not(.filled)').forEach(s=>s.style.pointerEvents='none');
+  // Hide bank wrap after checking
+  const bw=document.getElementById('woBankWrap');if(bw)bw.style.display='none';
+  if(!ok){
+    const cleanAns=c.ans.replace(/ \./g,'.');
+    showFBWithAnswer(false,c.exp,cleanAns);
+  } else {
+    showFB(true,c.exp);
+    confetti();
+  }
+  setTimeout(()=>autoGrade(ci,ok),600);
+};
+
+window.rwClick=function(el){SFX.click();el.classList.toggle('sel');};
+
+window.doMC=function(ci,chosen){
+  SFX.click();
+  const c=deck[ci];
+  document.querySelectorAll('.mc-opt').forEach((o,j)=>{
+    o.setAttribute('disabled','true');
+    if(j===chosen)o.classList.add(chosen===c.ans?'correct':'wrong');
+    else if(j===c.ans&&chosen!==c.ans)o.classList.add('reveal');
+  });
+  const ok=chosen===c.ans;
+  showFB(ok,c.exp);
+  if(ok)confetti();
+  
+  setTimeout(()=>autoGrade(ci,ok),600);
+};
+
+window.doGap=function(ci){
+  SFX.click();
+  const c=deck[ci];
+  const inp=document.getElementById('gapIn');
+  const val=(inp.value||'').trim();
+  if(!val){inp.focus();inp.style.borderColor='#f59e0b';setTimeout(()=>inp.style.borderColor='',800);return;}
+  const ok=val.toLowerCase()===c.ans.toLowerCase();
+  inp.classList.add(ok?'ok':'no');inp.setAttribute('readonly','true');
+  if(!ok){
+    showFBWithAnswer(false,c.exp,c.ans);
+  } else {
+    showFB(true,c.exp);
+    confetti();
+  }
+  setTimeout(()=>autoGrade(ci,ok),600);
+};
+
+let selFW=[];
+window.fwClick=function(el){
+  SFX.click();
+  el.classList.toggle('sel');
+  const idx=selFW.indexOf(el);
+  if(idx===-1)selFW.push(el);
+  else selFW.splice(idx,1);
+};
+window.doFind=function(ci){
+  SFX.click();
+  const c=deck[ci];
+  if(!selFW.length){
+    document.querySelectorAll('.fw').forEach(e=>{e.style.outline='2px solid #f59e0b';setTimeout(()=>e.style.outline='',800);});return;
+  }
+  // Build flat set of valid answer tokens
+  const validTokens=new Set();
+  c.answers.forEach(a=>{
+    a.toLowerCase().split(/\s+/).forEach(w=>{
+      const clean=w.replace(/[.,!?;:]/g,'');
+      if(clean)validTokens.add(clean);
+    });
+  });
+  // Mark each selected word correct or wrong
+  let correctCount=0,wrongSel=0;
+  const selSet=new Set(selFW);
+  document.querySelectorAll('.fw').forEach(e=>{
+    e.classList.remove('sel');
+    e.style.pointerEvents='none';
+    if(!selSet.has(e))return;
+    const w=e.textContent.replace(/[.,!?;:]/g,'').toLowerCase().trim();
+    if(validTokens.has(w)){e.classList.add('correct');correctCount++;}
+    else{e.classList.add('wrong');wrongSel++;}
+  });
+  const allOk=(wrongSel===0&&correctCount>=c.count);
+  const ft=document.getElementById('findTask');if(ft)ft.style.display='none';
+  const fh=document.getElementById('findHint');if(fh)fh.style.display='none';
+  if(!allOk){showFB(false,c.exp);}else{showFB(true,c.exp);}
+  if(allOk)confetti();
+  selFW=[];
+  setTimeout(()=>autoGrade(ci,allOk),600);
+};
+window.doOOO=function(ci,chosen){
+  SFX.click();
+  const c=deck[ci];
+  document.querySelectorAll('.ooo-opt').forEach((o,j)=>{
+    o.setAttribute('disabled','true');
+    if(j===chosen)o.classList.add(chosen===c.ans?'correct':'wrong');
+    else if(j===c.ans&&chosen!==c.ans)o.classList.add('reveal');
+  });
+  const ok=chosen===c.ans;
+  showFB(ok,c.exp);
+  if(ok)confetti();
+  setTimeout(()=>autoGrade(ci,ok),600);
+};
+
+let selEW=null;
+window.pickEW=function(el,errIdx){
+  SFX.click();
+  document.querySelectorAll('.ew').forEach(e=>e.classList.remove('sel'));
+  el.classList.add('sel');
+  selEW=+el.dataset.j;
+  
+  const inp=document.getElementById('errIn');
+  if(inp&&!inp.readOnly)inp.focus();
+};
+window.doErr=function(ci){
+  SFX.click();
+  const c=deck[ci];
+  const inp=document.getElementById('errIn');
+  const val=(inp.value||'').trim();
+  if(selEW===null){
+    document.querySelectorAll('.ew').forEach(e=>{e.style.outline='2px solid #f59e0b';setTimeout(()=>e.style.outline='',800);});return;
+  }
+  if(!val){inp.focus();inp.style.borderColor='#f59e0b';setTimeout(()=>inp.style.borderColor='',800);return;}
+  const wOk=selEW===c.errIdx;
+  const fOk=val.toLowerCase()===c.fix.toLowerCase()||val.toLowerCase().replace(/'/g,"'")===c.fix.toLowerCase().replace(/'/g,"'");
+  const ok=wOk&&fOk;
+  document.querySelectorAll('.ew').forEach((e,j)=>{
+    e.style.pointerEvents='none';
+    if(j===selEW)e.classList.add(wOk?'correct':'wrong');
+    if(!wOk&&j===c.errIdx)e.classList.add('reveal-c');
+  });
+  inp.classList.add(ok?'ok':'no');inp.setAttribute('readonly','true');
+  if(!ok){
+    showFBWithAnswer(false,c.exp,c.fix);
+  } else {
+    showFB(true,c.exp);
+  }
+  if(ok)confetti();
+  setTimeout(()=>autoGrade(ci,ok),600);
+};
+
+function replFoot(ci){
+  const ft=document.querySelector('.cm-ft');if(!ft)return;
+  ft.innerHTML=`<button class="ftb ftb-back" onclick="closeCard()">✕ Back</button>
+    <button class="ftb ftb-no" onclick="grade(${ci},false)">✗ Wrong</button>
+    <button class="ftb ftb-ok" onclick="grade(${ci},true)">✓ Correct</button>`;
+}
+
+window.autoGrade=function(ci,ok){
+  const c=deck[ci];
+  const pts=ok?c.pts:-3;
+  if(ok){
+    players[curP].score+=c.pts;
+    SFX.correct();
+    animateScore('+'+c.pts,true);
+    toast('+'+c.pts+' pts → '+players[curP].name+'!');
+  } else {
+    players[curP].score-=3;
+    SFX.wrong();
+    animateScore('-3',false);
+    toast('-3 pts → '+players[curP].name);
+  }
+  doneSet.add(ci);
+  const tc=document.getElementById('tc'+ci);if(tc)tc.classList.add('done');
+  curP=(curP+1)%players.length;
+  renderChips();
+  const ftw=document.querySelector('.cm-ft-wrap');
+  const ft=document.querySelector('.cm-ft');
+  if(ft){
+    ft.innerHTML=`<button class="ftb ftb-back" onclick="closeCard()">✕ Back to board</button>`;
+  }
+  if(doneSet.size>=deck.length)setTimeout(showWin,1200);
+};
+
+window.grade=function(ci,ok){
+  const c=deck[ci];
+  if(ok){
+    players[curP].score+=c.pts;
+    SFX.correct();
+    animateScore('+'+c.pts,true);
+    confetti();
+    toast('+'+c.pts+' pts → '+players[curP].name+'!');
+  } else {
+    players[curP].score-=3;
+    SFX.wrong();
+    animateScore('-3',false);
+    toast('-3 pts → '+players[curP].name);
+  }
+  doneSet.add(ci);
+  const tc=document.getElementById('tc'+ci);if(tc)tc.classList.add('done');
+  curP=(curP+1)%players.length;
+  renderChips();
+  closeCard();
+  if(doneSet.size>=deck.length)setTimeout(showWin,600);
+};
+
+function showFB(ok,exp){
+  ok?SFX.correct():SFX.wrong();
+  const fb=document.getElementById('fb');if(!fb)return;
+  fb.className='fb show '+(ok?'ok':'no');
+  fb.innerHTML=(ok?'✅ ':'❌ ')+exp;
+}
+
+function showFBWithAnswer(ok,exp,answer){
+  ok?SFX.correct():SFX.wrong();
+  const fb=document.getElementById('fb');if(!fb)return;
+  fb.className='fb show '+(ok?'ok':'no');
+  fb.innerHTML=
+    '<div style="font-size:1.05em;font-weight:700;margin-bottom:6px">✅ '+answer+'</div>'+
+    '<div style="opacity:.8;font-size:.88em">'+exp+'</div>';
+}
+
+function showWin(){
+  SFX.confetti();showScr('sWin');
+  const s=[...players].sort((a,b)=>b.score-a.score);
+  document.getElementById('winList').innerHTML=s.map((p,i)=>`
+    <div class="wrow"><div class="wrank">${['🥇','🥈','🥉'][i]||i+1+'.'}</div>
+    <img class="wav" src="${p.av}" alt=""><div class="wname">${p.name}</div>
+    <div class="wpts">${p.score>0?'+':''}${p.score} pts</div></div>`).join('');
+}
+
+function showScr(id){
+  document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+}
+function confetti(){
+  const shapes=['★','✦','◆','●','▲','✿'];
+  const colors=['#f7c948','#06d6a0','#4cc9f0','#f72585','#a78bfa','#fb923c'];
+  shapes.forEach((sh,i)=>{
+    setTimeout(()=>{
+      const el=document.createElement('div');el.className='conf';el.textContent=sh;
+      el.style.cssText=`left:${10+Math.random()*80}%;top:${10+Math.random()*40}%;color:${colors[i%colors.length]};font-size:${0.9+Math.random()*0.8}rem`;
+      document.body.appendChild(el);setTimeout(()=>el.remove(),1400);
+    },i*80);
+  });
+}
+let tT;
+function toast(m){const t=document.getElementById('toastEl');t.textContent=m;t.classList.add('on');clearTimeout(tT);tT=setTimeout(()=>t.classList.remove('on'),2800);}
+</script>
+</body>
+</html>
