@@ -31,7 +31,7 @@ body{
   line-height:1.7;overflow-x:hidden;width:100%;
 }
 
-/* NAV */
+
 .snug-nav{
   position:sticky;top:0;z-index:100;
   background:rgba(237,234,245,.95);backdrop-filter:blur(14px);
@@ -50,7 +50,6 @@ body{
 .snug-nav-cta{font-size:.72rem;font-weight:400;letter-spacing:.12em;text-transform:uppercase;color:var(--white);background:var(--accent);padding:9px 22px;text-decoration:none;transition:background .25s}
 .snug-nav-cta:hover{background:var(--ink)}
 
-/* HERO */
 .hero-band{background:var(--cream);padding:52px var(--p) 40px;}
 .hero-inner{max-width:var(--w);margin:0 auto;}
 .hero-back{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);text-decoration:none;display:inline-flex;align-items:center;gap:6px;margin-bottom:24px;transition:color .2s}
@@ -60,7 +59,6 @@ body{
 .hero-title em{font-style:italic;color:var(--accent)}
 .hero-sub{font-size:.87rem;color:var(--mid);max-width:420px;line-height:1.7}
 
-/* FILTER TABS */
 .tabs-band{background:var(--warm);border-bottom:1px solid var(--border);border-top:1px solid var(--border);}
 .tabs-inner{max-width:var(--w);margin:0 auto;padding:0 var(--p);display:flex;gap:0;overflow-x:auto;scrollbar-width:none}
 .tabs-inner::-webkit-scrollbar{display:none}
@@ -68,7 +66,6 @@ body{
 .tab:hover{color:var(--accent)}
 .tab.active{color:var(--accent);border-bottom-color:var(--accent)}
 
-/* GRID */
 .grid-band{background:var(--dark);padding:40px var(--p) 60px;}
 .grid-inner{max-width:var(--w);margin:0 auto;}
 .section-label{font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(176,154,222,.6);margin-bottom:20px;display:block}
@@ -98,17 +95,14 @@ body{
 .card:hover .card-arr{transform:translateX(4px);color:rgba(176,154,222,.7)}
 .card.stub .card-arr{opacity:0}
 
-/* hidden state */
 .cards-section{transition:opacity .3s}
 .cards-section.hidden{display:none}
 
-/* FOOTER */
 .footer-band{background:var(--cream);border-top:1px solid var(--border)}
 .footer-inner{max-width:var(--w);margin:0 auto;padding:18px var(--p);display:flex;justify-content:space-between;align-items:center;font-size:.67rem;color:var(--dim)}
 .footer-inner a{color:var(--dim);text-decoration:none;transition:color .2s}
 .footer-inner a:hover{color:var(--accent)}
 
-/* animations */
 .fade-in{opacity:0;transform:translateY(10px);animation:up .5s ease forwards}
 @keyframes up{to{opacity:1;transform:none}}
 .card:nth-child(1){animation-delay:.05s}
@@ -135,7 +129,6 @@ body{
 </head>
 <body>
 
-<!-- NAV -->
 <div class="snug-nav">
   <div class="snug-nav-in">
     <a class="snug-logo" href="index.html">
@@ -150,7 +143,6 @@ body{
   </div>
 </div>
 
-<!-- HERO -->
 <div class="hero-band">
   <div class="hero-inner">
     <a class="hero-back" href="index.html">← На главную</a>
@@ -160,7 +152,6 @@ body{
   </div>
 </div>
 
-<!-- FILTER TABS -->
 <div class="tabs-band">
   <div class="tabs-inner">
     <button class="tab active" data-filter="all">Все</button>
@@ -170,7 +161,6 @@ body{
   </div>
 </div>
 
-<!-- GRID -->
 <div class="grid-band">
   <div class="grid-inner">
 
@@ -290,8 +280,8 @@ body{
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M7 8h10M7 12h7M7 16h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
             </div>
             <div>
-              <div class="card-title">Irregular Verbs · Present Perfect</div>
-              <div class="card-meta">Неправильные глаголы · Present Perfect</div>
+              <div class="card-title">Irregular Present Forms</div>
+              <div class="card-meta">Правила с добавлением окончания "s" + неправильные формы\исключения</div>
             </div>
           </div>
           <span class="card-arr">→</span>
