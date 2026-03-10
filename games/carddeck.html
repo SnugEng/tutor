@@ -75,7 +75,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'DM Sans',sans-seri
 .tc-pts{font-family:'DM Mono',monospace;font-size:clamp(.65rem,1.4vw,1rem);color:rgba(255,255,255,.4);z-index:1;margin-top:2px;font-weight:700}
 .tc:hover .tc-num{color:#fff;transform:scale(1.06)}
 
-/* ══ CARD SCREEN ══ */
+
 #sCard{z-index:100;overflow:hidden;background:#f7f6ee}
 
 .card-player-bar{background:#0a0913;border-bottom:1px solid var(--bord);padding:5px 10px;display:flex;align-items:center;gap:6px;flex-shrink:0;min-height:46px}
@@ -88,7 +88,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'DM Sans',sans-seri
 .card-schip-score.p{color:#3db88a}.card-schip-score.n{color:#d9547a}.card-schip-score.z{color:var(--dim)}
 .card-tbar-right{display:flex;gap:5px;flex-shrink:0}
 
-/* ── wrapper ── */
+
 .cm-wrap{display:flex;flex-direction:column;flex:1;min-height:0;width:100%;overflow:hidden;background:#f7f6ee}
 .cm-hd{
   flex-shrink:0;width:100%;
@@ -121,7 +121,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'DM Sans',sans-seri
   font-family:'DM Mono',monospace;font-size:.6rem;
   color:rgba(255,255,255,.45);flex-shrink:0
 }
-/* centered scroll area — centers vertically too */
+
 .cm-scroll{
   flex:1;overflow-y:auto;min-height:0;
   display:flex;flex-direction:column;
@@ -130,14 +130,14 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'DM Sans',sans-seri
   padding:8px 0
 }
 
-/* ── body ── */
+
 .cm-body{
   width:100%;max-width:680px;
   padding:clamp(20px,3vh,40px) clamp(20px,4vw,48px);
   display:flex;flex-direction:column;gap:clamp(16px,2.8vh,28px);
   background:#f7f6ee
 }
-/* ── footer centered ── */
+
 .cm-ft-wrap{width:100%;display:flex;justify-content:center;background:#f0efe6;border-top:2px solid rgba(0,0,0,.07);flex-shrink:0}
 .cm-ft{
   padding:12px 16px 16px;
@@ -151,7 +151,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'DM Sans',sans-seri
   padding-bottom:6px;
   border-bottom:2px solid rgba(0,0,0,.07)
 }
-/* compact single-line instruction */
+
 .cm-instr{
   font-family:'DM Mono',monospace;
   font-size:clamp(.7rem,1.4vw,.82rem);
@@ -161,7 +161,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'DM Sans',sans-seri
   border-bottom:1px solid rgba(0,0,0,.06)
 }
 
-/* ── MC options ── */
+
 .mc-opts{display:flex;flex-direction:column;gap:11px}
 .mc-opt{
   padding:clamp(14px,2.2vh,20px) clamp(18px,3vw,26px);
@@ -193,7 +193,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'DM Sans',sans-seri
 .mc-opt.reveal{border-color:#06d6a0!important;background:#eafaf4!important;pointer-events:none}
 .mc-opt[disabled]{pointer-events:none}
 
-/* ── GAP fill ── */
+
 .gap-ctx{font-family:'DM Serif Display',serif;font-size:clamp(1.2rem,2.8vw,1.9rem);color:#18172e;line-height:1.9;padding:18px 22px;background:#fff;border-radius:14px;border:2px solid #e2e0d4;box-shadow:0 1px 4px rgba(0,0,0,.05)}
 .gap-lbl{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:2px;text-transform:uppercase;color:#aaa;margin-bottom:7px}
 .gap-in{width:100%;border:2px solid #ddd;border-radius:12px;padding:15px 20px;font-family:'DM Serif Display',serif;font-size:clamp(1.15rem,2.8vw,1.5rem);color:#18172e;background:#fff;outline:none;transition:border-color .2s,box-shadow .2s;box-shadow:0 1px 4px rgba(0,0,0,.05)}
@@ -201,7 +201,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'DM Sans',sans-seri
 .gap-in.ok{border-color:#06d6a0;background:#eafaf4;color:#027a5a;box-shadow:0 0 0 3px rgba(6,214,160,.15)}
 .gap-in.no{border-color:#f72585;background:#fdeef4;color:#a00050;box-shadow:0 0 0 3px rgba(247,37,133,.12)}
 
-/* ── Word Order ── */
+
 .wo-area{display:flex;flex-direction:column;gap:12px}
 .wo-label{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:2px;text-transform:uppercase;color:#aaa;margin-bottom:2px}
 .wo-zone{min-height:56px;border:2px dashed #d4d2c0;border-radius:14px;padding:10px 12px;display:flex;flex-wrap:wrap;gap:7px;align-items:center;background:#fff;transition:border-color .2s,box-shadow .2s}
@@ -215,7 +215,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'DM Sans',sans-seri
 .ww:active{transform:scale(.95)}
 .ww.placed{background:#f0f0e8;border-color:#c8c6b4;color:#22203a}
 .ww.placed:hover{background:#e8e6d8;border-color:#aaa;transform:translateY(-2px)}
-/* empty word slot in drop zone */
+
 .wo-slot{
   min-width:52px;height:38px;border-radius:10px;
   border:2px dashed #d0cec0;background:#f7f6ee;
@@ -223,12 +223,12 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'DM Sans',sans-seri
   cursor:default;transition:border-color .15s
 }
 .wo-slot.filled{border:none;padding:0;min-width:0;height:auto;background:none}
-/* locked punct chips — pre-placed, not interactive */
+
 .ww-locked{background:#f0efe6!important;border-color:#d0cec0!important;color:#aaa!important;cursor:default!important;pointer-events:none;box-shadow:none!important;transform:none!important}
 .ww.w-ok{border-color:#06d6a0!important;background:#eafaf4!important;color:#027a5a!important;box-shadow:0 2px 8px rgba(6,214,160,.25)!important}
 .ww.w-no{border-color:#f72585!important;background:#fdeef4!important;color:#a00050!important;box-shadow:0 2px 8px rgba(247,37,133,.2)!important}
 
-/* ── Odd One Out ── */
+
 .ooo-opts{display:flex;flex-direction:column;gap:11px}
 .ooo-opt{
   padding:clamp(14px,2.2vh,20px) clamp(18px,3vw,26px);
@@ -255,7 +255,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'DM Sans',sans-seri
 .ooo-opt.reveal{border-color:#06d6a0!important;background:#eafaf4!important;pointer-events:none}
 .ooo-opt.reveal .ooo-l{background:#06d6a0;color:#fff}
 
-/* ── Error correction ── */
+
 .err-sent{font-family:'DM Serif Display',serif;font-size:clamp(1.2rem,2.8vw,1.9rem);line-height:2.1;padding:18px 22px;background:#fff;border-radius:14px;border:2px solid #e2e0d4;box-shadow:0 1px 4px rgba(0,0,0,.05);color:#18172e;word-spacing:2px}
 .ew{cursor:pointer;padding:3px 6px;border-radius:7px;transition:all .18s;border-bottom:2.5px solid transparent;color:#18172e;display:inline}
 .ew.punct{padding:3px 1px;margin-left:-4px}
@@ -269,24 +269,24 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'DM Sans',sans-seri
 .err-in.ok{border-color:#06d6a0;background:#eafaf4;color:#027a5a}
 .err-in.no{border-color:#f72585;background:#fdeef4;color:#a00050}
 
-/* ── Read text ── */
+
 .read-txt{background:#fff;border-left:5px solid var(--tc,#888);border-radius:0 14px 14px 0;padding:clamp(16px,2.2vh,26px) clamp(18px,3vw,30px);font-size:clamp(1.05rem,2.2vw,1.4rem);line-height:2.2;color:#18172e;display:flex;flex-wrap:wrap;gap:0 4px;align-items:baseline;box-shadow:0 1px 6px rgba(0,0,0,.06)}
 .rw{cursor:pointer;padding:2px 5px;border-radius:5px;transition:background .15s;border-bottom:2px solid transparent;display:inline-block;color:#18172e}
 .rw:hover{background:#fdecc8;border-bottom-color:#d97706}
 .rw.sel{background:#fde8b8;border-bottom-color:#d97706;font-weight:700}
 .read-hint{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:2px;text-transform:uppercase;color:#bbb;margin-top:-8px}
 
-/* ── Speak box ── */
+
 .speak-box{background:#fff;border:2px solid #e2e0d4;border-radius:14px;padding:24px 28px;font-family:'DM Serif Display',serif;font-size:clamp(1.2rem,2.8vw,1.75rem);color:#18172e;line-height:1.7;box-shadow:0 1px 6px rgba(0,0,0,.06)}
 
-/* ── Feedback ── */
+
 .fb{display:none;padding:15px 20px;border-radius:13px;font-family:'DM Mono',monospace;font-size:clamp(.8rem,1.8vw,.95rem);line-height:1.75;border:1.5px solid}
 .fb.show{display:block;animation:fuD .3s cubic-bezier(.34,1.56,.64,1)}
 .fb.ok{background:#eafaf4;border-color:#3db88a;color:#1a6b4a}
 .fb.no{background:#fdeef4;border-color:#d9547a;color:#8b1a3a}
 @keyframes fuD{from{opacity:0;transform:translateY(8px) scale(.97)}to{opacity:1;transform:none}}
 
-/* ── Footer buttons ── */
+
 .ftb{
   flex:1;min-width:70px;
   padding:clamp(14px,2.2vh,19px);
@@ -310,8 +310,8 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'DM Sans',sans-seri
 #avModal.on{display:flex}
 .av-box{background:var(--surf);border:1px solid var(--bord);border-radius:15px;padding:16px;width:260px}
 .av-box h3{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:3px;text-transform:uppercase;color:var(--dim);margin-bottom:11px}
-.av-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:5px}
-.av-o{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;cursor:pointer;border:2px solid transparent;background:#16213e;transition:all .15s}
+.av-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
+.av-o{width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;cursor:pointer;border:2px solid transparent;background:#16213e;transition:all .15s}
 .av-o:hover{border-color:var(--acc);transform:scale(1.1)}
 
 #sWin{overflow-y:auto;align-items:center;justify-content:center;padding:40px 20px;background:radial-gradient(ellipse at center,#7b2fff22,var(--bg) 70%)}
@@ -445,7 +445,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'DM Sans',sans-seri
 <div class="toast" id="toastEl"></div>
 
 <script>
-// ══ AUDIO — lazy init ══
+
 let AC=null;
 function getAC(){
   if(!AC){try{AC=new(window.AudioContext||window.webkitAudioContext)();}catch(e){}}
@@ -475,69 +475,305 @@ const SFX={
   nextPlayer(){playTone(660,'sine',.04,.07);playTone(880,'sine',.04,.07,.07)}
 };
 
-// ══ DATA ══
+
 const CD=[
-// MC — easy: +10
-{type:'mc',topic:'ps',col:'#4cc9f0',pts:10,q:'She ______ to school yesterday.',opts:['go','goes','went','was going'],ans:2,exp:'"Yesterday" = completed past → Past Simple. "Go" is irregular: go → went.'},
-{type:'mc',topic:'ps',col:'#4cc9f0',pts:10,q:'They ______ the exam last week.',opts:["didn't passed","didn't pass",'not passed',"wasn't passing"],ans:1,exp:'Past Simple negative: didn\'t + base verb.'},
-{type:'mc',topic:'pc',col:'#f72585',pts:10,q:'At 8pm last night, they ______ dinner.',opts:['cooked','were cooking','are cooking','cookes'],ans:1,exp:'"At 8pm last night" = action in progress → Past Continuous: were cooking.'},
-{type:'mc',topic:'pc',col:'#f72585',pts:10,q:'What ______ you ______ when I called?',opts:['did / do','were / doing','was / do','did / doing'],ans:1,exp:'Past Continuous question: What were you doing?'},
-{type:'mc',topic:'pspc',col:'#7b2fff',pts:20,q:'She ______ a book when the phone ______.',opts:['read / was ringing','was reading / rang','reads / rang','was reading / was ringing'],ans:1,exp:'Ongoing (was reading) + sudden interruption (rang).'},
-{type:'mc',topic:'pspc',col:'#7b2fff',pts:20,q:'While Tom ______ home, it ______ to rain.',opts:['walked / was starting','was walking / started','walks / started','walked / started'],ans:1,exp:'"While" + background → Past Continuous. Sudden start → Past Simple.'},
-{type:'mc',topic:'adv',col:'#06d6a0',pts:10,q:'He spoke very ______ and nobody heard him.',opts:['quiet','quietly','more quiet','quieter'],ans:1,exp:'After a verb → adverb, not adjective.'},
-{type:'mc',topic:'adv',col:'#06d6a0',pts:10,q:'She ran ______ but still missed the bus.',opts:['fastly','fast','faster than','more fast'],ans:1,exp:'"Fast" is already an adverb. ❌ "fastly" doesn\'t exist.'},
-{type:'mc',topic:'adv',col:'#06d6a0',pts:10,q:'Which sentence is correct?',opts:['She danced beautiful.','She danced beautifully.','She beautiful danced.','She was dance beautifully.'],ans:1,exp:'Adverb of manner comes after the verb.'},
-{type:'mc',topic:'ps',col:'#4cc9f0',pts:10,q:'I ______ my keys this morning.',opts:['losted','was losing','lost',"didn't found"],ans:2,exp:'"Lose" is irregular: lose → lost.'},
-// GAP — medium: +15–25
-{type:'gap',topic:'ps',col:'#ff9f1c',pts:15,before:'He',after:'to the bus and caught it.',verb:'run',ans:'ran',exp:'"Run" is irregular: run → ran.'},
-{type:'gap',topic:'pc',col:'#f72585',pts:15,before:'She',after:'when her mum called.',verb:'study',ans:'was studying',exp:'Ongoing action interrupted = Past Continuous: was studying.'},
-{type:'gap',topic:'pspc',col:'#7b2fff',pts:25,before:'While I',after:'to school, I saw an accident.',verb:'walk',ans:'was walking',exp:'"While" clause = background ongoing → Past Continuous.'},
-{type:'gap',topic:'adv',col:'#06d6a0',pts:15,before:'The teacher spoke very',after:'so everyone understood.',verb:'careful',ans:'carefully',exp:'After a verb → adverb. "Careful" → "carefully" (-ly ending).'},
-{type:'gap',topic:'ps',col:'#4cc9f0',pts:15,before:'They',after:'to the party last night.',verb:'not / go',ans:"didn't go",exp:'Past Simple negative: didn\'t + base verb.'},
-{type:'gap',topic:'pc',col:'#f72585',pts:25,before:'At 9pm they',after:'happily at the wedding.',verb:'dance',ans:'were dancing',exp:'"At 9pm" = specific moment + ongoing → Past Continuous.'},
-{type:'gap',topic:'adv',col:'#06d6a0',pts:15,before:'She ran so',after:'that nobody could catch her.',verb:'quick',ans:'quickly',exp:'"So + adverb + that". "Quick" → "quickly".'},
-{type:'gap',topic:'pspc',col:'#7b2fff',pts:25,before:'He',after:'his report when the computer crashed.',verb:'write',ans:'was writing',exp:'Ongoing (was writing) + sudden event (crashed).'},
-// WO — medium: +20
-{type:'wo',topic:'ps',col:'#ffd60a',pts:20,words:["She","didn't","go","to","school","yesterday","."],ans:"She didn't go to school yesterday .",exp:'Past Simple negative: Subject + didn\'t + base verb + time.'},
-{type:'wo',topic:'pc',col:'#f72585',pts:20,words:["They","were","dancing","happily","when","the","music","stopped","."],ans:"They were dancing happily when the music stopped .",exp:'Past Continuous + adverb + when + Past Simple.'},
-{type:'wo',topic:'pspc',col:'#7b2fff',pts:20,words:["While","I","was","reading",",","my","phone","rang","."],ans:"While I was reading , my phone rang .",exp:'"While" + Past Continuous, then Past Simple interruption.'},
-{type:'wo',topic:'adv',col:'#06d6a0',pts:20,words:["He","worked","so","hard","that","he","finished","early","."],ans:"He worked so hard that he finished early .",exp:'"So + adverb + that" = result structure.'},
-{type:'wo',topic:'ps',col:'#4cc9f0',pts:20,words:["Did","you","see","that","film","last","weekend","?"],ans:"Did you see that film last weekend ?",exp:'Past Simple question: Did + subject + base verb?'},
-{type:'wo',topic:'adv',col:'#06d6a0',pts:20,words:["She","was","speaking","so","quietly","that","nobody","heard","her","."],ans:"She was speaking so quietly that nobody heard her .",exp:'Past Continuous + "so + adverb + that".'},
-// OOO — medium: +20
-{type:'ooo',topic:'ps',col:'#e040fb',pts:20,q:'Which verb form does NOT belong with Past Simple?',opts:['went','cooked','ran','was going'],ans:3,exp:'"Was going" is Past Continuous. The others are Past Simple.'},
-{type:'ooo',topic:'adv',col:'#06d6a0',pts:20,q:'Which word is NOT an adverb of manner?',opts:['quickly','carefully','nervous','slowly'],ans:2,exp:'"Nervous" is an adjective, not an adverb.'},
-{type:'ooo',topic:'adv',col:'#06d6a0',pts:20,q:'Which word CANNOT follow "She spoke ___"',opts:['quietly','loudly','angrily','anger'],ans:3,exp:'"Anger" is a noun. After a verb we need an adverb.'},
-{type:'ooo',topic:'pc',col:'#f72585',pts:20,q:'Which sentence uses Past Continuous INCORRECTLY?',opts:['She was reading a book.','They were cooking dinner.','He was knew the answer.','I was waiting for you.'],ans:2,exp:'"Know" is a state verb — no continuous form.'},
-{type:'ooo',topic:'pspc',col:'#7b2fff',pts:20,q:'Which time expression fits Past Continuous best?',opts:['yesterday','last week','at 6pm (ongoing)','two days ago'],ans:2,exp:'"At 6pm" = ongoing moment → Past Continuous.'},
-// ERR — hard: +25
-{type:'err',topic:'ps',col:'#ff6b35',pts:25,sentence:['She','runned','to','school','yesterday','.'],errIdx:1,fix:'ran',exp:'"Run" is irregular: run → ran. ❌ "runned" doesn\'t exist.'},
-{type:'err',topic:'pc',col:'#f72585',pts:25,sentence:['They','was','playing','football','at','5pm','.'],errIdx:1,fix:'were',exp:'"They" is plural → were (not was).'},
-{type:'err',topic:'pspc',col:'#7b2fff',pts:25,sentence:['He','cooked','when','I','called','.'],errIdx:1,fix:'was cooking',exp:'Ongoing action interrupted → Past Continuous.'},
-{type:'err',topic:'adv',col:'#06d6a0',pts:25,sentence:['She','danced','beautiful','at','the','party','.'],errIdx:2,fix:'beautifully',exp:'After a verb → adverb. "Beautiful" → "beautifully".'},
-{type:'err',topic:'ps',col:'#4cc9f0',pts:25,sentence:['I',"didn't",'went','to','the','party','.'],errIdx:2,fix:'go',exp:'"Didn\'t" + base verb only. ✅ didn\'t go.'},
-{type:'err',topic:'adv',col:'#06d6a0',pts:25,sentence:['He','ran','fastly','down','the','street','.'],errIdx:2,fix:'fast',exp:'"Fast" is already an adverb. ❌ "fastly" doesn\'t exist.'},
-{type:'err',topic:'pc',col:'#f72585',pts:25,sentence:['She','was','dance','beautifully','.'],errIdx:2,fix:'dancing',exp:'Past Continuous = was/were + verb-ING.'},
-{type:'err',topic:'pspc',col:'#7b2fff',pts:25,sentence:['While','I','studied',',','my','phone','rang','.'],errIdx:2,fix:'was studying',exp:'"While" clause = Past Continuous background.'},
-// READ — hardest: +30
-{type:'read',topic:'pspc',col:'#e040fb',pts:30,text:'Last Saturday Marco went to the park. While he was playing football, his friend Ana was reading quietly under a tree. Suddenly it started to rain. Everyone ran quickly to the nearest café.',q:'What was Ana doing while Marco was playing football?',example:'She was reading quietly under a tree. (Past Continuous — ongoing background action)'},
-{type:'read',topic:'adv',col:'#06d6a0',pts:30,text:'The students were waiting nervously outside the classroom. Inside, some were writing quickly while others sat quietly and thought carefully. At 10am the teacher said loudly: "Pens down!"',q:'Find THREE adverbs of manner in this text.',example:'nervously, quickly, quietly, carefully, loudly — any three are correct.'},
-{type:'read',topic:'pspc',col:'#7b2fff',pts:30,text:'Jake was late for his interview. He ran quickly down the street and jumped onto the bus. He was breathing heavily. When he finally arrived, the receptionist smiled kindly.',q:'What was Jake doing on the bus? What does this tell us about how he felt?',example:'He was breathing heavily — stressed/exhausted. (Past Continuous for ongoing state)'},
-// SPEAK — hardest: +30
-{type:'speak',topic:'ps',col:'#4cc9f0',pts:30,prompt:'Tell us about something you did last weekend. Use Past Simple + at least ONE adverb of manner.',example:'e.g. I cooked dinner carefully. / I walked quickly to the shops.'},
-{type:'speak',topic:'pc',col:'#f72585',pts:30,prompt:'Describe what was happening in your home at 9pm yesterday. Use Past Continuous.',example:'e.g. My mum was watching TV quietly. My sister was talking loudly on the phone.'},
-{type:'speak',topic:'pspc',col:'#7b2fff',pts:30,prompt:'Make a sentence: "While I was ___ing, I ___ed." Add an adverb.',example:'e.g. While I was walking quickly to school, I saw an accident.'},
-{type:'speak',topic:'adv',col:'#06d6a0',pts:30,prompt:'Describe someone doing something — use an adverb of manner and explain why.',example:'e.g. She was working nervously because her boss was watching.'},
+
+  { type:'mc', topic:'ps', col:'#4A90E2', pts:10, q:'I ___ to the cinema yesterday.', opts:['go', 'goes', 'went', 'going'], ans:2, exp:'Yesterday -> Past Simple (went).' },
+  { type:'mc', topic:'ps', col:'#4A90E2', pts:10, q:'They ___ not see the sign.', opts:['did', 'do', 'was', 'were'], ans:0, exp:'Negative Past Simple: did + not.' },
+  { type:'mc', topic:'ps', col:'#4A90E2', pts:10, q:'___ you finish the book?', opts:['Were', 'Did', 'Do', 'Was'], ans:1, exp:'Question Past Simple: Did + subject + V1.' },
+  { type:'mc', topic:'ps', col:'#4A90E2', pts:10, q:'She ___ a teacher in 2010.', opts:['is', 'were', 'been', 'was'], ans:3, exp:'Past Simple to be (she) -> was.' },
+  { type:'mc', topic:'ps', col:'#4A90E2', pts:10, q:'We ___ football last Sunday.', opts:['play', 'played', 'playing', 'plays'], ans:1, exp:'Regular verb + ed.' },
+  { type:'mc', topic:'ps', col:'#4A90E2', pts:10, q:'He ___ his keys at home.', opts:['leave', 'left', 'leaf', 'lefted'], ans:1, exp:'Leave -> left (irregular).' },
+  { type:'mc', topic:'ps', col:'#4A90E2', pts:10, q:'What time ___ they arrive?', opts:['did', 'do', 'was', 'were'], ans:0, exp:'Question auxiliary: did.' },
+  { type:'mc', topic:'ps', col:'#4A90E2', pts:10, q:'I ___ a noise last night.', opts:['hear', 'hears', 'heard', 'heared'], ans:2, exp:'Hear -> heard (irregular).' },
+  { type:'mc', topic:'ps', col:'#4A90E2', pts:10, q:'It ___ not rain on Tuesday.', opts:['did', 'was', 'does', 'is'], ans:0, exp:'Negative auxiliary: did.' },
+  { type:'mc', topic:'ps', col:'#4A90E2', pts:10, q:'Who ___ you see?', opts:['was', 'were', 'did', 'do'], ans:2, exp:'Question auxiliary: did.' },
+  { type:'mc', topic:'pc', col:'#50E3C2', pts:15, q:'I ___ watching TV at 8 PM.', opts:['were', 'was', 'did', 'am'], ans:1, exp:'Past Continuous (I) -> was + Ving.' },
+  { type:'mc', topic:'pc', col:'#50E3C2', pts:15, q:'They ___ playing cards.', opts:['was', 'were', 'did', 'are'], ans:1, exp:'Past Continuous (they) -> were + Ving.' },
+  { type:'mc', topic:'pc', col:'#50E3C2', pts:15, q:'What ___ you doing?', opts:['was', 'were', 'did', 'do'], ans:1, exp:'Past Continuous question (you) -> were.' },
+  { type:'mc', topic:'pc', col:'#50E3C2', pts:15, q:'She ___ sleeping.', opts:['wasnt', 'werent', 'didnt', 'not'], ans:0, exp:'Negative Past Continuous (she) -> wasnt.' },
+  { type:'mc', topic:'pc', col:'#50E3C2', pts:15, q:'It ___ raining all morning.', opts:['were', 'is', 'was', 'did'], ans:2, exp:'Past Continuous (it) -> was.' },
+  { type:'mc', topic:'pc', col:'#50E3C2', pts:15, q:'___ they working?', opts:['Was', 'Did', 'Were', 'Are'], ans:2, exp:'Past Continuous question (they) -> Were.' },
+  { type:'mc', topic:'pc', col:'#50E3C2', pts:15, q:'We ___ waiting for hours.', opts:['was', 'were', 'been', 'did'], ans:1, exp:'Past Continuous (we) -> were.' },
+  { type:'mc', topic:'pc', col:'#50E3C2', pts:15, q:'I ___ thinking about you.', opts:['were', 'am', 'was', 'did'], ans:2, exp:'Past Continuous (I) -> was.' },
+  { type:'mc', topic:'pc', col:'#50E3C2', pts:15, q:'Why ___ he shouting?', opts:['was', 'were', 'did', 'is'], ans:0, exp:'Past Continuous (he) -> was.' },
+  { type:'mc', topic:'pc', col:'#50E3C2', pts:15, q:'Birds ___ singing.', opts:['was', 'is', 'were', 'did'], ans:2, exp:'Plural -> were.' },
+  { type:'mc', topic:'adv', col:'#F5A623', pts:10, q:'He runs very ___.', opts:['fastly', 'fast', 'faster', 'fastest'], ans:1, exp:'Fast is both adj and adv.' },
+  { type:'mc', topic:'adv', col:'#F5A623', pts:10, q:'She speaks English ___.', opts:['good', 'goodly', 'well', 'better'], ans:2, exp:'Adverb of good -> well.' },
+  { type:'mc', topic:'adv', col:'#F5A623', pts:10, q:'Please walk ___.', opts:['quiet', 'quietly', 'quietness', 'quieter'], ans:1, exp:'Adverb of quiet -> quietly.' },
+  { type:'mc', topic:'adv', col:'#F5A623', pts:10, q:'He did the job ___.', opts:['hardly', 'hard', 'hards', 'harder'], ans:1, exp:'Hard (adv) = diligently.' },
+  { type:'mc', topic:'adv', col:'#F5A623', pts:10, q:'They smile ___.', opts:['happy', 'happily', 'happiness', 'happier'], ans:1, exp:'Happy -> happily.' },
+  { type:'mc', topic:'adv', col:'#F5A623', pts:10, q:'She drives ___.', opts:['careful', 'carefully', 'care', 'carefulness'], ans:1, exp:'Careful -> carefully.' },
+  { type:'mc', topic:'adv', col:'#F5A623', pts:10, q:'Wait ___ please.', opts:['patiently', 'patient', 'patience', 'patients'], ans:0, exp:'Patient -> patiently.' },
+  { type:'mc', topic:'adv', col:'#F5A623', pts:10, q:'The sun shines ___.', opts:['bright', 'brightly', 'brightness', 'brighter'], ans:1, exp:'Bright -> brightly.' },
+  { type:'mc', topic:'adv', col:'#F5A623', pts:10, q:'He answered ___.', opts:['angry', 'angrily', 'anger', 'angriest'], ans:1, exp:'Angry -> angrily.' },
+  { type:'mc', topic:'adv', col:'#F5A623', pts:10, q:'She sang ___ tonight.', opts:['beautiful', 'beautifully', 'beauty', 'beautify'], ans:1, exp:'Beautiful -> beautifully.' },
+  { type:'mc', topic:'all', col:'#D0021B', pts:20, q:'While I ___ dinner, the phone rang.', opts:['cook', 'cooked', 'was cooking', 'were cooking'], ans:2, exp:'PC for long action, PS for interruption.' },
+  { type:'mc', topic:'all', col:'#D0021B', pts:20, q:'She ___ the book and left.', opts:['closes', 'closed', 'was closing', 'closing'], ans:1, exp:'Sequence of past actions -> PS.' },
+  { type:'mc', topic:'all', col:'#D0021B', pts:20, q:'They ___ work when I arrived.', opts:['were finishing', 'finished', 'finishes', 'was finishing'], ans:0, exp:'Background action -> PC.' },
+  { type:'mc', topic:'all', col:'#D0021B', pts:20, q:'He spoke ___.', opts:['loud', 'loudly', 'loudness', 'louded'], ans:1, exp:'Manner adverb.' },
+  { type:'mc', topic:'all', col:'#D0021B', pts:20, q:'___ it snowing yesterday?', opts:['Did', 'Was', 'Were', 'Is'], ans:1, exp:'PC question (it).' },
+  { type:'mc', topic:'all', col:'#D0021B', pts:20, q:'I ___ see you at the party.', opts:['wasnt', 'werent', 'didnt', 'dont'], ans:2, exp:'Past Simple negative.' },
+  { type:'mc', topic:'all', col:'#D0021B', pts:20, q:'They ___ nicely.', opts:['danced', 'dancing', 'dance', 'was dancing'], ans:0, exp:'Simple past event.' },
+  { type:'mc', topic:'all', col:'#D0021B', pts:20, q:'He was running ___ to the bus.', opts:['quick', 'quickly', 'quickness', 'quicker'], ans:1, exp:'Adverb modifying verb.' },
+  { type:'mc', topic:'all', col:'#D0021B', pts:20, q:'What ___ they watching?', opts:['were', 'did', 'was', 'do'], ans:0, exp:'PC question (they).' },
+  { type:'mc', topic:'all', col:'#D0021B', pts:20, q:'We ___ a lot last night.', opts:['talk', 'talked', 'were talking', 'was talking'], ans:1, exp:'Completed action.' }
+
+  { type:'gap', topic:'ps', col:'#4A90E2', pts:15, before:'She', after:'the windows yesterday.', verb:'clean', ans:'cleaned', exp:'Regular PS.' },
+  { type:'gap', topic:'ps', col:'#4A90E2', pts:15, before:'They', after:'at the party.', verb:'be', ans:'were', exp:'Past be (they).' },
+  { type:'gap', topic:'ps', col:'#4A90E2', pts:15, before:'I', after:'an apple for lunch.', verb:'eat', ans:'ate', exp:'Eat -> ate.' },
+  { type:'gap', topic:'ps', col:'#4A90E2', pts:15, before:'He', after:'to France.', verb:'go', ans:'went', exp:'Go -> went.' },
+  { type:'gap', topic:'ps', col:'#4A90E2', pts:15, before:'We', after:'the game.', verb:'win', ans:'won', exp:'Win -> won.' },
+  { type:'gap', topic:'ps', col:'#4A90E2', pts:15, before:'You', after:'me a secret.', verb:'tell', ans:'told', exp:'Tell -> told.' },
+  { type:'gap', topic:'ps', col:'#4A90E2', pts:15, before:'The cat', after:'on the sofa.', verb:'sleep', ans:'slept', exp:'Sleep -> slept.' },
+  { type:'gap', topic:'ps', col:'#4A90E2', pts:15, before:'It', after:'cold.', verb:'be', ans:'was', exp:'Past be (it).' },
+  { type:'gap', topic:'ps', col:'#4A90E2', pts:15, before:'I', after:'my homework.', verb:'do', ans:'did', exp:'Do -> did.' },
+  { type:'gap', topic:'ps', col:'#4A90E2', pts:15, before:'They', after:'a house.', verb:'buy', ans:'bought', exp:'Buy -> bought.' },
+  { type:'gap', topic:'pc', col:'#50E3C2', pts:20, before:'I', after:'when you called.', verb:'study', ans:'was studying', exp:'Past Continuous.' },
+  { type:'gap', topic:'pc', col:'#50E3C2', pts:20, before:'They', after:'all night.', verb:'dance', ans:'were dancing', exp:'Past Continuous.' },
+  { type:'gap', topic:'pc', col:'#50E3C2', pts:20, before:'She', after:'dinner.', verb:'cook', ans:'was cooking', exp:'Past Continuous.' },
+  { type:'gap', topic:'pc', col:'#50E3C2', pts:20, before:'We', after:'the news.', verb:'watch', ans:'were watching', exp:'Past Continuous.' },
+  { type:'gap', topic:'pc', col:'#50E3C2', pts:20, before:'He', after:'his bike.', verb:'fix', ans:'was fixing', exp:'Past Continuous.' },
+  { type:'gap', topic:'pc', col:'#50E3C2', pts:20, before:'The dog', after:'at the moon.', verb:'bark', ans:'was barking', exp:'Past Continuous.' },
+  { type:'gap', topic:'pc', col:'#50E3C2', pts:20, before:'You', after:'on the phone.', verb:'talk', ans:'were talking', exp:'Past Continuous.' },
+  { type:'gap', topic:'pc', col:'#50E3C2', pts:20, before:'It', after:'hard.', verb:'snow', ans:'was snowing', exp:'Past Continuous.' },
+  { type:'gap', topic:'pc', col:'#50E3C2', pts:20, before:'They', after:'for the bus.', verb:'wait', ans:'were waiting', exp:'Past Continuous.' },
+  { type:'gap', topic:'pc', col:'#50E3C2', pts:20, before:'I', after:'about the future.', verb:'think', ans:'was thinking', exp:'Past Continuous.' },
+  { type:'gap', topic:'adv', col:'#F5A623', pts:15, before:'He drives', after:'.', verb:'careful', ans:'carefully', exp:'Adverb formation.' },
+  { type:'gap', topic:'adv', col:'#F5A623', pts:15, before:'She sings', after:'.', verb:'beautiful', ans:'beautifully', exp:'Adverb formation.' },
+  { type:'gap', topic:'adv', col:'#F5A623', pts:15, before:'They finished', after:'.', verb:'quick', ans:'quickly', exp:'Adverb formation.' },
+  { type:'gap', topic:'adv', col:'#F5A623', pts:15, before:'He works', after:'.', verb:'hard', ans:'hard', exp:'Irregular adverb.' },
+  { type:'gap', topic:'adv', col:'#F5A623', pts:15, before:'Speak', after:'please.', verb:'quiet', ans:'quietly', exp:'Adverb formation.' },
+  { type:'gap', topic:'adv', col:'#F5A623', pts:15, before:'She plays', after:'.', verb:'good', ans:'well', exp:'Adverb of good.' },
+  { type:'gap', topic:'adv', col:'#F5A623', pts:15, before:'It rained', after:'.', verb:'heavy', ans:'heavily', exp:'Adverb formation.' },
+  { type:'gap', topic:'adv', col:'#F5A623', pts:15, before:'He waited', after:'.', verb:'patient', ans:'patiently', exp:'Adverb formation.' },
+  { type:'gap', topic:'adv', col:'#F5A623', pts:15, before:'They smiled', after:'.', verb:'happy', ans:'happily', exp:'Adverb formation.' },
+  { type:'gap', topic:'adv', col:'#F5A623', pts:15, before:'I ran', after:'to the shop.', verb:'fast', ans:'fast', exp:'Irregular adverb.' },
+  { type:'gap', topic:'all', col:'#D0021B', pts:25, before:'I', after:'my lunch when she arrived.', verb:'eat', ans:'was eating', exp:'PC interrupted by PS.' },
+  { type:'gap', topic:'all', col:'#D0021B', pts:25, before:'They', after:'carefully.', verb:'drive', ans:'drove', exp:'PS + Adverb.' },
+  { type:'gap', topic:'all', col:'#D0021B', pts:25, before:'She', after:'well.', verb:'dance', ans:'danced', exp:'PS + Adverb.' },
+  { type:'gap', topic:'all', col:'#D0021B', pts:25, before:'He', after:'while it was raining.', verb:'run', ans:'was running', exp:'Parallel past process.' },
+  { type:'gap', topic:'all', col:'#D0021B', pts:25, before:'We', after:'loudly.', verb:'laugh', ans:'laughed', exp:'PS + Adverb.' },
+  { type:'gap', topic:'all', col:'#D0021B', pts:25, before:'The sun', after:'brightly.', verb:'shine', ans:'was shining', exp:'Past Continuous state.' },
+  { type:'gap', topic:'all', col:'#D0021B', pts:25, before:'I', after:'home yesterday.', verb:'walk', ans:'walked', exp:'Simple completed action.' },
+  { type:'gap', topic:'all', col:'#D0021B', pts:25, before:'They', after:'hard on the project.', verb:'work', ans:'were working', exp:'Past Continuous focus.' },
+  { type:'gap', topic:'all', col:'#D0021B', pts:25, before:'He', after:'patiently.', verb:'wait', ans:'waited', exp:'PS + Adverb.' },
+  { type:'gap', topic:'all', col:'#D0021B', pts:25, before:'I', after:'him at the mall.', verb:'see', ans:'saw', exp:'Irregular PS.' }
+
+  { type:'wo', topic:'ps', col:'#4A90E2', pts:20, words:['I', 'saw', 'him', 'yesterday', '.'], ans:'I saw him yesterday .', exp:'S + V + O + Time.' },
+  { type:'wo', topic:'ps', col:'#4A90E2', pts:20, words:['Did', 'you', 'go', 'out', '?'], ans:'Did you go out ?', exp:'Aux + S + V.' },
+  { type:'wo', topic:'ps', col:'#4A90E2', pts:20, words:['They', 'did', 'not', 'play', '.'], ans:'They did not play .', exp:'S + did not + V.' },
+  { type:'wo', topic:'ps', col:'#4A90E2', pts:20, words:['She', 'was', 'at', 'home', '.'], ans:'She was at home .', exp:'Subject + be.' },
+  { type:'wo', topic:'ps', col:'#4A90E2', pts:20, words:['What', 'did', 'he', 'say', '?'], ans:'What did he say ?', exp:'WH + did + S + V.' },
+  { type:'wo', topic:'ps', col:'#4A90E2', pts:20, words:['We', 'ate', 'pizza', 'last', 'night', '.'], ans:'We ate pizza last night .', exp:'Time at the end.' },
+  { type:'wo', topic:'ps', col:'#4A90E2', pts:20, words:['Where', 'were', 'you', '?'], ans:'Where were you ?', exp:'WH + be + S.' },
+  { type:'wo', topic:'ps', col:'#4A90E2', pts:20, words:['The', 'film', 'ended', 'at', 'ten', '.'], ans:'The film ended at ten .', exp:'Subject + V + Time.' },
+  { type:'wo', topic:'ps', col:'#4A90E2', pts:20, words:['I', 'bought', 'a', 'new', 'car', '.'], ans:'I bought a new car .', exp:'Subject + V + Object.' },
+  { type:'wo', topic:'ps', col:'#4A90E2', pts:20, words:['He', 'called', 'me', 'late', '.'], ans:'He called me late .', exp:'Subject + V + Object.' },
+  { type:'wo', topic:'pc', col:'#50E3C2', pts:25, words:['I', 'was', 'working', 'at', 'five', '.'], ans:'I was working at five .', exp:'S + was + Ving.' },
+  { type:'wo', topic:'pc', col:'#50E3C2', pts:25, words:['Were', 'they', 'sleeping', '?'], ans:'Were they sleeping ?', exp:'Be + S + Ving.' },
+  { type:'wo', topic:'pc', col:'#50E3C2', pts:25, words:['She', 'was', 'not', 'listening', '.'], ans:'She was not listening .', exp:'S + was not + Ving.' },
+  { type:'wo', topic:'pc', col:'#50E3C2', pts:25, words:['What', 'was', 'he', 'doing', '?'], ans:'What was he doing ?', exp:'WH + was + S + Ving.' },
+  { type:'wo', topic:'pc', col:'#50E3C2', pts:25, words:['They', 'were', 'playing', 'tennis', '.'], ans:'They were playing tennis .', exp:'Subject + were + Ving.' },
+  { type:'wo', topic:'pc', col:'#50E3C2', pts:25, words:['It', 'was', 'raining', 'hard', '.'], ans:'It was raining hard .', exp:'Subject + was + Ving.' },
+  { type:'wo', topic:'pc', col:'#50E3C2', pts:25, words:['Why', 'were', 'you', 'crying', '?'], ans:'Why were you crying ?', exp:'WH + were + S + Ving.' },
+  { type:'wo', topic:'pc', col:'#50E3C2', pts:25, words:['We', 'were', 'having', 'dinner', '.'], ans:'We were having dinner .', exp:'Past Continuous structure.' },
+  { type:'wo', topic:'pc', col:'#50E3C2', pts:25, words:['The', 'kids', 'were', 'laughing', '.'], ans:'The kids were laughing .', exp:'Subject + were + Ving.' },
+  { type:'wo', topic:'pc', col:'#50E3C2', pts:25, words:['Who', 'was', 'singing', '?'], ans:'Who was singing ?', exp:'Subject question.' },
+  { type:'wo', topic:'adv', col:'#F5A623', pts:20, words:['He', 'drives', 'slowly', '.'], ans:'He drives slowly .', exp:'S + V + Adv.' },
+  { type:'wo', topic:'adv', col:'#F5A623', pts:20, words:['She', 'speaks', 'quietly', '.'], ans:'She speaks quietly .', exp:'S + V + Adv.' },
+  { type:'wo', topic:'adv', col:'#F5A623', pts:20, words:['They', 'did', 'it', 'well', '.'], ans:'They did it well .', exp:'Adv at the end.' },
+  { type:'wo', topic:'adv', col:'#F5A623', pts:20, words:['Run', 'fast', '!'], ans:'Run fast !', exp:'Imperative.' },
+  { type:'wo', topic:'adv', col:'#F5A623', pts:20, words:['Wait', 'patiently', '.'], ans:'Wait patiently .', exp:'Imperative.' },
+  { type:'wo', topic:'adv', col:'#F5A623', pts:20, words:['He', 'opened', 'it', 'carefully', '.'], ans:'He opened it carefully .', exp:'S + V + O + Adv.' },
+  { type:'wo', topic:'adv', col:'#F5A623', pts:20, words:['I', 'answered', 'honestly', '.'], ans:'I answered honestly .', exp:'S + V + Adv.' },
+  { type:'wo', topic:'adv', col:'#F5A623', pts:20, words:['She', 'smiled', 'happily', '.'], ans:'She smiled happily .', exp:'S + V + Adv.' },
+  { type:'wo', topic:'adv', col:'#F5A623', pts:20, words:['They', 'work', 'hard', '.'], ans:'They work hard .', exp:'Hard as adverb.' },
+  { type:'wo', topic:'adv', col:'#F5A623', pts:20, words:['Listen', 'closely', '.'], ans:'Listen closely .', exp:'Adv of manner.' },
+  { type:'wo', topic:'all', col:'#D0021B', pts:30, words:['I', 'was', 'walking', 'slowly', '.'], ans:'I was walking slowly .', exp:'PC + Adv.' },
+  { type:'wo', topic:'all', col:'#D0021B', pts:30, words:['Did', 'she', 'sing', 'well', '?'], ans:'Did she sing well ?', exp:'PS + Adv.' },
+  { type:'wo', topic:'all', col:'#D0021B', pts:30, words:['They', 'were', 'talking', 'loudly', '.'], ans:'They were talking loudly .', exp:'PC + Adv.' },
+  { type:'wo', topic:'all', col:'#D0021B', pts:30, words:['I', 'finished', 'it', 'quickly', '.'], ans:'I finished it quickly .', exp:'PS + Adv.' },
+  { type:'wo', topic:'all', col:'#D0021B', pts:30, words:['Were', 'you', 'waiting', 'patiently', '?'], ans:'Were you waiting patiently ?', exp:'PC + Adv question.' },
+  { type:'wo', topic:'all', col:'#D0021B', pts:30, words:['He', 'ran', 'fast', 'yesterday', '.'], ans:'He ran fast yesterday .', exp:'PS + Adv + Time.' },
+  { type:'wo', topic:'all', col:'#D0021B', pts:30, words:['She', 'was', 'reading', 'quietly', '.'], ans:'She was reading quietly .', exp:'PC + Adv.' },
+  { type:'wo', topic:'all', col:'#D0021B', pts:30, words:['We', 'played', 'happily', '.'], ans:'We played happily .', exp:'PS + Adv.' },
+  { type:'wo', topic:'all', col:'#D0021B', pts:30, words:['What', 'were', 'you', 'doing', 'here', '?'], ans:'What were you doing here ?', exp:'PC question.' },
+  { type:'wo', topic:'all', col:'#D0021B', pts:30, words:['I', 'did', 'not', 'see', 'it', '.'], ans:'I did not see it .', exp:'PS negative.' }
+
+  { type:'ooo', topic:'ps', col:'#4A90E2', pts:15, q:'Which is NOT a past form?', opts:['ate', 'went', 'see', 'was'], ans:2, exp:'See is present.' },
+  { type:'ooo', topic:'ps', col:'#4A90E2', pts:15, q:'Find the regular verb:', opts:['took', 'played', 'gave', 'made'], ans:1, exp:'Played ends in -ed.' },
+  { type:'ooo', topic:'ps', col:'#4A90E2', pts:15, q:'Odd time expression:', opts:['yesterday', 'ago', 'last week', 'now'], ans:3, exp:'Now is present.' },
+  { type:'ooo', topic:'ps', col:'#4A90E2', pts:15, q:'Which is NOT a past form?', opts:['ran', 'sung', 'did', 'left'], ans:1, exp:'Sung is V3.' },
+  { type:'ooo', topic:'ps', col:'#4A90E2', pts:15, q:'Which is NOT a past form?', opts:['drank', 'ate', 'sleeps', 'woke'], ans:2, exp:'Sleeps is present.' },
+  { type:'ooo', topic:'ps', col:'#4A90E2', pts:15, q:'Which is NOT a past form?', opts:['taught', 'brought', 'caught', 'thought'], ans:0, exp:'Trick: all are past, but taught starts with T.' }, // (Можно заменить на более явное)
+  { type:'ooo', topic:'ps', col:'#4A90E2', pts:15, q:'Which doesn’t belong?', opts:['did', 'was', 'were', 'is'], ans:3, exp:'Is is present.' },
+  { type:'ooo', topic:'ps', col:'#4A90E2', pts:15, q:'Which is NOT past?', opts:['had', 'has', 'heard', 'held'], ans:1, exp:'Has is present.' },
+  { type:'ooo', topic:'ps', col:'#4A90E2', pts:15, q:'Which is NOT past?', opts:['fell', 'found', 'fly', 'felt'], ans:2, exp:'Fly is present.' },
+  { type:'ooo', topic:'ps', col:'#4A90E2', pts:15, q:'Odd one out:', opts:['walked', 'stopped', 'carried', 'go'], ans:3, exp:'Go is present.' },
+  { type:'ooo', topic:'pc', col:'#50E3C2', pts:20, q:'Which is NOT Past Continuous?', opts:['was going', 'were playing', 'did work', 'was dancing'], ans:2, exp:'Did work is PS.' },
+  { type:'ooo', topic:'pc', col:'#50E3C2', pts:20, q:'Which auxiliary is wrong?', opts:['I was', 'You were', 'He were', 'They were'], ans:2, exp:'He was.' },
+  { type:'ooo', topic:'pc', col:'#50E3C2', pts:20, q:'Odd one out:', opts:['cooking', 'running', 'read', 'singing'], ans:2, exp:'Read is not Ving.' },
+  { type:'ooo', topic:'pc', col:'#50E3C2', pts:20, q:'Find the odd phrase:', opts:['at 5 PM', 'when I saw him', 'yesterday', 'while she slept'], ans:2, exp:'Yesterday is general PS.' },
+  { type:'ooo', topic:'pc', col:'#50E3C2', pts:20, q:'Which is NOT PC?', opts:['was writing', 'did see', 'were eating', 'was fixing'], ans:1, exp:'Did see is PS.' },
+  { type:'ooo', topic:'pc', col:'#50E3C2', pts:20, q:'Which is NOT PC?', opts:['was it', 'was being', 'were being', 'did being'], ans:3, exp:'Grammar error.' },
+  { type:'ooo', topic:'pc', col:'#50E3C2', pts:20, q:'Odd auxiliary:', opts:['was', 'were', 'been', 'wasnt'], ans:2, exp:'Been is V3.' },
+  { type:'ooo', topic:'pc', col:'#50E3C2', pts:20, q:'Which is NOT PC?', opts:['watching', 'looked', 'seeing', 'hearing'], ans:1, exp:'Looked is PS.' },
+  { type:'ooo', topic:'pc', col:'#50E3C2', pts:20, q:'Which is NOT PC?', opts:['were they', 'was he', 'did we', 'was she'], ans:2, exp:'Did we is PS.' },
+  { type:'ooo', topic:'pc', col:'#50E3C2', pts:20, q:'Odd one out:', opts:['running', 'cutting', 'putting', 'opening'], ans:3, exp:'Opening has single consonant.' },
+  { type:'ooo', topic:'adv', col:'#F5A623', pts:15, q:'Which is NOT an adverb?', opts:['slowly', 'well', 'fast', 'good'], ans:3, exp:'Good is adjective.' },
+  { type:'ooo', topic:'adv', col:'#F5A623', pts:15, q:'Which is NOT an adverb?', opts:['friendly', 'loudly', 'quietly', 'badly'], ans:0, exp:'Friendly is adjective.' },
+  { type:'ooo', topic:'adv', col:'#F5A623', pts:15, q:'Which is NOT an adverb?', opts:['hard', 'late', 'early', 'hardly'], ans:3, exp:'Hardly means "barely".' },
+  { type:'ooo', topic:'adv', col:'#F5A623', pts:15, q:'Odd one out:', opts:['happily', 'sadly', 'angry', 'angrily'], ans:2, exp:'Angry is adjective.' },
+  { type:'ooo', topic:'adv', col:'#F5A623', pts:15, q:'Which is NOT an adverb?', opts:['beautifully', 'wonderful', 'carefully', 'easily'], ans:1, exp:'Wonderful is adjective.' },
+  { type:'ooo', topic:'adv', col:'#F5A623', pts:15, q:'Which is NOT an adverb?', opts:['daily', 'weekly', 'silly', 'monthly'], ans:2, exp:'Silly is adjective.' },
+  { type:'ooo', topic:'adv', col:'#F5A623', pts:15, q:'Odd one out:', opts:['fast', 'slowly', 'quick', 'loudly'], ans:2, exp:'Quick is adjective.' },
+  { type:'ooo', topic:'adv', col:'#F5A623', pts:15, q:'Which is NOT an adverb?', opts:['neatly', 'cleanly', 'dirty', 'brightly'], ans:2, exp:'Dirty is adjective.' },
+  { type:'ooo', topic:'adv', col:'#F5A623', pts:15, q:'Odd one out:', opts:['well', 'better', 'best', 'goodly'], ans:3, exp:'Goodly is not used.' },
+  { type:'ooo', topic:'adv', col:'#F5A623', pts:15, q:'Odd one out:', opts:['bravely', 'cowardly', 'smartly', 'kindly'], ans:1, exp:'Cowardly is adjective.' },
+  { type:'ooo', topic:'all', col:'#D0021B', pts:20, q:'Which is NOT a past form?', opts:['wrote', 'taking', 'gave', 'sang'], ans:1, exp:'Taking is Ving.' },
+  { type:'ooo', topic:'all', col:'#D0021B', pts:20, q:'Odd grammar point:', opts:['was working', 'played', 'did go', 'had been'], ans:3, exp:'Past Perfect.' },
+  { type:'ooo', topic:'all', col:'#D0021B', pts:20, q:'Which is NOT an adverb?', opts:['fast', 'hard', 'well', 'best'], ans:3, exp:'Best is superlative.' },
+  { type:'ooo', topic:'all', col:'#D0021B', pts:20, q:'Odd one out:', opts:['yesterday', 'while', 'tomorrow', 'when'], ans:2, exp:'Tomorrow is future.' },
+  { type:'ooo', topic:'all', col:'#D0021B', pts:20, q:'Which doesn’t belong?', opts:['was', 'were', 'been', 'is'], ans:3, exp:'Is is present.' },
+  { type:'ooo', topic:'all', col:'#D0021B', pts:20, q:'Which is NOT PC?', opts:['was fixing', 'did fix', 'were fixing', 'wasnt fixing'], ans:1, exp:'Did fix is PS.' },
+  { type:'ooo', topic:'all', col:'#D0021B', pts:20, q:'Odd adverb:', opts:['well', 'badly', 'nice', 'neatly'], ans:2, exp:'Nice is adjective.' },
+  { type:'ooo', topic:'all', col:'#D0021B', pts:20, q:'Odd tense:', opts:['goes', 'went', 'was going', 'did go'], ans:0, exp:'Goes is present.' },
+  { type:'ooo', topic:'all', col:'#D0021B', pts:20, q:'Odd one out:', opts:['quickly', 'fast', 'slowly', 'lazy'], ans:3, exp:'Lazy is adjective.' },
+  { type:'ooo', topic:'all', col:'#D0021B', pts:20, q:'Which is NOT past?', opts:['ate', 'ate', 'eats', 'eaten'], ans:2, exp:'Eats is present.' }
+
+  { type:'err', topic:'ps', col:'#BD10E0', pts:20, sentence:['I', 'not', 'went', 'there', '.'], errIdx:1, fix:'didnt', exp:'Past Simple negative.' },
+  { type:'err', topic:'ps', col:'#BD10E0', pts:20, sentence:['Did', 'you', 'saw', 'him', '?'], errIdx:2, fix:'see', exp:'V1 after Did.' },
+  { type:'err', topic:'ps', col:'#BD10E0', pts:20, sentence:['He', 'buyed', 'a', 'car', '.'], errIdx:1, fix:'bought', exp:'Irregular verb.' },
+  { type:'err', topic:'ps', col:'#BD10E0', pts:20, sentence:['She', 'was', 'worked', 'late', '.'], errIdx:1, fix:'', exp:'Remove was for PS.' },
+  { type:'err', topic:'ps', col:'#BD10E0', pts:20, sentence:['They', 'didnt', 'knew', '.'], errIdx:2, fix:'know', exp:'V1 after didnt.' },
+  { type:'err', topic:'ps', col:'#BD10E0', pts:20, sentence:['We', 'was', 'happy', '.'], errIdx:1, fix:'were', exp:'We were.' },
+  { type:'err', topic:'ps', col:'#BD10E0', pts:20, sentence:['It', 'runned', 'away', '.'], errIdx:1, fix:'ran', exp:'Run -> ran.' },
+  { type:'err', topic:'ps', col:'#BD10E0', pts:20, sentence:['Where', 'you', 'did', 'go', '?'], errIdx:1, fix:'', exp:'Incorrect order.' },
+  { type:'err', topic:'ps', col:'#BD10E0', pts:20, sentence:['I', 'seed', 'the', 'movie', '.'], errIdx:1, fix:'saw', exp:'See -> saw.' },
+  { type:'err', topic:'ps', col:'#BD10E0', pts:20, sentence:['He', 'not', 'called', '.'], errIdx:1, fix:'didnt', exp:'Negative past.' },
+  { type:'err', topic:'pc', col:'#BD10E0', pts:25, sentence:['I', 'were', 'working', '.'], errIdx:1, fix:'was', exp:'I was.' },
+  { type:'err', topic:'pc', col:'#BD10E0', pts:25, sentence:['She', 'was', 'sleep', '.'], errIdx:2, fix:'sleeping', exp:'Ving for PC.' },
+  { type:'err', topic:'pc', col:'#BD10E0', pts:25, sentence:['They', 'playing', 'football', '.'], errIdx:0, fix:'They were', exp:'Missing were.' },
+  { type:'err', topic:'pc', col:'#BD10E0', pts:25, sentence:['What', 'was', 'you', 'doing', '?'], errIdx:1, fix:'were', exp:'You were.' },
+  { type:'err', topic:'pc', col:'#BD10E0', pts:25, sentence:['He', 'wasnt', 'listen', '.'], errIdx:2, fix:'listening', exp:'Ving for PC.' },
+  { type:'err', topic:'pc', col:'#BD10E0', pts:25, sentence:['We', 'were', 'dance', '.'], errIdx:2, fix:'dancing', exp:'Ving for PC.' },
+  { type:'err', topic:'pc', col:'#BD10E0', pts:25, sentence:['It', 'were', 'raining', '.'], errIdx:1, fix:'was', exp:'It was.' },
+  { type:'err', topic:'pc', col:'#BD10E0', pts:25, sentence:['They', 'was', 'crying', '.'], errIdx:1, fix:'were', exp:'They were.' },
+  { type:'err', topic:'pc', col:'#BD10E0', pts:25, sentence:['Why', 'he', 'was', 'running', '?'], errIdx:1, fix:'', exp:'Order: Why was he.' },
+  { type:'err', topic:'pc', col:'#BD10E0', pts:25, sentence:['I', 'was', 'watch', 'TV', '.'], errIdx:2, fix:'watching', exp:'Ving for PC.' },
+  { type:'err', topic:'adv', col:'#BD10E0', pts:20, sentence:['He', 'runs', 'fastly', '.'], errIdx:2, fix:'fast', exp:'Fast (adv).' },
+  { type:'err', topic:'adv', col:'#BD10E0', pts:20, sentence:['She', 'speaks', 'good', '.'], errIdx:2, fix:'well', exp:'Well (adv).' },
+  { type:'err', topic:'adv', col:'#BD10E0', pts:20, sentence:['He', 'did', 'it', 'easy', '.'], errIdx:3, fix:'easily', exp:'Easily (adv).' },
+  { type:'err', topic:'adv', col:'#BD10E0', pts:20, sentence:['They', 'sang', 'beautiful', '.'], errIdx:2, fix:'beautifully', exp:'Beautifully (adv).' },
+  { type:'err', topic:'adv', col:'#BD10E0', pts:20, sentence:['Wait', 'patient', '.'], errIdx:1, fix:'patiently', exp:'Patiently (adv).' },
+  { type:'err', topic:'adv', col:'#BD10E0', pts:20, sentence:['He', 'opened', 'it', 'careful', '.'], errIdx:3, fix:'carefully', exp:'Carefully (adv).' },
+  { type:'err', topic:'adv', col:'#BD10E0', pts:20, sentence:['I', 'work', 'hardly', '.'], errIdx:2, fix:'hard', exp:'Hard (adv).' },
+  { type:'err', topic:'adv', col:'#BD10E0', pts:20, sentence:['Smile', 'happy', '.'], errIdx:1, fix:'happily', exp:'Happily (adv).' },
+  { type:'err', topic:'adv', col:'#BD10E0', pts:20, sentence:['The', 'sun', 'shines', 'bright', '.'], errIdx:3, fix:'brightly', exp:'Brightly (adv).' },
+  { type:'err', topic:'adv', col:'#BD10E0', pts:20, sentence:['Speak', 'quiet', '.'], errIdx:1, fix:'quietly', exp:'Quietly (adv).' },
+  { type:'err', topic:'all', col:'#BD10E0', pts:30, sentence:['I', 'was', 'ate', 'lunch', '.'], errIdx:2, fix:'eating', exp:'PC structure.' },
+  { type:'err', topic:'all', col:'#BD10E0', pts:30, sentence:['They', 'didnt', 'well', '.'], errIdx:2, fix:'do well', exp:'Missing verb.' },
+  { type:'err', topic:'all', col:'#BD10E0', pts:30, sentence:['She', 'danced', 'graceful', '.'], errIdx:2, fix:'gracefully', exp:'Adverb needed.' },
+  { type:'err', topic:'all', col:'#BD10E0', pts:30, sentence:['What', 'was', 'you', 'saw', '?'], errIdx:1, fix:'did', exp:'PS question.' },
+  { type:'err', topic:'all', col:'#BD10E0', pts:30, sentence:['He', 'were', 'running', '.'], errIdx:1, fix:'was', exp:'He was.' },
+  { type:'err', topic:'all', col:'#BD10E0', pts:30, sentence:['We', 'didnt', 'went', '.'], errIdx:2, fix:'go', exp:'V1 after didnt.' },
+  { type:'err', topic:'all', col:'#BD10E0', pts:30, sentence:['I', 'slowly', 'walked', '.'], errIdx:1, fix:'', exp:'Order okay, but check context.' },
+  { type:'err', topic:'all', col:'#BD10E0', pts:30, sentence:['Look', 'carefully', 'at', 'it', '.'], errIdx:0, fix:'', exp:'Correct.' },
+  { type:'err', topic:'all', col:'#BD10E0', pts:30, sentence:['They', 'was', 'shouting', '.'], errIdx:1, fix:'were', exp:'They were.' },
+  { type:'err', topic:'all', col:'#BD10E0', pts:30, sentence:['I', 'saw', 'he', '.'], errIdx:2, fix:'him', exp:'Object pronoun.' }
+
+  { type:'read', topic:'ps', col:'#9013FE', text:'Tom went to the park. He saw a dog and played with it.', q:'Where did Tom go?', example:'He went to the park.' },
+  { type:'read', topic:'ps', col:'#9013FE', text:'Mary bought a cake. It was delicious.', q:'What did Mary buy?', example:'A cake.' },
+  { type:'read', topic:'ps', col:'#9013FE', text:'The movie started at 7. It ended late.', q:'When did the movie start?', example:'At 7.' },
+  { type:'read', topic:'ps', col:'#9013FE', text:'I lost my keys. I found them in my bag.', q:'Where were the keys?', example:'In the bag.' },
+  { type:'read', topic:'ps', col:'#9013FE', text:'They stayed home. They watched a film.', q:'Did they go out?', example:'No, they stayed home.' },
+  { type:'read', topic:'ps', col:'#9013FE', text:'He called me twice. I didnt answer.', q:'How many times did he call?', example:'Twice.' },
+  { type:'read', topic:'ps', col:'#9013FE', text:'We ate pizza. It had mushrooms.', q:'What was on the pizza?', example:'Mushrooms.' },
+  { type:'read', topic:'ps', col:'#9013FE', text:'She arrived late. The bus was slow.', q:'Why was she late?', example:'The bus was slow.' },
+  { type:'read', topic:'ps', col:'#9013FE', text:'I saw a bird. It was blue.', q:'What color was the bird?', example:'Blue.' },
+  { type:'read', topic:'ps', col:'#9013FE', text:'He finished the test. It was easy.', q:'Was the test hard?', example:'No, it was easy.' },
+  { type:'read', topic:'pc', col:'#9013FE', text:'I was reading when the phone rang.', q:'What were you doing?', example:'Reading.' },
+  { type:'read', topic:'pc', col:'#9013FE', text:'They were dancing all night.', q:'Were they sleeping?', example:'No, they were dancing.' },
+  { type:'read', topic:'pc', col:'#9013FE', text:'She was cooking dinner at 6 PM.', q:'What was she doing at 6?', example:'Cooking dinner.' },
+  { type:'read', topic:'pc', col:'#9013FE', text:'It was raining when we left.', q:'What was the weather like?', example:'It was raining.' },
+  { type:'read', topic:'pc', col:'#9013FE', text:'The kids were playing in the garden.', q:'Where were the kids?', example:'In the garden.' },
+  { type:'read', topic:'pc', col:'#9013FE', text:'He was fixing his car.', q:'What was he fixing?', example:'His car.' },
+  { type:'read', topic:'pc', col:'#9013FE', text:'We were waiting for you.', q:'Who were they waiting for?', example:'You.' },
+  { type:'read', topic:'pc', col:'#9013FE', text:'The dog was barking at a cat.', q:'Why was the dog barking?', example:'At a cat.' },
+  { type:'read', topic:'pc', col:'#9013FE', text:'I was thinking about the movie.', q:'What was I thinking about?', example:'The movie.' },
+  { type:'read', topic:'pc', col:'#9013FE', text:'Birds were singing in the trees.', q:'Where were the birds?', example:'In the trees.' },
+  { type:'read', topic:'adv', col:'#9013FE', text:'He drives carefully. He never has accidents.', q:'How does he drive?', example:'Carefully.' },
+  { type:'read', topic:'adv', col:'#9013FE', text:'She sings beautifully. Everyone loves her voice.', q:'Does she sing badly?', example:'No, beautifully.' },
+  { type:'read', topic:'adv', col:'#9013FE', text:'They worked hard. The project was a success.', q:'How did they work?', example:'Hard.' },
+  { type:'read', topic:'adv', col:'#9013FE', text:'He ran fast to catch the bus.', q:'How did he run?', example:'Fast.' },
+  { type:'read', topic:'adv', col:'#9013FE', text:'Speak quietly. The baby is sleeping.', q:'How should you speak?', example:'Quietly.' },
+  { type:'read', topic:'adv', col:'#9013FE', text:'She solved the puzzle easily.', q:'Was it difficult for her?', example:'No, she did it easily.' },
+  { type:'read', topic:'adv', col:'#9013FE', text:'He waited patiently in the queue.', q:'How did he wait?', example:'Patiently.' },
+  { type:'read', topic:'adv', col:'#9013FE', text:'The sun shone brightly.', q:'How did the sun shine?', example:'Brightly.' },
+  { type:'read', topic:'adv', col:'#9013FE', text:'She smiled happily at the news.', q:'How did she smile?', example:'Happily.' },
+  { type:'read', topic:'adv', col:'#9013FE', text:'They listened closely to the teacher.', q:'How did they listen?', example:'Closely.' },
+  { type:'read', topic:'all', col:'#9013FE', text:'While I was walking, I saw a cat.', q:'What were you doing when you saw the cat?', example:'Walking.' },
+  { type:'read', topic:'all', col:'#9013FE', text:'He ran quickly because it started to rain.', q:'Why did he run?', example:'It started to rain.' },
+  { type:'read', topic:'all', col:'#9013FE', text:'They were talking loudly when the teacher entered.', q:'How were they talking?', example:'Loudly.' },
+  { type:'read', topic:'all', col:'#9013FE', text:'She finished her work well.', q:'How did she finish?', example:'Well.' },
+  { type:'read', topic:'all', col:'#9013FE', text:'I was sleeping peacefully.', q:'How was I sleeping?', example:'Peacefully.' },
+  { type:'read', topic:'all', col:'#9013FE', text:'He ate his dinner hungrily.', q:'How did he eat?', example:'Hungrily.' },
+  { type:'read', topic:'all', col:'#9013FE', text:'They were playing happily.', q:'Were they sad?', example:'No, playing happily.' },
+  { type:'read', topic:'all', col:'#9013FE', text:'We walked slowly in the rain.', q:'How did we walk?', example:'Slowly.' },
+  { type:'read', topic:'all', col:'#9013FE', text:'She shouted angrily at the dog.', q:'Why was she angry?', example:'At the dog.' },
+  { type:'read', topic:'all', col:'#9013FE', text:'I was working hard all day.', q:'How did I work?', example:'Hard.' }
+
+  { type:'speak', topic:'ps', col:'#F8E71C', pts:30, prompt:'Tell us about your last holiday.', example:'I went to Italy and ate pizza.' },
+  { type:'speak', topic:'ps', col:'#F8E71C', pts:30, prompt:'What did you eat for breakfast?', example:'I had eggs and toast.' },
+  { type:'speak', topic:'ps', col:'#F8E71C', pts:30, prompt:'When did you last see a movie?', example:'I saw one last Friday.' },
+  { type:'speak', topic:'ps', col:'#F8E71C', pts:30, prompt:'What did you do yesterday?', example:'I worked and went to the gym.' },
+  { type:'speak', topic:'ps', col:'#F8E71C', pts:30, prompt:'Who did you talk to today?', example:'I talked to my mom.' },
+  { type:'speak', topic:'ps', col:'#F8E71C', pts:30, prompt:'Where did you grow up?', example:'I grew up in London.' },
+  { type:'speak', topic:'ps', col:'#F8E71C', pts:30, prompt:'What was the last book you read?', example:'I read Harry Potter.' },
+  { type:'speak', topic:'ps', col:'#F8E71C', pts:30, prompt:'Did you play sports as a child?', example:'Yes, I played football.' },
+  { type:'speak', topic:'ps', col:'#F8E71C', pts:30, prompt:'How did you get here?', example:'I came by bus.' },
+  { type:'speak', topic:'ps', col:'#F8E71C', pts:30, prompt:'What time did you wake up?', example:'I woke up at 7.' },
+  { type:'speak', topic:'pc', col:'#F8E71C', pts:30, prompt:'What were you doing at 8 PM yesterday?', example:'I was watching Netflix.' },
+  { type:'speak', topic:'pc', col:'#F8E71C', pts:30, prompt:'Were you dreaming last night?', example:'Yes, I was dreaming about cats.' },
+  { type:'speak', topic:'pc', col:'#F8E71C', pts:30, prompt:'What were your parents doing when you called?', example:'They were having dinner.' },
+  { type:'speak', topic:'pc', col:'#F8E71C', pts:30, prompt:'Who were you talking to 10 minutes ago?', example:'I was talking to my friend.' },
+  { type:'speak', topic:'pc', col:'#F8E71C', pts:30, prompt:'What was the sun doing this morning?', example:'It was shining brightly.' },
+  { type:'speak', topic:'pc', col:'#F8E71C', pts:30, prompt:'Were people wearing coats today?', example:'Yes, it was raining.' },
+  { type:'speak', topic:'pc', col:'#F8E71C', pts:30, prompt:'What were you thinking about just now?', example:'I was thinking about food.' },
+  { type:'speak', topic:'pc', col:'#F8E71C', pts:30, prompt:'Was it snowing when you woke up?', example:'No, it was raining.' },
+  { type:'speak', topic:'pc', col:'#F8E71C', pts:30, prompt:'What were you wearing yesterday?', example:'I was wearing jeans.' },
+  { type:'speak', topic:'pc', col:'#F8E71C', pts:30, prompt:'Who was singing in the shower?', example:'I was singing.' },
+  { type:'speak', topic:'adv', col:'#F8E71C', pts:30, prompt:'How do you usually drive?', example:'I drive carefully.' },
+  { type:'speak', topic:'adv', col:'#F8E71C', pts:30, prompt:'How do you speak English?', example:'I speak English well.' },
+  { type:'speak', topic:'adv', col:'#F8E71C', pts:30, prompt:'How do you do your homework?', example:'I do it quickly.' },
+  { type:'speak', topic:'adv', col:'#F8E71C', pts:30, prompt:'Tell us about a time you ran fast.', example:'I ran fast to the bus.' },
+  { type:'speak', topic:'adv', col:'#F8E71C', pts:30, prompt:'How do you wait for results?', example:'I wait patiently.' },
+  { type:'speak', topic:'adv', col:'#F8E71C', pts:30, prompt:'How do you walk when you are tired?', example:'I walk slowly.' },
+  { type:'speak', topic:'adv', col:'#F8E71C', pts:30, prompt:'How do you treat your pets?', example:'I treat them gently.' },
+  { type:'speak', topic:'adv', col:'#F8E71C', pts:30, prompt:'How do you work at your job?', example:'I work hard.' },
+  { type:'speak', topic:'adv', col:'#F8E71C', pts:30, prompt:'How do you answer difficult questions?', example:'I answer honestly.' },
+  { type:'speak', topic:'adv', col:'#F8E71C', pts:30, prompt:'How do you sing in the shower?', example:'I sing loudly.' },
+  { type:'speak', topic:'all', col:'#F8E71C', pts:30, prompt:'What were you doing when it started to rain?', example:'I was walking home quickly.' },
+  { type:'speak', topic:'all', col:'#F8E71C', pts:30, prompt:'Tell us something you did well last week.', example:'I cooked dinner well.' },
+  { type:'speak', topic:'all', col:'#F8E71C', pts:30, prompt:'Were you sleeping soundly last night?', example:'Yes, I was sleeping soundly.' },
+  { type:'speak', topic:'all', col:'#F8E71C', pts:30, prompt:'How did you speak to your boss yesterday?', example:'I spoke to him politely.' },
+  { type:'speak', topic:'all', col:'#F8E71C', pts:30, prompt:'What was happening while you were studying?', example:'My cat was playing noisily.' },
+  { type:'speak', topic:'all', col:'#F8E71C', pts:30, prompt:'How did you run when you were a kid?', example:'I ran very fast.' },
+  { type:'speak', topic:'all', col:'#F8E71C', pts:30, prompt:'What were you doing at midnight?', example:'I was sleeping quietly.' },
+  { type:'speak', topic:'all', col:'#F8E71C', pts:30, prompt:'Tell us 3 things you did yesterday.', example:'I ate, worked, and slept.' },
+  { type:'speak', topic:'all', col:'#F8E71C', pts:30, prompt:'How do you dance at parties?', example:'I dance happily.' },
+  { type:'speak', topic:'all', col:'#F8E71C', pts:30, prompt:'What were you doing when I saw you?', example:'I was waiting patiently.' }
 ];
 
 const TN={mc:'Multiple Choice',gap:'Fill the Gap',wo:'Word Order',ooo:'Odd One Out',err:'Fix the Error',read:'Read & Answer',speak:'Speak!'};
 const PC=['#f7c948','#4cc9f0','#f72585','#06d6a0','#a78bfa','#fb923c'];
 const EM=Array.from({length:11},(_,i)=>`/assets/av${i+1}.png`);
 
-// ══ STATE ══
+
 let topic='all',cardCount=9,players=[],curP=0,deck=[],doneSet=new Set(),avIdx=null;
 
-// ══ LOBBY ══
+
 document.querySelectorAll('.tpill').forEach(b=>b.addEventListener('click',()=>{
   document.querySelectorAll('.tpill').forEach(x=>x.classList.remove('sel'));
   b.classList.add('sel');topic=b.dataset.t;
@@ -591,7 +827,7 @@ document.getElementById('startBtn').addEventListener('click',()=>{
   showScr('sTable');buildGrid();renderChips();
 });
 
-// ══ TABLE ══
+
 function buildGrid(){
   const grid=document.getElementById('cardGrid');
   if(!grid)return;
@@ -603,9 +839,9 @@ function buildGrid(){
   const W=Math.max(window.innerWidth||320,200);
   const H=Math.max((window.innerHeight||600)-tbarH,100);
   const GAP=10;
-  // Pick cols: prefer perfect fills, then minimize waste
+  
   let bestCols=1,bestScore=-1;
-  // First pass: find perfect fill (no remainder)
+  
   let perfectCols=[];
   for(let cols=1;cols<=12;cols++){
     if(n%cols===0)perfectCols.push(cols);
@@ -619,14 +855,14 @@ function buildGrid(){
     const aspectPenalty=aspect<0.5||aspect>2.5?0.2:aspect<0.7||aspect>2?0.7:1;
     const remainder=n%cols;
     const waste=remainder===0?0:(cols-remainder)/cols;
-    // Strong bonus for zero waste (perfect grid)
+    
     const wastePenalty=remainder===0?1.5:1-waste*0.8;
     const score=cw*ch*aspectPenalty*wastePenalty;
     if(score>bestScore){bestScore=score;bestCols=cols;}
   }
   const rows=Math.ceil(n/bestCols);
   const remainder=n%bestCols;
-  const lastRowStart=remainder===0?-1:n-remainder; // index where last row starts
+  const lastRowStart=remainder===0?-1:n-remainder; 
   grid.style.cssText=[
     'display:grid',
     `grid-template-columns:repeat(${bestCols},1fr)`,
@@ -644,9 +880,9 @@ function buildGrid(){
     el.className='tc'+(doneSet.has(i)?' done':'');
     el.id='tc'+i;
     el.innerHTML=`<div class="tc-num">${i+1}</div>`;
-    // Stretch last-row cards to fill width evenly
+    
     if(lastRowStart>0&&i>=lastRowStart){
-      // Each card in last row spans proportionally
+      
       const lastCount=remainder;
       const span=Math.floor(bestCols/lastCount);
       const extra=bestCols%lastCount;
@@ -669,7 +905,7 @@ document.getElementById('nextPBtn').addEventListener('click',()=>{
 document.getElementById('endBtn').addEventListener('click',showWin);
 
 function renderChips(){
-  // table bar
+  
   const el=document.getElementById('scoreChips');el.innerHTML='';
   players.forEach((p,i)=>{
     const c=document.createElement('div');c.className='schip'+(i===curP?' cur':'');
@@ -694,7 +930,7 @@ function renderCardChips(){
 }
 
 function animateScore(txt,isOk){
-  // find current player chip in both bars
+  
   const allChips=[...document.querySelectorAll('.schip,.card-schip')];
   let found=false;
   allChips.forEach((chip,idx)=>{
@@ -713,7 +949,7 @@ function animateScore(txt,isOk){
   });
 }
 
-// ══ OPEN CARD ══
+
 function openCard(i){
   const c=deck[i];
   renderCardChips();
@@ -745,10 +981,10 @@ function openCard(i){
   else if(c.type==='wo'){
     const words=c.words;
     const isPunct=w=>/^[.,!?;:,]$/.test(w);
-    // bank = only non-punct words, shuffled
+    
     const bankWords=[...words].filter(w=>!isPunct(w)).sort(()=>Math.random()-.5);
     const bankChips=bankWords.map((w,j)=>`<div class="ww" data-w="${w}" onclick="woClick(this,${i})">${w}</div>`).join('');
-    // drop zone = template: punct chips fixed, word slots empty
+    
     const dropItems=words.map((w,pos)=>{
       if(isPunct(w)){
         return `<div class="ww ww-locked punct" data-w="${w}" data-pos="${pos}">${w}</div>`;
@@ -810,14 +1046,14 @@ function openCard(i){
     hd+
     `<div class="cm-scroll"><div class="cm-body">${body}</div></div>`+
     `<div class="cm-ft-wrap">${foot}</div>`;
-  // re-query ft inside cm-ft-wrap
+  
   const se=document.getElementById('showEx');
   if(se) se.addEventListener('click',()=>{
     const fb=document.getElementById('fb');
     fb.className='fb show ok';
     fb.innerHTML='<strong>Answer / Example:</strong><br>'+c.example;
     se.style.display='none';
-    // show grade buttons after revealing answer
+    
     const ft=document.querySelector('.cm-ft');
     if(ft&&!ft.querySelector('.ftb-ok')){
       ft.insertAdjacentHTML('beforeend',`
@@ -829,8 +1065,8 @@ function openCard(i){
 
 function closeCard(){SFX.back();showScr('sTable');}
 
-// ══ WORD ORDER — slot-based ══
-// Track which word chip is "selected" from bank to place
+
+
 let woSelected=null;
 window.woClick=function(chip){
   SFX.place();
@@ -839,14 +1075,14 @@ window.woClick=function(chip){
   const drop=document.getElementById('woDrop');
   if(!bank||!drop)return;
   if(chip.parentElement===bank){
-    // find first empty slot and fill it
+    
     const emptySlot=drop.querySelector('.wo-slot:not(.filled)');
     if(!emptySlot)return;
     chip.classList.add('placed');
     emptySlot.classList.add('filled');
     emptySlot.appendChild(chip);
   } else {
-    // chip is in a slot — return to bank
+    
     const slot=chip.parentElement;
     chip.classList.remove('placed','w-ok','w-no');
     bank.appendChild(chip);
@@ -855,7 +1091,7 @@ window.woClick=function(chip){
   }
 };
 window.woSlotClick=function(slot){
-  // clicking a filled slot returns its chip to bank
+  
   const chip=slot.querySelector('.ww');
   if(chip)woClick(chip);
 };
@@ -875,7 +1111,7 @@ window.doWO=function(ci){
   SFX.click();
   const c=deck[ci];
   const drop=document.getElementById('woDrop');
-  // collect answer: iterate all tokens in order
+  
   const tokens=[...drop.children].map(el=>{
     if(el.classList.contains('ww-locked'))return el.dataset.w;
     if(el.classList.contains('wo-slot')){
@@ -887,12 +1123,12 @@ window.doWO=function(ci){
   const placed=tokens.join(' ').trim();
   const ok=placed===c.ans.trim();
   drop.classList.add('done');
-  // colour filled chips
+  
   drop.querySelectorAll('.wo-slot.filled .ww').forEach(ch=>{
     ch.style.pointerEvents='none';
     ch.classList.add(ok?'w-ok':'w-no');
   });
-  // disable bank
+  
   document.querySelectorAll('#woBank .ww').forEach(ch=>ch.style.pointerEvents='none');
   document.querySelectorAll('.wo-slot:not(.filled)').forEach(s=>s.style.pointerEvents='none');
   showFB(ok,c.exp);
@@ -900,10 +1136,10 @@ window.doWO=function(ci){
   setTimeout(()=>autoGrade(ci,ok),600);
 };
 
-// ══ READ — clickable words ══
+
 window.rwClick=function(el){SFX.click();el.classList.toggle('sel');};
 
-// ══ MC ══
+
 window.doMC=function(ci,chosen){
   SFX.click();
   const c=deck[ci];
@@ -915,11 +1151,11 @@ window.doMC=function(ci,chosen){
   const ok=chosen===c.ans;
   showFB(ok,c.exp);
   if(ok)confetti();
-  // auto-grade: MC answer is clear
+  
   setTimeout(()=>autoGrade(ci,ok),600);
 };
 
-// ══ GAP ══
+
 window.doGap=function(ci){
   SFX.click();
   const c=deck[ci];
@@ -932,7 +1168,7 @@ window.doGap=function(ci){
   setTimeout(()=>autoGrade(ci,ok),600);
 };
 
-// ══ OOO ══
+
 window.doOOO=function(ci,chosen){
   SFX.click();
   const c=deck[ci];
@@ -947,14 +1183,14 @@ window.doOOO=function(ci,chosen){
   setTimeout(()=>autoGrade(ci,ok),600);
 };
 
-// ══ ERR ══
+
 let selEW=null;
 window.pickEW=function(el,errIdx){
   SFX.click();
   document.querySelectorAll('.ew').forEach(e=>e.classList.remove('sel'));
   el.classList.add('sel');
   selEW=+el.dataset.j;
-  // focus the input when a word is selected
+  
   const inp=document.getElementById('errIn');
   if(inp&&!inp.readOnly)inp.focus();
 };
@@ -984,7 +1220,6 @@ function replFoot(ci){
     <button class="ftb ftb-ok" onclick="grade(${ci},true)">✓ Correct</button>`;
 }
 
-// autoGrade: for tasks with clear right/wrong (MC, OOO, GAP, WO, ERR)
 window.autoGrade=function(ci,ok){
   const c=deck[ci];
   const pts=ok?c.pts:-3;
@@ -1003,7 +1238,6 @@ window.autoGrade=function(ci,ok){
   const tc=document.getElementById('tc'+ci);if(tc)tc.classList.add('done');
   curP=(curP+1)%players.length;
   renderChips();
-  // show back button
   const ftw=document.querySelector('.cm-ft-wrap');
   const ft=document.querySelector('.cm-ft');
   if(ft){
@@ -1041,7 +1275,6 @@ function showFB(ok,exp){
   fb.innerHTML=(ok?'✅ ':'❌ ')+exp;
 }
 
-// ══ WIN ══
 function showWin(){
   SFX.confetti();showScr('sWin');
   const s=[...players].sort((a,b)=>b.score-a.score);
@@ -1051,7 +1284,6 @@ function showWin(){
     <div class="wpts">${p.score>0?'+':''}${p.score} pts</div></div>`).join('');
 }
 
-// ══ UTILS ══
 function showScr(id){
   document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));
   document.getElementById(id).classList.add('on');

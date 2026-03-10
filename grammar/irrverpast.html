@@ -74,6 +74,7 @@ main { flex: 1; }
 .dict-table td { padding: 0.8rem 1rem; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
 .dict-table tr:hover td { background: var(--surface2); }
 .dict-table td:first-child { font-weight: 500; color: var(--accent); }
+.dict-table td.ru { color: var(--text2); font-size: 0.82rem; font-style: italic; }
 
 .cards-section { display: flex; flex-direction: column; align-items: center; }
 .cat-row { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 1.4rem; justify-content: center; }
@@ -120,6 +121,13 @@ main { flex: 1; }
   margin: 0 auto; 
   width: 100%;
 }
+.gap-mode-row { display: flex; gap: 0.4rem; margin-bottom: 1.4rem; }
+.gap-mode-btn {
+  padding: 0.38rem 1.1rem; border-radius: 2rem; border: 1px solid var(--border);
+  background: transparent; color: var(--text2); cursor: pointer;
+  font-family: 'DM Sans', sans-serif; font-size: 0.83rem; font-weight: 500; transition: all 0.2s;
+}
+.gap-mode-btn.active { background: var(--accent); color: #000; border-color: var(--accent); }
 
 .progress-bar { height: 4px; background: var(--surface2); border-radius: 2px; margin-bottom: 1.1rem; overflow: hidden; }
 .progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.4s; }
@@ -283,7 +291,7 @@ footer { padding: 1.2rem 2rem; border-top: 1px solid var(--border); }
     <span class="count" id="countEl"></span>
   </div>
   <table class="dict-table">
-    <thead><tr><th>Bare infinitive</th><th>Past simple</th><th>Past participle</th></tr></thead>
+    <thead><tr><th>Bare infinitive</th><th>Перевод</th><th>Past simple</th><th>Past participle</th></tr></thead>
     <tbody id="tableBody"></tbody>
   </table>
 </div>
@@ -300,6 +308,7 @@ footer { padding: 1.2rem 2rem; border-top: 1px solid var(--border); }
           <div class="card-hint-txt">tap to reveal</div>
         </div>
         <div class="card-face back">
+          <div id="cRu" style="color:var(--text2);font-size:0.85rem;font-style:italic;margin-bottom:0.8rem;text-align:center"></div>
           <div class="card-forms" id="cForms"></div>
         </div>
       </div>
@@ -313,7 +322,13 @@ footer { padding: 1.2rem 2rem; border-top: 1px solid var(--border); }
 </div>
 
 <div class="panel" id="tab-gap">
-  <div class="ex-wrap" id="gapContent"></div>
+  <div class="ex-wrap">
+    <div class="gap-mode-row">
+      <button class="gap-mode-btn active" id="gModeS" onclick="setGapMode('sentences',this)">Sentences</button>
+      <button class="gap-mode-btn" id="gModeT" onclick="setGapMode('texts',this)">Texts</button>
+    </div>
+    <div id="gapContent"></div>
+  </div>
 </div>
 
 <div class="panel" id="tab-mcq">
@@ -336,101 +351,101 @@ footer { padding: 1.2rem 2rem; border-top: 1px solid var(--border); }
 
 <script>
 const IRR = [
-  {inf:'be',      ps:'was / were',        pp:'been'},
-  {inf:'beat',    ps:'beat',              pp:'beaten'},
-  {inf:'become',  ps:'became',            pp:'become'},
-  {inf:'begin',   ps:'began',             pp:'begun'},
-  {inf:'bite',    ps:'bit',               pp:'bitten'},
-  {inf:'blow',    ps:'blew',              pp:'blown'},
-  {inf:'break',   ps:'broke',             pp:'broken'},
-  {inf:'bring',   ps:'brought',           pp:'brought'},
-  {inf:'build',   ps:'built',             pp:'built'},
-  {inf:'burn',    ps:'burnt / burned',    pp:'burnt / burned'},
-  {inf:'buy',     ps:'bought',            pp:'bought'},
-  {inf:'catch',   ps:'caught',            pp:'caught'},
-  {inf:'choose',  ps:'chose',             pp:'chosen'},
-  {inf:'come',    ps:'came',              pp:'come'},
-  {inf:'cost',    ps:'cost',              pp:'cost'},
-  {inf:'cut',     ps:'cut',               pp:'cut'},
-  {inf:'deal',    ps:'dealt',             pp:'dealt'},
-  {inf:'dig',     ps:'dug',               pp:'dug'},
-  {inf:'do',      ps:'did',               pp:'done'},
-  {inf:'draw',    ps:'drew',              pp:'drawn'},
-  {inf:'dream',   ps:'dreamt / dreamed',  pp:'dreamt / dreamed'},
-  {inf:'drink',   ps:'drank',             pp:'drunk'},
-  {inf:'drive',   ps:'drove',             pp:'driven'},
-  {inf:'eat',     ps:'ate',               pp:'eaten'},
-  {inf:'fall',    ps:'fell',              pp:'fallen'},
-  {inf:'feed',    ps:'fed',               pp:'fed'},
-  {inf:'feel',    ps:'felt',              pp:'felt'},
-  {inf:'fight',   ps:'fought',            pp:'fought'},
-  {inf:'find',    ps:'found',             pp:'found'},
-  {inf:'fly',     ps:'flew',              pp:'flown'},
-  {inf:'forget',  ps:'forgot',            pp:'forgotten'},
-  {inf:'forgive', ps:'forgave',           pp:'forgiven'},
-  {inf:'freeze',  ps:'froze',             pp:'frozen'},
-  {inf:'get',     ps:'got',               pp:'got / gotten'},
-  {inf:'give',    ps:'gave',              pp:'given'},
-  {inf:'go',      ps:'went',              pp:'gone / been'},
-  {inf:'grow',    ps:'grew',              pp:'grown'},
-  {inf:'have',    ps:'had',               pp:'had'},
-  {inf:'hear',    ps:'heard',             pp:'heard'},
-  {inf:'hide',    ps:'hid',               pp:'hidden'},
-  {inf:'hit',     ps:'hit',               pp:'hit'},
-  {inf:'hold',    ps:'held',              pp:'held'},
-  {inf:'hurt',    ps:'hurt',              pp:'hurt'},
-  {inf:'keep',    ps:'kept',              pp:'kept'},
-  {inf:'know',    ps:'knew',              pp:'known'},
-  {inf:'lead',    ps:'led',               pp:'led'},
-  {inf:'learn',   ps:'learnt / learned',  pp:'learnt / learned'},
-  {inf:'leave',   ps:'left',              pp:'left'},
-  {inf:'lend',    ps:'lent',              pp:'lent'},
-  {inf:'let',     ps:'let',               pp:'let'},
-  {inf:'lie',     ps:'lay',               pp:'lain'},
-  {inf:'light',   ps:'lit',               pp:'lit'},
-  {inf:'lose',    ps:'lost',              pp:'lost'},
-  {inf:'make',    ps:'made',              pp:'made'},
-  {inf:'mean',    ps:'meant',             pp:'meant'},
-  {inf:'meet',    ps:'met',               pp:'met'},
-  {inf:'pay',     ps:'paid',              pp:'paid'},
-  {inf:'put',     ps:'put',               pp:'put'},
-  {inf:'read',    ps:'read',              pp:'read'},
-  {inf:'ride',    ps:'rode',              pp:'ridden'},
-  {inf:'ring',    ps:'rang',              pp:'rung'},
-  {inf:'rise',    ps:'rose',              pp:'risen'},
-  {inf:'run',     ps:'ran',               pp:'run'},
-  {inf:'say',     ps:'said',              pp:'said'},
-  {inf:'see',     ps:'saw',               pp:'seen'},
-  {inf:'sell',    ps:'sold',              pp:'sold'},
-  {inf:'send',    ps:'sent',              pp:'sent'},
-  {inf:'set',     ps:'set',               pp:'set'},
-  {inf:'shake',   ps:'shook',             pp:'shaken'},
-  {inf:'shine',   ps:'shone',             pp:'shone'},
-  {inf:'shoot',   ps:'shot',              pp:'shot'},
-  {inf:'show',    ps:'showed',            pp:'shown'},
-  {inf:'shut',    ps:'shut',              pp:'shut'},
-  {inf:'sing',    ps:'sang',              pp:'sung'},
-  {inf:'sit',     ps:'sat',               pp:'sat'},
-  {inf:'sleep',   ps:'slept',             pp:'slept'},
-  {inf:'smell',   ps:'smelt / smelled',   pp:'smelt / smelled'},
-  {inf:'speak',   ps:'spoke',             pp:'spoken'},
-  {inf:'spend',   ps:'spent',             pp:'spent'},
-  {inf:'spill',   ps:'spilt / spilled',   pp:'spilt / spilled'},
-  {inf:'stand',   ps:'stood',             pp:'stood'},
-  {inf:'steal',   ps:'stole',             pp:'stolen'},
-  {inf:'sting',   ps:'stung',             pp:'stung'},
-  {inf:'swim',    ps:'swam',              pp:'swum'},
-  {inf:'take',    ps:'took',              pp:'taken'},
-  {inf:'teach',   ps:'taught',            pp:'taught'},
-  {inf:'tear',    ps:'tore',              pp:'torn'},
-  {inf:'tell',    ps:'told',              pp:'told'},
-  {inf:'think',   ps:'thought',           pp:'thought'},
-  {inf:'throw',   ps:'threw',             pp:'thrown'},
-  {inf:'understand',ps:'understood',      pp:'understood'},
-  {inf:'wake',    ps:'woke',              pp:'woken'},
-  {inf:'wear',    ps:'wore',              pp:'worn'},
-  {inf:'win',     ps:'won',               pp:'won'},
-  {inf:'write',   ps:'wrote',             pp:'written'},
+  {inf:'be',          ps:'was / were',        pp:'been',             ru:'быть'},
+  {inf:'beat',        ps:'beat',              pp:'beaten',           ru:'бить, побеждать'},
+  {inf:'become',      ps:'became',            pp:'become',           ru:'становиться'},
+  {inf:'begin',       ps:'began',             pp:'begun',            ru:'начинать'},
+  {inf:'bite',        ps:'bit',               pp:'bitten',           ru:'кусать'},
+  {inf:'blow',        ps:'blew',              pp:'blown',            ru:'дуть'},
+  {inf:'break',       ps:'broke',             pp:'broken',           ru:'ломать'},
+  {inf:'bring',       ps:'brought',           pp:'brought',          ru:'приносить'},
+  {inf:'build',       ps:'built',             pp:'built',            ru:'строить'},
+  {inf:'burn',        ps:'burnt / burned',    pp:'burnt / burned',   ru:'гореть, жечь'},
+  {inf:'buy',         ps:'bought',            pp:'bought',           ru:'покупать'},
+  {inf:'catch',       ps:'caught',            pp:'caught',           ru:'ловить'},
+  {inf:'choose',      ps:'chose',             pp:'chosen',           ru:'выбирать'},
+  {inf:'come',        ps:'came',              pp:'come',             ru:'приходить'},
+  {inf:'cost',        ps:'cost',              pp:'cost',             ru:'стоить'},
+  {inf:'cut',         ps:'cut',               pp:'cut',              ru:'резать'},
+  {inf:'deal',        ps:'dealt',             pp:'dealt',            ru:'иметь дело'},
+  {inf:'dig',         ps:'dug',               pp:'dug',              ru:'копать'},
+  {inf:'do',          ps:'did',               pp:'done',             ru:'делать'},
+  {inf:'draw',        ps:'drew',              pp:'drawn',            ru:'рисовать, тянуть'},
+  {inf:'dream',       ps:'dreamt / dreamed',  pp:'dreamt / dreamed', ru:'мечтать, сниться'},
+  {inf:'drink',       ps:'drank',             pp:'drunk',            ru:'пить'},
+  {inf:'drive',       ps:'drove',             pp:'driven',           ru:'водить, ехать'},
+  {inf:'eat',         ps:'ate',               pp:'eaten',            ru:'есть'},
+  {inf:'fall',        ps:'fell',              pp:'fallen',           ru:'падать'},
+  {inf:'feed',        ps:'fed',               pp:'fed',              ru:'кормить'},
+  {inf:'feel',        ps:'felt',              pp:'felt',             ru:'чувствовать'},
+  {inf:'fight',       ps:'fought',            pp:'fought',           ru:'драться, бороться'},
+  {inf:'find',        ps:'found',             pp:'found',            ru:'находить'},
+  {inf:'fly',         ps:'flew',              pp:'flown',            ru:'летать'},
+  {inf:'forget',      ps:'forgot',            pp:'forgotten',        ru:'забывать'},
+  {inf:'forgive',     ps:'forgave',           pp:'forgiven',         ru:'прощать'},
+  {inf:'freeze',      ps:'froze',             pp:'frozen',           ru:'замерзать'},
+  {inf:'get',         ps:'got',               pp:'got / gotten',     ru:'получать, становиться'},
+  {inf:'give',        ps:'gave',              pp:'given',            ru:'давать'},
+  {inf:'go',          ps:'went',              pp:'gone / been',      ru:'идти, ехать'},
+  {inf:'grow',        ps:'grew',              pp:'grown',            ru:'расти'},
+  {inf:'have',        ps:'had',               pp:'had',              ru:'иметь'},
+  {inf:'hear',        ps:'heard',             pp:'heard',            ru:'слышать'},
+  {inf:'hide',        ps:'hid',               pp:'hidden',           ru:'прятать'},
+  {inf:'hit',         ps:'hit',               pp:'hit',              ru:'ударять'},
+  {inf:'hold',        ps:'held',              pp:'held',             ru:'держать'},
+  {inf:'hurt',        ps:'hurt',              pp:'hurt',             ru:'причинять боль'},
+  {inf:'keep',        ps:'kept',              pp:'kept',             ru:'хранить, держать'},
+  {inf:'know',        ps:'knew',              pp:'known',            ru:'знать'},
+  {inf:'lead',        ps:'led',               pp:'led',              ru:'вести, возглавлять'},
+  {inf:'learn',       ps:'learnt / learned',  pp:'learnt / learned', ru:'учить, узнавать'},
+  {inf:'leave',       ps:'left',              pp:'left',             ru:'уходить, оставлять'},
+  {inf:'lend',        ps:'lent',              pp:'lent',             ru:'одалживать'},
+  {inf:'let',         ps:'let',               pp:'let',              ru:'позволять'},
+  {inf:'lie',         ps:'lay',               pp:'lain',             ru:'лежать'},
+  {inf:'light',       ps:'lit',               pp:'lit',              ru:'зажигать'},
+  {inf:'lose',        ps:'lost',              pp:'lost',             ru:'терять, проигрывать'},
+  {inf:'make',        ps:'made',              pp:'made',             ru:'делать, создавать'},
+  {inf:'mean',        ps:'meant',             pp:'meant',            ru:'значить, иметь в виду'},
+  {inf:'meet',        ps:'met',               pp:'met',              ru:'встречать'},
+  {inf:'pay',         ps:'paid',              pp:'paid',             ru:'платить'},
+  {inf:'put',         ps:'put',               pp:'put',              ru:'класть, ставить'},
+  {inf:'read',        ps:'read',              pp:'read',             ru:'читать'},
+  {inf:'ride',        ps:'rode',              pp:'ridden',           ru:'ехать верхом'},
+  {inf:'ring',        ps:'rang',              pp:'rung',             ru:'звонить'},
+  {inf:'rise',        ps:'rose',              pp:'risen',            ru:'подниматься'},
+  {inf:'run',         ps:'ran',               pp:'run',              ru:'бежать'},
+  {inf:'say',         ps:'said',              pp:'said',             ru:'сказать'},
+  {inf:'see',         ps:'saw',               pp:'seen',             ru:'видеть'},
+  {inf:'sell',        ps:'sold',              pp:'sold',             ru:'продавать'},
+  {inf:'send',        ps:'sent',              pp:'sent',             ru:'посылать'},
+  {inf:'set',         ps:'set',               pp:'set',              ru:'устанавливать'},
+  {inf:'shake',       ps:'shook',             pp:'shaken',           ru:'трясти'},
+  {inf:'shine',       ps:'shone',             pp:'shone',            ru:'светить, блестеть'},
+  {inf:'shoot',       ps:'shot',              pp:'shot',             ru:'стрелять'},
+  {inf:'show',        ps:'showed',            pp:'shown',            ru:'показывать'},
+  {inf:'shut',        ps:'shut',              pp:'shut',             ru:'закрывать'},
+  {inf:'sing',        ps:'sang',              pp:'sung',             ru:'петь'},
+  {inf:'sit',         ps:'sat',               pp:'sat',              ru:'сидеть'},
+  {inf:'sleep',       ps:'slept',             pp:'slept',            ru:'спать'},
+  {inf:'smell',       ps:'smelt / smelled',   pp:'smelt / smelled',  ru:'нюхать, пахнуть'},
+  {inf:'speak',       ps:'spoke',             pp:'spoken',           ru:'говорить'},
+  {inf:'spend',       ps:'spent',             pp:'spent',            ru:'тратить, проводить'},
+  {inf:'spill',       ps:'spilt / spilled',   pp:'spilt / spilled',  ru:'проливать'},
+  {inf:'stand',       ps:'stood',             pp:'stood',            ru:'стоять'},
+  {inf:'steal',       ps:'stole',             pp:'stolen',           ru:'красть'},
+  {inf:'sting',       ps:'stung',             pp:'stung',            ru:'жалить'},
+  {inf:'swim',        ps:'swam',              pp:'swum',             ru:'плавать'},
+  {inf:'take',        ps:'took',              pp:'taken',            ru:'брать'},
+  {inf:'teach',       ps:'taught',            pp:'taught',           ru:'учить, преподавать'},
+  {inf:'tear',        ps:'tore',              pp:'torn',             ru:'рвать'},
+  {inf:'tell',        ps:'told',              pp:'told',             ru:'рассказывать'},
+  {inf:'think',       ps:'thought',           pp:'thought',          ru:'думать'},
+  {inf:'throw',       ps:'threw',             pp:'thrown',           ru:'бросать'},
+  {inf:'understand',  ps:'understood',        pp:'understood',       ru:'понимать'},
+  {inf:'wake',        ps:'woke',              pp:'woken',            ru:'просыпаться, будить'},
+  {inf:'wear',        ps:'wore',              pp:'worn',             ru:'носить одежду'},
+  {inf:'win',         ps:'won',               pp:'won',              ru:'побеждать'},
+  {inf:'write',       ps:'wrote',             pp:'written',          ru:'писать'},
 ];
 
 const GAP_DATA = [
@@ -523,7 +538,7 @@ function renderTable() {
   const rows = IRR.filter(v => !q || v.inf.includes(q) || v.ps.includes(q) || v.pp.includes(q));
   document.getElementById('countEl').textContent = rows.length + ' verbs';
   document.getElementById('tableBody').innerHTML = rows.map(v =>
-    `<tr><td>${v.inf}</td><td>${v.ps}</td><td>${v.pp}</td></tr>`
+    `<tr><td>${v.inf}</td><td class="ru">${v.ru}</td><td>${v.ps}</td><td>${v.pp}</td></tr>`
   ).join('');
 }
 renderTable();
@@ -557,6 +572,7 @@ function showCard() {
   document.getElementById('cardWrap').classList.remove('flipped');
   setTimeout(() => {
     document.getElementById('cWord').textContent = v.inf;
+    document.getElementById('cRu').textContent = v.ru;
     document.getElementById('cardCounter').textContent = `Card ${cIdx+1} / ${deck.length}`;
     document.getElementById('cForms').innerHTML =
       `<div class="card-form-row"><span class="cfl">Past Simple</span><span class="cfv">${v.ps}</span></div>
@@ -568,10 +584,84 @@ function cardNext()    { cIdx = (cIdx+1) % deck.length; showCard(); }
 function cardPrev()    { cIdx = (cIdx-1+deck.length) % deck.length; showCard(); }
 function cardShuffle() { deck = shuffle(deck); cIdx = 0; showCard(); }
 
-let gDeck, gIdx, gScore, gAnswered;
-function initGap() {
-  gDeck = shuffle(GAP_DATA); gIdx = 0; gScore = 0; renderGap();
+const TEXTS_DATA = [
+  {
+    title: 'The Lost Key',
+    gaps: [
+      { before: 'I have ', verb: 'lose', ans: 'lost', after: ' my keys! I have ' },
+      { before: '', verb: 'look', ans: 'looked', after: " everywhere but I can't find them. Yesterday, I " },
+      { before: '', verb: 'come', ans: 'came', after: ' home late and ' },
+      { before: '', verb: 'put', ans: 'put', after: ' them on the table. Or maybe I ' },
+      { before: '', verb: 'drop', ans: 'dropped', after: ' them in the garden? I have already ' },
+      { before: '', verb: 'check', ans: 'checked', after: ' my bag twice, but they are gone.' },
+    ]
+  },
+  {
+    title: 'The New Job',
+    gaps: [
+      { before: 'My brother has ', verb: 'become', ans: 'become', after: ' a famous architect. Last year, he ' },
+      { before: '', verb: 'build', ans: 'built', after: ' a very unusual house in London. Many people ' },
+      { before: '', verb: 'see', ans: 'saw', after: ' it and said it was beautiful. He has already ' },
+      { before: '', verb: 'win', ans: 'won', after: ' two awards for his work. I ' },
+      { before: '', verb: 'feel', ans: 'felt', after: ' very proud when I ' },
+      { before: '', verb: 'hear', ans: 'heard', after: ' the news.' },
+    ]
+  },
+  {
+    title: 'A Rainy Morning',
+    gaps: [
+      { before: 'The weather has ', verb: 'change', ans: 'changed', after: ' since this morning. At 7 AM, the sun ' },
+      { before: '', verb: 'shine', ans: 'shone', after: ' brightly and the birds ' },
+      { before: '', verb: 'sing', ans: 'sang', after: '. But then the wind ' },
+      { before: '', verb: 'blow', ans: 'blew', after: ' hard and it ' },
+      { before: '', verb: 'begin', ans: 'began', after: ' to rain. I have already ' },
+      { before: '', verb: 'catch', ans: 'caught', after: " a cold, so I'll stay at home and read a book." },
+    ]
+  },
+  {
+    title: 'Travel Experience',
+    gaps: [
+      { before: 'She has ', verb: 'be', ans: 'been', after: ' to New York three times. The last time she ' },
+      { before: '', verb: 'fly', ans: 'flew', after: ' there, she ' },
+      { before: '', verb: 'meet', ans: 'met', after: ' an old friend. They ' },
+      { before: '', verb: 'spend', ans: 'spent', after: ' the whole day together and ' },
+      { before: '', verb: 'eat', ans: 'ate', after: ' at a lovely Italian restaurant. She has never ' },
+      { before: '', verb: 'forget', ans: 'forgotten', after: ' that trip because they ' },
+      { before: '', verb: 'have', ans: 'had', after: ' so much fun.' },
+    ]
+  },
+  {
+    title: 'An Unlucky Day',
+    gaps: [
+      { before: 'Someone has ', verb: 'steal', ans: 'stolen', after: ' my bicycle! I ' },
+      { before: '', verb: 'leave', ans: 'left', after: ' it near the library an hour ago. When I ' },
+      { before: '', verb: 'come', ans: 'came', after: " back, it was gone. I have already " },
+      { before: '', verb: 'tell', ans: 'told', after: " the police about it, but they haven't " },
+      { before: '', verb: 'find', ans: 'found', after: ' it yet. I ' },
+      { before: '', verb: 'buy', ans: 'bought', after: ' that bike only last month!' },
+    ]
+  },
+];
+
+let gMode = 'sentences';
+function setGapMode(mode, btn) {
+  gMode = mode;
+  document.querySelectorAll('.gap-mode-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  initGap();
 }
+
+let gDeck, gIdx, gScore, gAnswered;
+let tDeck, tIdx, tScore;
+
+function initGap() {
+  if (gMode === 'sentences') {
+    gDeck = shuffle(GAP_DATA).slice(0, 20); gIdx = 0; gScore = 0; renderGap();
+  } else {
+    tDeck = shuffle([...TEXTS_DATA]); tIdx = 0; tScore = 0; renderText();
+  }
+}
+
 function renderGap() {
   const el = document.getElementById('gapContent');
   if (gIdx >= gDeck.length) {
@@ -601,6 +691,7 @@ function renderGap() {
   inp.focus();
   inp.addEventListener('keydown', e => { if(e.key==='Enter') checkGap(item.ans); });
 }
+
 function checkGap(ans) {
   if(gAnswered) return; gAnswered = true;
   const inp = document.getElementById('gIn');
@@ -608,15 +699,75 @@ function checkGap(ans) {
   const accepted = ans.toLowerCase().split(' / ').map(s=>s.trim());
   if(accepted.includes(val)) {
     inp.classList.add('correct');
-    document.getElementById('gFB').className='q-feedback'; document.getElementById('gFB').style.color='var(--green)';
+    document.getElementById('gFB').style.color='var(--green)';
     document.getElementById('gFB').textContent='✓ Correct!'; gScore++;
   } else {
     inp.classList.add('wrong');
-    document.getElementById('gFB').className='q-feedback'; document.getElementById('gFB').style.color='var(--red)';
+    document.getElementById('gFB').style.color='var(--red)';
     document.getElementById('gFB').innerHTML=`✗ Correct answer: <b>${ans}</b>`;
   }
   inp.disabled=true;
   document.getElementById('gNext').style.display='inline-block';
+}
+
+function buildTextHTML(text) {
+  return text.gaps.map((g, i) =>
+    g.before + `<input class="gap-input" id="tIn${i}" placeholder="(${g.verb})" autocomplete="off" style="min-width:90px">` + g.after
+  ).join('');
+}
+
+function renderText() {
+  const el = document.getElementById('gapContent');
+  if (tIdx >= tDeck.length) {
+    const total = tDeck.reduce((s,t) => s + t.gaps.length, 0);
+    const pct = Math.round(tScore/total*100);
+    el.innerHTML = `<div class="done-block">
+      <div class="big">${tScore}/${total}</div>
+      <div style="color:var(--text2);margin-top:0.5rem">${pct}% correct</div>
+      <div style="font-size:1.1rem;margin-top:0.8rem">${pct>=80?'Excellent! 🎉':pct>=50?'Good effort! 💪':'Keep practising! 📚'}</div>
+      <button class="quiz-restart" onclick="initGap()">Try again</button>
+    </div>`; return;
+  }
+  const text = tDeck[tIdx];
+  el.innerHTML = `
+    <div class="q-stats"><span>Text ${tIdx+1} of ${tDeck.length}</span><span>Score: <b>${tScore}</b></span></div>
+    <div class="progress-bar"><div class="progress-fill" style="width:${(tIdx/tDeck.length*100).toFixed(0)}%"></div></div>
+    <div class="q-card">
+      <div class="q-label" style="margin-bottom:0.8rem">${text.title}</div>
+      <div style="line-height:2.6;font-size:1.05rem">${buildTextHTML(text)}</div>
+    </div>
+    <div class="q-feedback" id="tFB"></div>
+    <div class="q-actions">
+      <button class="btn-primary" onclick="checkAllText()">Check</button>
+    </div>`;
+  document.getElementById('tIn0').focus();
+}
+
+function checkAllText() {
+  const text = tDeck[tIdx];
+  let correct = 0;
+  text.gaps.forEach((g, i) => {
+    const inp = document.getElementById(`tIn${i}`);
+    if (!inp || inp.disabled) return;
+    const val = inp.value.trim().toLowerCase();
+    const accepted = g.ans.toLowerCase().split(' / ').map(s=>s.trim());
+    if (accepted.includes(val)) {
+      inp.classList.add('correct'); correct++;
+    } else {
+      inp.classList.add('wrong');
+      inp.value = g.ans;
+    }
+    inp.disabled = true;
+  });
+  tScore += correct;
+  const total = text.gaps.length;
+  const fb = document.getElementById('tFB');
+  fb.style.color = correct === total ? 'var(--green)' : 'var(--red)';
+  fb.innerHTML = correct === total
+    ? `✓ All correct!`
+    : `${correct}/${total} correct — wrong answers shown in red.`;
+  const actions = document.querySelector('#gapContent .q-actions');
+  actions.innerHTML = `<button class="btn-primary" onclick="tIdx++;renderText()">Next text →</button>`;
 }
 
 const MCQ = [
