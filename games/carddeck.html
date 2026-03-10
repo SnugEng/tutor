@@ -43,16 +43,15 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'DM Sans',sans-seri
 
 #sTable{overflow:hidden;background:#0a0913}
 
-.tbar{background:#0a0913;border-bottom:1px solid var(--bord);padding:6px 8px;display:flex;align-items:center;gap:6px;flex-shrink:0;min-height:46px;overflow:hidden}
+.tbar{background:#0a0913;border-bottom:1px solid var(--bord);padding:8px 10px;display:flex;align-items:center;gap:6px;flex-shrink:0;min-height:62px;overflow:hidden}
 .tbar-title{font-family:'DM Serif Display',serif;font-size:.85rem;color:var(--acc);flex-shrink:0;display:none}
-.schips{display:flex;gap:4px;flex:1;overflow-x:auto;min-width:0;justify-content:center;align-items:center;padding:2px 0;scrollbar-width:none;-ms-overflow-style:none}
-.schip{display:flex;align-items:center;gap:3px;padding:3px 8px 3px 5px;border-radius:24px;background:#1e1c2e;border:2px solid var(--bord);font-weight:700;white-space:nowrap;flex-shrink:1;min-width:0;max-width:140px;transition:all .35s cubic-bezier(.34,1.56,.64,1);position:relative}
-.schip.cur{border-color:var(--acc);background:rgba(232,184,75,.12);box-shadow:0 0 12px rgba(232,184,75,.35);transform:scale(1.08)}
-.schip-av{width:22px;height:22px;border-radius:50%;object-fit:cover;flex-shrink:0;display:block}
-.schip-name{font-family:'DM Sans',sans-serif;font-size:clamp(.58rem,.9vw,.78rem);font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;flex:1}
-.ssc{font-family:'DM Mono',monospace;font-size:.78rem;font-weight:900;padding:2px 7px;border-radius:8px;background:rgba(255,255,255,.1);flex-shrink:0}
+.schips{display:flex;gap:6px;flex:1;overflow-x:auto;min-width:0;justify-content:center;align-items:center;padding:2px 0;scrollbar-width:none;-ms-overflow-style:none}
+.schip{display:flex;align-items:center;gap:6px;padding:6px 12px 6px 8px;border-radius:28px;background:#1e1c2e;border:2px solid var(--bord);font-weight:700;white-space:nowrap;flex-shrink:1;min-width:0;max-width:180px;transition:all .35s cubic-bezier(.34,1.56,.64,1);position:relative}
+.schip.cur{border-color:var(--acc);background:rgba(232,184,75,.12);box-shadow:0 0 14px rgba(232,184,75,.35);transform:scale(1.08)}
+.schip-av{width:32px;height:32px;border-radius:50%;object-fit:cover;flex-shrink:0;display:block}
+.schip-name{font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;flex:1}
+.ssc{font-family:'DM Mono',monospace;font-size:.92rem;font-weight:900;padding:3px 9px;border-radius:8px;background:rgba(255,255,255,.1);flex-shrink:0}
 .ssc.p{color:#3db88a}.ssc.n{color:#d9547a}.ssc.z{color:var(--dim)}
-
 
 .score-pop{position:fixed;pointer-events:none;font-family:'DM Mono',monospace;font-weight:900;font-size:1.2rem;z-index:9998;animation:scorePop 1.1s ease forwards;white-space:nowrap;text-shadow:0 2px 8px rgba(0,0,0,.7)}
 .score-pop.pos{color:#06d6a0}.score-pop.neg{color:#f72585}
@@ -62,7 +61,6 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'DM Sans',sans-seri
 .tbtn{padding:4px 9px;border-radius:6px;border:1.5px solid var(--bord);background:transparent;color:var(--dim);font-size:.64rem;font-weight:700;cursor:pointer;flex-shrink:0;transition:all .2s;white-space:nowrap}
 .tbtn:hover{border-color:var(--acc);color:var(--acc)}
 .tbtn.rd{border-color:#7f1d1d;color:#fca5a5}.tbtn.rd:hover{background:#7f1d1d;color:#fff}
-
 
 #cardGrid{flex:1;display:grid;gap:8px;padding:8px;overflow:hidden}
 
@@ -75,19 +73,17 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'DM Sans',sans-seri
 .tc-pts{font-family:'DM Mono',monospace;font-size:clamp(.65rem,1.4vw,1rem);color:rgba(255,255,255,.4);z-index:1;margin-top:2px;font-weight:700}
 .tc:hover .tc-num{color:#fff;transform:scale(1.06)}
 
-
 #sCard{z-index:100;overflow:hidden;background:#f7f6ee}
 
-.card-player-bar{background:#0a0913;border-bottom:1px solid var(--bord);padding:5px 10px;display:flex;align-items:center;gap:6px;flex-shrink:0;min-height:46px}
-.card-schips{display:flex;gap:4px;flex:1;overflow-x:auto;justify-content:center;align-items:center;scrollbar-width:none}
-.card-schip{display:flex;align-items:center;gap:3px;padding:3px 8px 3px 5px;border-radius:20px;background:#1e1c2e;border:2px solid var(--bord);font-weight:700;white-space:nowrap;flex-shrink:1;min-width:0;max-width:140px;transition:all .3s}
-.card-schip.cur{border-color:var(--acc);background:rgba(232,184,75,.12);box-shadow:0 0 10px rgba(232,184,75,.35);transform:scale(1.06)}
-.card-schip-av{width:20px;height:20px;border-radius:50%;object-fit:cover;flex-shrink:0;display:block}
-.card-schip-name{font-size:clamp(.58rem,.85vw,.72rem);font-weight:700;color:var(--txt);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;flex:1}
-.card-schip-score{font-family:'DM Mono',monospace;font-size:.75rem;font-weight:900;padding:2px 6px;border-radius:6px;background:rgba(255,255,255,.1);flex-shrink:0}
+.card-player-bar{background:#0a0913;border-bottom:1px solid var(--bord);padding:8px 12px;display:flex;align-items:center;gap:6px;flex-shrink:0;min-height:62px}
+.card-schips{display:flex;gap:6px;flex:1;overflow-x:auto;justify-content:center;align-items:center;scrollbar-width:none}
+.card-schip{display:flex;align-items:center;gap:6px;padding:6px 12px 6px 8px;border-radius:28px;background:#1e1c2e;border:2px solid var(--bord);font-weight:700;white-space:nowrap;flex-shrink:1;min-width:0;max-width:180px;transition:all .3s}
+.card-schip.cur{border-color:var(--acc);background:rgba(232,184,75,.12);box-shadow:0 0 12px rgba(232,184,75,.35);transform:scale(1.06)}
+.card-schip-av{width:32px;height:32px;border-radius:50%;object-fit:cover;flex-shrink:0;display:block}
+.card-schip-name{font-size:.88rem;font-weight:700;color:var(--txt);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;flex:1}
+.card-schip-score{font-family:'DM Mono',monospace;font-size:.92rem;font-weight:900;padding:3px 9px;border-radius:8px;background:rgba(255,255,255,.1);flex-shrink:0}
 .card-schip-score.p{color:#3db88a}.card-schip-score.n{color:#d9547a}.card-schip-score.z{color:var(--dim)}
 .card-tbar-right{display:flex;gap:5px;flex-shrink:0}
-
 
 .cm-wrap{display:flex;flex-direction:column;flex:1;min-height:0;width:100%;overflow:hidden;background:#f7f6ee}
 .cm-hd{
@@ -130,7 +126,6 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'DM Sans',sans-seri
   padding:8px 0
 }
 
-
 .cm-body{
   width:100%;max-width:680px;
   padding:clamp(20px,3vh,40px) clamp(20px,4vw,48px);
@@ -160,7 +155,6 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'DM Sans',sans-seri
   padding-bottom:4px;
   border-bottom:1px solid rgba(0,0,0,.06)
 }
-
 
 .mc-opts{display:flex;flex-direction:column;gap:11px}
 .mc-opt{
@@ -193,14 +187,12 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'DM Sans',sans-seri
 .mc-opt.reveal{border-color:#06d6a0!important;background:#eafaf4!important;pointer-events:none}
 .mc-opt[disabled]{pointer-events:none}
 
-
 .gap-ctx{font-family:'DM Serif Display',serif;font-size:clamp(1.2rem,2.8vw,1.9rem);color:#18172e;line-height:1.9;padding:18px 22px;background:#fff;border-radius:14px;border:2px solid #e2e0d4;box-shadow:0 1px 4px rgba(0,0,0,.05)}
 .gap-lbl{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:2px;text-transform:uppercase;color:#aaa;margin-bottom:7px}
 .gap-in{width:100%;border:2px solid #ddd;border-radius:12px;padding:15px 20px;font-family:'DM Serif Display',serif;font-size:clamp(1.15rem,2.8vw,1.5rem);color:#18172e;background:#fff;outline:none;transition:border-color .2s,box-shadow .2s;box-shadow:0 1px 4px rgba(0,0,0,.05)}
 .gap-in:focus{border-color:var(--tc,#888);box-shadow:0 0 0 3px color-mix(in srgb,var(--tc,#888) 20%,transparent)}
 .gap-in.ok{border-color:#06d6a0;background:#eafaf4;color:#027a5a;box-shadow:0 0 0 3px rgba(6,214,160,.15)}
 .gap-in.no{border-color:#f72585;background:#fdeef4;color:#a00050;box-shadow:0 0 0 3px rgba(247,37,133,.12)}
-
 
 .wo-area{display:flex;flex-direction:column;gap:12px}
 .wo-label{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:2px;text-transform:uppercase;color:#aaa;margin-bottom:2px}
@@ -228,7 +220,6 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'DM Sans',sans-seri
 .ww.w-ok{border-color:#06d6a0!important;background:#eafaf4!important;color:#027a5a!important;box-shadow:0 2px 8px rgba(6,214,160,.25)!important}
 .ww.w-no{border-color:#f72585!important;background:#fdeef4!important;color:#a00050!important;box-shadow:0 2px 8px rgba(247,37,133,.2)!important}
 
-
 .ooo-opts{display:flex;flex-direction:column;gap:11px}
 .ooo-opt{
   padding:clamp(14px,2.2vh,20px) clamp(18px,3vw,26px);
@@ -255,7 +246,6 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'DM Sans',sans-seri
 .ooo-opt.reveal{border-color:#06d6a0!important;background:#eafaf4!important;pointer-events:none}
 .ooo-opt.reveal .ooo-l{background:#06d6a0;color:#fff}
 
-
 .err-sent{font-family:'DM Serif Display',serif;font-size:clamp(1.2rem,2.8vw,1.9rem);line-height:2.1;padding:18px 22px;background:#fff;border-radius:14px;border:2px solid #e2e0d4;box-shadow:0 1px 4px rgba(0,0,0,.05);color:#18172e;word-spacing:2px}
 .ew{cursor:pointer;padding:3px 6px;border-radius:7px;transition:all .18s;border-bottom:2.5px solid transparent;color:#18172e;display:inline}
 .ew.punct{padding:3px 1px;margin-left:-4px}
@@ -269,23 +259,19 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'DM Sans',sans-seri
 .err-in.ok{border-color:#06d6a0;background:#eafaf4;color:#027a5a}
 .err-in.no{border-color:#f72585;background:#fdeef4;color:#a00050}
 
-
 .read-txt{background:#fff;border-left:5px solid var(--tc,#888);border-radius:0 14px 14px 0;padding:clamp(16px,2.2vh,26px) clamp(18px,3vw,30px);font-size:clamp(1.05rem,2.2vw,1.4rem);line-height:2.2;color:#18172e;display:flex;flex-wrap:wrap;gap:0 4px;align-items:baseline;box-shadow:0 1px 6px rgba(0,0,0,.06)}
 .rw{cursor:pointer;padding:2px 5px;border-radius:5px;transition:background .15s;border-bottom:2px solid transparent;display:inline-block;color:#18172e}
 .rw:hover{background:#fdecc8;border-bottom-color:#d97706}
 .rw.sel{background:#fde8b8;border-bottom-color:#d97706;font-weight:700}
 .read-hint{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:2px;text-transform:uppercase;color:#bbb;margin-top:-8px}
 
-
 .speak-box{background:#fff;border:2px solid #e2e0d4;border-radius:14px;padding:24px 28px;font-family:'DM Serif Display',serif;font-size:clamp(1.2rem,2.8vw,1.75rem);color:#18172e;line-height:1.7;box-shadow:0 1px 6px rgba(0,0,0,.06)}
-
 
 .fb{display:none;padding:15px 20px;border-radius:13px;font-family:'DM Mono',monospace;font-size:clamp(.8rem,1.8vw,.95rem);line-height:1.75;border:1.5px solid}
 .fb.show{display:block;animation:fuD .3s cubic-bezier(.34,1.56,.64,1)}
 .fb.ok{background:#eafaf4;border-color:#3db88a;color:#1a6b4a}
 .fb.no{background:#fdeef4;border-color:#d9547a;color:#8b1a3a}
 @keyframes fuD{from{opacity:0;transform:translateY(8px) scale(.97)}to{opacity:1;transform:none}}
-
 
 .ftb{
   flex:1;min-width:70px;
@@ -332,18 +318,18 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'DM Sans',sans-seri
 ::-webkit-scrollbar{width:3px;height:3px}::-webkit-scrollbar-thumb{background:var(--bord);border-radius:2px}
 
 @media(max-width:480px){
-  .tbar{padding:4px 6px;min-height:42px;gap:4px}
+  .tbar{padding:6px 8px;min-height:54px;gap:4px}
   .tbar-right{gap:3px}
   .tbtn{padding:3px 7px;font-size:.58rem}
-  .schip{padding:2px 6px 2px 4px;max-width:110px}
-  .schip-av{width:18px;height:18px}
-  .schip-name{font-size:.56rem;max-width:50px}
-  .ssc{font-size:.7rem;padding:1px 5px}
-  .card-player-bar{padding:4px 8px;min-height:42px}
-  .card-schip{padding:2px 6px 2px 4px;max-width:110px}
-  .card-schip-av{width:16px;height:16px}
-  .card-schip-name{font-size:.55rem}
-  .card-schip-score{font-size:.68rem;padding:1px 5px}
+  .schip{padding:4px 9px 4px 6px;max-width:130px;gap:5px}
+  .schip-av{width:26px;height:26px}
+  .schip-name{font-size:.78rem}
+  .ssc{font-size:.78rem;padding:2px 6px}
+  .card-player-bar{padding:6px 8px;min-height:54px}
+  .card-schip{padding:4px 9px 4px 6px;max-width:130px;gap:5px}
+  .card-schip-av{width:26px;height:26px}
+  .card-schip-name{font-size:.78rem}
+  .card-schip-score{font-size:.78rem;padding:2px 6px}
   .hd-pts-badge{font-size:.62rem;padding:2px 8px}
   .cm-body{padding:10px 14px;gap:10px}
   .cm-q{font-size:clamp(1rem,4.5vw,1.4rem)}
@@ -351,10 +337,10 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'DM Sans',sans-seri
   .ftb{font-size:clamp(.8rem,3vw,1rem);padding:10px}
 }
 @media(max-width:380px){
-  .schip-name{display:none}
-  .card-schip-name{display:none}
-  .schip{max-width:72px}
-  .card-schip{max-width:72px}
+  .schip-name{max-width:44px}
+  .card-schip-name{max-width:44px}
+  .schip{max-width:90px}
+  .card-schip{max-width:90px}
 }
 .hd-pts-badge{font-size:clamp(.72rem,1.8vw,1rem);padding:4px 12px;font-weight:900}
 .score-pop{font-size:1.5rem}
@@ -475,275 +461,235 @@ const SFX={
   nextPlayer(){playTone(660,'sine',.04,.07);playTone(880,'sine',.04,.07,.07)}
 };
 
-
 const CD=[
 
-// ===== MC =====
-// PS — A2
-{type:'mc',topic:'ps',col:'#4A90E2',pts:10,q:'At summer camp, the storyteller ___ a strange old diary.',opts:['find','finds','found','was find'],ans:2,exp:'"Found" is Past Simple of "find" (irregular: find → found). Completed past action.'},
-{type:'mc',topic:'ps',col:'#4A90E2',pts:10,q:'Dad ___ not close the suitcase properly before the trip.',opts:['did','do','was','were'],ans:0,exp:'Past Simple negative: did + not + base verb.'},
-{type:'mc',topic:'ps',col:'#4A90E2',pts:10,q:'___ the Nicholsons miss their flight?',opts:['Were','Did','Do','Was'],ans:1,exp:'Past Simple question: Did + subject + base verb.'},
-{type:'mc',topic:'ps',col:'#4A90E2',pts:10,q:'Harry ___ his pillow in the grey suitcase.',opts:['leave','leaved','left','lefted'],ans:2,exp:'"Leave" is irregular: leave → left. ❌ "Leaved" doesn\'t exist.'},
-{type:'mc',topic:'ps',col:'#4A90E2',pts:10,q:'The family ___ a great time on holiday in Crete.',opts:['have','has','had','having'],ans:2,exp:'"Have" is irregular: have → had.'},
-// PS — B1
-{type:'mc',topic:'ps',col:'#4A90E2',pts:20,q:'They ___ the washing up, put the dishes away and went outside.',opts:['do','did','were doing','done'],ans:1,exp:'A sequence of completed past actions → all Past Simple. "Do" → "did" (irregular).'},
-{type:'mc',topic:'ps',col:'#4A90E2',pts:20,q:'Which sentence is grammatically CORRECT?',opts:['Did she went snorkelling?','She didn\'t went camping.','She went hiking, didn\'t she?','She didn\'t go cycling, did she?'],ans:3,exp:'"She didn\'t go cycling, did she?" — negative PS + positive tag. ✅ The others use the wrong verb form after did/didn\'t.'},
-{type:'mc',topic:'ps',col:'#4A90E2',pts:20,q:'Arlo ___ off his bike and hurt his arm and knee.',opts:['fall','felt','fell','falled'],ans:2,exp:'"Fall" is irregular: fall → fell. ❌ "Falled" doesn\'t exist. ("Felt" = past of "feel".)'},
-{type:'mc',topic:'ps',col:'#4A90E2',pts:20,q:'The campers ___ the old diary in turns and laughed at the funny poems.',opts:['read','were reading','readed','reads'],ans:0,exp:'A completed past activity → Past Simple. "Read" is irregular — the past form is also "read" (pronounced /rɛd/).'},
-{type:'mc',topic:'ps',col:'#4A90E2',pts:20,q:'What ___ the last page of the diary say?',opts:['does','did','was','were'],ans:1,exp:'Past Simple question with "what": What did + subject + base verb?'},
+{type:'mc',topic:'ps',col:'#4A90E2',pts:10,q:'She ___ the whole night to finish the project before the deadline.',opts:['work','works','worked','was work'],ans:2,exp:'"Worked" is Past Simple of the regular verb "work". Completed past action.'},
+{type:'mc',topic:'ps',col:'#4A90E2',pts:10,q:'They ___ not understand why the teacher cancelled the test.',opts:['did','do','was','were'],ans:0,exp:'Past Simple negative: did + not + base verb.'},
+{type:'mc',topic:'ps',col:'#4A90E2',pts:10,q:'___ you remember to lock the door before you left?',opts:['Were','Did','Do','Was'],ans:1,exp:'Past Simple question: Did + subject + base verb.'},
+{type:'mc',topic:'ps',col:'#4A90E2',pts:10,q:'He ___ his wallet on the bus and couldn\'t find it anywhere.',opts:['leave','leaved','left','lefted'],ans:2,exp:'"Leave" is irregular: leave → left. ❌ "Leaved" and "lefted" don\'t exist.'},
+{type:'mc',topic:'ps',col:'#4A90E2',pts:10,q:'We ___ a terrible time at the concert — the sound was awful.',opts:['have','has','had','having'],ans:2,exp:'"Have" is irregular: have → had.'},
+{type:'mc',topic:'ps',col:'#4A90E2',pts:20,q:'By the time Mum came home, we ___ already the whole pizza.',opts:['eat','ate','was eating','had ate'],ans:1,exp:'A completed action in the past → Past Simple. "Eat" is irregular: eat → ate.'},
+{type:'mc',topic:'ps',col:'#4A90E2',pts:20,q:'Which sentence is grammatically CORRECT?',opts:['Did she went to the party?','She didn\'t went early.','She left on time, didn\'t she?','She didn\'t go home, did she?'],ans:3,exp:'"She didn\'t go home, did she?" — negative PS + positive tag ✅. The others use wrong verb forms after did/didn\'t.'},
+{type:'mc',topic:'ps',col:'#4A90E2',pts:20,q:'Our class ___ a really cool model of a volcano last term.',opts:['build','builded','were building','built'],ans:3,exp:'"Build" is irregular: build → built. Completed past action → Past Simple.'},
+{type:'mc',topic:'ps',col:'#4A90E2',pts:20,q:'The two friends ___ on the same project for the whole summer.',opts:['worked','were working','work','did worked'],ans:0,exp:'A completed period of activity that is now over → Past Simple: worked.'},
+{type:'mc',topic:'ps',col:'#4A90E2',pts:20,q:'What ___ the teacher say at the end of the lesson?',opts:['does','did','was','were'],ans:1,exp:'Past Simple question with "what": What did + subject + base verb?'},
 
-// PC — A2
-{type:'mc',topic:'pc',col:'#50E3C2',pts:10,q:'At 8 p.m. last Friday Jodie ___ basketball.',opts:['plays','played','was playing','is playing'],ans:2,exp:'"At 8 p.m. last Friday" = a specific past moment → Past Continuous: was playing.'},
-{type:'mc',topic:'pc',col:'#50E3C2',pts:10,q:'While Arlo ___ through the park, a dog ran in front of him.',opts:['cycled','cycle','was cycling','is cycling'],ans:2,exp:'"While" + ongoing background action interrupted by a sudden event → Past Continuous.'},
-{type:'mc',topic:'pc',col:'#50E3C2',pts:10,q:'What ___ you doing when the accident happened?',opts:['did','was','were','are'],ans:2,exp:'Past Continuous question with "you" → were.'},
-{type:'mc',topic:'pc',col:'#50E3C2',pts:10,q:'Mike ___ not playing his guitar when we arrived.',opts:['did','was','were','is'],ans:1,exp:'Negative Past Continuous with "Mike" (he) → was not.'},
-{type:'mc',topic:'pc',col:'#50E3C2',pts:10,q:'While my friend ___ the dishes, I was putting them away.',opts:['washes','was washing','washed','is washing'],ans:1,exp:'Two simultaneous ongoing past actions → both Past Continuous.'},
-// PC — B1
-{type:'mc',topic:'pc',col:'#50E3C2',pts:20,q:'Which sentence uses Past Continuous INCORRECTLY?',opts:['She was trying to score a basket.','He was paying attention to the road.','They were knowing the way home.','I was wondering what to do next.'],ans:2,exp:'"Know" is a stative verb — it describes a state, not an action. Stative verbs can\'t be used in continuous tenses.'},
-{type:'mc',topic:'pc',col:'#50E3C2',pts:20,q:'Jodie ___ to score a basket when she hurt her ankle.',opts:['tried','was trying','did try','tries'],ans:1,exp:'"While/when trying" = an ongoing action in progress that was interrupted → Past Continuous.'},
-{type:'mc',topic:'pc',col:'#50E3C2',pts:20,q:'Which time expression fits Past Continuous BEST?',opts:['last Tuesday','in 2010','at six o\'clock this morning','two weeks ago'],ans:2,exp:'"At six o\'clock this morning" = a specific ongoing moment → Past Continuous.'},
-{type:'mc',topic:'pc',col:'#50E3C2',pts:20,q:'I could see Dad ___ — he kept looking at his watch.',opts:['worried','worries','was worrying','is worrying'],ans:2,exp:'An ongoing state visible in the past → Past Continuous: was worrying.'},
-{type:'mc',topic:'pc',col:'#50E3C2',pts:20,q:'While Poppy ___ for a new hairdryer, George had a great idea.',opts:['looked','was looking','looks','is looking'],ans:1,exp:'"While" introduces the background ongoing action → Past Continuous.'},
+{type:'mc',topic:'pc',col:'#50E3C2',pts:10,q:'At midnight, the whole city ___ while the storm grew stronger.',opts:['sleeps','slept','was sleeping','is sleeping'],ans:2,exp:'"At midnight" = a specific ongoing moment → Past Continuous: was sleeping.'},
+{type:'mc',topic:'pc',col:'#50E3C2',pts:10,q:'The children ___ in the garden when the thunderstorm started.',opts:['played','play','were playing','are playing'],ans:2,exp:'Ongoing background action interrupted by a sudden event → Past Continuous.'},
+{type:'mc',topic:'pc',col:'#50E3C2',pts:10,q:'What ___ the engineers doing when the power cut happened?',opts:['did','was','were','are'],ans:2,exp:'Past Continuous question with "the engineers" (they) → were.'},
+{type:'mc',topic:'pc',col:'#50E3C2',pts:10,q:'The audience ___ not paying attention when the speaker made the key point.',opts:['did','was','were','is'],ans:2,exp:'Negative Past Continuous with "the audience" (they) → were not.'},
+{type:'mc',topic:'pc',col:'#50E3C2',pts:10,q:'While the chef ___ the sauce, his assistant was chopping vegetables.',opts:['stirs','was stirring','stirred','is stirring'],ans:1,exp:'Two simultaneous ongoing past actions → both Past Continuous.'},
+{type:'mc',topic:'pc',col:'#50E3C2',pts:20,q:'Which sentence uses Past Continuous INCORRECTLY?',opts:['She was thinking about the answer.','He was reconsidering his choice.','They were believing every word.','I was wondering what to do.'],ans:2,exp:'"Believe" is a stative verb — it describes a mental state, not an action. Stative verbs can\'t be used in continuous tenses.'},
+{type:'mc',topic:'pc',col:'#50E3C2',pts:20,q:'My friend ___ on the phone for over an hour when her mum told her to stop.',opts:['talked','was talking','did talk','talks'],ans:1,exp:'An ongoing action over a period in the past → Past Continuous: was talking.'},
+{type:'mc',topic:'pc',col:'#50E3C2',pts:20,q:'Which time expression fits Past Continuous BEST?',opts:['last April','in 1995','at half past two yesterday','three weeks ago'],ans:2,exp:'"At half past two yesterday" = a specific ongoing moment → Past Continuous. The others are general past times.'},
+{type:'mc',topic:'pc',col:'#50E3C2',pts:20,q:'The patient looked exhausted. She ___ in the waiting room for three hours.',opts:['waited','waits','was waiting','is waiting'],ans:2,exp:'An ongoing action in progress at a past moment → Past Continuous: was waiting.'},
+{type:'mc',topic:'pc',col:'#50E3C2',pts:20,q:'While the passengers ___ their bags, the announcement came over the speakers.',opts:['checked','were checking','check','are checking'],ans:1,exp:'"While" introduces the background ongoing action → Past Continuous.'},
 
-// ADV — A2
-{type:'mc',topic:'adv',col:'#F5A623',pts:10,q:'Mike sang the songs ___ and everyone joined in.',opts:['happy','happily','happier','happiness'],ans:1,exp:'After a verb, use an adverb of manner: happily. "Happy" is an adjective.'},
-{type:'mc',topic:'adv',col:'#F5A623',pts:10,q:'The dog ran ___ in front of Arlo\'s bike.',opts:['sudden','suddenly','more sudden','suddenness'],ans:1,exp:'"Sudden" is an adjective. The adverb form is "suddenly".'},
-{type:'mc',topic:'adv',col:'#F5A623',pts:10,q:'Please turn the microwave on ___. It\'s very old.',opts:['careful','carefully','more careful','carefulness'],ans:1,exp:'"Careful" is an adjective. The adverb form is "carefully".'},
-{type:'mc',topic:'adv',col:'#F5A623',pts:10,q:'She packed her bag and left ___.',opts:['fastly','fast','more fast','fastest'],ans:1,exp:'"Fast" is already an adverb. ❌ "Fastly" does not exist.'},
-{type:'mc',topic:'adv',col:'#F5A623',pts:10,q:'The camp leader plays the guitar really ___.',opts:['good','goodly','well','better'],ans:2,exp:'The adverb for "good" is "well". ❌ "Goodly" doesn\'t exist.'},
-// ADV — B1
-{type:'mc',topic:'adv',col:'#F5A623',pts:20,q:'He ___ managed to get off the bike before it hit the wall.',opts:['near','nearly','narrow','close'],ans:1,exp:'"Nearly" = almost. "Near" as an adverb means physically close to somewhere, not "almost".'},
-{type:'mc',topic:'adv',col:'#F5A623',pts:20,q:'She ___ ever uses a DVD player — everything is online now.',opts:['hard','hardly','late','barely'],ans:1,exp:'"Hardly ever" = very rarely. "Hard" = with effort. Both fit grammatically, but only "hardly" fits the meaning.'},
-{type:'mc',topic:'adv',col:'#F5A623',pts:20,q:'Which sentence has a grammar error?',opts:['She typed quickly and quietly.','He reacted angrily and nervously.','She answered correctly and honest.','They worked fast and efficiently.'],ans:2,exp:'"Honest" is an adjective. Both words in a list must match: correctly and honestly (adverb + adverb).'},
-{type:'mc',topic:'adv',col:'#F5A623',pts:20,q:'She ___ agreed with everything he said — she never asked questions.',opts:['ready','readiness','readily','reading'],ans:2,exp:'"Readily" = without hesitation, willingly. "Ready" is an adjective and cannot modify a verb.'},
-{type:'mc',topic:'adv',col:'#F5A623',pts:20,q:'Doctor Q\'s robot walked ___. It didn\'t make a single mistake.',opts:['flaw','flawless','flawlessly','flawed'],ans:2,exp:'"Flawlessly" = without any mistakes. "Flawless" is an adjective; the adverb is "flawlessly".'},
+{type:'mc',topic:'adv',col:'#F5A623',pts:10,q:'She drew the picture ___ so she wouldn\'t make any mistakes.',opts:['careful','carefully','more careful','carefulness'],ans:1,exp:'After a verb, use an adverb of manner: carefully. "Careful" is an adjective.'},
+{type:'mc',topic:'adv',col:'#F5A623',pts:10,q:'She ran ___ down the stairs and twisted her ankle.',opts:['careless','carelessly','more careless','carelessness'],ans:1,exp:'"Careless" is an adjective. After a verb we need an adverb: carelessly.'},
+{type:'mc',topic:'adv',col:'#F5A623',pts:10,q:'He ___ solved the equation and moved on to the next problem.',opts:['quick','quickly','quicker','quickest'],ans:1,exp:'"Quick" is an adjective. After a verb we need an adverb: quickly.'},
+{type:'mc',topic:'adv',col:'#F5A623',pts:10,q:'The engine runs really ___. There must be something wrong.',opts:['loudly','loud','louder','loudness'],ans:0,exp:'"Loud" is an adjective. After a verb we need an adverb: loudly.'},
+{type:'mc',topic:'adv',col:'#F5A623',pts:10,q:'He speaks three languages very ___.',opts:['good','goodly','well','better'],ans:2,exp:'The adverb form of "good" is "well". ❌ "Goodly" does not exist.'},
+{type:'mc',topic:'adv',col:'#F5A623',pts:20,q:'The rescue team ___ reached the survivors before the second avalanche hit.',opts:['near','nearly','narrow','close'],ans:1,exp:'"Nearly" = almost. "Near" as an adverb means physically close to a place, not "almost".'},
+{type:'mc',topic:'adv',col:'#F5A623',pts:20,q:'She ___ ever checks her email — you need to call her directly.',opts:['hard','hardly','late','barely'],ans:1,exp:'"Hardly ever" = very rarely. "Hard" = with effort. Only "hardly" fits the meaning here.'},
+{type:'mc',topic:'adv',col:'#F5A623',pts:20,q:'Which sentence has a grammar error?',opts:['She spoke clearly and confidently.','He reacted quickly and decisively.','She answered correctly and honest.','They worked quietly and efficiently.'],ans:2,exp:'"Honest" is an adjective. Both words in a paired list must match: correctly and honestly (adverb + adverb).'},
+{type:'mc',topic:'adv',col:'#F5A623',pts:20,q:'She ___ agreed to help without asking any questions.',opts:['ready','readiness','readily','reading'],ans:2,exp:'"Readily" = without hesitation, willingly. "Ready" is an adjective and cannot modify a verb.'},
+{type:'mc',topic:'adv',col:'#F5A623',pts:20,q:'She sang at the school concert ___. Not a single note was wrong.',opts:['flaw','flawless','flawlessly','flawed'],ans:2,exp:'"Flawlessly" = without any mistakes. "Flawless" is an adjective; the adverb is "flawlessly".'},
 
-// ALL — mix
-{type:'mc',topic:'all',col:'#D0021B',pts:20,q:'While the family ___ dinner, Dad noticed the passports were missing.',opts:['cooked','cooks','was cooking','were cooking'],ans:3,exp:'"While" + an ongoing background action with plural subject → Past Continuous: were cooking.'},
-{type:'mc',topic:'all',col:'#D0021B',pts:20,q:'Arlo walked ___ out of the park so his ankle wouldn\'t hurt more.',opts:['slow','slowness','slower','slowly'],ans:3,exp:'After a verb we need an adverb of manner: slowly.'},
-{type:'mc',topic:'all',col:'#D0021B',pts:20,q:'The campers ___ songs when Mike asked them to get the marshmallows.',opts:['sang','were singing','sing','have sung'],ans:1,exp:'"When Mike asked" = interruption → the ongoing action uses Past Continuous: were singing.'},
-{type:'mc',topic:'all',col:'#D0021B',pts:20,q:'Doctor Q\'s robot spoke really ___ — the neighbours could hear it.',opts:['loud','loudly','louder','loudness'],ans:1,exp:'After a verb we need an adverb: loudly (= in a loud way).'},
-{type:'mc',topic:'all',col:'#D0021B',pts:20,q:'I ___ nervously and she ___ carefully the whole time.',opts:['talked / listened','was talking / was listening','talked / was listening','was talking / listened'],ans:1,exp:'Two simultaneous ongoing past actions → both Past Continuous.'},
-{type:'mc',topic:'all',col:'#D0021B',pts:20,q:'He answered all the questions about the diary ___.',opts:['correct','correctly','more correct','correction'],ans:1,exp:'After a verb we need an adverb: correctly. "Correct" is an adjective.'},
-{type:'mc',topic:'all',col:'#D0021B',pts:20,q:'What ___ she ___ when the smoke alarm went off?',opts:['did / do','was / doing','did / doing','was / did'],ans:1,exp:'Past Continuous question: What was + subject + doing?'},
-{type:'mc',topic:'all',col:'#D0021B',pts:20,q:'My mum ___ her head as she ___ into the car.',opts:['hit / was getting','was hitting / got','hit / got','was hitting / was getting'],ans:1,exp:'Short sudden injury (hit) = Past Simple; ongoing action in progress (was getting) = Past Continuous.'},
-{type:'mc',topic:'all',col:'#D0021B',pts:20,q:'She read the warning ___ and her voice shook.',opts:['nervous','nervously','more nervous','nervousness'],ans:1,exp:'After a verb we need an adverb of manner: nervously.'},
-{type:'mc',topic:'all',col:'#D0021B',pts:20,q:'He got up, ___ quickly and ran to catch the taxi.',opts:['dress','dressed','was dressing','dressing'],ans:1,exp:'A sequence of completed past actions → all Past Simple.'},
+{type:'mc',topic:'all',col:'#D0021B',pts:20,q:'While the technician ___ the server, the whole network went down.',opts:['restarted','restarts','was restarting','is restarting'],ans:2,exp:'"While" + an ongoing background action interrupted by a sudden event → Past Continuous.'},
+{type:'mc',topic:'all',col:'#D0021B',pts:20,q:'He tiptoed ___ into the library so he wouldn\'t disturb anyone.',opts:['quiet','quietness','quieter','quietly'],ans:3,exp:'After a verb we need an adverb of manner: quietly.'},
+{type:'mc',topic:'all',col:'#D0021B',pts:20,q:'The students ___ their essays when the fire alarm went off.',opts:['wrote','were writing','write','have written'],ans:1,exp:'"When the fire alarm went off" = interruption → the ongoing action uses Past Continuous: were writing.'},
+{type:'mc',topic:'all',col:'#D0021B',pts:20,q:'The soloist performed really ___ at the opening night.',opts:['brilliant','brilliantly','brilliance','more brilliant'],ans:1,exp:'After a verb we need an adverb: brilliantly (= in a brilliant way).'},
+{type:'mc',topic:'all',col:'#D0021B',pts:20,q:'I ___ to him for an hour while he ___ carefully the whole time.',opts:['talked / listened','was talking / was listening','talked / was listening','was talking / listened'],ans:1,exp:'Two simultaneous ongoing past actions → both Past Continuous.'},
+{type:'mc',topic:'all',col:'#D0021B',pts:20,q:'He explained his idea so ___ that everyone agreed with him.',opts:['persuasive','persuasively','more persuasive','persuasion'],ans:1,exp:'After a verb we need an adverb: persuasively. "Persuasive" is an adjective.'},
+{type:'mc',topic:'all',col:'#D0021B',pts:20,q:'What ___ she ___ when the earthquake struck?',opts:['did / do','was / doing','did / doing','was / did'],ans:1,exp:'Past Continuous question: What was + subject + doing?'},
+{type:'mc',topic:'all',col:'#D0021B',pts:20,q:'The alarm ___ when the intruder ___ through the window.',opts:['rang / was climbing','was ringing / climbed','rings / climbed','rang / climbed'],ans:1,exp:'Ongoing background action (alarm ringing) + sudden completed action (climbed through) → PC + PS.'},
+{type:'mc',topic:'all',col:'#D0021B',pts:20,q:'She told the story so ___ that everyone stopped and listened.',opts:['compelling','compelled','compellingly','compulsion'],ans:2,exp:'After a verb we need an adverb: compellingly (= in a compelling, powerful way).'},
+{type:'mc',topic:'all',col:'#D0021B',pts:20,q:'He jumped out of bed, ___ quickly and rushed to the hospital.',opts:['dress','dressed','was dressing','dressing'],ans:1,exp:'A sequence of completed past actions → all Past Simple.'},
 
-// ===== GAP =====
-// PS — A2
-{type:'gap',topic:'ps',col:'#4A90E2',pts:15,before:'The campers',after:'the diary in turns.',verb:'read',ans:'read',exp:'"Read" is irregular. The Past Simple form is also "read" (but pronounced /rɛd/). Completed past action.'},
-{type:'gap',topic:'ps',col:'#4A90E2',pts:15,before:'She',after:'a souvenir from the market in Crete.',verb:'buy',ans:'bought',exp:'"Buy" is irregular: buy → bought.'},
-{type:'gap',topic:'ps',col:'#4A90E2',pts:15,before:'They',after:'their friends at the campfire.',verb:'meet',ans:'met',exp:'"Meet" is irregular: meet → met.'},
-{type:'gap',topic:'ps',col:'#4A90E2',pts:15,before:'George',after:'his phone on the umbrella arm.',verb:'hit',ans:'hit',exp:'"Hit" is irregular — the Past Simple form is also "hit". Completed past action.'},
-{type:'gap',topic:'ps',col:'#4A90E2',pts:15,before:'I',after:'the marshmallows from the cupboard.',verb:'take',ans:'took',exp:'"Take" is irregular: take → took.'},
-// PS — B1
-{type:'gap',topic:'ps',col:'#4A90E2',pts:20,before:'Jodie',after:'to score a basket but hurt her ankle instead.',verb:'try',ans:'tried',exp:'Regular verb with -y ending: try → tried. Completed past action.'},
-{type:'gap',topic:'ps',col:'#4A90E2',pts:20,before:'He',after:'to everyone at the camp but nobody believed him.',verb:'speak',ans:'spoke',exp:'"Speak" is irregular: speak → spoke.'},
-{type:'gap',topic:'ps',col:'#4A90E2',pts:20,before:'They',after:'in Crete for two weeks before exploring the old towns.',verb:'stay',ans:'stayed',exp:'Regular verb: stay → stayed. A completed period of past activity.'},
-{type:'gap',topic:'ps',col:'#4A90E2',pts:20,before:'She',after:'the local food every day — she loved it.',verb:'try',ans:'tried',exp:'Regular verb with -y ending: try → tried. Repeated completed past action.'},
-{type:'gap',topic:'ps',col:'#4A90E2',pts:20,before:'The basketball team',after:'34–21 when Jodie got the ball.',verb:'win',ans:'was winning',exp:'Score at a moment in the past = ongoing situation → Past Continuous: was winning.'},
+{type:'gap',topic:'ps',col:'#4A90E2',pts:15,before:'The teacher',after:'our idea for the school trip.',verb:'reject',ans:'rejected',exp:'Regular verb: reject → rejected. Completed past action.'},
+{type:'gap',topic:'ps',col:'#4A90E2',pts:15,before:'She',after:'all her pocket money into a new piggy bank.',verb:'put',ans:'put',exp:'"Put" is irregular — the Past Simple form is also "put". Completed past action.'},
+{type:'gap',topic:'ps',col:'#4A90E2',pts:15,before:'The rescue team',after:'the injured hiker after a two-day search.',verb:'find',ans:'found',exp:'"Find" is irregular: find → found.'},
+{type:'gap',topic:'ps',col:'#4A90E2',pts:15,before:'He',after:'the wrong turn and ended up completely lost.',verb:'take',ans:'took',exp:'"Take" is irregular: take → took.'},
+{type:'gap',topic:'ps',col:'#4A90E2',pts:15,before:'The company',after:'a record number of products last quarter.',verb:'sell',ans:'sold',exp:'"Sell" is irregular: sell → sold.'},
+{type:'gap',topic:'ps',col:'#4A90E2',pts:20,before:'She',after:'her essay three times before her teacher was happy with it.',verb:'rewrite',ans:'rewrote',exp:'"Rewrite" is irregular: write → wrote, so rewrite → rewrote. Completed repeated past action.'},
+{type:'gap',topic:'ps',col:'#4A90E2',pts:20,before:'He',after:'to every classmate but no one wanted to swap seats.',verb:'speak',ans:'spoke',exp:'"Speak" is irregular: speak → spoke.'},
+{type:'gap',topic:'ps',col:'#4A90E2',pts:20,before:'The fans',after:'outside the stadium for three hours before the gates opened.',verb:'stand',ans:'stood',exp:'"Stand" is irregular: stand → stood. A completed period of activity in the past.'},
+{type:'gap',topic:'ps',col:'#4A90E2',pts:20,before:'The athlete',after:'the world record by almost two full seconds.',verb:'break',ans:'broke',exp:'"Break" is irregular: break → broke.'},
+{type:'gap',topic:'ps',col:'#4A90E2',pts:20,before:'The teacher',after:'our science project and asked us a few questions.',verb:'inspect',ans:'inspected',exp:'Regular verb: inspect → inspected. Completed past activity.'},
 
-// PC — A2
-{type:'gap',topic:'pc',col:'#50E3C2',pts:15,before:'She',after:'to music when Mike called her name.',verb:'listen',ans:'was listening',exp:'Ongoing action interrupted → Past Continuous: was listening.'},
-{type:'gap',topic:'pc',col:'#50E3C2',pts:15,before:'They',after:'songs around the campfire all evening.',verb:'sing',ans:'were singing',exp:'Action in progress over a period → Past Continuous: were singing.'},
-{type:'gap',topic:'pc',col:'#50E3C2',pts:15,before:'The robot',after:'loudly when Pi walked in.',verb:'talk',ans:'was talking',exp:'Background ongoing action → Past Continuous: was talking.'},
-{type:'gap',topic:'pc',col:'#50E3C2',pts:15,before:'It',after:'heavily when the Nicholsons left for the airport.',verb:'rain',ans:'was raining',exp:'"When they left" = the interruption → the ongoing action is Past Continuous.'},
-{type:'gap',topic:'pc',col:'#50E3C2',pts:15,before:'Arlo',after:'through the park when a dog ran out.',verb:'cycle',ans:'was cycling',exp:'Ongoing action interrupted → Past Continuous: was cycling.'},
-// PC — B1
-{type:'gap',topic:'pc',col:'#50E3C2',pts:20,before:'He',after:'so fast on his bike that he couldn\'t stop in time.',verb:'ride',ans:'was riding',exp:'Ongoing action that explains what happened → Past Continuous: was riding.'},
-{type:'gap',topic:'pc',col:'#50E3C2',pts:20,before:'While the campers',after:'the dishes, someone turned on the guitar.',verb:'wash',ans:'were washing',exp:'Ongoing background action → Past Continuous: were washing.'},
-{type:'gap',topic:'pc',col:'#50E3C2',pts:20,before:'Two boys',after:'loudly at the back of the tent when the counsellor arrived.',verb:'talk',ans:'were talking',exp:'Ongoing action caught in progress → Past Continuous: were talking.'},
-{type:'gap',topic:'pc',col:'#50E3C2',pts:20,before:'She',after:'so nervously that her hands shook.',verb:'read',ans:'was reading',exp:'Ongoing action in the past + its consequence → Past Continuous: was reading.'},
-{type:'gap',topic:'pc',col:'#50E3C2',pts:20,before:'I could tell he',after:'— he kept looking at the screen.',verb:'wait',ans:'was waiting',exp:'Ongoing background state in the past → Past Continuous: was waiting.'},
+{type:'gap',topic:'pc',col:'#50E3C2',pts:15,before:'She',after:'to the radio when the breaking news came on.',verb:'listen',ans:'was listening',exp:'Ongoing action interrupted → Past Continuous: was listening.'},
+{type:'gap',topic:'pc',col:'#50E3C2',pts:15,before:'The neighbours',after:'loudly when someone knocked on the wall.',verb:'argue',ans:'were arguing',exp:'Action in progress interrupted → Past Continuous: were arguing.'},
+{type:'gap',topic:'pc',col:'#50E3C2',pts:15,before:'The dog',after:'at the door when the postman arrived.',verb:'scratch',ans:'was scratching',exp:'Background ongoing action → Past Continuous: was scratching.'},
+{type:'gap',topic:'pc',col:'#50E3C2',pts:15,before:'It',after:'heavily when the match finally started.',verb:'rain',ans:'was raining',exp:'"When the match started" = the interruption → the ongoing action is Past Continuous.'},
+{type:'gap',topic:'pc',col:'#50E3C2',pts:15,before:'She',after:'an important email when her laptop battery died.',verb:'write',ans:'was writing',exp:'Ongoing action interrupted → Past Continuous: was writing.'},
+{type:'gap',topic:'pc',col:'#50E3C2',pts:20,before:'He',after:'so recklessly that he lost control on the bend.',verb:'drive',ans:'was driving',exp:'Ongoing action that explains what happened → Past Continuous: was driving.'},
+{type:'gap',topic:'pc',col:'#50E3C2',pts:20,before:'While we',after:'our lines for the play, someone opened the door and spoiled the surprise.',verb:'rehearse',ans:'were rehearsing',exp:'Ongoing background action interrupted by a sudden event → Past Continuous.'},
+{type:'gap',topic:'pc',col:'#50E3C2',pts:20,before:'Two passengers',after:'very loudly at the back when the driver pulled over.',verb:'talk',ans:'were talking',exp:'Ongoing action caught in progress → Past Continuous: were talking.'},
+{type:'gap',topic:'pc',col:'#50E3C2',pts:20,before:'She',after:'so confidently that everyone thought she had done it before.',verb:'speak',ans:'was speaking',exp:'Ongoing action in the past + its impression → Past Continuous: was speaking.'},
+{type:'gap',topic:'pc',col:'#50E3C2',pts:20,before:'I could tell the team',after:'— nobody made eye contact.',verb:'hide something',ans:'was hiding something',exp:'Ongoing background state in the past → Past Continuous: was hiding something.'},
 
-// ADV — A2
-{type:'gap',topic:'adv',col:'#F5A623',pts:15,before:'He turned the remote control on',after:'— it was very old.',verb:'careful',ans:'carefully',exp:'"Careful" → "carefully". Most adjectives form adverbs by adding -ly.'},
-{type:'gap',topic:'adv',col:'#F5A623',pts:15,before:'The camp leader played the guitar so',after:'that everyone stopped talking.',verb:'beautiful',ans:'beautifully',exp:'"Beautiful" → "beautifully".'},
-{type:'gap',topic:'adv',col:'#F5A623',pts:15,before:'Please walk more',after:'— Arlo\'s ankle is still hurting.',verb:'slow',ans:'slowly',exp:'"Slow" → "slowly".'},
-{type:'gap',topic:'adv',col:'#F5A623',pts:15,before:'She looked at the warning',after:'and put the book down.',verb:'nervous',ans:'nervously',exp:'"Nervous" → "nervously" (regular -ly adverb).'},
-{type:'gap',topic:'adv',col:'#F5A623',pts:15,before:'He trained very',after:'all summer to win the championship.',verb:'hard',ans:'hard',exp:'"Hard" is already an adverb. "Hardly" means "almost not" — a completely different word!'},
-// ADV — B1
-{type:'gap',topic:'adv',col:'#F5A623',pts:20,before:'The robot',after:'repeated the same phrase all morning.',verb:'annoy',ans:'annoyingly',exp:'"Annoy" → "annoying" → "annoyingly" = in an annoying way.'},
-{type:'gap',topic:'adv',col:'#F5A623',pts:20,before:'She handled the snack-maker situation',after:'despite the noise.',verb:'patient',ans:'patiently',exp:'"Patient" → "patiently" = calmly and without complaining.'},
-{type:'gap',topic:'adv',col:'#F5A623',pts:20,before:'He responded to every question',after:'and with a big smile.',verb:'calm',ans:'calmly',exp:'"Calm" → "calmly". Adverb of manner modifying "responded".'},
-{type:'gap',topic:'adv',col:'#F5A623',pts:20,before:'The athlete',after:'crossed the finish line first.',verb:'decisive',ans:'decisively',exp:'"Decisive" → "decisively" = in a clear, confident way.'},
-{type:'gap',topic:'adv',col:'#F5A623',pts:20,before:'She explained how to use the hairdryer',after:'so everyone understood.',verb:'clear',ans:'clearly',exp:'"Clear" → "clearly". Adverb modifying "explained".'},
+{type:'gap',topic:'adv',col:'#F5A623',pts:15,before:'He walked up to the microphone',after:'and started to sing.',verb:'confident',ans:'confidently',exp:'"Confident" → "confidently". Most adjectives form adverbs by adding -ly.'},
+{type:'gap',topic:'adv',col:'#F5A623',pts:15,before:'She explained the rules so',after:'that even the youngest players understood.',verb:'clear',ans:'clearly',exp:'"Clear" → "clearly".'},
+{type:'gap',topic:'adv',col:'#F5A623',pts:15,before:'Please speak more',after:'. I can barely hear you.',verb:'slow',ans:'slowly',exp:'"Slow" → "slowly".'},
+{type:'gap',topic:'adv',col:'#F5A623',pts:15,before:'He stared at her',after:'and refused to apologise.',verb:'cold',ans:'coldly',exp:'"Cold" → "coldly" (regular -ly adverb).'},
+{type:'gap',topic:'adv',col:'#F5A623',pts:15,before:'She trains very',after:'— six days a week, no exceptions.',verb:'hard',ans:'hard',exp:'"Hard" is already an adverb. "Hardly" means "almost not" — a completely different word!'},
+{type:'gap',topic:'adv',col:'#F5A623',pts:20,before:'She',after:'asked her mum the same question.',verb:'repeat',ans:'repeatedly',exp:'"Repeat" → "repeatedly" = again and again.'},
+{type:'gap',topic:'adv',col:'#F5A623',pts:20,before:'She waited',after:'even though the queue was very long.',verb:'patient',ans:'patiently',exp:'"Patient" → "patiently" = without getting angry or upset.'},
+{type:'gap',topic:'adv',col:'#F5A623',pts:20,before:'He answered every question',after:'and without rushing.',verb:'calm',ans:'calmly',exp:'"Calm" → "calmly". Adverb of manner modifying "answered".'},
+{type:'gap',topic:'adv',col:'#F5A623',pts:20,before:'The team',after:'overtook their rivals in the final lap.',verb:'decisive',ans:'decisively',exp:'"Decisive" → "decisively" = in a clear, definitive way.'},
+{type:'gap',topic:'adv',col:'#F5A623',pts:20,before:'He checked every answer',after:'before handing in his test.',verb:'thorough',ans:'thoroughly',exp:'"Thorough" → "thoroughly" = completely and in detail.'},
 
-// ALL — mix
-{type:'gap',topic:'all',col:'#D0021B',pts:25,before:'While I',after:'to the old house, I found a strange diary.',verb:'walk',ans:'was walking',exp:'"While" + ongoing background action → Past Continuous.'},
-{type:'gap',topic:'all',col:'#D0021B',pts:25,before:'She closed the cupboard',after:'so nobody would hear her.',verb:'quiet',ans:'quietly',exp:'Completed action + adverb of manner: quietly.'},
-{type:'gap',topic:'all',col:'#D0021B',pts:25,before:'The whole camp',after:'songs around the fire beautifully.',verb:'sing',ans:'sang',exp:'Completed past event → Past Simple: sang (irregular). "Beautifully" is the adverb of manner.'},
-{type:'gap',topic:'all',col:'#D0021B',pts:25,before:'I',after:'nervously towards the dark hall while the others waited.',verb:'walk',ans:'was walking',exp:'Ongoing action → Past Continuous: was walking. "Nervously" is the adverb of manner.'},
-{type:'gap',topic:'all',col:'#D0021B',pts:25,before:'The family',after:'carefully around the old town all afternoon.',verb:'explore',ans:'explored',exp:'Completed period of past activity → Past Simple: explored.'},
-{type:'gap',topic:'all',col:'#D0021B',pts:25,before:'The crowd',after:'wildly when the campers came on stage.',verb:'cheer',ans:'cheered',exp:'Past Simple: cheered. "Wildly" is the adverb of manner.'},
-{type:'gap',topic:'all',col:'#D0021B',pts:25,before:'He',after:'carefully through the diary while his friends waited.',verb:'read',ans:'was reading',exp:'Ongoing action with simultaneous background situation → Past Continuous: was reading.'},
-{type:'gap',topic:'all',col:'#D0021B',pts:25,before:'She',after:'the question really well — the counsellor was impressed.',verb:'answer',ans:'answered',exp:'Completed past action → Past Simple. "Really well" is the adverb phrase.'},
-{type:'gap',topic:'all',col:'#D0021B',pts:25,before:'I',after:'loudly because Mike\'s guitar was so loud.',verb:'speak',ans:'was speaking',exp:'Ongoing situation in the past → Past Continuous: was speaking.'},
-{type:'gap',topic:'all',col:'#D0021B',pts:25,before:'The snack-maker was',after:'tested and carefully repaired.',verb:'thorough',ans:'thoroughly',exp:'"Thorough" → "thoroughly" = completely and in detail.'},
+{type:'gap',topic:'all',col:'#D0021B',pts:25,before:'While I',after:'through the crowded station, someone grabbed my bag.',verb:'walk',ans:'was walking',exp:'"While" + ongoing background action → Past Continuous.'},
+{type:'gap',topic:'all',col:'#D0021B',pts:25,before:'She closed the laptop',after:'so the person next to her couldn\'t see the screen.',verb:'quick',ans:'quickly',exp:'Completed action + adverb of manner: quickly.'},
+{type:'gap',topic:'all',col:'#D0021B',pts:25,before:'The whole audience',after:'when the conductor walked onto the stage.',verb:'stand',ans:'stood',exp:'Completed past event → Past Simple: stood (irregular). Simultaneous with applause.'},
+{type:'gap',topic:'all',col:'#D0021B',pts:25,before:'I',after:'nervously outside the classroom while my name was called.',verb:'sit',ans:'was sitting',exp:'Ongoing action → Past Continuous: was sitting. "Nervously" is the adverb of manner.'},
+{type:'gap',topic:'all',col:'#D0021B',pts:25,before:'The volunteers',after:'tirelessly for twelve hours to clear the flood damage.',verb:'work',ans:'worked',exp:'Completed period of past activity → Past Simple: worked.'},
+{type:'gap',topic:'all',col:'#D0021B',pts:25,before:'The crowd',after:'wildly when the final whistle blew.',verb:'cheer',ans:'cheered',exp:'Past Simple: cheered. "Wildly" is the adverb of manner.'},
+{type:'gap',topic:'all',col:'#D0021B',pts:25,before:'He',after:'carefully through the letter while his friend waited.',verb:'read',ans:'was reading',exp:'Ongoing action with simultaneous background situation → Past Continuous: was reading.'},
+{type:'gap',topic:'all',col:'#D0021B',pts:25,before:'She',after:'the question so well that everyone started clapping.',verb:'answer',ans:'answered',exp:'Completed past action → Past Simple. Adverb "so well" modifies the verb.'},
+{type:'gap',topic:'all',col:'#D0021B',pts:25,before:'I',after:'too loudly on the phone because the connection was so bad.',verb:'speak',ans:'was speaking',exp:'Ongoing situation in the past → Past Continuous: was speaking.'},
+{type:'gap',topic:'all',col:'#D0021B',pts:25,before:'Her project was',after:'prepared — she had checked every single detail.',verb:'thorough',ans:'thoroughly',exp:'"Thorough" → "thoroughly" = completely and in detail.'},
 
-// ===== WO =====
-// PS — A2
-{type:'wo',topic:'ps',col:'#4A90E2',pts:20,words:['She','explored','an','old','town','last','Tuesday','.'],ans:'She explored an old town last Tuesday .',exp:'Past Simple: subject + verb + object + time expression.'},
-{type:'wo',topic:'ps',col:'#4A90E2',pts:20,words:['Did','he','go','snorkelling','yesterday','?'],ans:'Did he go snorkelling yesterday ?',exp:'Past Simple question: Did + subject + base verb.'},
-{type:'wo',topic:'ps',col:'#4A90E2',pts:20,words:['They','did','not','try','the','local','food','.'],ans:'They did not try the local food .',exp:'Past Simple negative: did not + base verb.'},
-{type:'wo',topic:'ps',col:'#4A90E2',pts:20,words:['Where','did','she','go','after','the','accident','?'],ans:'Where did she go after the accident ?',exp:'Wh-question in Past Simple: Wh + did + subject + base verb.'},
-{type:'wo',topic:'ps',col:'#4A90E2',pts:20,words:['I','met','my','campmates','by','the','fire','on','Saturday','.'],ans:'I met my campmates by the fire on Saturday .',exp:'Past Simple with irregular verb: meet → met.'},
-// PS — B1
-{type:'wo',topic:'ps',col:'#4A90E2',pts:25,words:['She','tried','the','local','food',',','didn\'t','she','?'],ans:'She tried the local food , didn\'t she ?',exp:'Question tag after positive Past Simple: didn\'t + subject?'},
-{type:'wo',topic:'ps',col:'#4A90E2',pts:25,words:['How','long','did','it','take','to','hike','to','the','top','?'],ans:'How long did it take to hike to the top ?',exp:'Wh-question with "how long" in Past Simple.'},
-{type:'wo',topic:'ps',col:'#4A90E2',pts:25,words:['The','basketball','team','didn\'t','play','the','way','they','expected','.'],ans:'The basketball team didn\'t play the way they expected .',exp:'Past Simple negative in a complex sentence.'},
-{type:'wo',topic:'ps',col:'#4A90E2',pts:25,words:['Nobody','told','me','the','old','house','was','so','dark','.'],ans:'Nobody told me the old house was so dark .',exp:'Past Simple with indirect speech structure.'},
-{type:'wo',topic:'ps',col:'#4A90E2',pts:25,words:['It','turned','out','George','had','already','dropped','his','phone','.'],ans:'It turned out George had already dropped his phone .',exp:'Past Simple "turned out" + past perfect.'},
+{type:'wo',topic:'ps',col:'#4A90E2',pts:20,words:['She','moved','to','a','new','school','last','Friday','.'],ans:'She moved to a new school last Friday .',exp:'Past Simple: subject + verb + prepositional phrase + time expression.'},
+{type:'wo',topic:'ps',col:'#4A90E2',pts:20,words:['Did','he','send','the','message','before','the','lesson','?'],ans:'Did he send the message before the lesson ?',exp:'Past Simple question: Did + subject + base verb.'},
+{type:'wo',topic:'ps',col:'#4A90E2',pts:20,words:['They','did','not','receive','any','reply','to','their','message','.'],ans:'They did not receive any reply to their message .',exp:'Past Simple negative: did not + base verb.'},
+{type:'wo',topic:'ps',col:'#4A90E2',pts:20,words:['Where','did','the','path','lead','in','the','end','?'],ans:'Where did the path lead in the end ?',exp:'Wh-question in Past Simple: Wh + did + subject + base verb.'},
+{type:'wo',topic:'ps',col:'#4A90E2',pts:20,words:['I','ran','into','an','old','classmate','at','the','shopping','centre','.'],ans:'I ran into an old classmate at the shopping centre .',exp:'Past Simple with irregular verb: run → ran.'},
+{type:'wo',topic:'ps',col:'#4A90E2',pts:25,words:['She','sang','her','song','brilliantly',',','didn\'t','she','?'],ans:'She sang her song brilliantly , didn\'t she ?',exp:'Question tag after positive Past Simple: didn\'t + subject?'},
+{type:'wo',topic:'ps',col:'#4A90E2',pts:25,words:['How','long','did','it','take','to','rebuild','the','bridge','?'],ans:'How long did it take to rebuild the bridge ?',exp:'Wh-question with "how long" in Past Simple.'},
+{type:'wo',topic:'ps',col:'#4A90E2',pts:25,words:['The','team','didn\'t','win','the','match','the','way','anyone','expected','.'],ans:'The team didn\'t win the match the way anyone expected .',exp:'Past Simple negative in a complex sentence.'},
+{type:'wo',topic:'ps',col:'#4A90E2',pts:25,words:['Nobody','warned','me','the','road','was','going','to','be','that','steep','.'],ans:'Nobody warned me the road was going to be that steep .',exp:'Past Simple with reporting structure.'},
+{type:'wo',topic:'ps',col:'#4A90E2',pts:25,words:['It','turned','out','she\'d','already','done','the','homework','.'],ans:'It turned out she\'d already done the homework .',exp:'Past Simple "turned out" + contracted past perfect.'},
 
-// PC — A2
-{type:'wo',topic:'pc',col:'#50E3C2',pts:20,words:['She','was','reading','the','old','diary','by','the','fire','.'],ans:'She was reading the old diary by the fire .',exp:'Past Continuous: subject + was/were + verb-ing.'},
-{type:'wo',topic:'pc',col:'#50E3C2',pts:20,words:['Were','they','singing','songs','at','the','campfire','?'],ans:'Were they singing songs at the campfire ?',exp:'Past Continuous question: Were + subject + verb-ing?'},
-{type:'wo',topic:'pc',col:'#50E3C2',pts:20,words:['He','was','not','paying','attention','to','the','road','.'],ans:'He was not paying attention to the road .',exp:'Past Continuous negative: was not + verb-ing.'},
-{type:'wo',topic:'pc',col:'#50E3C2',pts:20,words:['What','were','you','doing','at','noon','on','Sunday','?'],ans:'What were you doing at noon on Sunday ?',exp:'Wh-question in Past Continuous.'},
-{type:'wo',topic:'pc',col:'#50E3C2',pts:20,words:['While','I','was','washing','up',',','she','was','putting','dishes','away','.'],ans:'While I was washing up , she was putting dishes away .',exp:'Two simultaneous background past actions → both Past Continuous.'},
-// PC — B1
-{type:'wo',topic:'pc',col:'#50E3C2',pts:25,words:['They','were','singing','noisily','when','the','camp','leader','walked','in','.'],ans:'They were singing noisily when the camp leader walked in .',exp:'Past Continuous (ongoing action) + adverb + interrupted by Past Simple.'},
+{type:'wo',topic:'pc',col:'#50E3C2',pts:20,words:['She','was','reading','a','book','when','her','phone','rang','.'],ans:'She was reading a book when her phone rang .',exp:'Past Continuous interrupted by Past Simple.'},
+{type:'wo',topic:'pc',col:'#50E3C2',pts:20,words:['Were','the','kids','playing','in','the','garden','?'],ans:'Were the kids playing in the garden ?',exp:'Past Continuous question: Were + subject + verb-ing?'},
+{type:'wo',topic:'pc',col:'#50E3C2',pts:20,words:['He','was','not','paying','attention','during','the','lesson','.'],ans:'He was not paying attention during the lesson .',exp:'Past Continuous negative: was not + verb-ing.'},
+{type:'wo',topic:'pc',col:'#50E3C2',pts:20,words:['What','were','you','working','on','at','three','o\'clock','?'],ans:'What were you working on at three o\'clock ?',exp:'Wh-question in Past Continuous.'},
+{type:'wo',topic:'pc',col:'#50E3C2',pts:20,words:['While','I','was','cooking',',','she','was','setting','the','table','.'],ans:'While I was cooking , she was setting the table .',exp:'Two simultaneous background past actions → both Past Continuous.'},
+{type:'wo',topic:'pc',col:'#50E3C2',pts:25,words:['They','were','arguing','heatedly','when','the','teacher','walked','in','.'],ans:'They were arguing heatedly when the teacher walked in .',exp:'Past Continuous + adverb + interrupted by Past Simple.'},
 {type:'wo',topic:'pc',col:'#50E3C2',pts:25,words:['Why','were','you','whispering','so','nervously','?'],ans:'Why were you whispering so nervously ?',exp:'Wh-question in Past Continuous with adverb of manner.'},
 {type:'wo',topic:'pc',col:'#50E3C2',pts:25,words:['She','was','clearly','struggling',',','but','she','refused','any','help','.'],ans:'She was clearly struggling , but she refused any help .',exp:'Past Continuous with adverb + contrast with Past Simple.'},
-{type:'wo',topic:'pc',col:'#50E3C2',pts:25,words:['He','wasn\'t','watching','the','road',',','was','he','?'],ans:'He wasn\'t watching the road , was he ?',exp:'Question tag after negative Past Continuous: was he?'},
-{type:'wo',topic:'pc',col:'#50E3C2',pts:25,words:['I','was','waiting','impatiently','while','she','was','looking','for','the','remote','.'],ans:'I was waiting impatiently while she was looking for the remote .',exp:'Two simultaneous PC actions with adverb of manner.'},
+{type:'wo',topic:'pc',col:'#50E3C2',pts:25,words:['He','wasn\'t','paying','attention',',','was','he','?'],ans:'He wasn\'t paying attention , was he ?',exp:'Question tag after negative Past Continuous: was he?'},
+{type:'wo',topic:'pc',col:'#50E3C2',pts:25,words:['I','was','waiting','impatiently','while','she','was','chatting','to','her','friend','.'],ans:'I was waiting impatiently while she was chatting to her friend .',exp:'Two simultaneous PC actions with adverb of manner.'},
 
-// ADV — A2
-{type:'wo',topic:'adv',col:'#F5A623',pts:20,words:['Mike','played','the','guitar','very','well','.'],ans:'Mike played the guitar very well .',exp:'Adverb of manner after the verb phrase. "Well" is the adverb of "good".'},
-{type:'wo',topic:'adv',col:'#F5A623',pts:20,words:['She','finished','the','washing-up','quickly','.'],ans:'She finished the washing-up quickly .',exp:'Adverb of manner at the end of the sentence.'},
-{type:'wo',topic:'adv',col:'#F5A623',pts:20,words:['They','explored','the','old','town','happily','all','day','.'],ans:'They explored the old town happily all day .',exp:'Adverb of manner after the verb.'},
-{type:'wo',topic:'adv',col:'#F5A623',pts:20,words:['Please','turn','on','the','robot','more','carefully','.'],ans:'Please turn on the robot more carefully .',exp:'Comparative adverb: more + adverb. Imperative structure.'},
-{type:'wo',topic:'adv',col:'#F5A623',pts:20,words:['He','trained','really','hard','every','day','that','summer','.'],ans:'He trained really hard every day that summer .',exp:'"Hard" is already an adverb. "Really" is the degree adverb.'},
-// ADV — B1
-{type:'wo',topic:'adv',col:'#F5A623',pts:25,words:['She','handled','the','robot','remarkably','patiently','.'],ans:'She handled the robot remarkably patiently .',exp:'"Remarkably" (degree adverb) modifies "patiently" (manner adverb). Both follow the verb phrase.'},
-{type:'wo',topic:'adv',col:'#F5A623',pts:25,words:['She','spoke','surprisingly','confidently','for','her','first','campfire','story','.'],ans:'She spoke surprisingly confidently for her first campfire story .',exp:'"Surprisingly" modifies "confidently". Both are adverbs placed after the verb.'},
-{type:'wo',topic:'adv',col:'#F5A623',pts:25,words:['He','consistently','forgot','to','plug','in','the','toaster','.'],ans:'He consistently forgot to plug in the toaster .',exp:'"Consistently" is in mid-position, before the main verb.'},
-{type:'wo',topic:'adv',col:'#F5A623',pts:25,words:['She','apologised','quietly','for','pushing','the','wrong','button','.'],ans:'She apologised quietly for pushing the wrong button .',exp:'"Quietly" modifies "apologised". Adverb placed after an intransitive verb.'},
-{type:'wo',topic:'adv',col:'#F5A623',pts:25,words:['The','story','was','told','nervously','but','clearly','.'],ans:'The story was told nervously but clearly .',exp:'Two manner adverbs in parallel structure after the passive verb.'},
+{type:'wo',topic:'adv',col:'#F5A623',pts:20,words:['He','explained','the','rules','very','clearly','.'],ans:'He explained the rules very clearly .',exp:'Adverb of manner after the verb phrase. "Very" is a degree adverb.'},
+{type:'wo',topic:'adv',col:'#F5A623',pts:20,words:['She','finished','the','exercise','quickly','and','without','any','mistakes','.'],ans:'She finished the exercise quickly and without any mistakes .',exp:'Adverb of manner after the verb.'},
+{type:'wo',topic:'adv',col:'#F5A623',pts:20,words:['They','celebrated','their','win','noisily','in','the','street','.'],ans:'They celebrated their win noisily in the street .',exp:'Adverb of manner after the verb.'},
+{type:'wo',topic:'adv',col:'#F5A623',pts:20,words:['Please','drive','more','carefully','on','the','motorway','.'],ans:'Please drive more carefully on the motorway .',exp:'Comparative adverb: more + adverb. Imperative structure.'},
+{type:'wo',topic:'adv',col:'#F5A623',pts:20,words:['He','works','really','hard','and','never','complains','.'],ans:'He works really hard and never complains .',exp:'"Hard" is already an adverb. "Really" is the degree adverb.'},
+{type:'wo',topic:'adv',col:'#F5A623',pts:25,words:['She','answered','the','question','remarkably','calmly','.'],ans:'She answered the question remarkably calmly .',exp:'"Remarkably" (degree adverb) modifies "calmly" (manner adverb).'},
+{type:'wo',topic:'adv',col:'#F5A623',pts:25,words:['She','performed','surprisingly','confidently','for','someone','so','young','.'],ans:'She performed surprisingly confidently for someone so young .',exp:'"Surprisingly" modifies "confidently". Both are adverbs placed after the verb.'},
+{type:'wo',topic:'adv',col:'#F5A623',pts:25,words:['He','consistently','underestimated','how','long','homework','would','take','.'],ans:'He consistently underestimated how long homework would take .',exp:'"Consistently" is in mid-position, before the main verb.'},
+{type:'wo',topic:'adv',col:'#F5A623',pts:25,words:['She','apologised','sincerely','for','what','had','happened','.'],ans:'She apologised sincerely for what had happened .',exp:'"Sincerely" modifies "apologised". Adverb placed after an intransitive verb.'},
+{type:'wo',topic:'adv',col:'#F5A623',pts:25,words:['The','poem','was','read','flawlessly','and','passionately','.'],ans:'The poem was read flawlessly and passionately .',exp:'Two manner adverbs in parallel structure after the passive verb.'},
 
-// ALL — mix
-{type:'wo',topic:'all',col:'#D0021B',pts:30,words:['I','was','cycling','slowly','home','when','the','dog','appeared','.'],ans:'I was cycling slowly home when the dog appeared .',exp:'Past Continuous + adverb of manner, interrupted by Past Simple.'},
-{type:'wo',topic:'all',col:'#D0021B',pts:30,words:['She','sang','happily','at','the','campfire','last','night','.'],ans:'She sang happily at the campfire last night .',exp:'Past Simple + adverb of manner.'},
-{type:'wo',topic:'all',col:'#D0021B',pts:30,words:['They','were','talking','loudly','when','the','camp','leader','arrived','.'],ans:'They were talking loudly when the camp leader arrived .',exp:'Past Continuous + adverb + interrupted by Past Simple.'},
-{type:'wo',topic:'all',col:'#D0021B',pts:30,words:['She','ran','fast','to','get','on','the','boat','trip','.'],ans:'She ran fast to get on the boat trip .',exp:'Past Simple + "fast" as adverb (no -ly needed).'},
-{type:'wo',topic:'all',col:'#D0021B',pts:30,words:['He','was','reading','nervously','when','the','last','page','fell','out','.'],ans:'He was reading nervously when the last page fell out .',exp:'Past Continuous + manner adverb, interrupted by Past Simple.'},
-{type:'wo',topic:'all',col:'#D0021B',pts:30,words:['Did','she','read','the','warning','clearly','enough','to','understand','it','?'],ans:'Did she read the warning clearly enough to understand it ?',exp:'Past Simple question + "clearly enough" (adverb + degree word).'},
-{type:'wo',topic:'all',col:'#D0021B',pts:30,words:['He','was','walking','nervously','while','she','calmly','read','the','diary','.'],ans:'He was walking nervously while she calmly read the diary .',exp:'Two simultaneous past actions with different adverbs of manner.'},
-{type:'wo',topic:'all',col:'#D0021B',pts:30,words:['She','consistently','packed','everything','neatly','before','every','trip','.'],ans:'She consistently packed everything neatly before every trip .',exp:'Past Simple + mid-position adverb + end-position adverb.'},
-{type:'wo',topic:'all',col:'#D0021B',pts:30,words:['What','were','they','whispering','so','secretively','about','?'],ans:'What were they whispering so secretively about ?',exp:'Past Continuous question + degree + manner adverb.'},
-{type:'wo',topic:'all',col:'#D0021B',pts:30,words:['I','woke','up',',','dressed','quickly','and','ran','to','the','campfire','.'],ans:'I woke up , dressed quickly and ran to the campfire .',exp:'Sequence of Past Simple actions with adverb of manner in the middle.'},
+{type:'wo',topic:'all',col:'#D0021B',pts:30,words:['I','was','walking','quickly','through','the','park','when','it','started','to','rain','.'],ans:'I was walking quickly through the park when it started to rain .',exp:'Past Continuous + adverb of manner, interrupted by Past Simple.'},
+{type:'wo',topic:'all',col:'#D0021B',pts:30,words:['She','sang','brilliantly','at','the','concert','last','week','.'],ans:'She sang brilliantly at the concert last week .',exp:'Past Simple + adverb of manner.'},
+{type:'wo',topic:'all',col:'#D0021B',pts:30,words:['They','were','arguing','loudly','when','their','teacher','walked','in','.'],ans:'They were arguing loudly when their teacher walked in .',exp:'Past Continuous + adverb + interrupted by Past Simple.'},
+{type:'wo',topic:'all',col:'#D0021B',pts:30,words:['She','ran','fast','to','catch','the','last','train','.'],ans:'She ran fast to catch the last train .',exp:'Past Simple + "fast" as adverb (no -ly needed).'},
+{type:'wo',topic:'all',col:'#D0021B',pts:30,words:['He','was','speaking','nervously','when','his','voice','suddenly','cracked','.'],ans:'He was speaking nervously when his voice suddenly cracked .',exp:'Past Continuous + manner adverb, interrupted by Past Simple.'},
+{type:'wo',topic:'all',col:'#D0021B',pts:30,words:['Did','she','explain','everything','clearly','enough','for','the','class','to','understand','?'],ans:'Did she explain everything clearly enough for the class to understand ?',exp:'Past Simple question + "clearly enough" (adverb + degree word).'},
+{type:'wo',topic:'all',col:'#D0021B',pts:30,words:['He','was','pacing','nervously','while','she','calmly','read','the','instructions','.'],ans:'He was pacing nervously while she calmly read the instructions .',exp:'Two simultaneous past actions with different adverbs of manner.'},
+{type:'wo',topic:'all',col:'#D0021B',pts:30,words:['She','consistently','outperformed','everyone','in','her','class','.'],ans:'She consistently outperformed everyone in her class .',exp:'Past Simple + mid-position adverb.'},
+{type:'wo',topic:'all',col:'#D0021B',pts:30,words:['What','were','they','whispering','so','urgently','about','?'],ans:'What were they whispering so urgently about ?',exp:'Past Continuous question + degree + manner adverb.'},
+{type:'wo',topic:'all',col:'#D0021B',pts:30,words:['I','woke','up',',','got','dressed','quickly','and','rushed','to','the','airport','.'],ans:'I woke up , got dressed quickly and rushed to the airport .',exp:'Sequence of Past Simple actions with adverb of manner in the middle.'},
 
-// ===== OOO =====
-// PS
-{type:'ooo',topic:'ps',col:'#4A90E2',pts:15,q:'Which word is NOT in the Past Simple?',opts:['went','explored','swims','bought'],ans:2,exp:'"Swims" is Present Simple (3rd person). Went, explored, bought are all Past Simple forms.'},
-{type:'ooo',topic:'ps',col:'#4A90E2',pts:15,q:'Which is NOT a Past Simple time expression?',opts:['last Tuesday','a week ago','yesterday afternoon','right now'],ans:3,exp:'"Right now" = present. The others all signal a completed past action.'},
-{type:'ooo',topic:'ps',col:'#4A90E2',pts:15,q:'Which verb is NOT irregular in Past Simple?',opts:['go','see','camp','eat'],ans:2,exp:'"Camp" is regular: camp → camped. Go, see, eat are all irregular.'},
-{type:'ooo',topic:'ps',col:'#4A90E2',pts:15,q:'Which sentence is grammatically CORRECT?',opts:['Did she went snorkelling?','She didn\'t went camping.','She went hiking, didn\'t she?','He didn\'t explored the town.'],ans:2,exp:'"Didn\'t she?" is the correct question tag after positive Past Simple. The others use wrong verb forms.'},
+{type:'ooo',topic:'ps',col:'#4A90E2',pts:15,q:'Which word is NOT in the Past Simple?',opts:['finished','inspected','submits','rejected'],ans:2,exp:'"Submits" is Present Simple (3rd person). Finished, inspected, rejected are all Past Simple forms.'},
+{type:'ooo',topic:'ps',col:'#4A90E2',pts:15,q:'Which is NOT a Past Simple time expression?',opts:['last Tuesday','a fortnight ago','yesterday morning','at the moment'],ans:3,exp:'"At the moment" = present. The others all signal a completed past action.'},
+{type:'ooo',topic:'ps',col:'#4A90E2',pts:15,q:'Which verb is NOT irregular in Past Simple?',opts:['break','choose','launch','steal'],ans:2,exp:'"Launch" is regular: launch → launched. Break, choose, steal are all irregular.'},
+{type:'ooo',topic:'ps',col:'#4A90E2',pts:15,q:'Which sentence is grammatically CORRECT?',opts:['Did she went to the party?','She didn\'t danced.','She danced, didn\'t she?','He didn\'t arrived.'],ans:2,exp:'"Didn\'t she?" is the correct question tag after positive Past Simple. The others use wrong verb forms.'},
 {type:'ooo',topic:'ps',col:'#4A90E2',pts:15,q:'Which word does NOT belong with Past Simple?',opts:['did','was','were','does'],ans:3,exp:'"Does" is present tense. Did, was, were are all past forms.'},
-// PC
-{type:'ooo',topic:'pc',col:'#50E3C2',pts:20,q:'Which verb CANNOT be used in Past Continuous?',opts:['cycle','think (= reflect)','own','argue'],ans:2,exp:'"Own" is a stative verb (possession). Stative verbs have no continuous form. "I was owning a hairdryer" is incorrect.'},
-{type:'ooo',topic:'pc',col:'#50E3C2',pts:20,q:'Which auxiliary is WRONG for Past Continuous?',opts:['I was','She was','They were','He were'],ans:3,exp:'"He were" is wrong. He/she/it → was. We/you/they → were.'},
-{type:'ooo',topic:'pc',col:'#50E3C2',pts:20,q:'Which time expression fits Past Continuous BEST?',opts:['at 9 o\'clock last night','last Monday','in 2010','two weeks ago'],ans:0,exp:'"At 9 o\'clock last night" = a specific ongoing moment → Past Continuous. The others are general past times.'},
-{type:'ooo',topic:'pc',col:'#50E3C2',pts:20,q:'Which sentence uses Past Continuous CORRECTLY?',opts:['She was cook dinner.','They were play football.','He was reading the diary.','We was camping.'],ans:2,exp:'"He was reading the diary" is correct: was + verb-ING. Cook→cooking, play→playing, was→were (we).'},
-{type:'ooo',topic:'pc',col:'#50E3C2',pts:20,q:'Which stative verb is INCORRECTLY used in continuous?',opts:['She was reconsidering her plan.','He was feeling nervous.','They were owning a games console.','I was wondering what to say.'],ans:2,exp:'"Own" (possession) is always stative — no continuous form. "Feel", "reconsider", "wonder" can be used in continuous.'},
-// ADV
-{type:'ooo',topic:'adv',col:'#F5A623',pts:15,q:'Which word is NOT an adverb of manner?',opts:['quickly','carefully','noisily','noisy'],ans:3,exp:'"Noisy" is an adjective. Quickly, carefully, noisily are all adverbs of manner.'},
-{type:'ooo',topic:'adv',col:'#F5A623',pts:15,q:'Which word is NOT an adverb?',opts:['loudly','happily','friendly','quietly'],ans:2,exp:'"Friendly" is an adjective, not an adverb. We don\'t say "she spoke friendly."'},
-{type:'ooo',topic:'adv',col:'#F5A623',pts:15,q:'Which sentence uses the adverb CORRECTLY?',opts:['She sang beautiful.','He spoke to me angry.','They worked hard all day.','I ran fastly to the bus.'],ans:2,exp:'"Worked hard" is correct. Beautiful→beautifully, angry→angrily, fastly doesn\'t exist.'},
-{type:'ooo',topic:'adv',col:'#F5A623',pts:15,q:'Which word is an adjective, NOT an adverb?',opts:['well','badly','beautiful','carefully'],ans:2,exp:'"Beautiful" is an adjective. The correct adverb is "beautifully". Well, badly, carefully are adverbs.'},
-{type:'ooo',topic:'adv',col:'#F5A623',pts:15,q:'Which sentence has a grammar error?',opts:['She spoke clearly and confidently.','They worked quickly and noisily.','He answered correctly and honest.','She smiled warmly and genuinely.'],ans:2,exp:'"Honest" is an adjective. In a parallel list, use adverb + adverb: correctly and honestly.'},
-// ALL
-{type:'ooo',topic:'all',col:'#D0021B',pts:20,q:'Which sentence is CORRECT?',opts:['She was singing beautiful.','He spoke to her angry.','They ran fast to the exit.','I worked hardly all week.'],ans:2,exp:'"Ran fast" is correct — fast is already an adverb. Beautiful→beautifully, angry→angrily, hardly≠hard.'},
-{type:'ooo',topic:'all',col:'#D0021B',pts:20,q:'Which sentence uses Past Continuous CORRECTLY?',opts:['I was eat dinner.','She were cooking.','They was playing.','He was watching the campfire.'],ans:3,exp:'"He was watching the campfire" is correct. eat→eating, were→was (she), was→were (they).'},
-{type:'ooo',topic:'all',col:'#D0021B',pts:20,q:'Which is NOT a past tense form?',opts:['was hiking','explored','went','is snorkelling'],ans:3,exp:'"Is snorkelling" is Present Continuous. The others are all past tense forms.'},
-{type:'ooo',topic:'all',col:'#D0021B',pts:20,q:'Which adverb is used INCORRECTLY?',opts:['He cycled recklessly.','She answered nervously.','They late arrived.','He spoke unexpectedly calmly.'],ans:2,exp:'"Late arrived" is wrong word order. Correct: "They arrived late." Adverbs of time go after the verb.'},
-{type:'ooo',topic:'all',col:'#D0021B',pts:20,q:'Which sentence correctly combines PS + adverb of manner?',opts:['She sudden stopped.','He walked slow to the tent.','They finished the boat trip quickly.','I runned fast.'],ans:2,exp:'"Finished quickly" is correct. Sudden→suddenly, slow→slowly, runned→ran.'},
 
-// ===== ERR =====
-// PS — A2
-{type:'err',topic:'ps',col:'#BD10E0',pts:20,sentence:['She','goed','snorkelling','every','day','in','Crete','.'],errIdx:1,fix:'went',exp:'"Go" is irregular: go → went. ❌ "Goed" doesn\'t exist.'},
-{type:'err',topic:'ps',col:'#BD10E0',pts:20,sentence:['They','did','not','explored','the','old','town','.'],errIdx:3,fix:'explore',exp:'After "did not" always use the base verb: did not explore.'},
-{type:'err',topic:'ps',col:'#BD10E0',pts:20,sentence:['I','buyed','a','souvenir','at','the','market','.'],errIdx:1,fix:'bought',exp:'"Buy" is irregular: buy → bought. ❌ "Buyed" doesn\'t exist.'},
-{type:'err',topic:'ps',col:'#BD10E0',pts:20,sentence:['Did','she','went','on','the','boat','trip','?'],errIdx:2,fix:'go',exp:'After "did" always use the base verb: Did she go?'},
-{type:'err',topic:'ps',col:'#BD10E0',pts:20,sentence:['We','was','really','lucky','to','find','the','old','diary','.'],errIdx:1,fix:'were',exp:'"Was" is for I/he/she/it. "We" needs "were".'},
-// PS — B1
-{type:'err',topic:'ps',col:'#BD10E0',pts:25,sentence:['She','read','the','last','page','nervous','and','her','voice','shook','.'],errIdx:5,fix:'nervously',exp:'After a verb we need an adverb: nervous → nervously.'},
-{type:'err',topic:'ps',col:'#BD10E0',pts:25,sentence:['He','didn\'t','called','anyone','after','the','accident','.'],errIdx:2,fix:'call',exp:'After "didn\'t" always use the base verb: didn\'t call.'},
-{type:'err',topic:'ps',col:'#BD10E0',pts:25,sentence:['The','team','played','for','three','quarters','and','the','crowd','react','loudly','.'],errIdx:9,fix:'reacted',exp:'Parallel past actions in a sequence → both Past Simple: played … and reacted.'},
-{type:'err',topic:'ps',col:'#BD10E0',pts:25,sentence:['She','speaked','to','everyone','at','the','campfire','.'],errIdx:1,fix:'spoke',exp:'"Speak" is irregular: speak → spoke. ❌ "Speaked" doesn\'t exist.'},
+{type:'ooo',topic:'pc',col:'#50E3C2',pts:20,q:'Which verb CANNOT be used in Past Continuous?',opts:['talk','run','own','laugh'],ans:2,exp:'"Own" is a stative verb (possession). Stative verbs have no continuous form. "I was owning" is incorrect.'},
+{type:'ooo',topic:'pc',col:'#50E3C2',pts:20,q:'Which auxiliary is WRONG for Past Continuous?',opts:['I was','She was','They were','He were'],ans:3,exp:'"He were" is wrong. He/she/it → was. We/you/they → were.'},
+{type:'ooo',topic:'pc',col:'#50E3C2',pts:20,q:'Which time expression fits Past Continuous BEST?',opts:['at half past three yesterday','last April','in 2012','two months ago'],ans:0,exp:'"At half past three yesterday" = a specific ongoing moment → Past Continuous.'},
+{type:'ooo',topic:'pc',col:'#50E3C2',pts:20,q:'Which sentence uses Past Continuous CORRECTLY?',opts:['She was cook the dinner.','They were play football.','He was reviewing the files.','We was waiting.'],ans:2,exp:'"He was reviewing the files" is correct: was + verb-ING. Cook→cooking, play→playing, was→were (we).'},
+{type:'ooo',topic:'pc',col:'#50E3C2',pts:20,q:'Which stative verb is INCORRECTLY used in continuous?',opts:['She was thinking about her answer.','He was feeling nervous.','They were owning a big dog.','I was wondering what to say.'],ans:2,exp:'"Own" (possession/state) is stative — no continuous form. "Think", "feel", "wonder" can be used in continuous.'},
+
+{type:'ooo',topic:'adv',col:'#F5A623',pts:15,q:'Which word is NOT an adverb of manner?',opts:['quickly','loudly','carefully','careful'],ans:3,exp:'"Careful" is an adjective. Quickly, loudly, carefully are all adverbs of manner.'},
+{type:'ooo',topic:'adv',col:'#F5A623',pts:15,q:'Which word is NOT an adverb?',opts:['loudly','happily','friendly','quietly'],ans:2,exp:'"Friendly" is an adjective, not an adverb. We don\'t say "she smiled friendly."'},
+{type:'ooo',topic:'adv',col:'#F5A623',pts:15,q:'Which sentence uses the adverb CORRECTLY?',opts:['She read the book quiet.','He answered the question angry.','They worked hard all week.','I ran fastly to catch the bus.'],ans:2,exp:'"Worked hard" is correct. Quiet→quietly, angry→angrily, fastly doesn\'t exist.'},
+{type:'ooo',topic:'adv',col:'#F5A623',pts:15,q:'Which word is an adjective, NOT an adverb?',opts:['well','badly','thorough','carefully'],ans:2,exp:'"Thorough" is an adjective. The correct adverb is "thoroughly". Well, badly, carefully are adverbs.'},
+{type:'ooo',topic:'adv',col:'#F5A623',pts:15,q:'Which sentence has a grammar error?',opts:['She spoke clearly and confidently.','They worked quickly and efficiently.','He answered correctly and honest.','She smiled warmly and genuinely.'],ans:2,exp:'"Honest" is an adjective. In a parallel list, use adverb + adverb: correctly and honestly.'},
+
+{type:'ooo',topic:'all',col:'#D0021B',pts:20,q:'Which sentence is CORRECT?',opts:['She was singing brilliant.','He spoke to his teacher angry.','They finished the project quickly.','I worked hardly all week.'],ans:2,exp:'"Finished quickly" is correct. Brilliant→brilliantly, angry→angrily, hardly≠hard.'},
+{type:'ooo',topic:'all',col:'#D0021B',pts:20,q:'Which sentence uses Past Continuous CORRECTLY?',opts:['I was eat lunch.','She were typing.','They was meeting.','He was writing a message.'],ans:3,exp:'"He was writing a message" is correct. eat→eating, were→was (she), was→were (they).'},
+{type:'ooo',topic:'all',col:'#D0021B',pts:20,q:'Which is NOT a past tense form?',opts:['was playing','finished','broke','is reviewing'],ans:3,exp:'"Is reviewing" is Present Continuous. The others are all past tense forms.'},
+{type:'ooo',topic:'all',col:'#D0021B',pts:20,q:'Which adverb is used INCORRECTLY?',opts:['He drove recklessly.','She answered hesitantly.','They late arrived.','He spoke unexpectedly calmly.'],ans:2,exp:'"Late arrived" is wrong word order. Correct: "They arrived late." Adverbs of time go after the verb.'},
+{type:'ooo',topic:'all',col:'#D0021B',pts:20,q:'Which sentence correctly combines PS + adverb of manner?',opts:['She sudden stopped.','He walked slow to the exit.','They completed the task efficiently.','I runned fast.'],ans:2,exp:'"Completed efficiently" is correct. Sudden→suddenly, slow→slowly, runned→ran.'},
+
+{type:'err',topic:'ps',col:'#BD10E0',pts:20,sentence:['She','goed','to','the','wrong','terminal','and','missed','her','flight','.'],errIdx:1,fix:'went',exp:'"Go" is irregular: go → went. ❌ "Goed" doesn\'t exist.'},
+{type:'err',topic:'ps',col:'#BD10E0',pts:20,sentence:['They','did','not','submitted','their','homework','on','time','.'],errIdx:3,fix:'submit',exp:'After "did not" always use the base verb: did not submit.'},
+{type:'err',topic:'ps',col:'#BD10E0',pts:20,sentence:['The','kids','builded','a','sandcastle','in','just','ten','minutes','.'],errIdx:2,fix:'built',exp:'"Build" is irregular: build → built. ❌ "Builded" doesn\'t exist.'},
+{type:'err',topic:'ps',col:'#BD10E0',pts:20,sentence:['Did','your','sister','went','to','the','party','last','night','?'],errIdx:3,fix:'go',exp:'After "did" always use the base verb: Did your sister go?'},
+{type:'err',topic:'ps',col:'#BD10E0',pts:20,sentence:['The','whole','team','was','exhausted','after','the','presentation','.'],errIdx:3,fix:'were',exp:'"Was" is for I/he/she/it. "The whole team" is plural here → "were".'},
+{type:'err',topic:'ps',col:'#BD10E0',pts:25,sentence:['She','delivered','the','speech','brilliant','and','received','a','standing','ovation','.'],errIdx:3,fix:'brilliantly',exp:'After a verb we need an adverb: brilliant → brilliantly.'},
+{type:'err',topic:'ps',col:'#BD10E0',pts:25,sentence:['She','didn\'t','called','a','single','friend','on','her','birthday','.'],errIdx:2,fix:'call',exp:'After "didn\'t" always use the base verb: didn\'t call.'},
+{type:'err',topic:'ps',col:'#BD10E0',pts:25,sentence:['The','crowd','cheered','loudly','and','the','players','react','with','disbelief','.'],errIdx:7,fix:'reacted',exp:'Parallel past actions in a sequence → both Past Simple: cheered … and reacted.'},
+{type:'err',topic:'ps',col:'#BD10E0',pts:25,sentence:['She','speaked','to','her','teacher','after','the','lesson','.'],errIdx:1,fix:'spoke',exp:'"Speak" is irregular: speak → spoke. ❌ "Speaked" doesn\'t exist.'},
 {type:'err',topic:'ps',col:'#BD10E0',pts:25,sentence:['Nobody','told','me',',','didn\'t','they','?'],errIdx:4,fix:'did',exp:'Question tag after a negative sentence uses a positive auxiliary: "Nobody told me, did they?"'},
 
-// PC — A2
-{type:'err',topic:'pc',col:'#BD10E0',pts:20,sentence:['I','were','watching','the','campfire','at','9pm','.'],errIdx:1,fix:'was',exp:'"Were" is for you/we/they. "I" needs "was".'},
-{type:'err',topic:'pc',col:'#BD10E0',pts:20,sentence:['She','was','sleep','when','the','fire','alarm','went','off','.'],errIdx:2,fix:'sleeping',exp:'Past Continuous = was/were + verb-ING: was sleeping.'},
-{type:'err',topic:'pc',col:'#BD10E0',pts:20,sentence:['They','was','playing','basketball','when','it','started','to','rain','.'],errIdx:1,fix:'were',exp:'"Was" is for I/he/she/it. "They" needs "were".'},
-{type:'err',topic:'pc',col:'#BD10E0',pts:20,sentence:['He','was','cycle','through','the','park','when','the','dog','appeared','.'],errIdx:2,fix:'cycling',exp:'Past Continuous = was/were + verb-ING: was cycling.'},
-{type:'err',topic:'pc',col:'#BD10E0',pts:20,sentence:['What','was','you','doing','when','the','accident','happened','?'],errIdx:1,fix:'were',exp:'"Was" is for I/he/she/it. "You" needs "were".'},
-// PC — B1
-{type:'err',topic:'pc',col:'#BD10E0',pts:25,sentence:['They','were','know','the','way','to','the','old','house','all','along','.'],errIdx:2,fix:'knew',exp:'"Know" is a stative verb — no continuous form. Use Past Simple: "They knew the way."'},
-{type:'err',topic:'pc',col:'#BD10E0',pts:25,sentence:['She','was','clearly','struggle','with','the','heavy','suitcase','.'],errIdx:3,fix:'struggling',exp:'Past Continuous = was/were + verb-ING: was struggling.'},
-{type:'err',topic:'pc',col:'#BD10E0',pts:25,sentence:['He','wasn\'t','pay','attention','when','he','fell','off','his','bike','.'],errIdx:2,fix:'paying',exp:'Past Continuous = was/were + verb-ING: wasn\'t paying.'},
-{type:'err',topic:'pc',col:'#BD10E0',pts:25,sentence:['While','she','practised',',','he','was','reading','the','diary','.'],errIdx:2,fix:'was practising',exp:'Two simultaneous ongoing past actions → both Past Continuous: "While she was practising…"'},
-{type:'err',topic:'pc',col:'#BD10E0',pts:25,sentence:['She','was','understanding','the','instructions','perfectly','by','then','.'],errIdx:1,fix:'understood',exp:'"Understand" is a stative verb — no continuous form. Use Past Simple: "She understood the instructions."'},
+{type:'err',topic:'pc',col:'#BD10E0',pts:20,sentence:['I','were','watching','a','film','when','the','call','came','.'],errIdx:1,fix:'was',exp:'"Were" is for you/we/they. "I" needs "was".'},
+{type:'err',topic:'pc',col:'#BD10E0',pts:20,sentence:['She','was','sleep','in','the','departure','lounge','when','they','called','her','name','.'],errIdx:2,fix:'sleeping',exp:'Past Continuous = was/were + verb-ING: was sleeping.'},
+{type:'err',topic:'pc',col:'#BD10E0',pts:20,sentence:['They','was','playing','in','the','garden','when','the','rain','started','.'],errIdx:1,fix:'were',exp:'"Was" is for I/he/she/it. "They" needs "were".'},
+{type:'err',topic:'pc',col:'#BD10E0',pts:20,sentence:['He','was','argue','with','the','referee','when','the','second','card','came','.'],errIdx:2,fix:'arguing',exp:'Past Continuous = was/were + verb-ING: was arguing.'},
+{type:'err',topic:'pc',col:'#BD10E0',pts:20,sentence:['What','was','you','doing','when','the','alarm','went','off','?'],errIdx:1,fix:'were',exp:'"Was" is for I/he/she/it. "You" needs "were".'},
+{type:'err',topic:'pc',col:'#BD10E0',pts:25,sentence:['They','were','know','the','answer','the','whole','time','but','said','nothing','.'],errIdx:2,fix:'knew',exp:'"Know" is a stative verb — no continuous form. Use Past Simple: "They knew the answer."'},
+{type:'err',topic:'pc',col:'#BD10E0',pts:25,sentence:['She','was','clearly','struggle','under','the','pressure','of','the','deadline','.'],errIdx:3,fix:'struggling',exp:'Past Continuous = was/were + verb-ING: was struggling.'},
+{type:'err',topic:'pc',col:'#BD10E0',pts:25,sentence:['He','wasn\'t','pay','attention','when','the','most','important','part','was','announced','.'],errIdx:2,fix:'paying',exp:'Past Continuous = was/were + verb-ING: wasn\'t paying.'},
+{type:'err',topic:'pc',col:'#BD10E0',pts:25,sentence:['While','she','was','practising',',','everyone','else','was','chatting','loud','.'],errIdx:9,fix:'loudly',exp:'After a verb, use an adverb: loud → loudly.'},
+{type:'err',topic:'pc',col:'#BD10E0',pts:25,sentence:['She','understood','the','grammar','rule','perfect','by','the','end','of','the','lesson','.'],errIdx:5,fix:'perfectly',exp:'After a verb, use an adverb: perfect → perfectly. "Understood" is already the correct Past Simple.'},
 
-// ADV — A2
-{type:'err',topic:'adv',col:'#BD10E0',pts:20,sentence:['She','read','the','warning','very','quiet','.'],errIdx:5,fix:'quietly',exp:'After a verb, use an adverb: quiet → quietly.'},
-{type:'err',topic:'adv',col:'#BD10E0',pts:20,sentence:['He','ran','fastly','to','catch','the','boat','.'],errIdx:2,fix:'fast',exp:'"Fast" is already an adverb. ❌ "Fastly" doesn\'t exist.'},
-{type:'err',topic:'adv',col:'#BD10E0',pts:20,sentence:['They','sang','beautiful','around','the','campfire','.'],errIdx:2,fix:'beautifully',exp:'After a verb, use an adverb: beautiful → beautifully.'},
-{type:'err',topic:'adv',col:'#BD10E0',pts:20,sentence:['She','smiled','happy','when','she','found','the','souvenir','.'],errIdx:2,fix:'happily',exp:'After a verb, use an adverb: happy → happily.'},
-{type:'err',topic:'adv',col:'#BD10E0',pts:20,sentence:['He','played','the','guitar','at','the','campfire','good','.'],errIdx:7,fix:'well',exp:'The adverb of "good" is "well": he played well.'},
-// ADV — B1
-{type:'err',topic:'adv',col:'#BD10E0',pts:25,sentence:['She','trained','hardly','every','day','to','win','the','championship','.'],errIdx:2,fix:'hard',exp:'"Hardly" = almost not. "Hard" = with effort. She trained hard → she put in great effort.'},
-{type:'err',topic:'adv',col:'#BD10E0',pts:25,sentence:['He','didn\'t','hardly','say','anything','around','the','campfire','.'],errIdx:2,fix:'hardly',exp:'"Didn\'t hardly" is a double negative. Use: "He hardly said anything."'},
-{type:'err',topic:'adv',col:'#BD10E0',pts:25,sentence:['She','answered','every','question','about','the','diary','correct','.'],errIdx:7,fix:'correctly',exp:'After a verb, use an adverb: correct → correctly.'},
-{type:'err',topic:'adv',col:'#BD10E0',pts:25,sentence:['The','children','sat','patient','through','the','ceremony','.'],errIdx:3,fix:'patiently',exp:'"Patiently" (adverb) modifies the verb "sat". "Patient" is an adjective.'},
-{type:'err',topic:'adv',col:'#BD10E0',pts:25,sentence:['He','played','the','guitar','sincere','and','with','real','feeling','.'],errIdx:4,fix:'sincerely',exp:'"Sincerely" is the adverb form. "Sincere" is an adjective and cannot modify the verb "played".'},
+{type:'err',topic:'adv',col:'#BD10E0',pts:20,sentence:['She','explained','her','idea','very','clear','.'],errIdx:4,fix:'clearly',exp:'After a verb, use an adverb: clear → clearly.'},
+{type:'err',topic:'adv',col:'#BD10E0',pts:20,sentence:['He','ran','fastly','across','the','pitch','to','celebrate','.'],errIdx:2,fix:'fast',exp:'"Fast" is already an adverb. ❌ "Fastly" doesn\'t exist.'},
+{type:'err',topic:'adv',col:'#BD10E0',pts:20,sentence:['They','performed','beautiful','in','front','of','thousands','of','people','.'],errIdx:2,fix:'beautifully',exp:'After a verb, use an adverb: beautiful → beautifully.'},
+{type:'err',topic:'adv',col:'#BD10E0',pts:20,sentence:['She','smiled','confident','at','the','camera','and','walked','off','stage','.'],errIdx:2,fix:'confidently',exp:'After a verb, use an adverb: confident → confidently.'},
+{type:'err',topic:'adv',col:'#BD10E0',pts:20,sentence:['She','did','the','whole','presentation','good','.'],errIdx:4,fix:'well',exp:'The adverb of "good" is "well": she did it well.'},
+{type:'err',topic:'adv',col:'#BD10E0',pts:25,sentence:['She','trained','hardly','for','months','to','win','the','competition','.'],errIdx:2,fix:'hard',exp:'"Hardly" = almost not. "Hard" = with effort. She trained hard → she put in great effort.'},
+{type:'err',topic:'adv',col:'#BD10E0',pts:25,sentence:['He','didn\'t','hardly','say','a','word','during','the','whole','lesson','.'],errIdx:2,fix:'hardly',exp:'"Didn\'t hardly" is a double negative. Use: "He hardly said a word."'},
+{type:'err',topic:'adv',col:'#BD10E0',pts:25,sentence:['She','answered','every','question','on','the','exam','correct','.'],errIdx:7,fix:'correctly',exp:'After a verb, use an adverb: correct → correctly.'},
+{type:'err',topic:'adv',col:'#BD10E0',pts:25,sentence:['She','spoke','sincere','and','everyone','in','the','room','was','moved','.'],errIdx:2,fix:'sincerely',exp:'"Sincerely" is the adverb form. "Sincere" is an adjective and cannot modify the verb "spoke".'},
 
-// ALL — mix
-{type:'err',topic:'all',col:'#BD10E0',pts:30,sentence:['While','she','was','brilliant','reading',',','everyone','listened','in','silence','.'],errIdx:3,fix:'brilliantly',exp:'"Brilliantly" (adverb) modifies "reading" (verb form). "Brilliant" is an adjective.'},
-{type:'err',topic:'all',col:'#BD10E0',pts:30,sentence:['She','was','cycling','graceful','when','the','dog','appeared','.'],errIdx:3,fix:'gracefully',exp:'Adverb of manner modifies the verb "cycling": graceful → gracefully.'},
-{type:'err',topic:'all',col:'#BD10E0',pts:30,sentence:['They','were','talk','loudly','when','the','counsellor','walked','in','.'],errIdx:2,fix:'talking',exp:'Past Continuous = was/were + verb-ING: were talking.'},
-{type:'err',topic:'all',col:'#BD10E0',pts:30,sentence:['I','woke','up',',','packed','quick','and','ran','to','the','taxi','.'],errIdx:5,fix:'quickly',exp:'After a verb, use an adverb: quick → quickly.'},
-{type:'err',topic:'all',col:'#BD10E0',pts:30,sentence:['She','was','obvious','struggling',',','but','she','refused','to','stop','.'],errIdx:2,fix:'obviously',exp:'"Obviously" (adverb) modifies "struggling" (verb). "Obvious" is an adjective.'},
-{type:'err',topic:'all',col:'#BD10E0',pts:30,sentence:['He','runned','out','of','the','tent','and','fell','over','the','rope','.'],errIdx:1,fix:'ran',exp:'"Run" is irregular: run → ran. ❌ "Runned" doesn\'t exist.'},
-{type:'err',topic:'all',col:'#BD10E0',pts:30,sentence:['They','was','laughing','so','loud','that','the','whole','camp','woke','up','.'],errIdx:1,fix:'were',exp:'"They" needs "were", not "was".'},
-{type:'err',topic:'all',col:'#BD10E0',pts:30,sentence:['She','sang','graceful','all','evening','around','the','campfire','.'],errIdx:2,fix:'gracefully',exp:'After a verb, use an adverb: graceful → gracefully.'},
-{type:'err',topic:'all',col:'#BD10E0',pts:30,sentence:['Did','she','sang','at','the','campfire','last','night','?'],errIdx:2,fix:'sing',exp:'After "did" always use the base verb: Did she sing?'},
-{type:'err',topic:'all',col:'#BD10E0',pts:30,sentence:['We','were','walk','quietly','so','we','wouldn\'t','wake','the','camp','.'],errIdx:2,fix:'walking',exp:'Past Continuous = was/were + verb-ING: were walking.'},
+{type:'err',topic:'all',col:'#BD10E0',pts:30,sentence:['While','she','was','brilliant','singing',',','the','whole','crowd','fell','silent','.'],errIdx:3,fix:'brilliantly',exp:'"Brilliantly" (adverb) modifies "singing" (verb form). "Brilliant" is an adjective.'},
+{type:'err',topic:'all',col:'#BD10E0',pts:30,sentence:['She','was','walking','graceful','along','the','corridor','when','someone','called','her','name','.'],errIdx:3,fix:'gracefully',exp:'Adverb of manner modifies the verb "walking": graceful → gracefully.'},
+{type:'err',topic:'all',col:'#BD10E0',pts:30,sentence:['They','were','talk','loudly','when','the','teacher','walked','in','.'],errIdx:2,fix:'talking',exp:'Past Continuous = was/were + verb-ING: were talking.'},
+{type:'err',topic:'all',col:'#BD10E0',pts:30,sentence:['I','woke','up','late',',','packed','quick','and','rushed','out','the','door','.'],errIdx:6,fix:'quickly',exp:'After a verb, use an adverb: quick → quickly.'},
+{type:'err',topic:'all',col:'#BD10E0',pts:30,sentence:['She','was','obvious','struggling',',','but','she','refused','to','ask','for','help','.'],errIdx:2,fix:'obviously',exp:'"Obviously" (adverb) modifies "struggling" (verb). "Obvious" is an adjective.'},
+{type:'err',topic:'all',col:'#BD10E0',pts:30,sentence:['He','runned','out','of','the','building','and','flagged','down','a','taxi','.'],errIdx:1,fix:'ran',exp:'"Run" is irregular: run → ran. ❌ "Runned" doesn\'t exist.'},
+{type:'err',topic:'all',col:'#BD10E0',pts:30,sentence:['They','was','laughing','so','loud','that','the','whole','class','could','hear','them','.'],errIdx:1,fix:'were',exp:'"They" needs "were", not "was".'},
+{type:'err',topic:'all',col:'#BD10E0',pts:30,sentence:['She','danced','graceful','all','evening','and','stole','the','show','.'],errIdx:2,fix:'gracefully',exp:'After a verb, use an adverb: graceful → gracefully.'},
+{type:'err',topic:'all',col:'#BD10E0',pts:30,sentence:['Did','the','choir','sang','at','the','school','concert','?'],errIdx:3,fix:'sing',exp:'After "did" always use the base verb: Did they sing?'},
+{type:'err',topic:'all',col:'#BD10E0',pts:30,sentence:['We','were','walk','quietly','past','the','classroom','so','no','one','would','notice','.'],errIdx:2,fix:'walking',exp:'Past Continuous = was/were + verb-ING: were walking.'},
 
-// ===== READ =====
-{type:'read',topic:'ps',col:'#9013FE',pts:30,text:'Last summer, the campers finished dinner early. In the kitchen, one girl and her friend did the washing up carefully in the big sink. Then some campmates put the dishes away tidily. Mike, the camp leader, started playing his guitar outside. One by one, everyone sat down happily and sang songs.',q:'Retell the story in your own words. Use at least FOUR Past Simple verbs.',example:'They finished dinner, did the washing up, put the dishes away. Mike started playing guitar. Everyone sat down and sang.'},
-{type:'read',topic:'ps',col:'#9013FE',pts:30,text:'Arlo was cycling in the park yesterday afternoon. Some kids were playing football nearby, so he wasn\'t paying attention. While he was watching the match, a dog ran in front of him. He fell off his bike. He broke his arm, hurt his back and cut his knee. It was really painful.',q:'What happened to Arlo? Find FOUR Past Simple verbs that describe completed actions.',example:'Ran, fell, broke, hurt, cut — all Past Simple. These are sudden completed actions, not ongoing ones.'},
-{type:'read',topic:'pc',col:'#9013FE',pts:30,text:'When Mike walked back to the campfire, the scene was lively. Two boys were arguing loudly near the tent. Three girls were singing a song and clapping. One camper was standing by the fire, looking nervously at the old diary. Nobody noticed Mike at first.',q:'Describe THREE things that were happening when Mike arrived. Why is Past Continuous used here?',example:'"Were arguing", "were singing", "was standing" — Past Continuous shows ongoing background actions at the exact moment of interruption.'},
-{type:'read',topic:'pc',col:'#9013FE',pts:30,text:'At four o\'clock yesterday, Emma and George were hanging out in the park. Adrianna was there too! She was filming a new video with a film crew. The cameramen were eating sandwiches and Adrianna wasn\'t busy. George talked to her and took some photos.',q:'What was happening at four o\'clock? Find THREE Past Continuous verbs and explain what they show.',example:'"Were hanging out", "was filming", "were eating" — PC shows simultaneous ongoing actions at that moment.'},
-{type:'read',topic:'adv',col:'#9013FE',pts:30,text:'Doctor Q turned on his old robot carefully. It spoke quietly at first, then louder and louder. Pi said it was talking too loudly. Doctor Q explained patiently that the robot was simply saying hello. The robot then walked slowly towards Pi and said politely: "Hello! I\'m CX-546."',q:'Find FOUR adverbs of manner. What does each one modify?',example:'carefully (turned on), quietly (spoke), loudly (talking), patiently (explained), slowly (walked), politely (said). Each modifies a verb.'},
-{type:'read',topic:'adv',col:'#9013FE',pts:30,text:'"Hard" and "hardly" look similar but mean completely different things. "He trained hard all summer" means he put in great effort. "He hardly trained" means he did almost nothing. Watch out for "good" and "well" too — "She plays well" is correct; "She plays good" is wrong. Getting these wrong can completely change your meaning.',q:'What is the difference between "hard" and "hardly"? Give one example of each from the text.',example:'"Hard" = with effort: "he trained hard." "Hardly" = almost not: "he hardly trained." They are NOT interchangeable.'},
-{type:'read',topic:'all',col:'#9013FE',pts:30,text:'Last Sunday I was cycling slowly through the park when a dog suddenly ran out. I fell off my bike and hit my knee badly. I got up carefully and walked home slowly. My mum cleaned the cut quickly and told me to rest. I sat on the sofa and didn\'t move for the rest of the day.',q:'Find ONE Past Continuous verb (ongoing action) and ONE Past Simple verb (sudden/completed action). Then find TWO adverbs of manner.',example:'PC: "was cycling slowly" — ongoing background action. PS: "ran", "fell", "got up", "walked", "cleaned". Adverbs: slowly, badly, carefully, quickly.'},
-{type:'read',topic:'all',col:'#9013FE',pts:30,text:'The Nicholsons were getting ready noisily when Dad suddenly noticed the passports were missing. Mum ran to the stairs quickly and found them. Harry was still sleeping peacefully, so Dad woke him up loudly. George packed his things fast and they all ran to the taxi.',q:'Find ONE Past Continuous verb (ongoing action) and ONE Past Simple verb (completed action). Then find TWO adverbs of manner.',example:'PS: noticed, ran, found, woke, packed, ran. PC: were getting ready, was sleeping. Adverbs: noisily, quickly, peacefully, loudly, fast.'},
+{type:'read',topic:'ps',col:'#9013FE',pts:30,text:'Last weekend, a group of students organised a charity bake sale at school. They arrived early, set up the tables carefully and decorated the room with balloons. By lunchtime, they sold everything and raised over two hundred pounds. The teachers clapped and some students even cried with happiness.',q:'Retell the story in your own words. Use at least FOUR Past Simple verbs.',example:'They organised a bake sale, arrived early, set up tables, decorated the room. They sold everything and raised money. Teachers clapped.'},
+{type:'read',topic:'ps',col:'#9013FE',pts:30,text:'The expedition set off in April. The team crossed two mountain ranges, survived a violent storm and ran out of supplies twice. On the forty-third day, they finally reached the summit. The leader planted the flag, took a photo and sat down in silence. She later said it was the hardest thing she had ever done.',q:'Find FOUR Past Simple verbs that describe completed actions.',example:'Set off, crossed, survived, ran out, reached, planted, took, sat — all Past Simple. All describe completed, sequential events.'},
+{type:'read',topic:'pc',col:'#9013FE',pts:30,text:'When the teacher walked into the classroom, everyone was busy. Two students were whispering near the window. A girl was drawing something in her notebook. Someone was eating crisps at the back. The teacher said nothing and simply watched.',q:'Describe THREE things that were happening when the teacher arrived. Why is Past Continuous used here?',example:'"Were whispering", "was drawing", "was eating" — PC shows ongoing background actions at the exact moment of interruption.'},
+{type:'read',topic:'pc',col:'#9013FE',pts:30,text:'At half past three last Friday, the school canteen was very noisy. Some students were playing cards at a table. Others were listening to music and singing along. Two boys were arguing about a football match. Then the head teacher walked in and everything went silent.',q:'What was happening at half past three? Find THREE Past Continuous verbs and explain what they show.',example:'"Were playing", "were listening", "were arguing" — PC shows simultaneous ongoing actions at a specific past moment.'},
+{type:'read',topic:'adv',col:'#9013FE',pts:30,text:'The new student walked into the classroom calmly, sat down quietly and waited patiently for the lesson to start. When the teacher asked a question, she raised her hand confidently and answered clearly. Everyone listened attentively.',q:'Find FOUR adverbs of manner. What does each one modify?',example:'calmly (walked), quietly (sat down), patiently (waited), confidently (raised her hand), clearly (answered), attentively (listened).'},
+{type:'read',topic:'adv',col:'#9013FE',pts:30,text:'"Hard" and "hardly" look similar but mean completely different things. "He trained hard every day" means he put in great effort. "He hardly trained" means he did almost nothing. The same trap exists with "late" and "lately": "She arrived late" means she wasn\'t on time; "She\'s been busy lately" means recently.',q:'What is the difference between "hard" and "hardly"? Give one example of each from the text.',example:'"Hard" = with effort: "he trained hard." "Hardly" = almost not: "he hardly trained." They are NOT interchangeable.'},
+{type:'read',topic:'all',col:'#9013FE',pts:30,text:'I was cycling quickly through a narrow street when a car door suddenly swung open. I braked sharply but still clipped the door and fell off. I lay on the ground for a moment, then got up carefully and checked my bike. Luckily, nothing was badly damaged — just a few scratches.',q:'Find ONE Past Continuous verb (ongoing action) and ONE Past Simple verb (completed action). Then find TWO adverbs of manner.',example:'PC: "was cycling quickly". PS: "swung", "braked", "fell", "got up", "checked". Adverbs: quickly, sharply, carefully, badly.'},
+{type:'read',topic:'all',col:'#9013FE',pts:30,text:'The fire alarm went off at two in the morning. Everyone was sleeping soundly when the noise started. People ran out of their rooms quickly and gathered in the car park. Some were still dressed in pyjamas. The fire turned out to be a small kitchen fire — it was dealt with efficiently in minutes.',q:'Find ONE Past Continuous verb (ongoing action) and ONE Past Simple verb (completed action). Then find TWO adverbs of manner.',example:'PC: "was sleeping soundly". PS: "went off", "ran out", "gathered". Adverbs: soundly, quickly, efficiently.'},
 
-// ===== SPEAK =====
-{type:'speak',topic:'ps',col:'#F8E71C',pts:30,prompt:'Tell us about your last holiday or a day trip. What did you do? Use at least THREE different Past Simple verbs.',example:'e.g. We went to the beach, tried the local food and explored the old town. I bought a souvenir and took lots of photos.'},
-{type:'speak',topic:'ps',col:'#F8E71C',pts:30,prompt:'Tell us about a time you had an accident or something went wrong. What happened? Use a sequence of Past Simple verbs.',example:'e.g. I fell off my bike. I broke my arm and cut my knee. My mum took me to hospital. It was really painful.'},
-{type:'speak',topic:'ps',col:'#F8E71C',pts:30,prompt:'Describe something interesting you found or discovered. What happened next? Use Past Simple and at least one adverb of manner.',example:'e.g. I found a strange old diary in a cupboard. I called everyone excitedly. We read it carefully together.'},
-{type:'speak',topic:'pc',col:'#F8E71C',pts:30,prompt:'Describe what was happening in your house at 9 o\'clock last night. Use Past Continuous for at least THREE different people or things.',example:'e.g. My mum was watching TV. My sister was talking on the phone loudly. I was doing homework and the dog was sleeping under the table.'},
-{type:'speak',topic:'pc',col:'#F8E71C',pts:30,prompt:'Describe what was happening at the campfire / in the park / in the kitchen when something or someone arrived. Use Past Continuous for at least THREE things.',example:'e.g. When Mike arrived, we were singing songs. Some people were washing up. I was reading the diary nervously.'},
-{type:'speak',topic:'pc',col:'#F8E71C',pts:30,prompt:'Tell us about a time something unexpected happened while you were doing something else. Use "I was ...ing when ..."',example:'e.g. I was cycling through the park when a dog ran out. / I was reading a diary when I found a warning on the last page.'},
-{type:'speak',topic:'adv',col:'#F8E71C',pts:30,prompt:'Describe how you do three different activities. Use a different adverb of manner each time.',example:'e.g. I cycle carefully in the park. I pack quickly before a trip. I eat noisily — my family always complains!'},
-{type:'speak',topic:'adv',col:'#F8E71C',pts:30,prompt:'Think of someone from the textbook stories — Arlo, Jodie, Mike or Doctor Q. How did they move, speak, react? Use at least FOUR adverbs of manner.',example:'e.g. Arlo cycled carelessly. Mike played the guitar beautifully. Jodie tried bravely to score the basket. Doctor Q explained everything patiently.'},
-{type:'speak',topic:'all',col:'#F8E71C',pts:30,prompt:'Tell us a short story about an accident or a surprise. Use Past Continuous (what was happening), Past Simple (what happened), and at least two adverbs of manner.',example:'e.g. I was walking slowly through the park when a dog suddenly ran out. I fell off my bike badly. I got up carefully and walked home.'},
-{type:'speak',topic:'all',col:'#F8E71C',pts:30,prompt:'Describe your morning today or yesterday. What were you doing at different moments? What happened? How did you do things? Use PS, PC, and adverbs of manner.',example:'e.g. I was sleeping peacefully when my alarm went off. I got up slowly, packed quickly and ran to school. I just made it.'},
-{type:'speak',topic:'all',col:'#F8E71C',pts:30,prompt:'Imagine you are Arlo or Jodie. Tell the class what happened to you. Use Past Continuous + Past Simple. Start: "I was ... when ..."',example:'e.g. I was cycling carefully through the park when a dog suddenly ran out. I fell off my bike and broke my arm. It was really painful!'},
-{type:'speak',topic:'all',col:'#F8E71C',pts:30,prompt:'Describe a photo on your phone — a holiday, a party, a day out. Use at least TWO Past Simple verbs and ONE adverb of manner.',example:'e.g. In this photo we went snorkelling in Greece. We explored the old town and tried the local food. Everyone smiled happily at the camera.'},
+{type:'speak',topic:'ps',col:'#F8E71C',pts:30,prompt:'Tell us about something memorable that happened to you — a trip, an event, or an unexpected moment. Use at least THREE different Past Simple verbs.',example:'e.g. Last summer I travelled to a city I\'d never visited before. I got lost twice, found a great street market and ended up staying an extra day.'},
+{type:'speak',topic:'ps',col:'#F8E71C',pts:30,prompt:'Tell us about a time something went unexpectedly wrong. What happened, step by step? Use a sequence of Past Simple verbs.',example:'e.g. I missed my bus, walked to the station in the rain and realised I\'d left my ticket at home. I had to buy a new one.'},
+{type:'speak',topic:'ps',col:'#F8E71C',pts:30,prompt:'Describe a time you made a decision that turned out well — or badly. Use Past Simple and at least one adverb of manner.',example:'e.g. I signed up for a swimming competition I wasn\'t ready for. I trained hard, went there nervously and actually won a medal.'},
+{type:'speak',topic:'pc',col:'#F8E71C',pts:30,prompt:'Describe what was happening around you at a specific time yesterday — at home, on the street, in class. Use Past Continuous for at least THREE different people or things.',example:'e.g. At seven o\'clock, my brother was playing video games loudly, my mum was cooking in the kitchen, and the dog was barking at something outside.'},
+{type:'speak',topic:'pc',col:'#F8E71C',pts:30,prompt:'Describe a moment when you walked into a room or a place and things were already happening. Use Past Continuous for at least THREE things.',example:'e.g. When I walked into the kitchen, my brother was eating cereal noisily, the radio was playing and my dog was staring at me hopefully.'},
+{type:'speak',topic:'pc',col:'#F8E71C',pts:30,prompt:'Tell us about a time something unexpected happened while you were doing something else. Use "I was ...ing when ..."',example:'e.g. I was having a quiet lunch when my old school friend walked into the same café. / I was reading on the bus when it suddenly stopped and everyone had to get off.'},
+{type:'speak',topic:'adv',col:'#F8E71C',pts:30,prompt:'Describe how you do three different things in your life. Use a different adverb of manner each time.',example:'e.g. I eat really fast. I speak quietly in class. I laugh loudly when something is funny.'},
+{type:'speak',topic:'adv',col:'#F8E71C',pts:30,prompt:'Think of someone you know well. How do they speak, move, react to stress or surprises? Use at least FOUR adverbs of manner.',example:'e.g. My brother drives recklessly, eats incredibly fast, reacts calmly to everything — except when someone touches his stuff, then he reacts badly.'},
+{type:'speak',topic:'all',col:'#F8E71C',pts:30,prompt:'Tell a short story about something that went wrong or surprised you. Use Past Continuous (what was happening), Past Simple (what happened), and at least two adverbs of manner.',example:'e.g. I was walking confidently into my exam when I suddenly realised I had the wrong date. I left quickly, went home and studied frantically.'},
+{type:'speak',topic:'all',col:'#F8E71C',pts:30,prompt:'Describe your morning today or yesterday in detail. What were you doing at different moments? What happened? How did you do things? Use PS, PC, and adverbs of manner.',example:'e.g. I was sleeping deeply when my alarm went off unexpectedly early. I got up slowly, made coffee quickly and ran to the bus stop — barely made it.'},
+{type:'speak',topic:'all',col:'#F8E71C',pts:30,prompt:'Describe a scene — a busy café, a train station, a market, a street. What was happening around you? Use at least TWO Past Continuous verbs, ONE Past Simple and TWO adverbs.',example:'e.g. The market was packed. People were walking past quickly. A little kid was crying loudly near a food stall. Then it started to rain and everyone ran suddenly.'},
+{type:'speak',topic:'all',col:'#F8E71C',pts:30,prompt:'Describe a photo — real or imaginary. What was happening? What happened next? Use PS, PC, and at least one adverb of manner.',example:'e.g. In this photo I was standing nervously on a stage. Behind me, the audience was watching quietly. Then I started speaking and completely forgot my lines.'},
 ];
 
 const TN={mc:'Multiple Choice',gap:'Fill the Gap',wo:'Word Order',ooo:'Odd One Out',err:'Fix the Error',read:'Read & Answer',speak:'Speak!'};
 const PC=['#f7c948','#4cc9f0','#f72585','#06d6a0','#a78bfa','#fb923c'];
 const EM=Array.from({length:11},(_,i)=>`/assets/av${i+1}.png`);
 
-
 let topic='all',cardCount=9,players=[],curP=0,deck=[],doneSet=new Set(),avIdx=null;
-
 
 document.querySelectorAll('.tpill').forEach(b=>b.addEventListener('click',()=>{
   document.querySelectorAll('.tpill').forEach(x=>x.classList.remove('sel'));
@@ -797,7 +743,6 @@ document.getElementById('startBtn').addEventListener('click',()=>{
   players.forEach(p=>p.score=0);
   showScr('sTable');buildGrid();renderChips();
 });
-
 
 function buildGrid(){
   const grid=document.getElementById('cardGrid');
@@ -920,7 +865,6 @@ function animateScore(txt,isOk){
   });
 }
 
-
 function openCard(i){
   const c=deck[i];
   renderCardChips();
@@ -1036,8 +980,6 @@ function openCard(i){
 
 function closeCard(){SFX.back();showScr('sTable');}
 
-
-
 let woSelected=null;
 window.woClick=function(chip){
   SFX.place();
@@ -1112,9 +1054,7 @@ window.doWO=function(ci){
   setTimeout(()=>autoGrade(ci,ok),600);
 };
 
-
 window.rwClick=function(el){SFX.click();el.classList.toggle('sel');};
-
 
 window.doMC=function(ci,chosen){
   SFX.click();
@@ -1130,7 +1070,6 @@ window.doMC=function(ci,chosen){
   
   setTimeout(()=>autoGrade(ci,ok),600);
 };
-
 
 window.doGap=function(ci){
   SFX.click();
@@ -1149,7 +1088,6 @@ window.doGap=function(ci){
   setTimeout(()=>autoGrade(ci,ok),600);
 };
 
-
 window.doOOO=function(ci,chosen){
   SFX.click();
   const c=deck[ci];
@@ -1163,7 +1101,6 @@ window.doOOO=function(ci,chosen){
   if(ok)confetti();
   setTimeout(()=>autoGrade(ci,ok),600);
 };
-
 
 let selEW=null;
 window.pickEW=function(el,errIdx){
