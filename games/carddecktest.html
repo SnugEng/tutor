@@ -31,7 +31,8 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'DM Sans',sans-seri
 .cpill.sel{border-color:var(--acc);background:rgba(247,201,72,.14);color:var(--acc)}
 .prow{display:flex;align-items:center;gap:9px;background:#16213e;border:1.5px solid var(--bord);border-radius:12px;padding:9px 13px;margin-bottom:6px}
 .pav{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;border:2px solid var(--bord);background:var(--bg);flex-shrink:0;overflow:hidden}
-.pav img{width:70%;height:100%;object-fit:contain;border-radius:50%}
+.pav img{width:70%;height:100%;object-fit:contain;border-radius:50%;opacity:0;transition:opacity .2s}
+.pav img.loaded{opacity:1}
 .pname{flex:1;background:transparent;border:none;outline:none;color:var(--txt);font-family:'DM Sans',sans-serif;font-size:.94rem;font-weight:700;min-width:0}
 .pname::placeholder{color:var(--dim);font-weight:400}
 .pdot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
@@ -653,10 +654,17 @@ function renderP(){
   const el=document.getElementById('pList');el.innerHTML='';
   players.forEach((p,i)=>{
     const r=document.createElement('div');r.className='prow';
-    r.innerHTML=`<div class="pav" data-i="${i}"><img src="${p.av}" alt=""></div>
+    const pavDiv=document.createElement('div');pavDiv.className='pav';pavDiv.dataset.i=i;
+    const img=document.createElement('img');img.alt='';
+    img.onload=()=>img.classList.add('loaded');
+    img.onerror=()=>img.style.display='none';
+    img.src=p.av;
+    pavDiv.appendChild(img);
+    r.appendChild(pavDiv);
+    r.insertAdjacentHTML('beforeend',`
       <input class="pname" value="${p.name}" placeholder="Name" data-i="${i}" maxlength="16">
       <div class="pdot" style="background:${p.color}"></div>
-      ${players.length>1?`<button class="prmv" data-i="${i}">✕</button>`:''}`;
+      ${players.length>1?`<button class="prmv" data-i="${i}">✕</button>`:''}`);
     el.appendChild(r);
   });
   el.querySelectorAll('.pav').forEach(e=>e.addEventListener('click',()=>openAv(+e.dataset.i)));
