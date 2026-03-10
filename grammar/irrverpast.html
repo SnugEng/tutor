@@ -569,12 +569,114 @@ function checkGap(ans) {
   document.getElementById('gNext').style.display='inline-block';
 }
 
+const MCQ = [
+  {inf:'be',         ps:'was / were', pp:'been',     ps_w:['were / was','be','is / are'],       pp_w:['being','been / was','was']},
+  {inf:'beat',       ps:'beat',       pp:'beaten',   ps_w:['beated','beaten','bate'],            pp_w:['beat','beated','beten']},
+  {inf:'become',     ps:'became',     pp:'become',   ps_w:['becomed','become','becamed'],        pp_w:['became','becomed','becomen']},
+  {inf:'begin',      ps:'began',      pp:'begun',    ps_w:['begun','beginned','begined'],        pp_w:['began','begined','beginned']},
+  {inf:'bite',       ps:'bit',        pp:'bitten',   ps_w:['bitten','bited','bote'],             pp_w:['bit','bited','bitten up']},
+  {inf:'blow',       ps:'blew',       pp:'blown',    ps_w:['blown','blowed','blew out'],         pp_w:['blew','blowed','blowned']},
+  {inf:'break',      ps:'broke',      pp:'broken',   ps_w:['broken','breaked','braek'],          pp_w:['broke','breaked','broked']},
+  {inf:'bring',      ps:'brought',    pp:'brought',  ps_w:['bringed','brung','brought up'],      pp_w:['bringed','brung','bring']},
+  {inf:'build',      ps:'built',      pp:'built',    ps_w:['builded','bilt','builed'],           pp_w:['builded','bilt','builed']},
+  {inf:'burn',       ps:'burnt',      pp:'burnt',    ps_w:['burned up','burnd','bornt'],         pp_w:['burned up','bornt','burnd']},
+  {inf:'buy',        ps:'bought',     pp:'bought',   ps_w:['buyed','boughted','bied'],           pp_w:['buyed','boughted','bied']},
+  {inf:'catch',      ps:'caught',     pp:'caught',   ps_w:['catched','cought','cotched'],        pp_w:['catched','cought','cotched']},
+  {inf:'choose',     ps:'chose',      pp:'chosen',   ps_w:['chosen','choosed','chosed'],         pp_w:['chose','choosed','chosed']},
+  {inf:'come',       ps:'came',       pp:'come',     ps_w:['come','comed','camed'],              pp_w:['came','comed','camen']},
+  {inf:'cost',       ps:'cost',       pp:'cost',     ps_w:['costed','costed out','costs'],       pp_w:['costed','costs','costing']},
+  {inf:'cut',        ps:'cut',        pp:'cut',      ps_w:['cutted','cuted','cats'],             pp_w:['cutted','cuted','cats']},
+  {inf:'deal',       ps:'dealt',      pp:'dealt',    ps_w:['dealed','delt','dealt out'],         pp_w:['dealed','delt','deal']},
+  {inf:'dig',        ps:'dug',        pp:'dug',      ps_w:['digged','dag','dugged'],             pp_w:['digged','dag','dugged']},
+  {inf:'do',         ps:'did',        pp:'done',     ps_w:['done','does','doed'],                pp_w:['did','doed','does']},
+  {inf:'draw',       ps:'drew',       pp:'drawn',    ps_w:['drawn','drawed','drewn'],            pp_w:['drew','drawed','drewn']},
+  {inf:'dream',      ps:'dreamt',     pp:'dreamt',   ps_w:['dremed','dreamed up','dramt'],       pp_w:['dremed','dramed','dreamed up']},
+  {inf:'drink',      ps:'drank',      pp:'drunk',    ps_w:['drunk','drinked','drankd'],          pp_w:['drank','drinked','drunked']},
+  {inf:'drive',      ps:'drove',      pp:'driven',   ps_w:['driven','drived','droved'],          pp_w:['drove','drived','droven']},
+  {inf:'eat',        ps:'ate',        pp:'eaten',    ps_w:['eaten','eated','ated'],              pp_w:['ate','eated','aten']},
+  {inf:'fall',       ps:'fell',       pp:'fallen',   ps_w:['fallen','falled','felled'],          pp_w:['fell','falled','falln']},
+  {inf:'feed',       ps:'fed',        pp:'fed',      ps_w:['feeded','feded','fead'],             pp_w:['feeded','feded','fead']},
+  {inf:'feel',       ps:'felt',       pp:'felt',     ps_w:['feeled','fellt','felt up'],          pp_w:['feeled','fellt','feled']},
+  {inf:'fight',      ps:'fought',     pp:'fought',   ps_w:['fighted','faught','fort'],           pp_w:['fighted','faught','fort']},
+  {inf:'find',       ps:'found',      pp:'found',    ps_w:['finded','fund','foud'],              pp_w:['finded','fund','foud']},
+  {inf:'fly',        ps:'flew',       pp:'flown',    ps_w:['flown','flied','flewed'],            pp_w:['flew','flied','flownd']},
+  {inf:'forget',     ps:'forgot',     pp:'forgotten',ps_w:['forgotten','forgeted','forgate'],    pp_w:['forgot','forgeted','forgate']},
+  {inf:'forgive',    ps:'forgave',    pp:'forgiven', ps_w:['forgiven','forgived','forgave up'],  pp_w:['forgave','forgived','forgivened']},
+  {inf:'freeze',     ps:'froze',      pp:'frozen',   ps_w:['frozen','freezed','frosed'],         pp_w:['froze','freezed','frozed']},
+  {inf:'get',        ps:'got',        pp:'got',      ps_w:['getted','gat','gotten'],             pp_w:['getted','gat','getten']},
+  {inf:'give',       ps:'gave',       pp:'given',    ps_w:['given','gived','gave out'],          pp_w:['gave','gived','givened']},
+  {inf:'go',         ps:'went',       pp:'gone',     ps_w:['gone','goed','wented'],              pp_w:['went','goed','go']},
+  {inf:'grow',       ps:'grew',       pp:'grown',    ps_w:['grown','growed','grewn'],            pp_w:['grew','growed','grownd']},
+  {inf:'have',       ps:'had',        pp:'had',      ps_w:['haved','has','have'],                pp_w:['haved','has','have']},
+  {inf:'hear',       ps:'heard',      pp:'heard',    ps_w:['heared','herd','heared out'],        pp_w:['heared','herd','hear']},
+  {inf:'hide',       ps:'hid',        pp:'hidden',   ps_w:['hidden','hided','hod'],              pp_w:['hid','hided','hidded']},
+  {inf:'hit',        ps:'hit',        pp:'hit',      ps_w:['hitted','hat','hitten'],             pp_w:['hitted','hat','hitten']},
+  {inf:'hold',       ps:'held',       pp:'held',     ps_w:['holded','hald','holded on'],         pp_w:['holded','hald','hold']},
+  {inf:'hurt',       ps:'hurt',       pp:'hurt',     ps_w:['hurted','hert','hirted'],            pp_w:['hurted','hert','hirted']},
+  {inf:'keep',       ps:'kept',       pp:'kept',     ps_w:['keeped','keept','keeept'],           pp_w:['keeped','keept','keeept']},
+  {inf:'know',       ps:'knew',       pp:'known',    ps_w:['known','knowed','knewn'],            pp_w:['knew','knowed','knownd']},
+  {inf:'lead',       ps:'led',        pp:'led',      ps_w:['leaded','ledd','lead'],              pp_w:['leaded','ledd','lead']},
+  {inf:'learn',      ps:'learnt',     pp:'learnt',   ps_w:['learnd','lernt','learned up'],       pp_w:['learnd','lernt','leart']},
+  {inf:'leave',      ps:'left',       pp:'left',     ps_w:['leaved','left out','lefted'],        pp_w:['leaved','lefted','leavd']},
+  {inf:'lend',       ps:'lent',       pp:'lent',     ps_w:['lended','lendt','lend'],             pp_w:['lended','lendt','lend']},
+  {inf:'let',        ps:'let',        pp:'let',      ps_w:['letted','leted','letts'],            pp_w:['letted','leted','letts']},
+  {inf:'lie',        ps:'lay',        pp:'lain',     ps_w:['lain','lied','layed'],               pp_w:['lay','lied','layn']},
+  {inf:'light',      ps:'lit',        pp:'lit',      ps_w:['lighted','light','litten'],          pp_w:['lighted','light','litten']},
+  {inf:'lose',       ps:'lost',       pp:'lost',     ps_w:['losed','losted','lossed'],           pp_w:['losed','losted','lossed']},
+  {inf:'make',       ps:'made',       pp:'made',     ps_w:['maked','maded','maed'],              pp_w:['maked','maded','maed']},
+  {inf:'mean',       ps:'meant',      pp:'meant',    ps_w:['meaned','ment','meaned out'],        pp_w:['meaned','ment','mean']},
+  {inf:'meet',       ps:'met',        pp:'met',      ps_w:['meeted','mett','meted'],             pp_w:['meeted','mett','meted']},
+  {inf:'pay',        ps:'paid',       pp:'paid',     ps_w:['payed','paied','piad'],              pp_w:['payed','paied','piad']},
+  {inf:'put',        ps:'put',        pp:'put',      ps_w:['putted','puted','putt'],             pp_w:['putted','puted','putt']},
+  {inf:'read',       ps:'read',       pp:'read',     ps_w:['readed','red','readd'],              pp_w:['readed','red','readd']},
+  {inf:'ride',       ps:'rode',       pp:'ridden',   ps_w:['ridden','rided','roded'],            pp_w:['rode','rided','roded']},
+  {inf:'ring',       ps:'rang',       pp:'rung',     ps_w:['rung','ringed','ranged'],            pp_w:['rang','ringed','ronged']},
+  {inf:'rise',       ps:'rose',       pp:'risen',    ps_w:['risen','rised','rosed'],             pp_w:['rose','rised','rosened']},
+  {inf:'run',        ps:'ran',        pp:'run',      ps_w:['run','runned','ranned'],             pp_w:['ran','runned','runed']},
+  {inf:'say',        ps:'said',       pp:'said',     ps_w:['sayed','saied','siad'],              pp_w:['sayed','saied','siad']},
+  {inf:'see',        ps:'saw',        pp:'seen',     ps_w:['seen','seed','sawed'],               pp_w:['saw','seed','seened']},
+  {inf:'sell',       ps:'sold',       pp:'sold',     ps_w:['selled','solded','seld'],            pp_w:['selled','solded','seld']},
+  {inf:'send',       ps:'sent',       pp:'sent',     ps_w:['sended','sendt','sент'],             pp_w:['sended','sendt','send']},
+  {inf:'set',        ps:'set',        pp:'set',      ps_w:['setted','sett','seted'],             pp_w:['setted','sett','seted']},
+  {inf:'shake',      ps:'shook',      pp:'shaken',   ps_w:['shaken','shaked','shooked'],         pp_w:['shook','shaked','shookn']},
+  {inf:'shine',      ps:'shone',      pp:'shone',    ps_w:['shined','shoned','shined up'],       pp_w:['shined','shoned','shined up']},
+  {inf:'shoot',      ps:'shot',       pp:'shot',     ps_w:['shooted','shoted','shotten'],        pp_w:['shooted','shoted','shotten']},
+  {inf:'show',       ps:'showed',     pp:'shown',    ps_w:['shown','shew','showed off'],         pp_w:['showed','shew','shownd']},
+  {inf:'shut',       ps:'shut',       pp:'shut',     ps_w:['shutted','shuted','shitt'],          pp_w:['shutted','shuted','shitt']},
+  {inf:'sing',       ps:'sang',       pp:'sung',     ps_w:['sung','singed','sanged'],            pp_w:['sang','singed','songed']},
+  {inf:'sit',        ps:'sat',        pp:'sat',      ps_w:['sitted','sated','sitted down'],      pp_w:['sitted','sated','sitted down']},
+  {inf:'sleep',      ps:'slept',      pp:'slept',    ps_w:['sleeped','sleept','slept in'],       pp_w:['sleeped','sleept','sleeped']},
+  {inf:'smell',      ps:'smelt',      pp:'smelt',    ps_w:['smelled out','smeld','smeled'],      pp_w:['smelled out','smeld','smeled']},
+  {inf:'speak',      ps:'spoke',      pp:'spoken',   ps_w:['spoken','speaked','spoked'],         pp_w:['spoke','speaked','spokened']},
+  {inf:'spend',      ps:'spent',      pp:'spent',    ps_w:['spended','spendt','spant'],          pp_w:['spended','spendt','spant']},
+  {inf:'spill',      ps:'spilt',      pp:'spilt',    ps_w:['spilled out','speld','spilted'],     pp_w:['spilled out','speld','spilted']},
+  {inf:'stand',      ps:'stood',      pp:'stood',    ps_w:['standed','stod','standd'],           pp_w:['standed','stod','standd']},
+  {inf:'steal',      ps:'stole',      pp:'stolen',   ps_w:['stolen','stealed','stoled'],         pp_w:['stole','stealed','stoled']},
+  {inf:'sting',      ps:'stung',      pp:'stung',    ps_w:['stinged','sting','stanged'],         pp_w:['stinged','sting','stanged']},
+  {inf:'swim',       ps:'swam',       pp:'swum',     ps_w:['swum','swimmed','swammed'],          pp_w:['swam','swimmed','swammed']},
+  {inf:'take',       ps:'took',       pp:'taken',    ps_w:['taken','taked','tooked'],            pp_w:['took','taked','takened']},
+  {inf:'teach',      ps:'taught',     pp:'taught',   ps_w:['teached','tought','taought'],        pp_w:['teached','tought','taought']},
+  {inf:'tear',       ps:'tore',       pp:'torn',     ps_w:['torn','teared','tored'],             pp_w:['tore','teared','tored']},
+  {inf:'tell',       ps:'told',       pp:'told',     ps_w:['telled','tolded','teld'],            pp_w:['telled','tolded','teld']},
+  {inf:'think',      ps:'thought',    pp:'thought',  ps_w:['thinked','thougth','thinkt'],        pp_w:['thinked','thougth','thinkt']},
+  {inf:'throw',      ps:'threw',      pp:'thrown',   ps_w:['thrown','throwed','threwn'],         pp_w:['threw','throwed','thrownd']},
+  {inf:'understand', ps:'understood', pp:'understood',ps_w:['understanded','understaood','understod'],pp_w:['understanded','understaood','understod']},
+  {inf:'wake',       ps:'woke',       pp:'woken',    ps_w:['woken','waked','wocked'],            pp_w:['woke','waked','wokened']},
+  {inf:'wear',       ps:'wore',       pp:'worn',     ps_w:['worn','weared','wored'],             pp_w:['wore','weared','wornd']},
+  {inf:'win',        ps:'won',        pp:'won',      ps_w:['winned','wind','woned'],             pp_w:['winned','wind','woned']},
+  {inf:'write',      ps:'wrote',      pp:'written',  ps_w:['written','writed','wroted'],         pp_w:['wrote','writed','wrotten']},
+];
+
 let mDeck, mIdx, mScore, mAnswered;
 function buildMcqDeck() {
-  return shuffle(IRR).slice(0, 20).map(v => {
-    const wrongs = shuffle(IRR.filter(x => x.inf!==v.inf && x.ps!==v.ps)).slice(0,3).map(x=>x.ps.split(' / ')[0]);
-    const correct = v.ps.split(' / ')[0];
-    return { q:`What is the Past Simple of <b>${v.inf}</b>?`, opts: shuffle([correct,...wrongs]), ans: correct };
+  return shuffle(MCQ).slice(0, 20).map(v => {
+    const usePS = Math.random() > 0.5;
+    const correct = usePS ? v.ps.split(' / ')[0] : v.pp.split(' / ')[0];
+    const wrongs = shuffle(usePS ? v.ps_w : v.pp_w).slice(0, 3);
+    const q = usePS
+      ? `What is the <b>Past Simple</b> of <b>${v.inf}</b>?`
+      : `What is the <b>Past Participle</b> of <b>${v.inf}</b>?`;
+    return { q, opts: shuffle([correct, ...wrongs]), ans: correct };
   });
 }
 function initMcq() {
