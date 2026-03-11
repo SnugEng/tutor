@@ -3,13 +3,16 @@ name: Generate All Audio
 on:
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   generate:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Install edge-tts
         run: pip install edge-tts
       - name: Generate MP3 files
@@ -19,5 +22,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add vocabulary/audio*/
-          git commit -m "Add audio files for all units" || echo "Nothing to commit"
+          git diff --cached --quiet || git commit -m "Add audio files for all units"
           git push
