@@ -16,11 +16,16 @@ jobs:
         run: pip install edge-tts
 
       - name: Generate MP3 files
+        run: python3 vocabulary/gen_audio3.py
+
+      - name: Commit audio files
         run: |
-          mkdir -p vocabulary/audio3
-          python3 - <<'EOF'
-import asyncio, os, re
-import edge_tts
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add vocabulary/audio3/
+          git commit -m "Add Unit 3 audio files" || echo "Nothing to commit"
+          git push
+
 
 VOICE = "en-GB-SoniaNeural"
 OUT = "vocabulary/audio3"
