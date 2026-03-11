@@ -57,15 +57,6 @@
   .header-right { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
   .header-title { display: flex; align-items: center; gap: 1rem; }
 
-  .back-btn {
-    padding: 0.4rem 1rem; border-radius: 2rem; border: 1px solid var(--border);
-    background: transparent; color: var(--text2); cursor: pointer;
-    font-family: 'DM Sans', sans-serif; font-size: 0.83rem; font-weight: 500;
-    text-decoration: none; display: inline-flex; align-items: center; gap: 0.3rem;
-    transition: all 0.2s;
-  }
-  .back-btn:hover { border-color: var(--accent); color: var(--accent); }
-
   .theme-switch {
     position: relative;
     width: 56px; height: 28px;
@@ -323,7 +314,6 @@
     <h1>Unit <span>9</span> — Vocabulary: Coming and going</h1>
   </div>
   <div style="display:flex;align-items:center;gap:0.8rem;flex-wrap:wrap;">
-    <a href="index.html" class="back-btn">← All Units</a>
     <div class="tabs">
       <button class="tab active" onclick="showTab('dict',this)">Dictionary</button>
       <button class="tab" onclick="showTab('cards',this)">Flashcards</button>
@@ -417,7 +407,6 @@
 
 <script>
 const DATA = [
-  // Topic vocabulary
   {w:"abroad", pos:"adv", def:"in or to a foreign country", ex:"We try to go abroad at least once a year.", category:"topic"},
   {w:"accommodation", pos:"n", def:"a place for someone to stay, live, or work in", ex:"The hotel provides accommodation for up to 100 people.", category:"topic"},
   {w:"book", pos:"v", def:"to arrange to have or use something at a particular time in the future", ex:"Shall I book a room for you?", category:"topic"},
@@ -452,7 +441,6 @@ const DATA = [
   {w:"trip", pos:"n", def:"an occasion when you go somewhere and come back again", ex:"The whole family went on a trip to Florida.", category:"topic"},
   {w:"vehicle", pos:"n", def:"a machine that you travel in or on, especially one with an engine that travels on roads, for example a car, bus, etc", ex:"Four vehicles were involved in the accident.", category:"topic"},
 
-  // Phrasal verbs
   {w:"get in(to)", pos:"phr v", def:"enter a car", ex:"She got into the taxi quickly.", category:"phrasal"},
   {w:"get off", pos:"phr v", def:"leave a bus/train/etc", ex:"We got off the bus at the station.", category:"phrasal"},
   {w:"get on(to)", pos:"phr v", def:"enter a bus/train/etc", ex:"They got on the train just before it left.", category:"phrasal"},
@@ -462,7 +450,6 @@ const DATA = [
   {w:"set off", pos:"phr v", def:"start a journey", ex:"We set off for the airport at 6 am.", category:"phrasal"},
   {w:"take off", pos:"phr v", def:"leave the ground", ex:"The plane took off an hour late.", category:"phrasal"},
 
-// Prepositional phrases
 {w:"by air/sea/bus/car/etc", pos:"prep phr", def:"using a particular form of transport", ex:"We travelled by air to save time.", category:"prepositional"},
 {w:"on board", pos:"prep phr", def:"on a ship, plane, or other vehicle", ex:"There were 200 passengers on board.", category:"prepositional"},
 {w:"on foot", pos:"prep phr", def:"by walking", ex:"We explored the old town on foot.", category:"prepositional"},
@@ -470,7 +457,6 @@ const DATA = [
 {w:"on schedule", pos:"prep phr", def:"happening at the planned or expected time", ex:"The train arrived on schedule.", category:"prepositional"},
 {w:"on the coast", pos:"prep phr", def:"in an area near the sea", ex:"They have a small cottage on the coast.", category:"prepositional"},
 
-  // Word patterns
   {w:"close to", pos:"adj phr", def:"near, not far from", ex:"The hotel is close to the beach.", category:"patterns"},
   {w:"famous for", pos:"adj phr", def:"well known because of something", ex:"This region is famous for its wine.", category:"patterns"},
   {w:"far from", pos:"adj phr", def:"a long distance away", ex:"The airport is far from the city centre.", category:"patterns"},
@@ -717,33 +703,59 @@ let _loadingKey = null;
 
 function speak(text, btnEl) {
   const key = text.toLowerCase().trim();
+
   function playAudio(audio) {
     if (_currentAudio) { _currentAudio.pause(); _currentAudio.currentTime = 0; }
     _currentAudio = audio;
     audio.currentTime = 0;
     audio.play().catch(() => speakFallback(text));
   }
+
   if (_audioCache[key]) { playAudio(_audioCache[key]); return; }
   if (_loadingKey === key) return;
   _loadingKey = key;
   if (btnEl) btnEl.classList.add('speak-loading');
-  const url = `https://translate.google.com/translate_tts?ie=UTF-8&tl=en-GB&client=tw-ob&q=${encodeURIComponent(text)}`;
-  fetch(url)
-    .then(r => { if (!r.ok) throw new Error('fetch failed'); return r.blob(); })
+
+  const done = () => { _loadingKey = null; if (btnEl) btnEl.classList.remove('speak-loading'); };
+
+  fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(key)}`)
+    .then(r => r.ok ? r.json() : Promise.reject())
+    .then(data => {
+      const phonetics = data[0]?.phonetics || [];
+      const audioUrl = phonetics.find(p => p.audio && p.audio.includes('-gb'))?.audio
+                    || phonetics.find(p => p.audio && p.audio.includes('-us'))?.audio
+                    || phonetics.find(p => p.audio)?.audio;
+      if (!audioUrl) return Promise.reject();
+      return fetch(audioUrl);
+    })
+    .then(r => r.ok ? r.blob() : Promise.reject())
     .then(blob => {
       const audio = new Audio(URL.createObjectURL(blob));
       _audioCache[key] = audio;
-      _loadingKey = null;
-      if (btnEl) btnEl.classList.remove('speak-loading');
+      done();
       playAudio(audio);
     })
-    .catch(() => {
-      _loadingKey = null;
-      if (btnEl) btnEl.classList.remove('speak-loading');
-      speakFallback(text);
-    });
+    .catch(() => { done(); speakFallback(text); });
 }
 
+function speakFallback(text) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  function doSpeak() {
+    const voices = window.speechSynthesis.getVoices();
+    const enVoice = voices.find(v => v.lang === 'en-GB')
+                 || voices.find(v => v.lang === 'en-US')
+                 || voices.find(v => v.lang.startsWith('en'));
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'en-GB';
+    u.rate = 0.9;
+    if (enVoice) u.voice = enVoice;
+    window.speechSynthesis.speak(u);
+  }
+  const voices = window.speechSynthesis.getVoices();
+  if (voices.length > 0) { doSpeak(); }
+  else { window.speechSynthesis.onvoiceschanged = () => { window.speechSynthesis.onvoiceschanged = null; doSpeak(); }; window.speechSynthesis.getVoices(); }
+}
 function speakFallback(text) {
   if (!window.speechSynthesis) return;
   window.speechSynthesis.cancel();

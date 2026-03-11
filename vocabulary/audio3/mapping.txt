@@ -1,0 +1,89 @@
+(in)active|in_active.mp3
+a book (by sb) about|a_book_by_sb_about.mp3
+a fan of|a_fan_of.mp3
+a game against|a_game_against.mp3
+action|action.mp3
+actor|actor.mp3
+athletic|athletic.mp3
+athletics|athletics.mp3
+beat|beat.mp3
+board game|board_game.mp3
+bored with|bored_with.mp3
+captain|captain.mp3
+carry on|carry_on.mp3
+challenge|challenge.mp3
+champion|champion.mp3
+cheat|cheat.mp3
+childhood|childhood.mp3
+children|children.mp3
+classical music|classical_music.mp3
+club|club.mp3
+coach|coach.mp3
+collection|collection.mp3
+collector|collector.mp3
+competition|competition.mp3
+concert|concert.mp3
+crazy about|crazy_about.mp3
+defeat|defeat.mp3
+eat out|eat_out.mp3
+entertaining|entertaining.mp3
+entertainment|entertainment.mp3
+feel like|feel_like.mp3
+folk music|folk_music.mp3
+for a long time|for_a_long_time.mp3
+for fun|for_fun.mp3
+give up|give_up.mp3
+good at|good_at.mp3
+group|group.mp3
+gym|gym.mp3
+have fun|have_fun.mp3
+heroic|heroic.mp3
+heroine|heroine.mp3
+in the middle (of)|in_the_middle_of.mp3
+in time (for)|in_time_for.mp3
+interest|interest.mp3
+interested in|interested_in.mp3
+join in|join_in.mp3
+keen on|keen_on.mp3
+listen to|listen_to.mp3
+member|member.mp3
+musical|musical.mp3
+musician|musician.mp3
+on CD/DVD/video|on_cd_dvd_video.mp3
+on stage|on_stage.mp3
+opponent|opponent.mp3
+organise|organise.mp3
+player|player.mp3
+playful|playful.mp3
+pleasure|pleasure.mp3
+popular with|popular_with.mp3
+referee|referee.mp3
+rhythm|rhythm.mp3
+risk|risk.mp3
+sailing|sailing.mp3
+sailor|sailor.mp3
+sang|sang.mp3
+score|score.mp3
+send off|send_off.mp3
+singer|singer.mp3
+singing|singing.mp3
+song|song.mp3
+sung|sung.mp3
+support|support.mp3
+take part in|take_part_in.mp3
+take up|take_up.mp3
+team|team.mp3
+train|train.mp3
+turn down|turn_down.mp3
+turn up|turn_up.mp3
+video game|video_game.mp3
+act|act.mp3
+athlete|athlete.mp3
+child|child.mp3
+collect|collect.mp3
+entertain|entertain.mp3
+hero|hero.mp3
+music|music.mp3
+play|play.mp3
+sail|sail.mp3
+sing|sing.mp3

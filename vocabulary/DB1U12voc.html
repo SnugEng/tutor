@@ -57,15 +57,6 @@
   .header-right { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
   .header-title { display: flex; align-items: center; gap: 1rem; }
 
-  .back-btn {
-    padding: 0.4rem 1rem; border-radius: 2rem; border: 1px solid var(--border);
-    background: transparent; color: var(--text2); cursor: pointer;
-    font-family: 'DM Sans', sans-serif; font-size: 0.83rem; font-weight: 500;
-    text-decoration: none; display: inline-flex; align-items: center; gap: 0.3rem;
-    transition: all 0.2s;
-  }
-  .back-btn:hover { border-color: var(--accent); color: var(--accent); }
-
   .theme-switch {
     position: relative;
     width: 56px; height: 28px;
@@ -323,7 +314,6 @@
     <h1>Unit <span>12</span> — Vocabulary: Friends and relations</h1>
   </div>
   <div style="display:flex;align-items:center;gap:0.8rem;flex-wrap:wrap;">
-    <a href="index.html" class="back-btn">← All Units</a>
     <div class="tabs">
       <button class="tab active" onclick="showTab('dict',this)">Dictionary</button>
       <button class="tab" onclick="showTab('cards',this)">Flashcards</button>
@@ -417,7 +407,6 @@
 
 <script>
 const DATA = [
-  // ── Topic Vocabulary ──
   {w:"apologise", pos:"v", def:"to tell someone that you are sorry for doing something wrong", ex:"You should apologise to your brother.", category:"topic"},
   {w:"boyfriend", pos:"n", def:"a man or boy that you are having a romantic relationship with", ex:"She's got a new boyfriend.", category:"topic"},
   {w:"close", pos:"adj", def:"connected by shared feelings such as love and respect", ex:"My brother and I are very close.", category:"topic"},
@@ -451,7 +440,6 @@ const DATA = [
   {w:"stranger", pos:"n", def:"someone who you do not know", ex:"I didn't want to share a room with a complete stranger.", category:"topic"},
   {w:"trust", pos:"v", def:"to believe that someone or something is good, honest, or reliable", ex:"You can trust Dana.", category:"topic"},
   {w:"trust", pos:"n", def:"a feeling that you trust someone or something", ex:"The doctor-patient relationship has to be based on trust.", category:"topic"},
-  // ── Phrasal Verbs ──
   {w:"bring up", pos:"phr v", def:"take care of a child until he or she becomes an adult", ex:"She brought up three sons on her own.", category:"phrasal"},
   {w:"fall out (with)", pos:"phr v", def:"have an argument with someone and stop being friends", ex:"Have you two fallen out?", category:"phrasal"},
   {w:"get on (with)", pos:"phr v", def:"have a good relationship with", ex:"Do you get on well with your colleagues?", category:"phrasal"},
@@ -460,14 +448,12 @@ const DATA = [
   {w:"let down", pos:"phr v", def:"disappoint someone", ex:"I really felt let down when he didn't come.", category:"phrasal"},
   {w:"look after", pos:"phr v", def:"take care of someone or something", ex:"It's hard work looking after three children all day.", category:"phrasal"},
   {w:"split up", pos:"phr v", def:"end a relationship", ex:"Tommy and Liz have just split up. It's very sad!", category:"phrasal"},
-  // ── Prepositional Phrases ──
   {w:"by yourself", pos:"prep phr", def:"alone, without any other people", ex:"Did you go to the cinema by yourself?", category:"prepositional"},
   {w:"in common (with)", pos:"prep phr", def:"sharing the same interests, characteristics, or experiences", ex:"I've got nothing in common with you!", category:"prepositional"},
   {w:"in contact (with)", pos:"prep phr", def:"communicating with someone regularly", ex:"I'm still in contact with several friends from school.", category:"prepositional"},
   {w:"in love (with)", pos:"prep phr", def:"feeling romantic love for someone", ex:"I'm in love with Chris.", category:"prepositional"},
   {w:"on purpose", pos:"prep phr", def:"done deliberately, not by accident", ex:"I didn't do it on purpose.", category:"prepositional"},
   {w:"on your own", pos:"prep phr", def:"alone, without help from anyone else", ex:"Can you do it on your own?", category:"prepositional"},
-  // ── Word Patterns ──
   {w:"fond of", pos:"adj phr", def:"having a liking for someone or something", ex:"I'm really fond of my dog!", category:"patterns"},
   {w:"jealous of", pos:"adj phr", def:"feeling unhappy because someone else has something you want", ex:"I'm jealous of Katy because she always has such nice clothes!", category:"patterns"},
   {w:"kind to", pos:"adj phr", def:"behaving in a gentle, caring, and helpful way towards someone", ex:"You've been very kind to me. Thank you!", category:"patterns"},
@@ -714,33 +700,59 @@ let _loadingKey = null;
 
 function speak(text, btnEl) {
   const key = text.toLowerCase().trim();
+
   function playAudio(audio) {
     if (_currentAudio) { _currentAudio.pause(); _currentAudio.currentTime = 0; }
     _currentAudio = audio;
     audio.currentTime = 0;
     audio.play().catch(() => speakFallback(text));
   }
+
   if (_audioCache[key]) { playAudio(_audioCache[key]); return; }
   if (_loadingKey === key) return;
   _loadingKey = key;
   if (btnEl) btnEl.classList.add('speak-loading');
-  const url = `https://translate.google.com/translate_tts?ie=UTF-8&tl=en-GB&client=tw-ob&q=${encodeURIComponent(text)}`;
-  fetch(url)
-    .then(r => { if (!r.ok) throw new Error('fetch failed'); return r.blob(); })
+
+  const done = () => { _loadingKey = null; if (btnEl) btnEl.classList.remove('speak-loading'); };
+
+  fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(key)}`)
+    .then(r => r.ok ? r.json() : Promise.reject())
+    .then(data => {
+      const phonetics = data[0]?.phonetics || [];
+      const audioUrl = phonetics.find(p => p.audio && p.audio.includes('-gb'))?.audio
+                    || phonetics.find(p => p.audio && p.audio.includes('-us'))?.audio
+                    || phonetics.find(p => p.audio)?.audio;
+      if (!audioUrl) return Promise.reject();
+      return fetch(audioUrl);
+    })
+    .then(r => r.ok ? r.blob() : Promise.reject())
     .then(blob => {
       const audio = new Audio(URL.createObjectURL(blob));
       _audioCache[key] = audio;
-      _loadingKey = null;
-      if (btnEl) btnEl.classList.remove('speak-loading');
+      done();
       playAudio(audio);
     })
-    .catch(() => {
-      _loadingKey = null;
-      if (btnEl) btnEl.classList.remove('speak-loading');
-      speakFallback(text);
-    });
+    .catch(() => { done(); speakFallback(text); });
 }
 
+function speakFallback(text) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  function doSpeak() {
+    const voices = window.speechSynthesis.getVoices();
+    const enVoice = voices.find(v => v.lang === 'en-GB')
+                 || voices.find(v => v.lang === 'en-US')
+                 || voices.find(v => v.lang.startsWith('en'));
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'en-GB';
+    u.rate = 0.9;
+    if (enVoice) u.voice = enVoice;
+    window.speechSynthesis.speak(u);
+  }
+  const voices = window.speechSynthesis.getVoices();
+  if (voices.length > 0) { doSpeak(); }
+  else { window.speechSynthesis.onvoiceschanged = () => { window.speechSynthesis.onvoiceschanged = null; doSpeak(); }; window.speechSynthesis.getVoices(); }
+}
 function speakFallback(text) {
   if (!window.speechSynthesis) return;
   window.speechSynthesis.cancel();

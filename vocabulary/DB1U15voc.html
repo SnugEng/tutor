@@ -57,15 +57,6 @@
   .header-right { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
   .header-title { display: flex; align-items: center; gap: 1rem; }
 
-  .back-btn {
-    padding: 0.4rem 1rem; border-radius: 2rem; border: 1px solid var(--border);
-    background: transparent; color: var(--text2); cursor: pointer;
-    font-family: 'DM Sans', sans-serif; font-size: 0.83rem; font-weight: 500;
-    text-decoration: none; display: inline-flex; align-items: center; gap: 0.3rem;
-    transition: all 0.2s;
-  }
-  .back-btn:hover { border-color: var(--accent); color: var(--accent); }
-
   .theme-switch {
     position: relative;
     width: 56px; height: 28px;
@@ -323,7 +314,6 @@
     <h1>Unit <span>15</span> — Vocabulary: Buying and selling</h1>
   </div>
   <div style="display:flex;align-items:center;gap:0.8rem;flex-wrap:wrap;">
-    <a href="index.html" class="back-btn">← All Units</a>
     <div class="tabs">
       <button class="tab active" onclick="showTab('dict',this)">Dictionary</button>
       <button class="tab" onclick="showTab('cards',this)">Flashcards</button>
@@ -417,7 +407,6 @@
 
 <script>
 const DATA = [
-  // Topic Vocabulary
   {w:"advertisement",pos:"n",def:"an announcement in a newspaper, on television, or on the Internet designed to persuade people to buy a product or service",ex:"I saw an advertisement for a new kind of camera.",category:"topic"},
   {w:"afford",pos:"v",def:"to have enough money to pay for something",ex:"I'm not sure how they're able to afford such expensive holidays.",category:"topic"},
   {w:"bargain",pos:"n",def:"something you buy that costs much less than normal",ex:"Her dress was a real bargain.",category:"topic"},
@@ -452,7 +441,6 @@ const DATA = [
   {w:"variety",pos:"n",def:"a number of different people or things",ex:"Adults study for a variety of reasons.",category:"topic"},
   {w:"waste",pos:"v",def:"to use more of something than is necessary, or to use it in a way that does not produce the best results",ex:"Don't waste water like that – turn the tap off when you're not using it!",category:"topic"},
   {w:"waste",pos:"n",def:"the failure to use something that is valuable or useful in an effective way",ex:"All this uneaten food – what a waste!",category:"topic"},
-  // Phrasal Verbs
   {w:"add up",pos:"phr v",def:"find the total of",ex:"The shop assistant added up what I'd bought and told me the total.",category:"phrasal"},
   {w:"come back (from)",pos:"phr v",def:"return (from)",ex:"Give me a call when you come back from Greece.",category:"phrasal"},
   {w:"give away",pos:"phr v",def:"give something free of charge",ex:"The store was giving away free samples.",category:"phrasal"},
@@ -461,14 +449,12 @@ const DATA = [
   {w:"save up (for)",pos:"phr v",def:"save money for a specific purpose",ex:"I'm saving up for a new electric guitar.",category:"phrasal"},
   {w:"take back",pos:"phr v",def:"return something to the place it came from",ex:"I'm going to take my library books back.",category:"phrasal"},
   {w:"take down",pos:"phr v",def:"remove from a high place",ex:"The old man took a large book down from a shelf.",category:"phrasal"},
-  // Prepositional Phrases
   {w:"by credit card/cheque",pos:"prep phr",def:"using a credit card or cheque as the method of payment",ex:"Can I pay by cheque?",category:"prepositional"},
   {w:"for rent",pos:"prep phr",def:"available to be rented",ex:"Do you have any rooms for rent?",category:"prepositional"},
   {w:"for sale",pos:"prep phr",def:"available to be bought",ex:"I'm afraid the pictures on the wall aren't for sale.",category:"prepositional"},
   {w:"in cash",pos:"prep phr",def:"using coins or notes rather than a card or cheque",ex:"The woman paid for the car in cash, which was unusual.",category:"prepositional"},
   {w:"in debt",pos:"prep phr",def:"owing money to someone",ex:"It can be very worrying to be in debt.",category:"prepositional"},
   {w:"in good/bad condition",pos:"prep phr",def:"in a good or bad state of repair",ex:"For sale: camping equipment, in good condition.",category:"prepositional"},
-  // Word Patterns
   {w:"wrong about/with",pos:"adj phr",def:"incorrect about or having a fault",ex:"I think Serena is wrong about Ian – he seems really nice to me.",category:"patterns"},
   {w:"belong to",pos:"v phr",def:"to be the property of someone",ex:"Do these belong to you?",category:"patterns"},
   {w:"borrow sth from",pos:"v phr",def:"to take and use something belonging to someone else, intending to return it",ex:"You can borrow some money from me, if you like.",category:"patterns"},
@@ -714,33 +700,59 @@ let _loadingKey = null;
 
 function speak(text, btnEl) {
   const key = text.toLowerCase().trim();
+
   function playAudio(audio) {
     if (_currentAudio) { _currentAudio.pause(); _currentAudio.currentTime = 0; }
     _currentAudio = audio;
     audio.currentTime = 0;
     audio.play().catch(() => speakFallback(text));
   }
+
   if (_audioCache[key]) { playAudio(_audioCache[key]); return; }
   if (_loadingKey === key) return;
   _loadingKey = key;
   if (btnEl) btnEl.classList.add('speak-loading');
-  const url = `https://translate.google.com/translate_tts?ie=UTF-8&tl=en-GB&client=tw-ob&q=${encodeURIComponent(text)}`;
-  fetch(url)
-    .then(r => { if (!r.ok) throw new Error('fetch failed'); return r.blob(); })
+
+  const done = () => { _loadingKey = null; if (btnEl) btnEl.classList.remove('speak-loading'); };
+
+  fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(key)}`)
+    .then(r => r.ok ? r.json() : Promise.reject())
+    .then(data => {
+      const phonetics = data[0]?.phonetics || [];
+      const audioUrl = phonetics.find(p => p.audio && p.audio.includes('-gb'))?.audio
+                    || phonetics.find(p => p.audio && p.audio.includes('-us'))?.audio
+                    || phonetics.find(p => p.audio)?.audio;
+      if (!audioUrl) return Promise.reject();
+      return fetch(audioUrl);
+    })
+    .then(r => r.ok ? r.blob() : Promise.reject())
     .then(blob => {
       const audio = new Audio(URL.createObjectURL(blob));
       _audioCache[key] = audio;
-      _loadingKey = null;
-      if (btnEl) btnEl.classList.remove('speak-loading');
+      done();
       playAudio(audio);
     })
-    .catch(() => {
-      _loadingKey = null;
-      if (btnEl) btnEl.classList.remove('speak-loading');
-      speakFallback(text);
-    });
+    .catch(() => { done(); speakFallback(text); });
 }
 
+function speakFallback(text) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  function doSpeak() {
+    const voices = window.speechSynthesis.getVoices();
+    const enVoice = voices.find(v => v.lang === 'en-GB')
+                 || voices.find(v => v.lang === 'en-US')
+                 || voices.find(v => v.lang.startsWith('en'));
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'en-GB';
+    u.rate = 0.9;
+    if (enVoice) u.voice = enVoice;
+    window.speechSynthesis.speak(u);
+  }
+  const voices = window.speechSynthesis.getVoices();
+  if (voices.length > 0) { doSpeak(); }
+  else { window.speechSynthesis.onvoiceschanged = () => { window.speechSynthesis.onvoiceschanged = null; doSpeak(); }; window.speechSynthesis.getVoices(); }
+}
 function speakFallback(text) {
   if (!window.speechSynthesis) return;
   window.speechSynthesis.cancel();

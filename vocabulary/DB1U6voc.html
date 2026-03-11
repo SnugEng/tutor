@@ -57,15 +57,6 @@
   .header-right { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
   .header-title { display: flex; align-items: center; gap: 1rem; }
 
-  .back-btn {
-    padding: 0.4rem 1rem; border-radius: 2rem; border: 1px solid var(--border);
-    background: transparent; color: var(--text2); cursor: pointer;
-    font-family: 'DM Sans', sans-serif; font-size: 0.83rem; font-weight: 500;
-    text-decoration: none; display: inline-flex; align-items: center; gap: 0.3rem;
-    transition: all 0.2s;
-  }
-  .back-btn:hover { border-color: var(--accent); color: var(--accent); }
-
   .theme-switch {
     position: relative;
     width: 56px; height: 28px;
@@ -323,7 +314,6 @@
     <h1>Unit <span>6</span> — Vocabulary: learning and doing</h1>
   </div>
   <div style="display:flex;align-items:center;gap:0.8rem;flex-wrap:wrap;">
-    <a href="index.html" class="back-btn">← All Units</a>
     <div class="tabs">
       <button class="tab active" onclick="showTab('dict',this)">Dictionary</button>
       <button class="tab" onclick="showTab('cards',this)">Flashcards</button>
@@ -417,7 +407,6 @@
 
 <script>
 const DATA = [
-  // Topic vocabulary
   {w:"achieve", pos:"v", def:"to succeed in doing or having something", ex:"We've achieved what we wanted to do.", category:"topic"},
   {w:"brain", pos:"n", def:"the organ inside your head that allows you to think and feel", ex:"The illness had affected his brain.", category:"topic"},
   {w:"clever", pos:"adj", def:"good at learning or understanding things", ex:"I'd like to be a doctor, but I'm not clever enough.", category:"topic"},
@@ -454,7 +443,6 @@ const DATA = [
   {w:"term", pos:"n", def:"one of the periods the year is divided into", ex:"How many weeks till the end of term?", category:"topic"},
   {w:"wonder", pos:"v", def:"to think because you want to know more", ex:"I was wondering about the best place for a holiday.", category:"topic"},
 
-  // Phrasal verbs
   {w:"cross out", pos:"phr v", def:"draw a line through sth written", ex:"Cross out the wrong answers.", category:"phrasal"},
   {w:"look up", pos:"phr v", def:"try to find information in a book, etc", ex:"You can look up words in a dictionary.", category:"phrasal"},
   {w:"point out", pos:"phr v", def:"tell sb important information", ex:"He pointed out my mistakes.", category:"phrasal"},
@@ -464,7 +452,6 @@ const DATA = [
   {w:"turn over", pos:"phr v", def:"turn sth so the other side is towards you", ex:"Turn over the page.", category:"phrasal"},
   {w:"write down", pos:"phr v", def:"write information on paper", ex:"Write down the address.", category:"phrasal"},
 
-  // Prepositional phrases 
   {w:"by heart", pos:"prep phr", def:"from memory", ex:"I learned the poem by heart.", category:"prepositional"},
   {w:"in conclusion", pos:"prep phr", def:"finally, to sum up", ex:"In conclusion, I'd like to thank everyone.", category:"prepositional"},
   {w:"in favour (of)", pos:"prep phr", def:"supporting an idea", ex:"I'm in favour of the new plan.", category:"prepositional"},
@@ -472,7 +459,6 @@ const DATA = [
   {w:"in fact", pos:"prep phr", def:"actually, really", ex:"In fact, I've never been there.", category:"prepositional"},
   {w:"for instance", pos:"prep phr", def:"for example", ex:"Some birds, for instance penguins, can't fly.", category:"prepositional"},
 
-  // Word patterns 
   {w:"capable of", pos:"adj phr", def:"having the ability to do something", ex:"She is capable of hard work.", category:"patterns"},
   {w:"talented at", pos:"adj phr", def:"naturally skilled at", ex:"He's talented at drawing.", category:"patterns"},
   {w:"cheat at/in", pos:"v phr", def:"act dishonestly in a game/exam", ex:"Don't cheat in the test.", category:"patterns"},
@@ -719,33 +705,59 @@ let _loadingKey = null;
 
 function speak(text, btnEl) {
   const key = text.toLowerCase().trim();
+
   function playAudio(audio) {
     if (_currentAudio) { _currentAudio.pause(); _currentAudio.currentTime = 0; }
     _currentAudio = audio;
     audio.currentTime = 0;
     audio.play().catch(() => speakFallback(text));
   }
+
   if (_audioCache[key]) { playAudio(_audioCache[key]); return; }
   if (_loadingKey === key) return;
   _loadingKey = key;
   if (btnEl) btnEl.classList.add('speak-loading');
-  const url = `https://translate.google.com/translate_tts?ie=UTF-8&tl=en-GB&client=tw-ob&q=${encodeURIComponent(text)}`;
-  fetch(url)
-    .then(r => { if (!r.ok) throw new Error('fetch failed'); return r.blob(); })
+
+  const done = () => { _loadingKey = null; if (btnEl) btnEl.classList.remove('speak-loading'); };
+
+  fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(key)}`)
+    .then(r => r.ok ? r.json() : Promise.reject())
+    .then(data => {
+      const phonetics = data[0]?.phonetics || [];
+      const audioUrl = phonetics.find(p => p.audio && p.audio.includes('-gb'))?.audio
+                    || phonetics.find(p => p.audio && p.audio.includes('-us'))?.audio
+                    || phonetics.find(p => p.audio)?.audio;
+      if (!audioUrl) return Promise.reject();
+      return fetch(audioUrl);
+    })
+    .then(r => r.ok ? r.blob() : Promise.reject())
     .then(blob => {
       const audio = new Audio(URL.createObjectURL(blob));
       _audioCache[key] = audio;
-      _loadingKey = null;
-      if (btnEl) btnEl.classList.remove('speak-loading');
+      done();
       playAudio(audio);
     })
-    .catch(() => {
-      _loadingKey = null;
-      if (btnEl) btnEl.classList.remove('speak-loading');
-      speakFallback(text);
-    });
+    .catch(() => { done(); speakFallback(text); });
 }
 
+function speakFallback(text) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  function doSpeak() {
+    const voices = window.speechSynthesis.getVoices();
+    const enVoice = voices.find(v => v.lang === 'en-GB')
+                 || voices.find(v => v.lang === 'en-US')
+                 || voices.find(v => v.lang.startsWith('en'));
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'en-GB';
+    u.rate = 0.9;
+    if (enVoice) u.voice = enVoice;
+    window.speechSynthesis.speak(u);
+  }
+  const voices = window.speechSynthesis.getVoices();
+  if (voices.length > 0) { doSpeak(); }
+  else { window.speechSynthesis.onvoiceschanged = () => { window.speechSynthesis.onvoiceschanged = null; doSpeak(); }; window.speechSynthesis.getVoices(); }
+}
 function speakFallback(text) {
   if (!window.speechSynthesis) return;
   window.speechSynthesis.cancel();
