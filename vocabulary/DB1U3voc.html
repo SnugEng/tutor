@@ -697,14 +697,21 @@ function renderWordForm() {
   ).join('');
 }
 
+window._unit = 3;
+
 function speak(text, btnEl) {
   if (btnEl) btnEl.classList.add('speak-loading');
   const done = () => { if (btnEl) btnEl.classList.remove('speak-loading'); };
   const fname = text.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '') + '.mp3';
-  const audio = new Audio('audio3/' + fname);
-  audio.oncanplaythrough = done;
-  audio.onerror = done;
-  audio.play().catch(done);
+  const audio = new Audio();
+  audio.preload = 'auto';
+  audio.src = 'audio' + window._unit + '/' + fname;
+  audio.addEventListener('canplaythrough', function() {
+    audio.play().catch(done);
+  }, { once: true });
+  audio.addEventListener('ended', done, { once: true });
+  audio.addEventListener('error', done, { once: true });
+  audio.load();
 }
 
 let currentTheme = 'dark';

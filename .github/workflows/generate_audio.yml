@@ -1,4 +1,4 @@
-name: Generate Audio Unit 3
+name: Generate All Audio
 
 on:
   workflow_dispatch:
@@ -13,11 +13,11 @@ jobs:
       - name: Install edge-tts
         run: pip install edge-tts
       - name: Generate MP3 files
-        run: python3 vocabulary/gen_audio3.py
+        run: python3 vocabulary/gen_all_audio.py
       - name: Commit audio files
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add vocabulary/audio3/
-          git commit -m "Add Unit 3 audio files" || echo "Nothing to commit"
+          git add vocabulary/audio*/
+          git commit -m "Add audio files for all units" || echo "Nothing to commit"
           git push

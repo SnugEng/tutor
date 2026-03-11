@@ -697,81 +697,21 @@ function renderWordForm() {
   ).join('');
 }
 
-const _audioCache = {};
-let _currentAudio = null;
-let _loadingKey = null;
+window._unit = 9;
 
 function speak(text, btnEl) {
-  const key = text.toLowerCase().trim();
-
-  function playAudio(audio) {
-    if (_currentAudio) { _currentAudio.pause(); _currentAudio.currentTime = 0; }
-    _currentAudio = audio;
-    audio.currentTime = 0;
-    audio.play().catch(() => speakFallback(text));
-  }
-
-  if (_audioCache[key]) { playAudio(_audioCache[key]); return; }
-  if (_loadingKey === key) return;
-  _loadingKey = key;
   if (btnEl) btnEl.classList.add('speak-loading');
-
-  const done = () => { _loadingKey = null; if (btnEl) btnEl.classList.remove('speak-loading'); };
-
-  fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(key)}`)
-    .then(r => r.ok ? r.json() : Promise.reject())
-    .then(data => {
-      const phonetics = data[0]?.phonetics || [];
-      const audioUrl = phonetics.find(p => p.audio && p.audio.includes('-gb'))?.audio
-                    || phonetics.find(p => p.audio && p.audio.includes('-us'))?.audio
-                    || phonetics.find(p => p.audio)?.audio;
-      if (!audioUrl) return Promise.reject();
-      return fetch(audioUrl);
-    })
-    .then(r => r.ok ? r.blob() : Promise.reject())
-    .then(blob => {
-      const audio = new Audio(URL.createObjectURL(blob));
-      _audioCache[key] = audio;
-      done();
-      playAudio(audio);
-    })
-    .catch(() => { done(); speakFallback(text); });
-}
-
-function speakFallback(text) {
-  if (!window.speechSynthesis) return;
-  window.speechSynthesis.cancel();
-  function doSpeak() {
-    const voices = window.speechSynthesis.getVoices();
-    const enVoice = voices.find(v => v.lang === 'en-GB')
-                 || voices.find(v => v.lang === 'en-US')
-                 || voices.find(v => v.lang.startsWith('en'));
-    const u = new SpeechSynthesisUtterance(text);
-    u.lang = 'en-GB';
-    u.rate = 0.9;
-    if (enVoice) u.voice = enVoice;
-    window.speechSynthesis.speak(u);
-  }
-  const voices = window.speechSynthesis.getVoices();
-  if (voices.length > 0) { doSpeak(); }
-  else { window.speechSynthesis.onvoiceschanged = () => { window.speechSynthesis.onvoiceschanged = null; doSpeak(); }; window.speechSynthesis.getVoices(); }
-}
-function speakFallback(text) {
-  if (!window.speechSynthesis) return;
-  window.speechSynthesis.cancel();
-  function doSpeak() {
-    const u = new SpeechSynthesisUtterance(text);
-    u.lang = 'en-GB'; u.rate = 0.9;
-    window.speechSynthesis.speak(u);
-  }
-  const voices = window.speechSynthesis.getVoices();
-  if (voices.length > 0) { doSpeak(); }
-  else {
-    window.speechSynthesis.onvoiceschanged = () => {
-      window.speechSynthesis.onvoiceschanged = null; doSpeak();
-    };
-    window.speechSynthesis.getVoices();
-  }
+  const done = () => { if (btnEl) btnEl.classList.remove('speak-loading'); };
+  const fname = text.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '') + '.mp3';
+  const audio = new Audio();
+  audio.preload = 'auto';
+  audio.src = 'audio' + window._unit + '/' + fname;
+  audio.addEventListener('canplaythrough', function() {
+    audio.play().catch(done);
+  }, { once: true });
+  audio.addEventListener('ended', done, { once: true });
+  audio.addEventListener('error', done, { once: true });
+  audio.load();
 }
 
 let currentTheme = 'dark';
