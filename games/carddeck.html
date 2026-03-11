@@ -47,7 +47,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'DM Sans',sans-seri
 #gameBar{display:none;position:fixed;top:0;left:0;right:0;z-index:200;background:#0a0913;border-bottom:1px solid var(--bord);padding:8px 10px;align-items:center;gap:6px;min-height:62px}
 #gameBar.on{display:flex}
 .bar-side{flex:0 0 auto;display:flex;gap:5px;align-items:center}
-.bar-side.mirror{visibility:hidden;pointer-events:none}
+.bar-side.mirror{display:none!important}
 .schips{display:flex;gap:6px;flex:1;overflow-x:auto;min-width:0;justify-content:center;align-items:center;padding:2px 0;scrollbar-width:none;-ms-overflow-style:none}
 .schip{display:flex;align-items:center;gap:6px;padding:6px 12px 6px 8px;border-radius:28px;background:#1e1c2e;border:2px solid var(--bord);font-weight:700;white-space:nowrap;flex-shrink:1;min-width:0;max-width:180px;transition:all .35s cubic-bezier(.34,1.56,.64,1);position:relative}
 .schip.cur{border-color:var(--acc);background:rgba(232,184,75,.12);box-shadow:0 0 14px rgba(232,184,75,.35);transform:scale(1.08)}
@@ -749,10 +749,8 @@ document.getElementById('startBtn').addEventListener('click',()=>{
 
 function setBarButtons(mode){
   const right=document.getElementById('barRight');
-  const mirror=document.getElementById('barMirror');
   if(mode==='table'){
     right.innerHTML=`<button class="tbtn" id="nextPBtn">Next</button><button class="tbtn rd" id="endBtn">End</button>`;
-    mirror.innerHTML=right.innerHTML;
     document.getElementById('nextPBtn').addEventListener('click',()=>{
       curP=(curP+1)%players.length;SFX.nextPlayer();renderChips();
       toast(`${players[curP].name}'s turn!`);
@@ -760,7 +758,6 @@ function setBarButtons(mode){
     document.getElementById('endBtn').addEventListener('click',showWin);
   } else {
     right.innerHTML=`<button class="tbtn" onclick="closeCard()">✕</button>`;
-    mirror.innerHTML=right.innerHTML;
   }
 }
 
