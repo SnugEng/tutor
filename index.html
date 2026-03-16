@@ -639,7 +639,7 @@ const tickerData = [
 
 const ticker = document.getElementById('snugTicker');
 if (ticker) {
-  // Build one set of items
+
   function buildItems() {
     return tickerData.map(d =>
       `<a href="#snug-reviews" class="snug-ticker-item" data-review="${d.idx}">
@@ -649,7 +649,6 @@ if (ticker) {
     ).join('');
   }
 
-  // Two identical sets: when first scrolls fully off, reset instantly — no jump because second is identical
   const wrap = ticker.parentElement;
   wrap.style.cssText += ';display:flex;overflow:hidden;';
   const set1 = document.createElement('div');
@@ -683,7 +682,6 @@ if (ticker) {
     s.addEventListener('mouseleave', () => { paused = false; });
   });
 
-  // Click handlers
   function attachClicks(el) {
     el.querySelectorAll('.snug-ticker-item').forEach(item => {
       item.addEventListener('click', e => {
