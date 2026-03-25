@@ -661,6 +661,87 @@ exp:'Slowly (walked), clearly (spoke), quietly (listened) — all describe HOW t
 prompt:'Describe how you do THREE different things in your life. Use a different adverb of manner each time.',
 example:"e.g. I eat quickly in the morning. I walk slowly when I'm tired. I laugh loudly at silly videos."},
 
+{type:'mc',topic:'pspc',col:'#E27D4A',pts:10,
+q:'While I ___ TV, my phone rang.',
+opts:['watched','was watching','am watching','watch'],
+ans:1,
+exp:'Past Continuous (was watching) = action already in progress. Past Simple (rang) = short interruption.'},
+
+{type:'mc',topic:'pspc',col:'#E27D4A',pts:10,
+q:'She ___ her keys while she ___ for the bus.',
+opts:['lost / was waiting','was losing / waited','lost / waited','was losing / was waiting'],
+ans:0,
+exp:'"Lost" = short completed action (Past Simple). "Was waiting" = longer background action (Past Continuous).'},
+
+{type:'gap',topic:'pspc',col:'#E27D4A',pts:15,
+verb:'cook',before:'Mum',after:'dinner when Dad came home.',
+ans:'was cooking',
+exp:'"Was cooking" = Past Continuous — ongoing action. "Came" = Past Simple — short interruption.'},
+
+{type:'gap',topic:'pspc',col:'#E27D4A',pts:15,
+verb:'not hear',before:'I',after:'the doorbell because I was listening to music.',
+ans:"didn't hear",
+exp:'"Didn\'t hear" = Past Simple negative. The background action (listening) explains why.'},
+
+{type:'wo',topic:'pspc',col:'#E27D4A',pts:15,
+words:['When','it','started','to','rain',',','we','were','walking','in','the','park','.'],
+ans:'When it started to rain , we were walking in the park .',
+exp:'"Started" = Past Simple (sudden event). "Were walking" = Past Continuous (what was already happening).'},
+
+{type:'wo',topic:'pspc',col:'#E27D4A',pts:15,
+words:['He','fell','asleep','while','he','was','reading','a','book','.'],
+ans:'He fell asleep while he was reading a book .',
+exp:'"Fell asleep" = Past Simple (short event). "Was reading" = Past Continuous (background action). "While" signals the longer action.'},
+
+{type:'ooo',topic:'pspc',col:'#E27D4A',pts:10,
+q:'Which sentence uses the tenses CORRECTLY?',
+opts:[
+  'She was cooking when she was burning her hand.',
+  'I watched TV while the rain was falling outside.',
+  'They were played football when the bell rang.',
+  'He was sleep when we arrived.'],
+ans:1,
+exp:'"Watched" (PS) + "was falling" (PC) — correct mix. Option A: two PC for one short event ✗. Option C: "were played" ✗. Option D: "was sleep" ✗.'},
+
+{type:'err',topic:'pspc',col:'#E27D4A',pts:15,
+sentence:['I','seeing','a','great','film','last','night','.'],
+errIdx:1,fix:'saw',
+exp:'"Seeing" is wrong here. Use Past Simple: saw.'},
+
+{type:'err',topic:'pspc',col:'#E27D4A',pts:15,
+sentence:['She','was','cook','dinner','when','Dad','arrived','.'],
+errIdx:2,fix:'cooking',
+exp:'Past Continuous = was/were + verb-ING. "Cook" → "cooking".'},
+
+{type:'err',topic:'pspc',col:'#E27D4A',pts:15,
+sentence:['While','I','were','studying',',','my','brother','called','me','.'],
+errIdx:2,fix:'was',
+exp:'"I" always takes "was", not "were". Was/were + verb-ING.'},
+
+{type:'err',topic:'pspc',col:'#E27D4A',pts:15,
+sentence:['They','were','played','football','when','it','started','to','rain','.'],
+errIdx:2,fix:'playing',
+exp:'Past Continuous = was/were + verb-ING. "Played" → "playing".'},
+
+{type:'err',topic:'pspc',col:'#E27D4A',pts:15,
+sentence:['He','didn\'t','was','sleeping','when','we','came','in','.'],
+errIdx:2,fix:'wasn\'t',
+exp:'Negative Past Continuous = wasn\'t/weren\'t + ING. Never "didn\'t was".'},
+
+{type:'err',topic:'pspc',col:'#E27D4A',pts:15,
+sentence:['When','I','arrived',',','they','was','having','lunch','.'],
+errIdx:5,fix:'were',
+exp:'"They" takes "were", not "was". They/we/you → were + verb-ING.'},
+
+{type:'find',topic:'pspc',col:'#E27D4A',pts:15,count:4,
+text:'Tom was walking home when he suddenly heard a strange noise. He stopped and looked around, but nobody was standing nearby.',
+q:'Find 2 Past Simple verbs and 2 Past Continuous verbs.',
+answers:['heard','stopped','looked','was walking','was standing'],
+exp:'PS: heard, stopped, looked. PC: was walking, was standing. PC = background; PS = events.'},
+
+{type:'speak',topic:'pspc',col:'#7C3AED',pts:20,
+prompt:'Tell us about a time something unexpected happened to you. What were you doing when it happened? Use BOTH Past Simple and Past Continuous.',
+example:'e.g. I was having lunch at school when my friend suddenly spilled juice all over my bag. I jumped up and ran to get some paper towels.'},
 ];
 
 const TN={mc:'Multiple Choice',gap:'Fill the Gap',wo:'Word Order',ooo:'Odd One Out',err:'Fix the Error',read:'Read & Answer',find:'Find It!',speak:'Speak!'};
