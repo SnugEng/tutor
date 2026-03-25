@@ -500,8 +500,11 @@ const SFX={
   nextPlayer(){playTone(660,'sine',.04,.07);playTone(880,'sine',.04,.07,.07)}
 };
 
-const CD=[
+const CD = [
 
+// ─── PAST SIMPLE ───────────────────────────────────────────
+
+// MC
 {type:'mc',topic:'ps',col:'#4A90E2',pts:10,
 q:'Tom ___ his phone on the bus yesterday.',
 opts:['lose','looses','lost','was lose'],
@@ -514,6 +517,19 @@ opts:['Do','Did','Does','Were'],
 ans:1,
 exp:'Past Simple questions: Did + subject + base verb. "Did you enjoy?" ✓'},
 
+{type:'mc',topic:'ps',col:'#4A90E2',pts:10,
+q:'He ___ an interesting article yesterday morning.',
+opts:['read','readed','reads','was read'],
+ans:0,
+exp:'"Read" is irregular. In the past tense, it is spelled the same but pronounced like "red".'},
+
+{type:'mc',topic:'ps',col:'#4A90E2',pts:10,
+q:'Where ___ you go on holiday last summer?',
+opts:['did','do','was','were'],
+ans:0,
+exp:'We use "did" to make questions in the Past Simple tense.'},
+
+// GAP
 {type:'gap',topic:'ps',col:'#4A90E2',pts:15,
 verb:'go',before:'We',after:'to the cinema last Saturday.',
 ans:'went',
@@ -524,17 +540,63 @@ verb:'not watch',before:'She',after:'TV last night — she read a book instead.'
 ans:"didn't watch",
 exp:"Negative Past Simple: didn't + base verb. Never \"didn't watched\"."},
 
+{type:'gap',topic:'ps',col:'#4A90E2',pts:15,
+verb:'take',before:'She',after:'some beautiful photos during the trip.',
+ans:'took',
+exp:'"Take" is an irregular verb: take → took.'},
+
+{type:'gap',topic:'ps',col:'#4A90E2',pts:15,
+verb:'not see',before:'I',after:'my friends at the park on Sunday.',
+ans:"didn't see",
+exp:"Negative Past Simple is formed with didn't + base verb."},
+
+// WO
 {type:'wo',topic:'ps',col:'#4A90E2',pts:15,
 words:['She',"didn't",'come','to','school','on','Monday','.'],
 ans:"She didn't come to school on Monday .",
 exp:"Negative: subject + didn't + base verb. Never \"didn't came\"."},
 
+{type:'wo',topic:'ps',col:'#4A90E2',pts:15,
+words:['Where','did','you','buy','that','cool','jacket','?'],
+ans:'Where did you buy that cool jacket ?',
+exp:'Question structure: Wh-word + did + subject + base verb.'},
+
+{type:'wo',topic:'ps',col:'#4A90E2',pts:15,
+words:['They','arrived','at','the','airport','late','at','night','.'],
+ans:'They arrived at the airport late at night .',
+exp:'Subject + past verb + location + time phrase.'},
+
+{type:'wo',topic:'ps',col:'#4A90E2',pts:15,
+words:['We','had','a','fantastic','time','at','the','beach','.'],
+ans:'We had a fantastic time at the beach .',
+exp:'Subject + irregular past verb (had) + object + place.'},
+
+// OOO
 {type:'ooo',topic:'ps',col:'#4A90E2',pts:10,
 q:'Which word is NOT Past Simple?',
 opts:['played','went','eats','ran'],
 ans:2,
 exp:'"Eats" is Present Simple. Played, went, ran are all Past Simple.'},
 
+{type:'ooo',topic:'ps',col:'#4A90E2',pts:10,
+q:'Which word is NOT Past Simple?',
+opts:['flew','knew','grew','draw'],
+ans:3,
+exp:'"Draw" is Present Simple. The past form is "drew".'},
+
+{type:'ooo',topic:'ps',col:'#4A90E2',pts:10,
+q:'Which word is a REGULAR Past Simple verb?',
+opts:['taught','caught','watched','bought'],
+ans:2,
+exp:'"Watched" is regular (ends in -ed). The others are irregular.'},
+
+{type:'ooo',topic:'ps',col:'#4A90E2',pts:10,
+q:'Which word is NOT Past Simple?',
+opts:['slept','keep','felt','left'],
+ans:1,
+exp:'"Keep" is Present Simple. The past form is "kept".'},
+
+// ERR
 {type:'err',topic:'ps',col:'#4A90E2',pts:15,
 sentence:['I','goed','to','the','shop','after','school','.'],
 errIdx:1,fix:'went',
@@ -545,16 +607,62 @@ sentence:['Did','your','brother','came','to','the','party','?'],
 errIdx:3,fix:'come',
 exp:'After "did" always use the base verb: Did your brother come? ✓'},
 
-{type:'find',topic:'ps',col:'#4A90E2',pts:15,count:4,
+{type:'err',topic:'ps',col:'#4A90E2',pts:15,
+sentence:['We','didn\'t','enjoyed','the','boring','museum','tour','.'],
+errIdx:2,fix:'enjoy',
+exp:'After "didn\'t" we must use the base verb form.'},
+
+{type:'err',topic:'ps',col:'#4A90E2',pts:15,
+sentence:['She','buyed','a','new','laptop','for','her','studies','.'],
+errIdx:1,fix:'bought',
+exp:'"Buy" is an irregular verb: buy → bought.'},
+
+// FIND
+{type:'find',topic:'ps',col:'#4A90E2',pts:15,count:5,
 text:'She got up early, made breakfast and walked to school. On the way she met her friend and they ran to catch the bus.',
-q:'Find 4 Past Simple verbs.',
+q:'Find 5 Past Simple verbs.',
 answers:['got','made','walked','met','ran'],
 exp:'Got (get), made (make), walked (walk), met (meet), ran (run) — all Past Simple.'},
 
+{type:'find',topic:'ps',col:'#4A90E2',pts:15,count:3,
+text:'Last week we visited a science museum. We saw huge dinosaur bones and learned about ancient history.',
+q:'Find 3 Past Simple verbs.',
+answers:['visited','saw','learned'],
+exp:'Visited, saw, learned — describing completed actions in the past.'},
+
+{type:'find',topic:'ps',col:'#4A90E2',pts:15,count:3,
+text:'He opened the heavy door, turned on the bright light and sat comfortably on the sofa.',
+q:'Find 3 Past Simple verbs.',
+answers:['opened','turned','sat'],
+exp:'Opened, turned, sat — a sequence of past actions.'},
+
+{type:'find',topic:'ps',col:'#4A90E2',pts:15,count:3,
+text:'They traveled to France, ate amazing croissants and drank hot coffee in Paris.',
+q:'Find 3 Past Simple verbs.',
+answers:['traveled','ate','drank'],
+exp:'Traveled, ate, drank — finished past events.'},
+
+// SPEAK
 {type:'speak',topic:'ps',col:'#7C3AED',pts:20,
 prompt:'Tell us about your last weekend. What did you do? Use at least THREE Past Simple verbs.',
 example:"e.g. I woke up late, watched a film and went for a walk with my dog."},
 
+{type:'speak',topic:'ps',col:'#7C3AED',pts:20,
+prompt:'Talk about your favorite childhood toy. Who gave it to you and how did you play with it? Use at least THREE Past Simple verbs.',
+example:"e.g. My grandmother gave me a toy train. I built long tracks in my bedroom."},
+
+{type:'speak',topic:'ps',col:'#7C3AED',pts:20,
+prompt:'Describe a mistake you made recently. What happened and how did you fix it? Use at least THREE Past Simple verbs.',
+example:"e.g. I forgot my friend's birthday. I bought a nice gift and apologized."},
+
+{type:'speak',topic:'ps',col:'#7C3AED',pts:20,
+prompt:'What did you have for dinner yesterday? Who cooked it? Use at least THREE Past Simple verbs.',
+example:"e.g. I had pasta with chicken. My father cooked it and it was delicious."},
+
+
+// ─── PAST CONTINUOUS ───────────────────────────────────────
+
+// MC
 {type:'mc',topic:'pc',col:'#50E3C2',pts:10,
 q:'I ___ my homework when Mum called me for dinner.',
 opts:['do','did','was doing','am doing'],
@@ -567,6 +675,19 @@ opts:['did','do','were','was'],
 ans:2,
 exp:'"Were" with you/we/they. Past Continuous question: Were + subject + verb-ING.'},
 
+{type:'mc',topic:'pc',col:'#50E3C2',pts:10,
+q:'They ___ football at 5 PM yesterday.',
+opts:['play','played','were playing','was playing'],
+ans:2,
+exp:'We use Past Continuous (were playing) to emphasize that an action was in progress at a specific time.'},
+
+{type:'mc',topic:'pc',col:'#50E3C2',pts:10,
+q:'The sun ___ and the birds were singing.',
+opts:['was shining','shine','shone','is shining'],
+ans:0,
+exp:'Past Continuous is often used to describe background scenes in a story (was shining).'},
+
+// GAP
 {type:'gap',topic:'pc',col:'#50E3C2',pts:15,
 verb:'rain',before:'It',after:'when we left the house, so we took an umbrella.',
 ans:'was raining',
@@ -577,17 +698,63 @@ verb:'sleep',before:'The baby',after:'when the guests arrived, so we all spoke q
 ans:'was sleeping',
 exp:'"Was sleeping" = Past Continuous: ongoing action interrupted by the guests arriving.'},
 
+{type:'gap',topic:'pc',col:'#50E3C2',pts:15,
+verb:'listen',before:'I',after:'to a podcast while driving to work.',
+ans:'was listening',
+exp:'An ongoing background action is expressed with Past Continuous (was listening).'},
+
+{type:'gap',topic:'pc',col:'#50E3C2',pts:15,
+verb:'not pay',before:'The students',after:'attention to the teacher during the lesson.',
+ans:"weren't paying",
+exp:'Negative Past Continuous for a plural subject (students) uses weren\'t + verb-ING.'},
+
+// WO
 {type:'wo',topic:'pc',col:'#50E3C2',pts:15,
 words:['They','were','playing','cards','when','I','arrived','.'],
 ans:'They were playing cards when I arrived .',
 exp:'Past Continuous (were playing) + Past Simple (arrived). The card game was already happening.'},
 
+{type:'wo',topic:'pc',col:'#50E3C2',pts:15,
+words:['What','were','you','doing','at','midnight','?'],
+ans:'What were you doing at midnight ?',
+exp:'Question format: Wh-word + was/were + subject + verb-ING.'},
+
+{type:'wo',topic:'pc',col:'#50E3C2',pts:15,
+words:['She','wasn\'t','listening','to','the','radio','anymore','.'],
+ans:'She wasn\'t listening to the radio anymore .',
+exp:'Negative sentence structure with Past Continuous.'},
+
+{type:'wo',topic:'pc',col:'#50E3C2',pts:15,
+words:['The','dogs','were','barking','loudly','all','night','.'],
+ans:'The dogs were barking loudly all night .',
+exp:'Past Continuous shows an ongoing background action (all night).'},
+
+// OOO
 {type:'ooo',topic:'pc',col:'#50E3C2',pts:10,
 q:'Which verb CANNOT be used in Past Continuous?',
 opts:['talk','run','know','laugh'],
 ans:2,
 exp:'"Know" is a stative verb (state, not action). No Continuous form. "I was knowing" ✗'},
 
+{type:'ooo',topic:'pc',col:'#50E3C2',pts:10,
+q:'Which verb CANNOT be used in Past Continuous?',
+opts:['believe','jump','dance','swim'],
+ans:0,
+exp:'"Believe" is a stative verb. We say "I believed", not "I was believing".'},
+
+{type:'ooo',topic:'pc',col:'#50E3C2',pts:10,
+q:'Which verb CANNOT be used in Past Continuous?',
+opts:['read','write','understand','speak'],
+ans:2,
+exp:'"Understand" is a state of mind, so it doesn\'t take the -ING form in continuous tenses.'},
+
+{type:'ooo',topic:'pc',col:'#50E3C2',pts:10,
+q:'Which verb CANNOT be used in Past Continuous?',
+opts:['need','paint','wash','clean'],
+ans:0,
+exp:'"Need" is a stative verb and shouldn\'t be used in continuous tenses.'},
+
+// ERR
 {type:'err',topic:'pc',col:'#50E3C2',pts:15,
 sentence:['I','were','doing','my','homework','at','7','pm','.'],
 errIdx:1,fix:'was',
@@ -598,69 +765,62 @@ sentence:['She','was','talk','on','the','phone','when','I','came','in','.'],
 errIdx:2,fix:'talking',
 exp:'Past Continuous = was/were + verb-ING. "Talk" → "talking".'},
 
+{type:'err',topic:'pc',col:'#50E3C2',pts:15,
+sentence:['We','was','walking','in','the','park','at','sunset','.'],
+errIdx:1,fix:'were',
+exp:'"We" is a plural subject, so it always takes "were", not "was".'},
+
+{type:'err',topic:'pc',col:'#50E3C2',pts:15,
+sentence:['He','wasn\'t','watch','the','match','on','television','.'],
+errIdx:2,fix:'watching',
+exp:'Past Continuous requires the -ING form of the main verb: watch → watching.'},
+
+// FIND
 {type:'find',topic:'pc',col:'#50E3C2',pts:15,count:3,
 text:'When I arrived at the park, some kids were playing football near the gate. A dog was chasing a ball. Two old men were sitting on a bench.',
 q:'Find 3 Past Continuous verbs.',
-answers:['were','playing','was','chasing','sitting'],
-exp:'Were playing, was chasing, were sitting — all Past Continuous, showing ongoing actions at that moment.'},
+answers:['were playing','was chasing','were sitting'],
+exp:'Were playing, was chasing, were sitting — all describe ongoing actions at a specific moment.'},
 
+{type:'find',topic:'pc',col:'#50E3C2',pts:15,count:3,
+text:'At 8 PM, I was reading a book. My brother was playing video games and my parents were talking in the kitchen.',
+q:'Find 3 Past Continuous verbs.',
+answers:['was reading','was playing','were talking'],
+exp:'Actions that were in progress at exactly 8 PM.'},
+
+{type:'find',topic:'pc',col:'#50E3C2',pts:15,count:3,
+text:'The wind was blowing fiercely. Rain was falling, and people were running to find shelter.',
+q:'Find 3 Past Continuous verbs.',
+answers:['was blowing','was falling','were running'],
+exp:'Past Continuous is often used to describe the weather and background scene.'},
+
+{type:'find',topic:'pc',col:'#50E3C2',pts:15,count:2,
+text:'I looked out the window. A man was walking his dog, and two girls were laughing loudly.',
+q:'Find 2 Past Continuous verbs.',
+answers:['was walking','were laughing'],
+exp:'These verbs describe the ongoing background actions when you looked.'},
+
+// SPEAK
 {type:'speak',topic:'pc',col:'#7C3AED',pts:20,
 prompt:'When you walked into school this morning, what was happening? Describe THREE things using Past Continuous.',
 example:'e.g. Some kids were talking near the door. A teacher was writing on the board. My friend was looking for her bag.'},
 
-{type:'mc',topic:'adv',col:'#F5A623',pts:10,
-q:'She spoke very ___ and nobody could hear her.',
-opts:['quiet','quietly','quick','quicker'],
-ans:1,
-exp:'"Quietly" is an adverb — describes HOW she spoke. "Quiet" is an adjective (describes nouns, not verbs).'},
+{type:'speak',topic:'pc',col:'#7C3AED',pts:20,
+prompt:'Imagine you looked out of the window at 8 PM yesterday. What were people doing outside? Describe THREE things using Past Continuous.',
+example:'e.g. A man was parking his car. Teenagers were listening to music.'},
 
-{type:'mc',topic:'adv',col:'#F5A623',pts:10,
-q:'He ran ___ and finished the race first.',
-opts:['fastly','more fast','fast','fastest'],
-ans:2,
-exp:'"Fast" works as both adjective and adverb. "Fastly" does not exist in English.'},
+{type:'speak',topic:'pc',col:'#7C3AED',pts:20,
+prompt:'What were your family members doing when you woke up this morning? Describe THREE things using Past Continuous.',
+example:'e.g. My dad was drinking coffee and my sister was brushing her teeth.'},
 
-{type:'gap',topic:'adv',col:'#F5A623',pts:15,
-verb:'careful',before:'Please drive',after:'— the roads are wet.',
-ans:'carefully',
-exp:'Adjective "careful" → adverb "carefully" (add -ly). Adverbs describe HOW.'},
+{type:'speak',topic:'pc',col:'#7C3AED',pts:20,
+prompt:'Describe a busy street scene in the past. Describe THREE things using Past Continuous.',
+example:'e.g. Cars were moving slowly, people were waiting at the bus stop, and a musician was playing guitar.'},
 
-{type:'gap',topic:'adv',col:'#F5A623',pts:15,
-verb:'angry',before:'He slammed the door',after:'and walked out.',
-ans:'angrily',
-exp:'"Angry" → "angrily" (y → ily). The adverb describes HOW he slammed the door.'},
 
-{type:'wo',topic:'adv',col:'#F5A623',pts:15,
-words:['He','spoke','so','quietly','that','nobody','heard','him','.'],
-ans:'He spoke so quietly that nobody heard him .',
-exp:'"Quietly" comes after the verb "spoke". So + adverb + that = result clause.'},
+// ─── SIMPLE + CONTINUOUS ───────────────────────────────────
 
-{type:'ooo',topic:'adv',col:'#F5A623',pts:10,
-q:'Which word is NOT an adverb of manner?',
-opts:['quickly','loudly','carefully','careful'],
-ans:3,
-exp:'"Careful" is an adjective. Quickly, loudly, carefully are adverbs of manner (add -ly to adjective).'},
-
-{type:'err',topic:'adv',col:'#F5A623',pts:15,
-sentence:['She','danced','beautiful','at','the','concert','.'],
-errIdx:2,fix:'beautifully',
-exp:'After a verb, use an adverb: "beautiful" (adjective) → "beautifully" (adverb).'},
-
-{type:'err',topic:'adv',col:'#F5A623',pts:15,
-sentence:['He','finished','the','test','quick','and','left','the','room','.'],
-errIdx:4,fix:'quickly',
-exp:'"Quick" is an adjective. After a verb, use the adverb: quick → quickly.'},
-
-{type:'find',topic:'adv',col:'#F5A623',pts:15,count:3,
-text:'She walked slowly to the front of the class, took a deep breath and spoke clearly. Everyone listened quietly. The teacher smiled and nodded.',
-q:'Find 3 adverbs of manner.',
-answers:['slowly','clearly','quietly'],
-exp:'Slowly (walked), clearly (spoke), quietly (listened) — all describe HOW the action is done.'},
-
-{type:'speak',topic:'adv',col:'#7C3AED',pts:20,
-prompt:'Describe how you do THREE different things in your life. Use a different adverb of manner each time.',
-example:"e.g. I eat quickly in the morning. I walk slowly when I'm tired. I laugh loudly at silly videos."},
-
+// MC
 {type:'mc',topic:'pspc',col:'#E27D4A',pts:10,
 q:'While I ___ TV, my phone rang.',
 opts:['watched','was watching','am watching','watch'],
@@ -673,6 +833,19 @@ opts:['lost / was waiting','was losing / waited','lost / waited','was losing / w
 ans:0,
 exp:'"Lost" = short completed action (Past Simple). "Was waiting" = longer background action (Past Continuous).'},
 
+{type:'mc',topic:'pspc',col:'#E27D4A',pts:10,
+q:'When the teacher ___ the room, the students ___ heavily.',
+opts:['entered / were chatting','was entering / chatted','entered / chatted','was entering / were chatting'],
+ans:0,
+exp:'The students "were chatting" (long background action) when the teacher "entered" (short interruption).'},
+
+{type:'mc',topic:'pspc',col:'#E27D4A',pts:10,
+q:'I ___ my finger while I ___ vegetables for dinner.',
+opts:['cut / was chopping','was cutting / chopped','cut / chopped','was cutting / was chopping'],
+ans:0,
+exp:'Cutting a finger is a sudden action (Past Simple), chopping is the ongoing process (Past Continuous).'},
+
+// GAP
 {type:'gap',topic:'pspc',col:'#E27D4A',pts:15,
 verb:'cook',before:'Mum',after:'dinner when Dad came home.',
 ans:'was cooking',
@@ -683,6 +856,17 @@ verb:'not hear',before:'I',after:'the doorbell because I was listening to music.
 ans:"didn't hear",
 exp:'"Didn\'t hear" = Past Simple negative. The background action (listening) explains why.'},
 
+{type:'gap',topic:'pspc',col:'#E27D4A',pts:15,
+verb:'break',before:'He',after:'his glasses while he was playing rugby.',
+ans:'broke',
+exp:'"Broke" is the short sudden action that happened during the ongoing game.'},
+
+{type:'gap',topic:'pspc',col:'#E27D4A',pts:15,
+verb:'drive',before:'While we',after:'home, we saw a terrible accident.',
+ans:'were driving',
+exp:'The action following "while" is usually continuous because it sets the background scene.'},
+
+// WO
 {type:'wo',topic:'pspc',col:'#E27D4A',pts:15,
 words:['When','it','started','to','rain',',','we','were','walking','in','the','park','.'],
 ans:'When it started to rain , we were walking in the park .',
@@ -691,18 +875,56 @@ exp:'"Started" = Past Simple (sudden event). "Were walking" = Past Continuous (w
 {type:'wo',topic:'pspc',col:'#E27D4A',pts:15,
 words:['He','fell','asleep','while','he','was','reading','a','book','.'],
 ans:'He fell asleep while he was reading a book .',
-exp:'"Fell asleep" = Past Simple (short event). "Was reading" = Past Continuous (background action). "While" signals the longer action.'},
+exp:'"Fell asleep" = Past Simple (short event). "Was reading" = Past Continuous (background action).'},
+
+{type:'wo',topic:'pspc',col:'#E27D4A',pts:15,
+words:['I','was','taking','a','shower','when','the','phone','rang','.'],
+ans:'I was taking a shower when the phone rang .',
+exp:'Long background action + when + short interrupting action.'},
+
+{type:'wo',topic:'pspc',col:'#E27D4A',pts:15,
+words:['While','they','were','studying',',','the','lights','went','out','.'],
+ans:'While they were studying , the lights went out .',
+exp:'"While" introduces the ongoing process, followed by the sudden event.'},
+
+// OOO
+{type:'ooo',topic:'pspc',col:'#E27D4A',pts:10,
+q:'Which sentence uses the tenses CORRECTLY?',
+opts:[
+'She was cooking when she was burning her hand.',
+'I watched TV while the rain was falling outside.',
+'They were played football when the bell rang.',
+'He was sleep when we arrived.'],
+ans:1,
+exp:'"Watched" (PS) + "was falling" (PC) — correct mix.'},
+
+{type:'ooo',topic:'pspc',col:'#E27D4A',pts:10,
+q:'Which sentence uses the tenses INCORRECTLY?',
+opts:[
+'I dropped my keys while I was running.',
+'He was falling when he climbed the tree.',
+'They were having dinner when I called.',
+'She met him while she was traveling.'],
+ans:1,
+exp:'Falling is a sudden action (Past Simple), climbing is the process (Past Continuous). It should be "He fell when he was climbing".'},
+
+{type:'ooo',topic:'pspc',col:'#E27D4A',pts:10,
+q:'Which word often connects a Past Simple event interrupting a Past Continuous action?',
+opts:['because','but','when','so'],
+ans:2,
+exp:'"When" is commonly used right before the short interrupting action in Past Simple.'},
 
 {type:'ooo',topic:'pspc',col:'#E27D4A',pts:10,
 q:'Which sentence uses the tenses CORRECTLY?',
 opts:[
-  'She was cooking when she was burning her hand.',
-  'I watched TV while the rain was falling outside.',
-  'They were played football when the bell rang.',
-  'He was sleep when we arrived.'],
+'While I was walking, I was finding a coin.',
+'While I was walking, I found a coin.',
+'While I walked, I was finding a coin.',
+'While I walked, I found a coin.'],
 ans:1,
-exp:'"Watched" (PS) + "was falling" (PC) — correct mix. Option A: two PC for one short event ✗. Option C: "were played" ✗. Option D: "was sleep" ✗.'},
+exp:'Walking is the long background action (was walking), finding a coin is a sudden event (found).'},
 
+// ERR
 {type:'err',topic:'pspc',col:'#E27D4A',pts:15,
 sentence:['I','seeing','a','great','film','last','night','.'],
 errIdx:1,fix:'saw',
@@ -721,28 +943,214 @@ exp:'"I" always takes "was", not "were". Was/were + verb-ING.'},
 {type:'err',topic:'pspc',col:'#E27D4A',pts:15,
 sentence:['They','were','played','football','when','it','started','to','rain','.'],
 errIdx:2,fix:'playing',
-exp:'Past Continuous = was/were + verb-ING. "Played" → "playing".'},
+exp:'Past Continuous requires the -ING ending. "Played" → "playing".'},
 
-{type:'err',topic:'pspc',col:'#E27D4A',pts:15,
-sentence:['He','didn\'t','was','sleeping','when','we','came','in','.'],
-errIdx:2,fix:'wasn\'t',
-exp:'Negative Past Continuous = wasn\'t/weren\'t + ING. Never "didn\'t was".'},
-
-{type:'err',topic:'pspc',col:'#E27D4A',pts:15,
-sentence:['When','I','arrived',',','they','was','having','lunch','.'],
-errIdx:5,fix:'were',
-exp:'"They" takes "were", not "was". They/we/you → were + verb-ING.'},
+// FIND
+{type:'find',topic:'pspc',col:'#E27D4A',pts:15,count:5,
+text:'Tom was walking home when he suddenly heard a strange noise. He stopped and looked around, but nobody was standing nearby.',
+q:'Find 3 Past Simple verbs and 2 Past Continuous verbs.',
+answers:['heard','stopped','looked','was walking','was standing'],
+exp:'PS: heard, stopped, looked. PC: was walking, was standing.'},
 
 {type:'find',topic:'pspc',col:'#E27D4A',pts:15,count:4,
-text:'Tom was walking home when he suddenly heard a strange noise. He stopped and looked around, but nobody was standing nearby.',
-q:'Find 2 Past Simple verbs and 2 Past Continuous verbs.',
-answers:['heard','stopped','looked','was walking','was standing'],
-exp:'PS: heard, stopped, looked. PC: was walking, was standing. PC = background; PS = events.'},
+text:'While she was cleaning the attic, she found an old diary. She sat down and started reading it.',
+q:'Find 3 Past Simple verbs and 1 Past Continuous verb.',
+answers:['found','sat','started','was cleaning'],
+exp:'PS: found, sat, started. PC: was cleaning.'},
 
+{type:'find',topic:'pspc',col:'#E27D4A',pts:15,count:3,
+text:'I was waiting for the bus when I saw my friend. We decided to walk together.',
+q:'Find 2 Past Simple verbs and 1 Past Continuous verb.',
+answers:['saw','decided','was waiting'],
+exp:'PS: saw, decided. PC: was waiting.'},
+
+{type:'find',topic:'pspc',col:'#E27D4A',pts:15,count:4,
+text:'The phone rang while I was taking a shower. I quickly grabbed a towel and answered it.',
+q:'Find 3 Past Simple verbs and 1 Past Continuous verb.',
+answers:['rang','grabbed','answered','was taking'],
+exp:'PS: rang, grabbed, answered. PC: was taking.'},
+
+// SPEAK
 {type:'speak',topic:'pspc',col:'#7C3AED',pts:20,
 prompt:'Tell us about a time something unexpected happened to you. What were you doing when it happened? Use BOTH Past Simple and Past Continuous.',
-example:'e.g. I was having lunch at school when my friend suddenly spilled juice all over my bag. I jumped up and ran to get some paper towels.'},
+example:'e.g. I was having lunch at school when my friend suddenly spilled juice all over my bag.'},
+
+{type:'speak',topic:'pspc',col:'#7C3AED',pts:20,
+prompt:'Talk about an interruption you experienced recently. What were you doing when it happened? Use BOTH Past Simple and Past Continuous.',
+example:'e.g. I was writing an email when my boss suddenly called me into his office.'},
+
+{type:'speak',topic:'pspc',col:'#7C3AED',pts:20,
+prompt:'Imagine you were walking in the forest and found something strange. Describe the scene using BOTH Past Simple and Past Continuous.',
+example:'e.g. The sun was shining. I was walking near the river when I suddenly noticed a shiny old coin.'},
+
+{type:'speak',topic:'pspc',col:'#7C3AED',pts:20,
+prompt:'Describe a time when the weather suddenly changed. What were you doing? Use BOTH Past Simple and Past Continuous.',
+example:'e.g. We were having a picnic in the park when it suddenly started to rain heavily.'},
+
+
+// ─── ADVERBS OF MANNER ─────────────────────────────────────
+
+// MC
+{type:'mc',topic:'adv',col:'#F5A623',pts:10,
+q:'She spoke very ___ and nobody could hear her.',
+opts:['quiet','quietly','quick','quicker'],
+ans:1,
+exp:'"Quietly" is an adverb — describes HOW she spoke. "Quiet" is an adjective (describes nouns, not verbs).'},
+
+{type:'mc',topic:'adv',col:'#F5A623',pts:10,
+q:'He ran ___ and finished the race first.',
+opts:['fastly','more fast','fast','fastest'],
+ans:2,
+exp:'"Fast" works as both adjective and adverb. "Fastly" does not exist in English.'},
+
+{type:'mc',topic:'adv',col:'#F5A623',pts:10,
+q:'He did the exam very ___ and passed with top marks.',
+opts:['good','well','goodly','better'],
+ans:1,
+exp:'"Good" is an adjective. The adverb form is completely irregular: "well".'},
+
+{type:'mc',topic:'adv',col:'#F5A623',pts:10,
+q:'Please speak ___, the baby is sleeping.',
+opts:['soft','softer','softly','softness'],
+ans:2,
+exp:'We need the adverb "softly" to describe how you should speak.'},
+
+// GAP
+{type:'gap',topic:'adv',col:'#F5A623',pts:15,
+verb:'careful',before:'Please drive',after:'— the roads are wet.',
+ans:'carefully',
+exp:'Adjective "careful" → adverb "carefully" (add -ly). Adverbs describe HOW.'},
+
+{type:'gap',topic:'adv',col:'#F5A623',pts:15,
+verb:'angry',before:'He slammed the door',after:'and walked out.',
+ans:'angrily',
+exp:'"Angry" → "angrily" (y → ily). The adverb describes HOW he slammed the door.'},
+
+{type:'gap',topic:'adv',col:'#F5A623',pts:15,
+verb:'easy',before:'She solved the difficult math problem very',after:'.',
+ans:'easily',
+exp:'Adjective "easy" changes to the adverb "easily" (change -y to -ily).'},
+
+{type:'gap',topic:'adv',col:'#F5A623',pts:15,
+verb:'hard',before:'They trained very',after:'to win the championship.',
+ans:'hard',
+exp:'"Hard" is an irregular adverb that stays exactly the same as the adjective.'},
+
+// WO
+{type:'wo',topic:'adv',col:'#F5A623',pts:15,
+words:['He','spoke','so','quietly','that','nobody','heard','him','.'],
+ans:'He spoke so quietly that nobody heard him .',
+exp:'"Quietly" comes after the verb "spoke". So + adverb + that = result clause.'},
+
+{type:'wo',topic:'adv',col:'#F5A623',pts:15,
+words:['She','danced','beautifully','at','the','school','concert','.'],
+ans:'She danced beautifully at the school concert .',
+exp:'The adverb of manner (beautifully) usually comes after the main verb.'},
+
+{type:'wo',topic:'adv',col:'#F5A623',pts:15,
+words:['Please','read','the','instructions','very','carefully','now','.'],
+ans:'Please read the instructions very carefully now .',
+exp:'The adverb often comes after the object (the instructions).'},
+
+{type:'wo',topic:'adv',col:'#F5A623',pts:15,
+words:['He','quickly','hid','the','present','behind','his','back','.'],
+ans:'He quickly hid the present behind his back .',
+exp:'Sometimes adverbs of manner can come right before the main verb.'},
+
+// OOO
+{type:'ooo',topic:'adv',col:'#F5A623',pts:10,
+q:'Which word is NOT an adverb of manner?',
+opts:['quickly','loudly','carefully','careful'],
+ans:3,
+exp:'"Careful" is an adjective. Quickly, loudly, carefully are adverbs of manner.'},
+
+{type:'ooo',topic:'adv',col:'#F5A623',pts:10,
+q:'Which word is NOT an adverb of manner?',
+opts:['fast','hard','well','lonely'],
+ans:3,
+exp:'"Lonely" is an adjective (a lonely person), even though it ends in -ly.'},
+
+{type:'ooo',topic:'adv',col:'#F5A623',pts:10,
+q:'Which adverb does NOT end in -ly?',
+opts:['happily','easily','well','slowly'],
+ans:2,
+exp:'"Well" is the irregular adverb form of "good".'},
+
+{type:'ooo',topic:'adv',col:'#F5A623',pts:10,
+q:'Which word is an adjective, NOT an adverb?',
+opts:['friendly','quickly','sadly','loudly'],
+ans:0,
+exp:'"Friendly" is an adjective describing a noun (e.g., a friendly dog).'},
+
+// ERR
+{type:'err',topic:'adv',col:'#F5A623',pts:15,
+sentence:['She','danced','beautiful','at','the','concert','.'],
+errIdx:2,fix:'beautifully',
+exp:'After a verb, use an adverb: "beautiful" (adjective) → "beautifully" (adverb).'},
+
+{type:'err',topic:'adv',col:'#F5A623',pts:15,
+sentence:['He','finished','the','test','quick','and','left','the','room','.'],
+errIdx:4,fix:'quickly',
+exp:'"Quick" is an adjective. After a verb, use the adverb: quick → quickly.'},
+
+{type:'err',topic:'adv',col:'#F5A623',pts:15,
+sentence:['The','children','were','playing','happy','in','the','garden','.'],
+errIdx:4,fix:'happily',
+exp:'We need an adverb to describe how they were playing. Happy → happily.'},
+
+{type:'err',topic:'adv',col:'#F5A623',pts:15,
+sentence:['He','speaks','English','very','good','and','fluently','.'],
+errIdx:4,fix:'well',
+exp:'"Good" is an adjective. The correct adverb of manner is "well".'},
+
+// FIND
+{type:'find',topic:'adv',col:'#F5A623',pts:15,count:3,
+text:'She walked slowly to the front of the class, took a deep breath and spoke clearly. Everyone listened quietly.',
+q:'Find 3 adverbs of manner.',
+answers:['slowly','clearly','quietly'],
+exp:'Slowly (walked), clearly (spoke), quietly (listened) — all describe HOW the action is done.'},
+
+{type:'find',topic:'adv',col:'#F5A623',pts:15,count:3,
+text:'She smiled warmly, spoke softly and gently touched his shoulder.',
+q:'Find 3 adverbs of manner.',
+answers:['warmly','softly','gently'],
+exp:'These words describe how she smiled, spoke, and touched.'},
+
+{type:'find',topic:'adv',col:'#F5A623',pts:15,count:2,
+text:'He angrily threw the paper on the floor and quickly walked away.',
+q:'Find 2 adverbs of manner.',
+answers:['angrily','quickly'],
+exp:'Words ending in -ly that describe the actions.'},
+
+{type:'find',topic:'adv',col:'#F5A623',pts:15,count:2,
+text:'They worked hard all day and successfully finished the important project.',
+q:'Find 2 adverbs of manner.',
+answers:['hard','successfully'],
+exp:'"Hard" is irregular. "Successfully" is formed by adding -ly to the adjective.'},
+
+// SPEAK
+{type:'speak',topic:'adv',col:'#7C3AED',pts:20,
+prompt:'Describe how you do THREE different things in your life. Use at least THREE adverbs of manner.',
+example:"e.g. I eat quickly in the morning. I walk slowly when I'm tired. I laugh loudly at silly videos."},
+
+{type:'speak',topic:'adv',col:'#7C3AED',pts:20,
+prompt:'How does your favorite singer perform? Use at least THREE adverbs of manner.',
+example:"e.g. She sings beautifully, dances energetically, and smiles warmly at the fans."},
+
+{type:'speak',topic:'adv',col:'#7C3AED',pts:20,
+prompt:'Describe how you usually study for an important exam. Use at least THREE adverbs of manner.',
+example:"e.g. I sit quietly in my room, read the textbook carefully, and write notes neatly."},
+
+{type:'speak',topic:'adv',col:'#7C3AED',pts:20,
+prompt:'Explain how someone should drive a car in heavy rain. Use at least THREE adverbs of manner.',
+example:"e.g. You should drive slowly, hold the steering wheel firmly, and watch the road carefully."}
+
 ];
+
+
+
+
+
 
 const TN={mc:'Multiple Choice',gap:'Fill the Gap',wo:'Word Order',ooo:'Odd One Out',err:'Fix the Error',read:'Read & Answer',find:'Find It!',speak:'Speak!'};
 const PC=['#f7c948','#4cc9f0','#f72585','#06d6a0','#a78bfa','#fb923c'];
