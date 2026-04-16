@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>SE · 75 Smart Challenge · B1–B2 English Lesson</title>
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=Lora:ital@1&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --lime:#DFF478;--navy:#17243F;--floral:#92BAD5;--kawaii:#788CE3;
+  --white:#F7F3F6;--ink:#0e1520;--muted:#8a9ab5;--line:#d4dce8;
+  --gold:#a67c2e;--red:#bf3a18;--green:#1e6b45;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--white);color:var(--ink);overflow-x:hidden;font-size:17px}
+.fade{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.fade.in{opacity:1;transform:none}
+
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;background:var(--navy);overflow:hidden;position:relative}
+.hero-left{padding:5rem 4rem;display:flex;flex-direction:column;justify-content:center;z-index:2}
+.hero-right{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.hero-eyebrow{color:rgba(255,255,255,.5);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:400;letter-spacing:.02em;margin-bottom:2rem;display:flex;align-items:center;gap:10px}
+.hero-eyebrow::before{content:'';width:24px;height:1px;background:rgba(255,255,255,.25)}
+h1.hero-h{font-family:'Barlow Condensed',sans-serif;font-size:clamp(42px,6vw,80px);font-weight:900;color:var(--white);line-height:.95;text-transform:uppercase;margin-bottom:1.5rem}
+h1.hero-h em{color:var(--lime);font-style:normal;display:block}
+.hero-sub{font-size:15px;color:var(--floral);line-height:1.7;max-width:380px;margin-bottom:3rem;font-weight:300}
+.hero-pills{display:flex;gap:8px;flex-wrap:wrap}
+.pill{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;padding:7px 16px;border-radius:2px}
+.pill-a{background:var(--lime);color:var(--navy)}
+.pill-b{background:transparent;border:1px solid rgba(146,186,213,.4);color:var(--floral)}
+.hero-scroll{position:absolute;bottom:2.5rem;left:4rem;color:rgba(255,255,255,.5);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:400;letter-spacing:.02em;text-transform:uppercase;display:flex;align-items:center;gap:10px}
+.hero-scroll::before{content:'';width:24px;height:1px;background:rgba(255,255,255,.2)}
+.hero-img-wrap{width:100%;height:100%;position:relative;overflow:hidden}
+.hero-img-wrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:1}
+
+.warmup-s{background:#eeebef;padding:3.2rem 2rem 2.8rem;position:relative;border-bottom:1px solid rgba(23,36,63,.12)}
+.warmup-in{max-width:860px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;align-items:center}
+.warmup-left{padding-right:1rem;align-self:stretch;display:flex;flex-direction:column;justify-content:center}
+.warmup-eyebrow{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--kawaii);margin-bottom:.9rem;display:flex;align-items:center;gap:10px;font-weight:700}
+.warmup-eyebrow::before{content:'';width:18px;height:1px;background:var(--kawaii)}
+.warmup-h{font-family:'DM Serif Display',serif;font-size:36px;color:var(--navy);line-height:1.25;font-weight:400;margin:0}
+.warmup-h em{color:var(--navy);font-style:italic;background:var(--lime);padding:0 .25em;border-radius:2px}
+.warmup-right{display:flex;flex-direction:column;gap:1.1rem}
+.warmup-qs{display:flex;flex-direction:column;gap:.55rem}
+.warmup-q{font-size:13.5px;color:var(--ink);line-height:1.6;margin:0;font-family:'Lora',serif;font-style:italic;padding-left:1rem;position:relative;opacity:.82}
+.warmup-q::before{content:'›';position:absolute;left:0;color:var(--kawaii);font-family:'DM Sans',sans-serif;font-style:normal;font-weight:700}
+.warmup-label{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:rgba(23,36,63,.55);font-weight:700;margin:.3rem 0 .2rem 0;padding-top:1rem;border-top:1px solid rgba(23,36,63,.18)}
+.warmup-words{font-family:'DM Sans',sans-serif;font-size:13px;color:var(--navy);line-height:1.85;letter-spacing:.01em;font-weight:500;margin:0}
+.warmup-words span{display:inline-block;transition:background .2s;cursor:default;padding:1px 2px;border-radius:2px}
+.warmup-words span:hover{background:var(--lime)}
+.warmup-words .sep{color:rgba(23,36,63,.28);font-weight:300;padding:0 .35rem}
+.warmup-words .sep:hover{background:transparent}
+
+.art-wrap{max-width:860px;margin:0 auto;padding:3rem 2rem 5rem}
+.art-hdr{padding-bottom:2.5rem;border-bottom:2px solid var(--navy);margin-bottom:2.5rem}
+.art-kick{color:var(--kawaii);font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:.7rem}
+.art-title{font-family:'DM Serif Display',serif;font-size:clamp(26px,4vw,46px);font-weight:400;line-height:1.1;margin-bottom:.9rem;color:var(--navy)}
+.art-deck{font-family:'Lora',serif;font-size:17px;font-style:italic;color:var(--muted);line-height:1.7}
+.art-body{column-count:2;column-gap:3rem;font-size:16px;line-height:1.85}
+.art-body p{margin-bottom:1.1em;break-inside:avoid}
+.art-body .dc::first-letter{font-family:'DM Serif Display',serif;font-size:4.2em;float:left;line-height:.82;margin:.06em .14em 0 0;color:var(--kawaii)}
+.pull{column-span:all;font-family:'Lora',serif;font-size:clamp(17px,2.2vw,23px);font-style:italic;color:var(--navy);padding:2rem 0;margin:1.2rem 0;border-top:3px solid var(--lime);border-bottom:1px solid var(--line);text-align:center}
+.expert{column-span:all;display:grid;grid-template-columns:4px 1fr;gap:1.2rem;margin:1.8rem 0;background:var(--white);border:1px solid var(--line);padding:1.5rem 1.5rem 1.5rem 0}
+.exp-bar{background:var(--kawaii);border-radius:4px}
+.exp-q{font-family:'Lora',serif;font-size:15px;font-style:italic;color:var(--ink);line-height:1.75}
+.exp-by{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:.5rem}
+
+.vhl{cursor:pointer;border-radius:3px;padding:1px 4px;transition:background .15s}
+.vhl-word{background:rgba(120,140,227,.18);color:var(--navy);border-bottom:1.5px solid var(--kawaii);border-radius:3px;padding:1px 4px;transition:background .15s}
+.vhl-word:hover{background:rgba(120,140,227,.35)}
+.vhl-def{display:none;background:var(--kawaii);color:#fff;border-radius:3px;padding:2px 7px;font-size:.92em;font-style:normal;font-weight:400;font-family:'DM Sans',sans-serif}
+.vhl.open .vhl-word{display:none}
+.vhl.open .vhl-def{display:inline}
+
+.sec-head{display:flex;align-items:center;gap:1.2rem;margin-bottom:.5rem}
+.sec-tag{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:.22em;text-transform:uppercase;flex-shrink:0}
+.sec-line{flex:1;height:1px}
+
+.vtask-s{background:var(--floral);padding:6rem 2rem}
+.vtask-in{max-width:860px;margin:0 auto}
+.tcard-light{background:var(--white);border:1px solid rgba(23,36,63,.12);border-top:3px solid var(--navy);padding:2rem 2rem 2rem;margin-bottom:1.2rem}
+.tcard-tag{font-family:'DM Sans',sans-serif;font-size:10px;letter-spacing:.15em;text-transform:uppercase;margin-bottom:.4rem;color:var(--kawaii);font-weight:600}
+.tcard-h{font-family:'DM Sans',sans-serif;font-size:20px;font-weight:600;margin-bottom:.4rem;color:var(--navy)}
+.tcard-i{font-size:13px;margin-bottom:1.4rem;line-height:1.6;color:var(--muted)}
+
+.match-pairs{display:flex;flex-direction:column;gap:8px}
+.match-unmatched{display:grid;grid-template-columns:180px 1fr;gap:6px}
+.match-words-col{display:flex;flex-direction:column;gap:5px}
+.match-defs-col{display:flex;flex-direction:column;gap:5px}
+.match-word{padding:.55rem .9rem;background:var(--white);border:2px solid var(--line);border-radius:3px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:16px;font-weight:500;color:var(--navy);transition:all .18s;user-select:none;text-align:center;display:flex;align-items:center;justify-content:center;min-height:50px}
+.match-def{padding:.55rem .9rem;background:var(--white);border:2px solid var(--line);border-radius:3px;cursor:pointer;font-size:16px;font-family:'DM Sans',sans-serif;color:var(--navy);transition:all .18s;user-select:none;line-height:1.45;display:flex;align-items:center;min-height:50px}
+.match-word.selected,.match-def.selected{border-color:var(--kawaii);background:#eef0ff}
+.match-word.wrong,.match-def.wrong{border-color:var(--red);background:#fde8e3;animation:shake .3s}
+.match-matched-row{display:grid;grid-template-columns:180px 1fr;gap:6px;animation:snapIn .35s ease;padding-bottom: 6px;}
+.match-matched-row .match-word,.match-matched-row .match-def{border-color: var(--kawaii);background: rgba(120, 140, 227, .18);cursor: default;color: var(--navy);}
+#match-matched-zone:not(:empty){padding-bottom:10px;border-bottom:2px solid rgba(30,107,69,.25);margin-bottom:12px}
+@keyframes snapIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+
+.drag-bank{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:1.5rem;padding:.9rem;background:rgba(23,36,63,.06);border-radius:4px;min-height:44px}
+.drag-chip{padding:6px 14px;background:var(--navy);color:var(--white);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;border-radius:3px;cursor:grab;user-select:none;transition:opacity .18s,transform .15s}
+.drag-chip:active{cursor:grabbing;transform:scale(1.06)}
+.drag-chip.used{opacity:.2;pointer-events:none}
+.drag-sentence{display:flex;flex-wrap:wrap;align-items:baseline;gap:5px;margin-bottom:12px;font-size:16px;font-family:'DM Sans',sans-serif;color:var(--navy);line-height:2.1}
+.drag-num{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--kawaii);min-width:20px;font-weight:600}
+.drag-slot{display:inline-flex;align-items:center;justify-content:center;min-width:120px;height:34px;border-bottom:2px solid rgba(23,36,63,.25);padding:0 8px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:16px;font-weight:500;color:var(--navy);transition:border-color .18s,background .18s;border-radius:2px 2px 0 0}
+.drag-slot.over{border-color:var(--kawaii);background:rgba(120,140,227,.1)}
+.drag-slot.filled{border:none;background:rgba(120,140,227,.1)}
+.drag-slot.ok{border-bottom-style:solid;border-color:var(--kawaii);color:var(--navy)}
+.drag-slot.no{border-bottom-style:solid;border-color:var(--red);background:#fde8e3;color:var(--red)}
+
+.check-btn{margin-top:1.5rem;padding:11px 28px;background:transparent;border:1px solid var(--navy);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--navy);cursor:pointer;transition:all .2s;border-radius:2px}
+.check-btn:hover{background:var(--navy);color:var(--white)}
+.check-btn:disabled{opacity:.35;cursor:not-allowed}
+.check-btn-lime{border-color:var(--lime);color:var(--lime)}
+.check-btn-lime:hover{background:var(--lime);color:var(--navy)}
+
+.tasks-s{background:var(--white);padding:6rem 2rem;border-top:2px solid var(--navy)}
+.tasks-in{max-width:860px;margin:0 auto}
+.score-bar{display:flex;align-items:center;gap:1.5rem;margin-bottom:3.5rem;background:var(--navy);padding:1.2rem 1.8rem;border-radius:4px}
+.score-lbl{font-family:'DM Sans',sans-serif;font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:rgba(255,255,255,.5);flex-shrink:0;font-weight:500}
+.score-track{flex:1;height:4px;background:rgba(255,255,255,.12);border-radius:4px;position:relative}
+.score-fill{position:absolute;inset-block:0;left:0;background:linear-gradient(90deg,var(--kawaii),var(--lime));border-radius:4px;transition:width .6s cubic-bezier(.4,0,.2,1)}
+.score-num{font-family:'Barlow Condensed',sans-serif;font-size:30px;color:var(--lime);flex-shrink:0;line-height:1}
+.btn-row-snug{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:1.5rem}
+.btn-row-snug .check-btn{margin-top:0}
+.reset-btn{display:inline-flex;align-items:center;gap:6px;padding:10px 16px 10px 14px;background:transparent;border:1px solid var(--line);color:var(--muted);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;border-radius:2px;flex-shrink:0;transition:all .2s;line-height:1}
+.reset-btn:hover{border-color:var(--navy);color:var(--navy);background:rgba(23,36,63,.04)}
+.reset-btn svg{width:12px;height:12px;flex-shrink:0}
+.tcard{background:var(--white);border:1px solid var(--line);border-top:3px solid var(--navy);padding:2.5rem;margin-bottom:1.5rem}
+.tcard .tcard-tag{color:var(--kawaii)}
+.tcard .tcard-h{color:var(--navy)}
+.tcard .tcard-i{color:var(--muted)}
+.tf-it{display:flex;gap:12px;align-items:flex-start;margin-bottom:14px}
+.tf-tx{font-size:16px;font-family:'DM Sans',sans-serif;color:var(--ink);line-height:1.65;flex:1}
+.tf-bts{display:flex;gap:6px;flex-shrink:0;padding-top:2px}
+.tbtn{width:44px;height:34px;border:1px solid var(--line);background:transparent;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .18s;border-radius:2px}
+.tbtn:hover{border-color:var(--navy);color:var(--navy)}
+.tbtn.ok{background:rgba(120,140,227,.1);border-color:var(--kawaii);color:var(--navy)}
+.tbtn.no{background:#fde8e3;border-color:var(--red);color:var(--navy)}
+.fi-r{display:flex;flex-wrap:wrap;align-items:baseline;gap:7px;margin-bottom:14px;font-size:16px;font-family:'DM Sans',sans-serif;color:var(--ink);line-height:1.9}
+.fi-r-snug{display:flex;flex-wrap:wrap;align-items:baseline;gap:7px;margin-bottom:4px;font-size:16px;font-family:'DM Sans',sans-serif;color:var(--ink);line-height:1.9}
+.fi-def-snug{display:none;margin:0 0 14px 34px;padding:8px 12px 8px 36px;background:rgba(223,244,120,.12);border-left:3px solid var(--lime);font-size:13px;line-height:1.5;color:var(--navy);font-style:italic;border-radius:2px;position:relative;font-family:'DM Sans',sans-serif}
+.fi-def-snug::before{content:'';position:absolute;left:12px;top:10px;width:14px;height:14px;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23a67c2e' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><path d='M9 18h6'/><path d='M10 22h4'/><path d='M12 2a7 7 0 0 0-4 12.7c.7.5 1 1.3 1 2.1v.2h6v-.2c0-.8.3-1.6 1-2.1A7 7 0 0 0 12 2z'/></svg>")}
+.fi-def-snug.show{display:block}
+.fi-block-snug{margin-bottom:4px}
+.fi-n{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--kawaii);min-width:22px;font-weight:600}
+.fi-i{background:transparent;border:none;border-bottom:2px solid var(--line);color:var(--ink);font-family:'DM Sans',sans-serif;font-size:15px;padding:2px 4px;width:160px;outline:none;transition:border-color .2s}
+.fi-i:focus{border-color:var(--navy)}
+.fi-i.ok{border-color:var(--kawaii);color:var(--kawaii)}
+.fi-i.no{border-color:var(--red);color:var(--red)}
+.mc-q{font-size:15px;font-family:'DM Sans',sans-serif;color:var(--ink);line-height:1.65;margin-bottom:1rem;font-weight:500}
+.mc-os{display:flex;flex-direction:column;gap:7px;margin-bottom:2rem}
+.mc-os-snug{display:flex;flex-direction:column;gap:7px;margin-bottom:8px}
+.mc-block-snug{margin-bottom:1.6rem}
+.mc-block-snug:last-child{margin-bottom:0}
+.mc-r{display:flex;gap:11px;align-items:flex-start;cursor:pointer}
+.mc-l{width:30px;height:30px;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;color:var(--muted);flex-shrink:0;cursor:pointer;transition:all .18s;border-radius:2px}
+.mc-l:hover{border-color:var(--navy);color:var(--navy)}
+.mc-l.ok{background:rgba(120,140,227,.1);border-color:var(--kawaii);color:var(--navy)}
+.mc-l.no{background:#fde8e3;border-color:var(--red);color:var(--navy)}
+.mc-t{font-size:16px;font-family:'DM Sans',sans-serif;color:var(--ink);line-height:1.65;padding-top:7px}
+.fb{margin-top:12px;padding:10px 14px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;display:none;border-radius:2px}
+.fb.ok{background:rgba(120,140,227,.1);color:var(--navy);border-left:3px solid var(--kawaii);display:block}
+.fb.no{background:#fde8e3;color:var(--red);border-left:3px solid var(--red);display:block}
+.fb-l.ok{background:rgba(120, 140, 227, .18);color:var(--navy);border-left:3px solid var(--kawaii);display:block}
+.fb-l.no{background:#fde8e3;color:var(--red);border-left:3px solid var(--red);display:block}
+
+.hint-lamp{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border:1px solid var(--kawaii);background:rgba(120,140,227,.1);border-radius:50%;cursor:pointer;flex-shrink:0;transition:all .18s;margin-left:8px;vertical-align:middle;padding:0}
+.hint-lamp svg{width:14px;height:14px;stroke:var(--kawaii);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:stroke .18s}
+.hint-lamp:hover{background:var(--kawaii);border-color:var(--kawaii)}
+.hint-lamp:hover svg{stroke:#fff}
+.hint-lamp.active{background:var(--lime);border-color:var(--lime)}
+.hint-lamp.active svg{stroke:var(--navy);fill:var(--lime)}
+.hint-lamp.done{background:var(--kawaii);border-color:var(--kawaii)}
+.hint-lamp.done svg{stroke:#fff;fill:var(--kawaii)}
+.hint-box{display:none;margin:0 0 4px 0;padding:11px 14px 11px 40px;background:rgba(223,244,120,.12);border-left:3px solid var(--lime);font-size:13px;line-height:1.6;color:var(--navy);border-radius:2px;position:relative;font-family:'DM Sans',sans-serif}
+.hint-box::before{content:'';position:absolute;left:14px;top:12px;width:16px;height:16px;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23a67c2e' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><path d='M9 18h6'/><path d='M10 22h4'/><path d='M12 2a7 7 0 0 0-4 12.7c.7.5 1 1.3 1 2.1v.2h6v-.2c0-.8.3-1.6 1-2.1A7 7 0 0 0 12 2z'/></svg>")}
+.hint-box.show{display:block}
+.hint-row{display:flex;align-items:flex-start;gap:4px;flex-wrap:wrap}
+.hint-row .tf-tx,.hint-row .mc-q,.hint-row .fi-r{flex:1;min-width:0}
+
+.dis-s{padding:6rem 2rem;background:var(--navy)}
+.dis-in{max-width:860px;margin:0 auto}
+.sec-intro{font-size:15px;color:var(--floral);margin-top:.5rem;margin-bottom:0;font-weight:300}
+.dq-g{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:2rem}
+.dq{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);padding:2rem;position:relative;transition:border-color .2s;display:flex;flex-direction:column;gap:1rem}
+.dq:hover{border-color:rgba(255,255,255,.25)}
+.dq-n{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--lime);line-height:1}
+.dq-t{font-size:16px;font-family:'DM Sans',sans-serif;color:var(--white);line-height:1.7;font-weight:300}
+
+.ph-g{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:2rem}
+.pg{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);padding:1.4rem}
+.pg-h{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.9rem;padding-bottom:.5rem;border-bottom:1px solid rgba(255,255,255,.12);color:var(--lime)}
+.pg-it{font-size:13px;font-family:'DM Sans',sans-serif;color:rgba(247,243,246,.65);line-height:1.75;padding:.25rem 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.pg-it:last-child{border-bottom:none}
+
+.writing-s{padding:5rem 2rem;background:var(--white);border-top:1px solid var(--line)}
+.writing-in{max-width:860px;margin:0 auto}
+.wr-g{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:2rem}
+.wr-card{background:var(--white);border:1px solid var(--line);border-left:3px solid var(--kawaii);padding:1.6rem}
+.wr-letter{font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:.2em;color:var(--kawaii);font-weight:700;margin-bottom:.5rem}
+.wr-txt{font-size:15px;line-height:1.6;color:var(--ink)}
+.wr-hint{font-size:12px;color:var(--muted);margin-top:.8rem;font-style:italic}
+
+.site-footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.08)}
+.site-footer-in{max-width:860px;margin:0 auto;padding:18px 2rem;display:flex;justify-content:space-between;align-items:center;font-family:'DM Sans',sans-serif;font-size:.75rem;flex-wrap:wrap;gap:8px}
+.site-footer-in a{color:rgba(255,255,255,.4);text-decoration:none;transition:color .2s}
+.site-footer-in a:hover{color:var(--lime)}
+
+@media(max-width:900px){
+  .ph-g{grid-template-columns:repeat(2,1fr)}
+  .warmup-in{grid-template-columns:1fr;gap:1.4rem}
+  .warmup-left{padding-right:0;padding-bottom:1.2rem;border-right:none;border-bottom:1px solid rgba(23,36,63,.18)}
+  .warmup-h{font-size:20px}
+}
+@media(max-width:720px){
+  .hero{grid-template-columns:1fr;grid-template-rows:auto 340px}
+  .hero-right{display:flex;min-height:340px}
+  .hero-left{padding:2.5rem 1.5rem 2rem}
+  .hero-scroll{position:static;margin-top:2rem;left:auto;bottom:auto}
+  .warmup-s{padding:2.5rem 1.3rem 2.4rem}
+  .warmup-h{font-size:20px}
+  .warmup-words{font-size:13px;line-height:1.85}
+  .art-wrap{padding:3.5rem 1.3rem}
+  .art-body{column-count:1}
+  .vtask-s,.tasks-s,.dis-s,.writing-s{padding:4rem 1.3rem}
+  .tcard,.tcard-light{padding:1.6rem 1.3rem}
+  .tf-it{flex-direction:column;align-items:stretch;gap:10px;margin-bottom:22px;padding-bottom:18px;border-bottom:1px solid var(--line)}
+  .tf-it:last-child{border-bottom:none}
+  .tf-bts{padding-top:0}
+  .tbtn{flex:1;min-width:0}
+  .match-unmatched{grid-template-columns:1fr}
+  .match-matched-row{grid-template-columns:1fr}
+  .dq-g{grid-template-columns:1fr}
+  .ph-g{grid-template-columns:1fr}
+  .wr-g{grid-template-columns:1fr}
+  .fi-r{gap:5px 7px}
+  .fi-i{width:120px;min-width:100px;flex:1}
+  .score-bar{padding:1rem 1.2rem;gap:1rem}
+  .score-num{font-size:24px}
+  .mc-r{gap:9px}
+  .mc-t{font-size:15px;padding-top:5px}
+  .drag-sentence{font-size:15px;line-height:1.9}
+  .expert{padding:1.2rem 1.2rem 1.2rem 0}
+}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">English Lesson · B1–B2 · Reading &amp; Vocabulary</div>
+    <h1 class="hero-h">The 75 Smart<br>Challenge:<br><em>can you outsmart<br>your phone?</em></h1>
+    <p class="hero-sub">A journalist tried a 75-day TikTok challenge to fight doomscrolling. Read her story, learn key vocabulary, and test your understanding.</p>
+    <div class="hero-pills">
+      <span class="pill pill-a">60 min</span>
+      <span class="pill pill-b">Interactive</span>
+      <span class="pill pill-b">Women's Health</span>
+    </div>
+    <div class="hero-scroll">Scroll to begin</div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-img-wrap">
+      <img src="../assets/75.png" alt="75 Smart Challenge" onerror="this.parentElement.style.background='var(--kawaii)'"/>
+    </div>
+  </div>
+</section>
+
+<section class="warmup-s">
+  <div class="warmup-in">
+    <div class="warmup-left">
+      <p class="warmup-eyebrow">Before you read</p>
+      <h3 class="warmup-h">Take a breath. What do you think a <em>"75 Smart Challenge"</em> actually involves?</h3>
+    </div>
+    <div class="warmup-right">
+      <div class="warmup-qs">
+        <p class="warmup-q">What phone habits have you noticed in yourself or people around you?</p>
+        <p class="warmup-q">Which of the words below do you already know? Guess the rest.</p>
+      </div>
+      <p class="warmup-label">Key vocabulary</p>
+      <p class="warmup-words">
+        <span>doomscrolling</span><span class="sep">·</span><span>cognition</span><span class="sep">·</span><span>analogue</span><span class="sep">·</span><span>mindful</span><span class="sep">·</span><span>attention span</span><span class="sep">·</span><span>piecemeal</span><span class="sep">·</span><span>hooked</span><span class="sep">·</span><span>neuroplasticity</span><span class="sep">·</span><span>deprivation</span><span class="sep">·</span><span>multitasking</span><span class="sep">·</span><span>scroll vortex</span><span class="sep">·</span><span>self-improvement</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<div class="art-wrap">
+  <div class="art-hdr fade">
+    <p class="art-kick">Women's Health · Digital Wellness</p>
+    <h2 class="art-title">75 Smart challenge for doomscrolling</h2>
+    <p class="art-deck">The TikTok challenge promises sharper focus and more mindful content consumption. After being shamed for her scroll-dominated screentime, one writer tries on a life more analogue.</p>
+  </div>
+  <div class="art-body fade">
+    <p class="dc">'Mum, you're always on your phone.' These words from my seven-year-old daughter landed a gut-punch of pure, undiluted guilt. As beauty editor of <em>Women's Health</em>, I need to be extremely online. But somewhere between watching dermatologists dissect influencer nonsense and posting stories about pieces I've published, I fall into a <span class="vhl" onclick="toggleTip(this)"><span class="vhl-word">scroll vortex</span><span class="vhl-def">getting completely absorbed in scrolling, losing all track of time</span></span>, one I can feel corroding my fruit fly-adjacent <span class="vhl" onclick="toggleTip(this)"><span class="vhl-word">attention span</span><span class="vhl-def">the length of time you can concentrate on one thing</span></span>.</p>
+    <p>So, when (ironic, I know) TikTok's algorithm began pushing its latest <span class="vhl" onclick="toggleTip(this)"><span class="vhl-word">self-improvement</span><span class="vhl-def">activities aimed at making yourself better or more successful</span></span> obsession, the 75 Smart challenge, I felt both defensive and seen. Created by Sarah Lynn after she felt her brain turning to 'absolute mush', the 75-day challenge promises sharper <span class="vhl" onclick="toggleTip(this)"><span class="vhl-word">cognition</span><span class="vhl-def">the ability to think clearly and understand things quickly</span></span> and more <span class="vhl" onclick="toggleTip(this)"><span class="vhl-word">mindful</span><span class="vhl-def">paying deliberate attention to the present moment; intentional</span></span> content consumption. It's essentially the intellectual equivalent of the 75 Hard fitness challenge.</p>
+    <div class="pull">"The brain doesn't repair itself in noise — it repairs itself in quiet."</div>
+    <p>It's all peak <span class="vhl" onclick="toggleTip(this)"><span class="vhl-word">analogue</span><span class="vhl-def">not digital; using physical objects like paper instead of screens</span></span>: audio-free morning walks, no social media between 9.30pm and 10am, reading a paper book daily, writing a morning page, no <span class="vhl" onclick="toggleTip(this)"><span class="vhl-word">multitasking</span><span class="vhl-def">doing more than one thing at the same time</span></span> media, seven hours' sleep, playing an instrument and learning a language thrice weekly. I discard language or instrument learning (I have two young kids) but replace with creative writing — and adhere to the rest.</p>
+    <p>The audio-free mornings were the easiest. I ditched podcasts and resisted firing off voice notes on dog walks. Initially, I felt bored, but plans began to form — and problems untangled.</p>
+    <div class="expert">
+      <div class="exp-bar"></div>
+      <div>
+        <p class="exp-q">'Constant scrolling, switching and notifications keep the nervous system in a low hum of alertness. But the brain doesn't repair itself in noise, it repairs itself in quiet. So, when you walk in silence, the brain's default mode network — the system linked to creativity, memory integration and meaning making — finally gets space to switch on.'</p>
+        <p class="exp-by">— Dr Jane Ollis, neuroscientist &amp; founder of Sona</p>
+      </div>
+    </div>
+    <p>While stopping late-night scrolling matters and I <em>did</em> fall asleep more quickly, I didn't feel any brighter on waking. The no-social media before 10am rule was harder, as I often scroll on waking, so I deleted the app from my home screen and logged in only via my browser.</p>
+    <p>The beauty of the challenge is the way it encourages replacement of junk activities, not pure <span class="vhl" onclick="toggleTip(this)"><span class="vhl-word">deprivation</span><span class="vhl-def">the state of being without something you want or need</span></span>, and I raced through novels. Handwriting my chaotic morning page felt slower, almost resistant at first. But, buoyed by Dr Velazquez who reminds me it activates language, emotional processing and motor pathways for the day ahead, I crack on.</p>
+    <p>Is this the silver bullet solution for digital dependence? No. Devices and the platforms on them are designed to keep users <span class="vhl" onclick="toggleTip(this)"><span class="vhl-word">hooked</span><span class="vhl-def">addicted; unable to stop using something</span></span>, and the pushback shouldn't be down to individuals having to self-optimise our way out of mass manipulation. But having a set, long-term challenge — even if I'm yet to complete the full 75 days — has helped more than previous <span class="vhl" onclick="toggleTip(this)"><span class="vhl-word">piecemeal</span><span class="vhl-def">done in small separate parts; incomplete or unsystematic</span></span> efforts to chip away at my social media and phone use, and I do feel more in control of my attention.</p>
+    <div class="expert">
+      <div class="exp-bar"></div>
+      <div>
+        <p class="exp-q">'In the short term, you help cool and rebalance attentional networks that have been running too hot for too long. Long-term, you're creating the conditions for <span class="vhl" onclick="toggleTip(this)"><span class="vhl-word">neuroplasticity</span><span class="vhl-def">the brain's ability to change and form new connections through experience</span></span> to reshape your brain.'</p>
+        <p class="exp-by">— Dr Velazquez, neuroscientist &amp; scientific advisor, Mind Lab Pro</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="vtask-s">
+  <div class="vtask-in">
+    <div class="sec-head fade">
+      <p class="sec-tag" style="color:var(--navy)">02 · Vocabulary</p>
+      <div class="sec-line" style="background:rgba(23,36,63,.18)"></div>
+    </div>
+    <p style="font-size:13px;color:var(--navy);opacity:.6;margin-top:.5rem;margin-bottom:2rem;font-style:italic" class="fade">Highlighted words in the article are clickable — tap to see the definition, tap again to hide it.</p>
+
+    <div class="tcard-light fade">
+      <p class="tcard-tag">Task A · Context Clues</p>
+      <h3 class="tcard-h">Match the Bold Phrase to Its Meaning</h3>
+      <p class="tcard-i">Read the extracts from the article in your head. Click a word on the left, then its matching meaning on the right. A correct pair turns blue and locks.</p>
+      <div class="match-pairs" id="match-area"></div>
+      <div class="btn-row-snug"><button class="reset-btn" onclick="resetMatch()" title="Start over"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg><span>Reset</span></button></div>
+      <div class="fb fb-l" id="match-fb" style="display:none"></div>
+    </div>
+
+    <div class="tcard-light fade">
+      <p class="tcard-tag">Task B · Collocations</p>
+      <h3 class="tcard-h">Drag the Phrase Into the Gap</h3>
+      <p class="tcard-i">Drag a collocation chip into the correct gap. Click a filled slot to return it to the bank. Press Check when done.</p>
+      <div class="drag-bank" id="drag-bank"></div>
+      <div id="drag-sentences"></div>
+      <div class="btn-row-snug"><button class="check-btn" onclick="checkDrag()">Check answers</button><button class="reset-btn" onclick="resetDrag()" title="Start over"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg><span>Reset</span></button></div>
+      <div class="fb fb-l" id="drag-fb" style="display:none"></div>
+    </div>
+  </div>
+</section>
+
+<section class="tasks-s">
+  <div class="tasks-in">
+    <div class="sec-head fade">
+      <p class="sec-tag" style="color:var(--muted)">03 · Test Yourself</p>
+      <div class="sec-line" style="background:var(--line)"></div>
+    </div>
+    <div class="score-bar fade">
+      <span class="score-lbl">Score</span>
+      <div class="score-track"><div class="score-fill" id="prog" style="width:0%"></div></div>
+      <span class="score-num" id="snum">0 / 0</span>
+    </div>
+
+    <div class="tcard fade">
+      <p class="tcard-tag">Task C · Reading Comprehension</p>
+      <h3 class="tcard-h">True, False or Not Stated?</h3>
+      <p class="tcard-i">Mark T (True), F (False) or NS (Not Stated) for each statement. After you press Check, a bulb icon will appear next to each question — click it to reveal a hint explanation.</p>
+      <div id="tf-w"></div>
+      <div class="btn-row-snug"><button class="check-btn" id="tf-check-btn" onclick="checkAllTF()">Check answers</button><button class="reset-btn" onclick="resetTF()" title="Start over"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg><span>Reset</span></button></div>
+      <div class="fb" id="tf-fb"></div>
+    </div>
+
+    <div class="tcard fade">
+      <p class="tcard-tag">Task D · Inference</p>
+      <h3 class="tcard-h">Read Between the Lines</h3>
+      <p class="tcard-i">Choose the best answer (A, B or C). After Check, wrong picks turn red, and a bulb icon appears next to each question — tap it to see the hint.</p>
+      <div id="mc-w"></div>
+      <div class="btn-row-snug"><button class="check-btn" id="mc-check-btn" onclick="checkAllMC()">Check answers</button><button class="reset-btn" onclick="resetMC()" title="Start over"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg><span>Reset</span></button></div>
+      <div class="fb" id="mc-fb"></div>
+    </div>
+
+    <div class="tcard fade">
+      <p class="tcard-tag">Task E · Gap-fill</p>
+      <h3 class="tcard-h">Complete the Sentences</h3>
+      <p class="tcard-i">Type the correct vocabulary word into each gap, then press Check. After checking, a bulb icon appears next to each gap — click it once for a hint definition, click it again to auto-fill the correct answer.</p>
+      <div id="fi-w"></div>
+      <div class="btn-row-snug"><button class="check-btn" onclick="checkFill()">Check answers</button><button class="reset-btn" onclick="resetFI()" title="Start over"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg><span>Reset</span></button></div>
+      <div class="fb" id="fi-fb"></div>
+    </div>
+
+    <div class="tcard fade">
+      <p class="tcard-tag">Task F · Word Choice</p>
+      <h3 class="tcard-h">Pick the Right Vocabulary Word</h3>
+      <p class="tcard-i">Read each sentence and choose which vocabulary word best fits the gap. Only your choice will be marked — correct ones blue, wrong ones red. A bulb icon appears after Check — tap it for a hint.</p>
+      <div id="st-w"></div>
+      <div class="btn-row-snug"><button class="check-btn" id="st-check-btn" onclick="checkAllST()">Check answers</button><button class="reset-btn" onclick="resetST()" title="Start over"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg><span>Reset</span></button></div>
+      <div class="fb" id="st-fb"></div>
+    </div>
+  </div>
+</section>
+
+<section class="dis-s">
+  <div class="dis-in">
+    <div class="sec-head fade">
+      <p class="sec-tag" style="color:var(--muted)">04 · Speak</p>
+      <div class="sec-line" style="background:var(--line)"></div>
+    </div>
+    <p class="sec-intro fade" style="margin-top:.5rem">Discuss these questions with a partner or think through them yourself. Try to use at least 2–3 vocabulary words per answer. Use the phrase bank below to structure your response.</p>
+
+    <div class="ph-g fade" style="margin-top:1.8rem;margin-bottom:2.5rem">
+      <div class="pg">
+        <div class="pg-h">Agreeing</div>
+        <div class="pg-it">I completely agree that…</div>
+        <div class="pg-it">That's a good point because…</div>
+        <div class="pg-it">I can relate — personally…</div>
+      </div>
+      <div class="pg">
+        <div class="pg-h">Disagreeing</div>
+        <div class="pg-it">I'm not sure I agree with…</div>
+        <div class="pg-it">On the other hand…</div>
+        <div class="pg-it">That may be true, but…</div>
+      </div>
+      <div class="pg">
+        <div class="pg-h">Examples</div>
+        <div class="pg-it">For instance…</div>
+        <div class="pg-it">In my experience…</div>
+        <div class="pg-it">A good example of this is…</div>
+      </div>
+      <div class="pg">
+        <div class="pg-h">Adding</div>
+        <div class="pg-it">What's more…</div>
+        <div class="pg-it">Another angle is…</div>
+        <div class="pg-it">Building on that…</div>
+      </div>
+    </div>
+
+    <div class="dq-g fade">
+      <div class="dq"><div class="dq-n">01</div><p class="dq-t">How much time do you realistically spend on your phone daily? What activities dominate?</p></div>
+      <div class="dq"><div class="dq-n">02</div><p class="dq-t">Have you ever experienced a scroll vortex or doomscrolling? What triggered it, and how did you stop?</p></div>
+      <div class="dq"><div class="dq-n">03</div><p class="dq-t">Which rule from the 75 Smart Challenge would be easiest for you? Which would be hardest? Why?</p></div>
+      <div class="dq"><div class="dq-n">04</div><p class="dq-t">Do you agree that platforms are designed to keep users hooked? Who bears more responsibility — users or companies?</p></div>
+      <div class="dq"><div class="dq-n">05</div><p class="dq-t">What is one analogue habit you could add to your routine this week? How would it affect your cognition or attention span?</p></div>
+      <div class="dq"><div class="dq-n">06</div><p class="dq-t">Is mindful scrolling possible, or should we aim for complete digital breaks? Argue both sides.</p></div>
+      <div class="dq"><div class="dq-n">07</div><p class="dq-t">Do challenges like this promote genuine self-improvement, or are they just another form of pressure?</p></div>
+      <div class="dq"><div class="dq-n">08</div><p class="dq-t">How do piecemeal efforts to reduce screen time differ from a structured challenge? Which works better for you?</p></div>
+      <div class="dq"><div class="dq-n">09</div><p class="dq-t">If you designed a "75 Smart Challenge" for your friends, what 3 rules would you include?</p></div>
+      <div class="dq"><div class="dq-n">10</div><p class="dq-t">Long-term, neuroplasticity means we can reshape our brain. Do you believe it's ever too late to fix digital habits?</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="writing-s">
+  <div class="writing-in">
+    <div class="sec-head fade">
+      <p class="sec-tag" style="color:var(--muted)">05 · Write</p>
+      <div class="sec-line" style="background:var(--line)"></div>
+    </div>
+    <p class="sec-intro fade" style="margin-top:.5rem;color:var(--muted)">Choose ONE option below and write 100–120 words. Use at least 4 vocabulary words and underline them in your text.</p>
+    <div class="wr-g fade">
+      <div class="wr-card">
+        <div class="wr-letter">Option A</div>
+        <p class="wr-txt">Describe one small change you could make to use your phone more mindfully. What obstacles might you face, and how could you overcome them?</p>
+        <p class="wr-hint">Suggested words: mindful · attention span · scroll vortex · hooked</p>
+      </div>
+      <div class="wr-card">
+        <div class="wr-letter">Option B</div>
+        <p class="wr-txt">Write a short review of the 75 Smart Challenge. Would you recommend it to a friend? Why or why not?</p>
+        <p class="wr-hint">Suggested words: piecemeal · deprivation · self-improvement · cognition</p>
+      </div>
+      <div class="wr-card">
+        <div class="wr-letter">Option C</div>
+        <p class="wr-txt">Create a "Digital Wellness" poster for your school. Write a punchy headline and 3 bullet points.</p>
+        <p class="wr-hint">Suggested words: analogue · multitasking · mindful · attention span</p>
+      </div>
+      <div class="wr-card">
+        <div class="wr-letter">Option D</div>
+        <p class="wr-txt">Respond to the statement: "Neuroplasticity means it's never too late to rewire your digital habits." Do you agree? Give examples.</p>
+        <p class="wr-hint">Suggested words: neuroplasticity · hooked · doomscrolling · mindful</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="site-footer">
+  <div class="site-footer-in">
+    <a href="../index.html">Анастасия · Преподаватель →</a>
+    <a href="https://t.me/+6JRA3AbAyAZkN2Ni">SE: там вообще-то шутка была →</a>
+  </div>
+</div>
+
+<script>
+var els=document.querySelectorAll('.fade');
+function reveal(){els.forEach(function(e){if(e.getBoundingClientRect().top<window.innerHeight-40)e.classList.add('in');})}
+window.addEventListener('scroll',reveal);reveal();
+
+function toggleTip(el){el.classList.toggle('open');}
+
+var MATCH_DATA=[
+  {w:"scroll vortex",     d:"Getting completely absorbed in scrolling and losing all track of time"},
+  {w:"cognition",         d:"The mental ability to think clearly, learn and understand"},
+  {w:"analogue",          d:"Using physical, non-digital methods instead of screens"},
+  {w:"deprivation",       d:"Being without something you want; forced absence"},
+  {w:"piecemeal",         d:"Done in small, unconnected parts; unsystematic"},
+  {w:"hooked",            d:"Addicted; unable to stop using something despite negative effects"},
+  {w:"self-improvement",  d:"Activities aimed at making yourself better or more successful"},
+  {w:"multitasking",      d:"Using more than one type of media or app at the same time"},
+  {w:"neuroplasticity",   d:"The brain's capacity to change its structure through experience"},
+  {w:"mindful",           d:"Paying deliberate attention to the present moment; intentional"}
+];
+var shuffledDefs=MATCH_DATA.map(function(m){return m.d;}).sort(function(){return Math.random()-.5;});
+var matchSel=null,matchDone=0;
+function initMatch(){
+  matchSel=null;matchDone=0;
+  var area=document.getElementById('match-area');
+  area.innerHTML='';
+  var matchFb=document.getElementById('match-fb');
+  matchFb.style.display='none';matchFb.textContent='';matchFb.className='fb fb-l';
+  var matchedZone=document.createElement('div');
+  matchedZone.id='match-matched-zone';
+  area.appendChild(matchedZone);
+
+  var unmatchedGrid=document.createElement('div');
+  unmatchedGrid.className='match-unmatched';
+  unmatchedGrid.id='match-unmatched-zone';
+  var wordsCol=document.createElement('div');
+  wordsCol.className='match-words-col';
+  wordsCol.id='match-words-col';
+  var defsCol=document.createElement('div');
+  defsCol.className='match-defs-col';
+  defsCol.id='match-defs-col';
+  unmatchedGrid.appendChild(wordsCol);
+  unmatchedGrid.appendChild(defsCol);
+  area.appendChild(unmatchedGrid);
+
+  shuffledDefs=MATCH_DATA.map(function(m){return m.d;}).sort(function(){return Math.random()-.5;});
+  MATCH_DATA.forEach(function(m){
+    var wd=document.createElement('div');
+    wd.className='match-word';wd.textContent=m.w;wd.dataset.word=m.w;
+    wd.onclick=function(){selectMatch(this,'word');};
+    wordsCol.appendChild(wd);
+  });
+  shuffledDefs.forEach(function(d){
+    var dd=document.createElement('div');
+    dd.className='match-def';dd.textContent=d;dd.dataset.def=d;
+    dd.onclick=function(){selectMatch(this,'def');};
+    defsCol.appendChild(dd);
+  });
+}
+initMatch();
+
+function selectMatch(el,type){
+  if(el.dataset.done)return;
+  if(matchSel===null){
+    el.classList.add('selected');
+    matchSel={el:el,type:type};
+  } else if(matchSel.type===type){
+    matchSel.el.classList.remove('selected');
+    el.classList.add('selected');
+    matchSel={el:el,type:type};
+  } else {
+    var wEl=type==='word'?el:matchSel.el;
+    var dEl=type==='def'?el:matchSel.el;
+    var cor=MATCH_DATA.find(function(m){return m.w===wEl.dataset.word;});
+    if(cor&&cor.d===dEl.dataset.def){
+      wEl.classList.remove('selected');
+      dEl.classList.remove('selected');
+      wEl.dataset.done='1';
+      dEl.dataset.done='1';
+      wEl.remove();
+      dEl.remove();
+      var matchedRow=document.createElement('div');
+      matchedRow.className='match-matched-row';
+      var wClone=document.createElement('div');
+      wClone.className='match-word';wClone.textContent=cor.w;
+      var dClone=document.createElement('div');
+      dClone.className='match-def';dClone.textContent=cor.d;
+      matchedRow.appendChild(wClone);matchedRow.appendChild(dClone);
+      document.getElementById('match-matched-zone').appendChild(matchedRow);
+      matchDone++;
+      if(matchDone===MATCH_DATA.length){
+        var fb=document.getElementById('match-fb');
+        fb.className='fb fb-l ok';fb.textContent='All matched! Well done.';fb.style.display='block';
+        document.getElementById('match-unmatched-zone').style.display='none';
+      }
+    } else {
+      wEl.classList.add('wrong');dEl.classList.add('wrong');
+      setTimeout(function(){wEl.classList.remove('wrong','selected');dEl.classList.remove('wrong','selected');},500);
+    }
+    matchSel=null;
+  }
+}
+
+var DD=[
+  {b:"Devices and apps are deliberately designed to",               a:"keep users hooked",          e:"— that's why they're so hard to put down."},
+  {b:"Reading a paper book before bed is a great",                  a:"analogue alternative",       e:"to scrolling on your phone."},
+  {b:"Constant notifications gradually",                            a:"corrode your attention span",e:"until focusing feels almost impossible."},
+  {b:"Every morning I try to",                                      a:"resist the urge to scroll",  e:"before I've even had coffee."},
+  {b:"Small, unconnected fixes rarely work — ",                     a:"piecemeal changes",          e:"don't lead to lasting transformation."},
+  {b:"Quiet time and new habits can",                               a:"rewire your brain",          e:"thanks to the way neurons adapt."},
+  {b:"Silent walks and focused reading help",                       a:"sharpen cognition",          e:"and boost mental clarity."},
+  {b:"Scrolling on autopilot is the opposite of",                   a:"mindful content consumption",e:"which demands real attention."}
+];
+var ddSlots={},dragging=null;
+function initDrag(){
+  ddSlots={};dragging=null;
+  var bank=document.getElementById('drag-bank');
+  var cont=document.getElementById('drag-sentences');
+  bank.innerHTML='';
+  cont.innerHTML='';
+  var dragFb=document.getElementById('drag-fb');
+  dragFb.style.display='none';dragFb.textContent='';dragFb.className='fb fb-l';
+  DD.map(function(d){return d.a;}).sort(function(){return Math.random()-.5;}).forEach(function(w){
+    var chip=document.createElement('div');chip.className='drag-chip';chip.textContent=w;chip.id='chip_'+w.replace(/[\s]/g,'_');
+    chip.draggable=true;
+    chip.addEventListener('dragstart',function(e){dragging=w;e.dataTransfer.setData('text',w);});
+    chip.addEventListener('touchstart',function(){dragging=w;},{passive:true});
+    bank.appendChild(chip);
+  });
+  DD.forEach(function(item,i){
+    var row=document.createElement('div');row.className='drag-sentence';
+    var slot=document.createElement('div');slot.className='drag-slot';slot.id='slot'+i;
+    slot.addEventListener('dragover',function(e){e.preventDefault();slot.classList.add('over');});
+    slot.addEventListener('dragleave',function(){slot.classList.remove('over');});
+    slot.addEventListener('drop',function(e){e.preventDefault();slot.classList.remove('over');var w=e.dataTransfer.getData('text')||dragging;if(w)dropSlot(slot,w,i);});
+    slot.addEventListener('touchend',function(){if(dragging){dropSlot(slot,dragging,i);dragging=null;}});
+    slot.addEventListener('click',function(){if(!ddSlots[i])return;returnChip(ddSlots[i]);delete ddSlots[i];slot.textContent='';slot.classList.remove('filled','ok','no');});
+    row.innerHTML='<span class="drag-num">'+(i+1)+'.</span><span>'+item.b+' </span>';
+    row.appendChild(slot);
+    var aft=document.createElement('span');aft.textContent=' '+item.e;
+    row.appendChild(aft);
+    cont.appendChild(row);
+  });
+}
+initDrag();
+function dropSlot(slot,word,i){
+  if(ddSlots[i])returnChip(ddSlots[i]);
+  ddSlots[i]=word;slot.textContent=word;slot.classList.add('filled');slot.classList.remove('ok','no');
+  var chip=document.getElementById('chip_'+word.replace(/[\s]/g,'_'));
+  if(chip)chip.classList.add('used');
+}
+function returnChip(word){
+  var chip=document.getElementById('chip_'+word.replace(/[\s]/g,'_'));
+  if(chip)chip.classList.remove('used');
+}
+function checkDrag(){
+  var ok=0;
+  DD.forEach(function(item,i){
+    var slot=document.getElementById('slot'+i);
+    slot.classList.remove('ok','no');
+    var userWord=ddSlots[i];
+    if((userWord||'').toLowerCase()===item.a.toLowerCase()){
+      slot.classList.add('ok');ok++;
+    } else {
+      slot.classList.add('no');
+      if(userWord){
+        returnChip(userWord);
+        delete ddSlots[i];
+        slot.textContent='';
+        slot.classList.remove('filled');
+      }
+    }
+  });
+  var fb=document.getElementById('drag-fb');
+  fb.className='fb fb-l '+(ok===DD.length?'ok':'no');
+  fb.textContent=ok+' of '+DD.length+' correct.'+(ok===DD.length?' Excellent!':' Wrong answers were sent back to the bank — try again.');
+  fb.style.display='block';
+}
+
+var TF=[
+  {t:"The author's daughter criticised her for spending too much time on her phone.", a:"T", hint:"'Mum, you're always on your phone' — said by her seven-year-old daughter, and the author calls it 'a gut-punch of pure guilt'."},
+  {t:"The 75 Smart Challenge was created by a neuroscientist.", a:"NS", hint:"The text only tells us the challenge was created by Sarah Lynn — her profession is never mentioned."},
+  {t:"One rule of the challenge is: no social media between 9:30pm and 10am.", a:"T", hint:"Directly listed in the rules: 'no social media between 9.30pm and 10am'."},
+  {t:"The author found audio-free morning walks the most difficult rule.", a:"F", hint:"She says the opposite: 'The audio-free mornings were the easiest.'"},
+  {t:"Deleting the app from the home screen helped the author scroll less in the morning.", a:"T", hint:"She writes: 'I deleted the app from my home screen and logged in only via my browser' — as a strategy against morning scrolling."},
+  {t:"The challenge requires learning a new language and playing an instrument every day.", a:"F", hint:"The rule is 'thrice weekly' (three times a week), not every day. Also, the author replaces this rule with creative writing."},
+  {t:"The author believes the challenge is a perfect solution to digital addiction.", a:"F", hint:"She asks rhetorically: 'Is this the silver bullet solution…? No.' — the challenge helps but isn't a magic fix."},
+  {t:"Handwriting the morning page felt natural and easy from the first day.", a:"F", hint:"It 'felt slower, almost resistant at first' — the opposite of natural and easy."},
+  {t:"According to Dr Ollis, the brain repairs itself during quiet, not noise.", a:"T", hint:"Direct quote: 'The brain doesn't repair itself in noise — it repairs itself in quiet.'"},
+  {t:"The author completed all 75 days before writing the article.", a:"F", hint:"She admits: 'I'm yet to complete the full 75 days' — she wrote the article mid-challenge."}
+];
+
+var MC=[
+  {q:"1. Why does the author feel 'defensive and seen' when TikTok shows her the challenge?",
+   o:["She thinks the challenge is silly.","She recognises her own problem in the description.","She wants to criticise the algorithm."],
+   c:1, hint:"She admits her attention span is corroding — so the challenge exposes a weakness she already knew about but hadn't addressed."},
+  {q:"2. What does the phrase 'fruit fly-adjacent attention span' suggest?",
+   o:["The author loves insects.","Her ability to focus has become very short.","She is studying biology."],
+   c:1, hint:"A fruit fly's attention is famously fleeting — this is a self-mocking metaphor for her very short concentration ability."},
+  {q:"3. Why does the author replace 'learning a language' with creative writing?",
+   o:["She doesn't like languages.","She has two young kids and needs a more flexible option.","Creative writing is part of the original challenge."],
+   c:1, hint:"She explicitly writes '(I have two young kids)' as the reason — practical flexibility, not dislike."},
+  {q:"4. What is the main purpose of the 'morning page'?",
+   o:["To plan the day's tasks.","To activate language and emotional processing pathways.","To replace social media scrolling."],
+   c:1, hint:"Dr Velazquez says it 'activates language, emotional processing and motor pathways for the day ahead'."},
+  {q:"5. What does Dr Velazquez mean by 'rewire your brain'?",
+   o:["Change the physical structure of the brain through new habits.","Install new software on your devices.","Delete addictive apps permanently."],
+   c:0, hint:"He's talking about neuroplasticity — the brain's ability to physically reorganise itself through experience and new habits."},
+  {q:"6. Why does the author say 'the pushback shouldn't be down to individuals'?",
+   o:["People are too lazy to change.","Companies design addictive platforms, so systemic change is also needed.","Challenges like this never work."],
+   c:1, hint:"She argues platforms are 'designed to keep users hooked' — so blaming individuals alone ignores the system manipulating them."},
+  {q:"7. What is the author's attitude towards the challenge by the end?",
+   o:["Completely disappointed.","Cautiously optimistic — it helps, but isn't a magic fix.","Enthusiastic — she recommends it to everyone."],
+   c:1, hint:"She says 'No' to silver bullet, but also 'I do feel more in control' — a balanced, measured position."},
+  {q:"8. What does 'corroding my attention span' imply?",
+   o:["Her focus is slowly getting worse.","She is physically damaging her eyes.","She is becoming more creative."],
+   c:0, hint:"'Corrode' means to gradually eat away or weaken — her ability to concentrate is slowly being destroyed by constant scrolling."}
+];
+
+var FI=[
+  {b:"After three hours of", a:"doomscrolling", e:"she felt anxious and couldn't sleep.",
+   def:"scrolling through negative news for a long time even when it makes you feel worse",
+   hint:"The noun form follows the preposition 'of' — you need a gerund/noun meaning endless negative-news scrolling."},
+  {b:"Reading a paper book is a great", a:"analogue", e:"alternative to screens before bed.",
+   def:"using physical, non-digital methods instead of screens",
+   hint:"Opposite of digital. Collocates with 'alternative' to describe non-screen options."},
+  {b:"The course aims to improve students'", a:"cognition", e:"through critical thinking exercises.",
+   def:"the mental ability to think clearly, learn and understand",
+   hint:"An abstract, uncountable noun — no article needed, just the plain form."},
+  {b:"Practising", a:"mindful", e:"eating means paying full attention to the taste and texture of food.",
+   def:"paying deliberate attention to the present moment; intentional",
+   hint:"An adjective meaning deliberately attentive — it modifies the gerund 'eating'."},
+  {b:"Constant notifications can seriously shorten your", a:"attention span", e:".",
+   def:"the length of time you can concentrate on one thing",
+   hint:"A two-word noun phrase about focus duration — 'shorten your ___' is a very common collocation."}
+];
+
+var ST=[
+  {q:"1. Making ____ changes to your routine rarely leads to lasting results.",
+   o:["piecemeal","mindful","analogue"],
+   c:0, hint:"'___ changes' = small, unsystematic fixes. A structured challenge beats this kind of scattered effort."},
+  {q:"2. Social media apps are designed to keep users ____ for as long as possible.",
+   o:["mindful","hooked","analogue"],
+   c:1, hint:"A fixed phrase from the article — it means 'addicted; unable to stop using something'."},
+  {q:"3. The challenge replaces bad habits with good ones — it's not pure ____.",
+   o:["cognition","deprivation","neuroplasticity"],
+   c:1, hint:"'Pure ___' = being forced to live without something. The article contrasts it with replacement."},
+  {q:"4. Media ____ while studying — scrolling, videos, podcasts at once — reduces learning.",
+   o:["multitasking","cognition","piecemeal"],
+   c:0, hint:"'Media ___' is a set collocation: using several media types at the same time."},
+  {q:"5. Quiet time and new habits support ____, letting the brain form new pathways.",
+   o:["deprivation","hooked","neuroplasticity"],
+   c:2, hint:"The brain's ability to change and form new connections. No other word fits 'form new pathways'."}
+];
+
+var TOTAL=TF.length+FI.length+MC.length+ST.length;
+var scoreMap={tf:0,fi:0,mc:0,st:0};
+document.getElementById('snum').textContent='0 / '+TOTAL;
+function updateScore(section,n){
+  scoreMap[section]=n;
+  var total=scoreMap.tf+scoreMap.fi+scoreMap.mc+scoreMap.st;
+  document.getElementById('snum').textContent=total+' / '+TOTAL;
+  document.getElementById('prog').style.width=Math.round(total/TOTAL*100)+'%';
+}
+
+function toggleHint(id){
+  var box=document.getElementById(id);
+  var lamp=document.getElementById(id+'_lamp');
+  if(box.classList.contains('show')){box.classList.remove('show');lamp.classList.remove('active');}
+  else{box.classList.add('show');lamp.classList.add('active');}
+}
+var LAMP_SVG='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.7.5 1 1.3 1 2.1v.2h6v-.2c0-.8.3-1.6 1-2.1A7 7 0 0 0 12 2z"/></svg>';
+function makeLamp(id,onClickHandler){
+  var lamp=document.createElement('span');
+  lamp.className='hint-lamp';
+  lamp.id=id+'_lamp';
+  lamp.title='Show hint';
+  lamp.innerHTML=LAMP_SVG;
+  lamp.onclick=onClickHandler;
+  return lamp;
+}
+
+var tfAns={};
+(function(){
+  var w=document.getElementById('tf-w');
+  TF.forEach(function(item,i){
+    var d=document.createElement('div');
+    d.innerHTML='<div class="tf-it"><span class="tf-tx">'+(i+1)+'. '+item.t+'</span><span class="tf-bts" id="tfbtns'+i+'"><button class="tbtn" id="tT'+i+'" onclick="selTF('+i+',\'T\')">T</button><button class="tbtn" id="tF'+i+'" onclick="selTF('+i+',\'F\')">F</button><button class="tbtn" id="tN'+i+'" onclick="selTF('+i+',\'NS\')">NS</button></span></div><div class="hint-box" id="tfhint'+i+'">'+item.hint+'</div>';
+    w.appendChild(d);
+  });
+})();
+function selTF(i,v){
+  tfAns[i]=v;
+  ['T','F','N'].forEach(function(x){var btn=document.getElementById('t'+x+i);btn.style.cssText='';btn.className='tbtn';});
+  var btnId='t'+(v==='NS'?'N':v)+i;
+  document.getElementById(btnId).style.cssText='border-color:var(--navy);color:var(--navy);background:rgba(23,36,63,.08)';
+}
+function checkAllTF(){
+  var ok=0;
+  TF.forEach(function(item,i){
+    ['T','F','N'].forEach(function(x){document.getElementById('t'+x+i).style.cssText='';document.getElementById('t'+x+i).className='tbtn';});
+    var c=tfAns.hasOwnProperty(i)?tfAns[i]:null;
+    if(c){
+      var userId='t'+(c==='NS'?'N':c)+i;
+      if(c===item.a){document.getElementById(userId).className='tbtn ok';ok++;}
+      else{document.getElementById(userId).className='tbtn no';}
+    }
+    var btns=document.getElementById('tfbtns'+i);
+    if(!document.getElementById('tfhint'+i+'_lamp')){
+      btns.appendChild(makeLamp('tfhint'+i,function(){toggleHint('tfhint'+i);}));
+    }
+  });
+  updateScore('tf',ok);
+  var fb=document.getElementById('tf-fb');
+  fb.style.display='block';
+  fb.className=ok===TF.length?'fb ok':'fb no';
+  fb.textContent=ok+' of '+TF.length+' correct. '+(ok===TF.length?'Excellent! ':'Wrong answers marked in red — try again, or tap the bulb for a hint.');
+}
+
+(function(){
+  var w=document.getElementById('fi-w');
+  FI.forEach(function(item,i){
+    var d=document.createElement('div');
+    d.className='fi-block-snug';
+    d.innerHTML='<div class="fi-r-snug" id="fir'+i+'"><span class="fi-n">'+(i+1)+'.</span><span>'+item.b+'</span><input class="fi-i" id="fi'+i+'" autocomplete="off"/><span>'+item.e+'</span></div><div class="fi-def-snug" id="fidef'+i+'">'+item.def+'</div>';
+    w.appendChild(d);
+    var inp=d.querySelector('input');
+    inp.addEventListener('input',function(){inp.className='fi-i';});
+    var row=d.querySelector('.fi-r-snug');
+    var lamp=document.createElement('span');
+    lamp.className='hint-lamp';
+    lamp.id='filamp'+i;
+    lamp.title='Show a hint';
+    lamp.innerHTML=LAMP_SVG;
+    lamp.style.display='none';
+    lamp.dataset.step='0';
+    lamp.onclick=(function(idx,answer){return function(){
+      var step=this.dataset.step;
+      var defBox=document.getElementById('fidef'+idx);
+      var input=document.getElementById('fi'+idx);
+      if(step==='0'){
+        defBox.classList.add('show');
+        this.classList.add('active');
+        this.title='Click again to fill the answer';
+        this.dataset.step='1';
+      } else {
+        input.value=answer;
+        input.className='fi-i';
+        defBox.classList.remove('show');
+        this.classList.remove('active');
+        this.classList.add('done');
+        this.title='Answer filled';
+        this.dataset.step='2';
+      }
+    };})(i,item.a);
+    row.appendChild(lamp);
+  });
+})();
+function checkFill(){
+  var ok=0;
+  FI.forEach(function(item,i){
+    var inp=document.getElementById('fi'+i);
+    var val=inp.value.trim().toLowerCase();
+    if(val===item.a.toLowerCase()){
+      inp.className='fi-i ok';ok++;
+    } else {
+      inp.className='fi-i no';
+      if(val){inp.value='';inp.placeholder='try again';}
+      else{inp.placeholder='fill me in';}
+    }
+    document.getElementById('filamp'+i).style.display='';
+  });
+  updateScore('fi',ok);
+  var fb=document.getElementById('fi-fb');
+  fb.style.display='block';
+  fb.className=ok===FI.length?'fb ok':'fb no';
+  fb.textContent=ok+' of '+FI.length+' correct. '+(ok===FI.length?'All correct! ':'Try again, or tap the bulb: first click shows a hint, second click fills the answer.');
+}
+
+var mcAns={};
+(function(){
+  var w=document.getElementById('mc-w');
+  MC.forEach(function(item,qi){
+    var bl=document.createElement('div');
+    bl.className='mc-block-snug';
+    var opts=item.o.map(function(o,oi){return '<div class="mc-r"><div class="mc-l" id="mc'+qi+'_'+oi+'" onclick="selMC('+qi+','+oi+')">'+['A','B','C'][oi]+'</div><span class="mc-t">'+o+'</span></div>';}).join('');
+    bl.innerHTML='<div id="mcq'+qi+'" class="mc-q-snug"><p class="mc-q">'+item.q+'</p></div><div class="mc-os-snug">'+opts+'</div><div class="hint-box" id="mchint'+qi+'">'+item.hint+'</div>';
+    w.appendChild(bl);
+  });
+})();
+function selMC(qi,oi){
+  [0,1,2].forEach(function(x){var el=document.getElementById('mc'+qi+'_'+x);el.style.cssText='';el.className='mc-l';});
+  document.getElementById('mc'+qi+'_'+oi).style.cssText='border-color:var(--navy);color:var(--navy);background:rgba(23,36,63,.08)';
+  mcAns[qi]=oi;
+}
+function checkAllMC(){
+  var ok=0;
+  MC.forEach(function(item,qi){
+    [0,1,2].forEach(function(oi){var el=document.getElementById('mc'+qi+'_'+oi);el.style.cssText='';el.className='mc-l';});
+    var c=mcAns.hasOwnProperty(qi)?mcAns[qi]:null;
+    if(c!==null){
+      if(c===item.c){document.getElementById('mc'+qi+'_'+c).className='mc-l ok';ok++;}
+      else{document.getElementById('mc'+qi+'_'+c).className='mc-l no';}
+    }
+    var qBlock=document.getElementById('mcq'+qi).querySelector('.mc-q');
+    if(!document.getElementById('mchint'+qi+'_lamp')){
+      qBlock.appendChild(makeLamp('mchint'+qi,function(){toggleHint('mchint'+qi);}));
+    }
+  });
+  updateScore('mc',ok);
+  var fb=document.getElementById('mc-fb');
+  fb.style.display='block';
+  fb.className=ok===MC.length?'fb ok':'fb no';
+  fb.textContent=ok+' of '+MC.length+' correct. '+(ok===MC.length?'Perfect! ':'Wrong answers marked red — pick again, or tap the bulb for a hint.');
+}
+
+var stAns={};
+(function(){
+  var w=document.getElementById('st-w');
+  ST.forEach(function(item,qi){
+    var bl=document.createElement('div');
+    bl.className='mc-block-snug';
+    var opts=item.o.map(function(o,oi){return '<div class="mc-r"><div class="mc-l" id="st'+qi+'_'+oi+'" onclick="selST('+qi+','+oi+')">'+['A','B','C'][oi]+'</div><span class="mc-t">'+o+'</span></div>';}).join('');
+    bl.innerHTML='<div id="stq'+qi+'" class="mc-q-snug"><p class="mc-q">'+item.q+'</p></div><div class="mc-os-snug">'+opts+'</div><div class="hint-box" id="sthint'+qi+'">'+item.hint+'</div>';
+    w.appendChild(bl);
+  });
+})();
+function selST(qi,oi){
+  [0,1,2].forEach(function(x){var el=document.getElementById('st'+qi+'_'+x);el.style.cssText='';el.className='mc-l';});
+  document.getElementById('st'+qi+'_'+oi).style.cssText='border-color:var(--navy);color:var(--navy);background:rgba(23,36,63,.08)';
+  stAns[qi]=oi;
+}
+function checkAllST(){
+  var ok=0;
+  ST.forEach(function(item,qi){
+    [0,1,2].forEach(function(oi){var el=document.getElementById('st'+qi+'_'+oi);el.style.cssText='';el.className='mc-l';});
+    var c=stAns.hasOwnProperty(qi)?stAns[qi]:null;
+    if(c!==null){
+      if(c===item.c){document.getElementById('st'+qi+'_'+c).className='mc-l ok';ok++;}
+      else{document.getElementById('st'+qi+'_'+c).className='mc-l no';}
+    }
+    var qBlock=document.getElementById('stq'+qi).querySelector('.mc-q');
+    if(!document.getElementById('sthint'+qi+'_lamp')){
+      qBlock.appendChild(makeLamp('sthint'+qi,function(){toggleHint('sthint'+qi);}));
+    }
+  });
+  updateScore('st',ok);
+  var fb=document.getElementById('st-fb');
+  fb.style.display='block';
+  fb.className=ok===ST.length?'fb ok':'fb no';
+  fb.textContent=ok+' of '+ST.length+' correct. '+(ok===ST.length?'Excellent! ':'Wrong picks marked red — try again, or tap the bulb for a hint.');
+}
+
+function resetMatch(){initMatch();}
+function resetDrag(){initDrag();}
+
+function resetTF(){
+  tfAns={};
+  TF.forEach(function(item,i){
+    ['T','F','N'].forEach(function(x){
+      var btn=document.getElementById('t'+x+i);
+      if(btn){btn.style.cssText='';btn.className='tbtn';}
+    });
+    var lamp=document.getElementById('tfhint'+i+'_lamp');
+    if(lamp)lamp.remove();
+    var hintBox=document.getElementById('tfhint'+i);
+    if(hintBox)hintBox.classList.remove('show');
+  });
+  var fb=document.getElementById('tf-fb');
+  fb.style.display='none';fb.textContent='';fb.className='fb';
+  updateScore('tf',0);
+}
+
+function resetFI(){
+  FI.forEach(function(item,i){
+    var inp=document.getElementById('fi'+i);
+    if(inp){inp.value='';inp.className='fi-i';inp.placeholder='';}
+    var lamp=document.getElementById('filamp'+i);
+    if(lamp){
+      lamp.style.display='none';
+      lamp.classList.remove('active','done');
+      lamp.dataset.step='0';
+      lamp.title='Show a hint';
+    }
+    var defBox=document.getElementById('fidef'+i);
+    if(defBox)defBox.classList.remove('show');
+  });
+  var fb=document.getElementById('fi-fb');
+  fb.style.display='none';fb.textContent='';fb.className='fb';
+  updateScore('fi',0);
+}
+
+function resetMC(){
+  mcAns={};
+  MC.forEach(function(item,qi){
+    [0,1,2].forEach(function(oi){
+      var el=document.getElementById('mc'+qi+'_'+oi);
+      if(el){el.style.cssText='';el.className='mc-l';}
+    });
+    var lamp=document.getElementById('mchint'+qi+'_lamp');
+    if(lamp)lamp.remove();
+    var hintBox=document.getElementById('mchint'+qi);
+    if(hintBox)hintBox.classList.remove('show');
+  });
+  var fb=document.getElementById('mc-fb');
+  fb.style.display='none';fb.textContent='';fb.className='fb';
+  updateScore('mc',0);
+}
+
+function resetST(){
+  stAns={};
+  ST.forEach(function(item,qi){
+    [0,1,2].forEach(function(oi){
+      var el=document.getElementById('st'+qi+'_'+oi);
+      if(el){el.style.cssText='';el.className='mc-l';}
+    });
+    var lamp=document.getElementById('sthint'+qi+'_lamp');
+    if(lamp)lamp.remove();
+    var hintBox=document.getElementById('sthint'+qi);
+    if(hintBox)hintBox.classList.remove('show');
+  });
+  var fb=document.getElementById('st-fb');
+  fb.style.display='none';fb.textContent='';fb.className='fb';
+  updateScore('st',0);
+}
+</script>
+</body>
+</html>
