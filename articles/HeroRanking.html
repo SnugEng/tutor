@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>SE · Hero Ranking · A2–B1 English Lesson</title>
 <link rel="icon" type="image/png" href="/assets/favicon.png">
+<title>SE · Hero Ranking · A2–B1 English Lesson</title>
 <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Caveat:wght@500;700&family=Fraunces:ital,wght@0,600;0,800;1,600&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -34,7 +34,6 @@ body{font-family:'Inter',sans-serif;background:var(--steel);color:var(--ink);ove
 .fade{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
 .fade.in{opacity:1;transform:none}
 
-/* Sticky progress bar */
 .sticky-score{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--deep);border-bottom:2px solid var(--coral);padding:.7rem 1.2rem;transform:translateY(-100%);transition:transform .35s ease;box-shadow:0 6px 20px rgba(0,0,0,.2)}
 .sticky-score.show{transform:translateY(0)}
 .sticky-score-in{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:1.2rem}
@@ -42,35 +41,45 @@ body{font-family:'Inter',sans-serif;background:var(--steel);color:var(--ink);ove
 .sss-track{flex:1;height:8px;background:rgba(255,255,255,.08);position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.12)}
 .sss-fill{position:absolute;inset-block:0;left:0;background:linear-gradient(90deg,var(--coral) 0,var(--mustard) 50%,var(--mint) 100%);transition:width .6s cubic-bezier(.4,0,.2,1)}
 .sss-num{font-family:'Bungee',sans-serif;font-size:22px;color:var(--mustard);line-height:1;flex-shrink:0}
-.sss-tier{font-family:'Caveat',cursive;font-size:22px;font-weight:700;line-height:1;flex-shrink:0;min-width:100px;text-align:right;color:var(--mint)}
+.sss-tier{display:inline-flex;align-items:center;gap:8px;font-family:'Caveat',cursive;font-size:22px;font-weight:700;line-height:1;flex-shrink:0;min-width:110px;justify-content:flex-end;color:var(--mint)}
+.sss-tier svg{width:20px;height:20px;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .sss-tier.t1{color:var(--mint)}
+.sss-tier.t1 svg{stroke:var(--mint)}
 .sss-tier.t2{color:var(--mustard)}
+.sss-tier.t2 svg{stroke:var(--mustard)}
 .sss-tier.t3{color:var(--coral)}
-@media(max-width:720px){.sticky-score{padding:.5rem .8rem}.sss-lbl{display:none}.sss-num{font-size:18px}.sss-tier{font-size:18px;min-width:80px}}
+.sss-tier.t3 svg{stroke:var(--coral)}
+@media(max-width:720px){.sticky-score{padding:.5rem .8rem}.sss-lbl{display:none}.sss-num{font-size:18px}.sss-tier{font-size:18px;min-width:90px}}
 
-/* HERO */
-.hero{min-height:94vh;background:var(--deep);position:relative;overflow:hidden;padding:5rem 2rem 5rem;color:var(--steel);border-bottom:5px solid var(--coral)}
-.hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(transparent 98%,rgba(124,184,201,.06) 98%),linear-gradient(90deg,transparent 98%,rgba(124,184,201,.06) 98%);background-size:40px 40px;pointer-events:none;opacity:.5}
-.hero::after{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:repeating-linear-gradient(90deg,var(--coral) 0 30px,var(--mustard) 30px 60px,var(--sky) 60px 90px,var(--pink) 90px 120px)}
-.hero-in{max-width:1100px;margin:0 auto;position:relative;z-index:2}
-.hero-top{display:flex;align-items:center;gap:14px;margin-bottom:2.5rem;color:var(--sky);font-family:'Space Grotesk',sans-serif;font-size:11px;letter-spacing:.24em;text-transform:uppercase;font-weight:600}
-.hero-top::after{content:'';flex:1;height:1px;background:rgba(124,184,201,.3);max-width:200px}
-.hero-h{font-family:'Bungee',sans-serif;font-size:clamp(72px,13vw,170px);line-height:.85;letter-spacing:-.02em;color:var(--steel);margin-bottom:.3rem;text-transform:uppercase}
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;background:var(--deep);overflow:hidden;position:relative;color:var(--steel);border-bottom:5px solid var(--coral)}
+.hero::after{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:repeating-linear-gradient(90deg,var(--coral) 0 30px,var(--mustard) 30px 60px,var(--sky) 60px 90px,var(--pink) 90px 120px);z-index:3}
+.hero-left{padding:5rem 4rem;display:flex;flex-direction:column;justify-content:center;z-index:2;position:relative}
+.hero-left::before{content:'';position:absolute;inset:0;background-image:linear-gradient(transparent 97%,rgba(124,184,201,.08) 97%),linear-gradient(90deg,transparent 97%,rgba(124,184,201,.08) 97%);background-size:40px 40px;pointer-events:none;opacity:.5}
+.hero-left > *{position:relative;z-index:1}
+.hero-right{position:relative;overflow:hidden;display:flex;align-items:stretch;justify-content:stretch;background:var(--teal)}
+.hero-eyebrow{color:var(--sky);font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;margin-bottom:2rem;display:flex;align-items:center;gap:10px}
+.hero-eyebrow::before{content:'';width:24px;height:1px;background:rgba(124,184,201,.4)}
+h1.hero-h{font-family:'Bungee',sans-serif;font-size:clamp(64px,9vw,128px);line-height:.85;letter-spacing:-.02em;color:var(--steel);margin-bottom:.4rem;text-transform:uppercase}
 .hero-h .l1{color:var(--coral)}
 .hero-h .l2{color:var(--mustard)}
 .hero-h .l3{color:var(--sky)}
 .hero-h .l4{color:var(--steel)}
-.hero-word{font-family:'Caveat',cursive;font-size:clamp(44px,7vw,84px);color:var(--mustard);line-height:1;transform:rotate(-3deg);display:inline-block;font-weight:700;margin:.3rem 0 1rem -.5rem}
-.hero-sub{max-width:580px;font-size:17px;color:rgba(230,236,239,.78);line-height:1.7;margin:2rem 0 2.5rem;font-weight:300}
-.hero-meta{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.hero-word{font-family:'Caveat',cursive;font-size:clamp(40px,5vw,68px);color:var(--mustard);line-height:1;transform:rotate(-3deg);display:inline-block;font-weight:700;margin:.2rem 0 1.6rem -.2rem}
+.hero-sub{font-size:15.5px;color:rgba(230,236,239,.78);line-height:1.75;max-width:440px;margin-bottom:2.4rem;font-weight:300}
+.hero-sub em{color:var(--mustard);font-style:italic}
+.hero-pills{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:2.4rem}
 .pill{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;padding:8px 16px;border:1.5px solid}
 .pill-coral{background:var(--coral);color:var(--steel);border-color:var(--coral)}
 .pill-out{background:transparent;border-color:rgba(124,184,201,.4);color:var(--sky)}
-.hero-author{margin-top:3rem;padding-top:1.2rem;border-top:1px solid rgba(124,184,201,.25);display:flex;align-items:center;gap:14px;font-family:'Space Grotesk',sans-serif;font-size:11px;color:rgba(230,236,239,.5);letter-spacing:.1em;text-transform:uppercase}
-.hero-author-pen{font-family:'Caveat',cursive;font-size:24px;color:var(--mustard);text-transform:none;letter-spacing:0;font-weight:600}
-.hero-star{position:absolute;right:5%;bottom:10%;font-family:'Caveat',cursive;font-size:22px;color:var(--mustard);transform:rotate(4deg);opacity:.75;letter-spacing:0}
+.hero-author{padding-top:1.3rem;border-top:1px solid rgba(124,184,201,.25);display:flex;align-items:center;gap:14px;font-family:'Space Grotesk',sans-serif;font-size:11px;color:rgba(230,236,239,.5);letter-spacing:.12em;text-transform:uppercase;max-width:440px}
+.hero-author-pen{font-family:'Caveat',cursive;font-size:22px;color:var(--mustard);text-transform:none;letter-spacing:0;font-weight:600}
+.hero-scroll{position:absolute;bottom:2.5rem;left:4rem;color:rgba(230,236,239,.5);font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;display:flex;align-items:center;gap:10px;z-index:2}
+.hero-scroll::before{content:'';width:24px;height:1px;background:rgba(230,236,239,.3)}
+.hero-img-wrap{width:100%;height:100%;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.hero-img-wrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero-img-wrap::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,34,48,.4) 0%,rgba(10,34,48,0) 25%);pointer-events:none}
+.hero-stamp{position:absolute;right:2.5rem;bottom:2.5rem;font-family:'Caveat',cursive;font-size:24px;color:var(--mustard);transform:rotate(-4deg);letter-spacing:0;z-index:2;background:rgba(10,34,48,.55);padding:.5rem 1rem;border:1.5px solid var(--mustard)}
 
-/* WARM-UP */
 .warm-s{background:var(--paper);padding:4.5rem 2rem;position:relative;border-bottom:3px solid var(--deep)}
 .warm-in{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1.2fr;gap:3.5rem;align-items:start}
 .warm-title-wrap{position:sticky;top:2rem}
@@ -86,7 +95,6 @@ body{font-family:'Inter',sans-serif;background:var(--steel);color:var(--ink);ove
 .warm-b-h{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--deep);margin-bottom:1rem;padding-bottom:.6rem;border-bottom:2px solid var(--deep)}
 .wu-instr{font-size:13.5px;color:var(--muted);margin-bottom:1.1rem;line-height:1.55}
 
-/* Warm-up 01 */
 .wu-pairs{display:flex;flex-direction:column;gap:10px}
 .wu-pair{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:stretch}
 .wu-opt{padding:.85rem 1rem;background:var(--paper);border:2px solid var(--line);font-family:'Space Grotesk',sans-serif;font-size:13.5px;font-weight:500;color:var(--deep);cursor:pointer;transition:all .18s;text-align:center;line-height:1.3;user-select:none;min-height:54px;display:flex;align-items:center;justify-content:center}
@@ -94,7 +102,6 @@ body{font-family:'Inter',sans-serif;background:var(--steel);color:var(--ink);ove
 .wu-opt.picked{background:var(--coral);color:var(--steel);border-color:var(--coral);font-weight:600}
 .wu-or{display:flex;align-items:center;justify-content:center;font-family:'Bungee',sans-serif;font-size:11px;color:var(--mustard-dark);padding:0 .3rem;letter-spacing:.1em}
 
-/* Warm-up 02 */
 .wu-traits{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:.4rem}
 .wu-trait{padding:.8rem 1rem;background:var(--paper);border:2px solid var(--line);font-family:'Space Grotesk',sans-serif;font-size:13.5px;font-weight:500;color:var(--deep);cursor:pointer;transition:all .18s;user-select:none;display:flex;align-items:center;gap:10px;min-height:48px}
 .wu-trait::before{content:'';width:14px;height:14px;border:2px solid var(--line-dark);flex-shrink:0;transition:all .18s}
@@ -107,9 +114,9 @@ body{font-family:'Inter',sans-serif;background:var(--steel);color:var(--ink);ove
 .wu-trait-hint span b{color:var(--mint);font-weight:700;margin-right:4px}
 .wu-trait-hint span:last-child b{color:var(--coral)}
 .starter{margin-top:1.1rem;padding:.9rem 1rem;background:rgba(240,168,24,.13);border-left:3px solid var(--mustard);font-family:'Fraunces',serif;font-style:italic;font-size:14px;color:var(--deep);line-height:1.6}
-.starter::before{content:'💬 ';font-style:normal;margin-right:4px}
+.starter{display:flex;gap:10px;align-items:flex-start}
+.starter-ico{flex-shrink:0;width:18px;height:18px;stroke:var(--mustard-dark);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;margin-top:2px}
 
-/* ARTICLE */
 .art-s{background:var(--teal);padding:5rem 2rem 5rem;position:relative;color:var(--steel)}
 .art-s::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:repeating-linear-gradient(90deg,var(--coral) 0 60px,var(--mustard) 60px 120px)}
 .art-in{max-width:1100px;margin:0 auto;position:relative;z-index:2}
@@ -122,12 +129,12 @@ body{font-family:'Inter',sans-serif;background:var(--steel);color:var(--ink);ove
 .art-intro-card{max-width:720px;margin:2.5rem auto 3rem;background:rgba(230,236,239,.04);border:2px solid rgba(230,236,239,.18);padding:1.5rem 1.8rem;font-family:'Fraunces',serif;font-size:15.5px;line-height:1.75;color:rgba(230,236,239,.82);position:relative}
 .art-intro-card::before{content:'?';position:absolute;top:-20px;left:18px;background:var(--mustard);color:var(--deep);font-family:'Bungee',sans-serif;font-size:22px;width:40px;height:40px;display:flex;align-items:center;justify-content:center}
 
-/* Hero grid — 3×2 */
 .hero-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;margin-top:1rem}
 .hcard{background:rgba(230,236,239,.04);border:2px solid rgba(230,236,239,.15);padding:1.8rem;position:relative;transition:border-color .25s,transform .25s;display:flex;flex-direction:column}
 .hcard:hover{border-color:var(--mustard);transform:translateY(-3px)}
 .hcard-top{display:flex;align-items:flex-start;gap:1.2rem;margin-bottom:1rem}
-.hcard-img{width:88px;height:88px;background:var(--steel);flex-shrink:0;overflow:hidden;border:3px solid var(--mustard);display:flex;align-items:center;justify-content:center;color:var(--teal);font-family:'Space Grotesk',sans-serif;font-size:10px;font-weight:600;text-align:center;line-height:1.1;padding:6px;letter-spacing:.05em}
+.hcard-img{width:88px;height:88px;background:var(--steel);flex-shrink:0;overflow:hidden;border:3px solid var(--mustard);display:flex;align-items:center;justify-content:center}
+.hcard-img img{width:100%;height:100%;object-fit:cover;display:block}
 .hcard-img.c1{border-color:var(--coral)}
 .hcard-img.c2{border-color:var(--sky)}
 .hcard-img.c3{border-color:var(--mustard)}
@@ -155,13 +162,11 @@ body{font-family:'Inter',sans-serif;background:var(--steel);color:var(--ink);ove
 .hcard-total-v{font-family:'Bungee',sans-serif;font-size:28px;color:var(--coral);line-height:1}
 .hcard-quote{margin-top:.9rem;font-family:'Caveat',cursive;font-size:18px;color:var(--sky);line-height:1.3;transform:rotate(-1deg);font-weight:500}
 
-/* Sections */
 .sec-head{max-width:1100px;margin:0 auto 2rem;display:flex;align-items:center;gap:1.2rem}
 .sec-num{font-family:'Bungee',sans-serif;font-size:42px;color:var(--coral);line-height:1;flex-shrink:0}
 .sec-tag{font-family:'Space Grotesk',sans-serif;font-size:12px;letter-spacing:.26em;text-transform:uppercase;font-weight:700}
 .sec-line{flex:1;height:2px;background:var(--line)}
 
-/* Tasks */
 .tf-s{background:var(--steel);padding:5rem 2rem;position:relative}
 .tf-in{max-width:1100px;margin:0 auto}
 .sec-intro-light{font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--muted);margin:0 auto 2.5rem;max-width:720px;line-height:1.7}
@@ -170,11 +175,10 @@ body{font-family:'Inter',sans-serif;background:var(--steel);color:var(--ink);ove
 .tcard-tag{font-family:'Space Grotesk',sans-serif;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--coral);font-weight:700;margin-bottom:.4rem}
 .tcard-h{font-family:'Fraunces',serif;font-size:26px;font-weight:800;color:var(--deep);margin-bottom:.5rem;line-height:1.2}
 .tcard-i{font-size:13.5px;color:var(--muted);line-height:1.6;margin-bottom:1.5rem}
-.tcard-i b{background:var(--deep);color:var(--steel);padding:2px 8px;font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-left:4px}
 
-/* TF */
-.tf-it{display:flex;gap:14px;align-items:flex-start;margin-bottom:14px;padding-bottom:14px;border-bottom:1px dashed var(--line)}
+.tf-it{margin-bottom:14px;padding-bottom:14px;border-bottom:1px dashed var(--line)}
 .tf-it:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.tf-row{display:flex;gap:14px;align-items:flex-start}
 .tf-tx{flex:1;font-size:15px;line-height:1.65;color:var(--ink)}
 .tf-n{font-family:'Bungee',sans-serif;font-size:14px;color:var(--coral);margin-right:6px}
 .tf-bts{display:flex;gap:6px;flex-shrink:0;padding-top:2px}
@@ -184,7 +188,6 @@ body{font-family:'Inter',sans-serif;background:var(--steel);color:var(--ink);ove
 .tbtn.ok{background:rgba(61,145,68,.18);border-color:var(--lime-ok);color:var(--deep)}
 .tbtn.no{background:rgba(193,42,21,.14);border-color:var(--red);color:var(--red)}
 
-/* Matching — EQUAL height tiles */
 .match-pairs{display:flex;flex-direction:column;gap:8px}
 .match-unmatched{display:grid;grid-template-columns:200px 1fr;gap:6px}
 .match-words-col,.match-defs-col{display:flex;flex-direction:column;gap:5px}
@@ -198,7 +201,6 @@ body{font-family:'Inter',sans-serif;background:var(--steel);color:var(--ink);ove
 @keyframes snapIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
 
-/* Drag */
 .drag-bank{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:1.5rem;padding:1rem;background:rgba(10,34,48,.05);min-height:48px;border:2px dashed var(--line)}
 .drag-chip{padding:8px 14px;background:var(--deep);color:var(--steel);font-family:'Space Grotesk',sans-serif;font-size:13.5px;font-weight:600;cursor:grab;user-select:none;transition:all .18s}
 .drag-chip:active{cursor:grabbing;transform:scale(1.05)}
@@ -213,7 +215,6 @@ body{font-family:'Inter',sans-serif;background:var(--steel);color:var(--ink);ove
 .drag-slot.ok{border-color:var(--lime-ok);background:rgba(61,145,68,.14);color:var(--deep)}
 .drag-slot.no{border-color:var(--red);background:rgba(193,42,21,.12);color:var(--red)}
 
-/* MC */
 .mc-block-snug{margin-bottom:1.8rem}
 .mc-block-snug:last-child{margin-bottom:0}
 .mc-q{font-size:15px;color:var(--ink);line-height:1.65;margin-bottom:.9rem;font-weight:600}
@@ -226,7 +227,6 @@ body{font-family:'Inter',sans-serif;background:var(--steel);color:var(--ink);ove
 .mc-l.no{background:rgba(193,42,21,.14);border-color:var(--red);color:var(--red)}
 .mc-t{font-size:14.5px;color:var(--ink);line-height:1.6;padding-top:6px}
 
-/* Buttons */
 .btn-row-snug{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:1.4rem}
 .check-btn{padding:11px 26px;background:var(--coral);border:none;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--steel);cursor:pointer;transition:all .2s}
 .check-btn:hover{background:var(--coral-dark)}
@@ -237,7 +237,6 @@ body{font-family:'Inter',sans-serif;background:var(--steel);color:var(--ink);ove
 .fb.ok{background:rgba(61,145,68,.15);color:var(--deep);border-left:3px solid var(--lime-ok);display:block}
 .fb.no{background:rgba(193,42,21,.1);color:var(--red);border-left:3px solid var(--red);display:block}
 
-/* Hint lamp */
 .hint-lamp{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border:1.5px solid var(--coral);background:rgba(226,69,36,.1);border-radius:50%;cursor:pointer;flex-shrink:0;transition:all .18s;margin-left:8px;vertical-align:middle;padding:0}
 .hint-lamp svg{width:14px;height:14px;stroke:var(--coral);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:stroke .18s}
 .hint-lamp:hover{background:var(--coral);border-color:var(--coral)}
@@ -248,10 +247,12 @@ body{font-family:'Inter',sans-serif;background:var(--steel);color:var(--ink);ove
 .hint-box::before{content:'';position:absolute;left:14px;top:12px;width:16px;height:16px;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23e24524' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><path d='M9 18h6'/><path d='M10 22h4'/><path d='M12 2a7 7 0 0 0-4 12.7c.7.5 1 1.3 1 2.1v.2h6v-.2c0-.8.3-1.6 1-2.1A7 7 0 0 0 12 2z'/></svg>")}
 .hint-box.show{display:block}
 
-/* Tier legend */
 .tier-legend{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:2rem;background:var(--deep);padding:1.2rem 1.4rem;color:var(--steel)}
 .tier-item{display:flex;align-items:center;gap:12px;padding:.4rem 0}
-.tier-emoji{font-size:24px;line-height:1}
+.tier-ico{flex-shrink:0;width:26px;height:26px;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.tier-ico.t1{stroke:var(--mint)}
+.tier-ico.t2{stroke:var(--mustard)}
+.tier-ico.t3{stroke:var(--coral)}
 .tier-text{font-family:'Space Grotesk',sans-serif;font-size:11px;line-height:1.3}
 .tier-text b{display:block;font-size:14px;font-weight:700;margin-bottom:2px}
 .tier-text.t1 b{color:var(--mint)}
@@ -260,7 +261,6 @@ body{font-family:'Inter',sans-serif;background:var(--steel);color:var(--ink);ove
 .tier-text span{color:rgba(230,236,239,.55);letter-spacing:.1em;text-transform:uppercase;font-size:10px}
 @media(max-width:720px){.tier-legend{grid-template-columns:1fr;gap:6px;padding:1rem}}
 
-/* Speaking */
 .speak-s{background:var(--deep);padding:5rem 2rem;color:var(--steel)}
 .speak-in{max-width:1100px;margin:0 auto}
 .ph-g{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:2rem 0 2.5rem}
@@ -272,31 +272,39 @@ body{font-family:'Inter',sans-serif;background:var(--steel);color:var(--ink);ove
 .dq:hover{border-color:var(--mustard)}
 .dq-n{font-family:'Bungee',sans-serif;font-size:22px;color:var(--coral);line-height:1}
 .dq-t{font-size:15px;color:var(--steel);line-height:1.7;font-weight:300}
-.pitch-box{margin-top:3rem;padding:2rem;background:rgba(226,69,36,.08);border:2px dashed var(--coral)}
-.pitch-h{font-family:'Caveat',cursive;font-size:36px;color:var(--coral);line-height:1;margin-bottom:.5rem;font-weight:700}
-.pitch-sub{font-family:'Fraunces',serif;font-style:italic;font-size:14.5px;color:rgba(230,236,239,.82);margin-bottom:1rem;line-height:1.6}
-.pitch-steps{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:1rem}
-.pitch-step{flex:1;min-width:170px;padding:.9rem 1rem;background:rgba(230,236,239,.06)}
-.pitch-step b{color:var(--mustard);display:block;margin-bottom:4px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-family:'Space Grotesk',sans-serif}
-.pitch-step-t{font-family:'Space Grotesk',sans-serif;font-size:12.5px;color:var(--sky);line-height:1.5}
-.pitch-ex{font-family:'Fraunces',serif;font-style:italic;font-size:14.5px;color:var(--steel);line-height:1.75;padding-top:1rem;border-top:1px dashed rgba(230,236,239,.25)}
+.pitch-box{margin-top:3rem;background:rgba(230,236,239,.04);border:2px solid rgba(240,168,24,.4);padding:0;position:relative;overflow:hidden}
+.pitch-ribbon{background:var(--mustard);color:var(--deep);padding:.55rem 1.6rem;font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;display:inline-flex;align-items:center;gap:8px}
+.pitch-ribbon svg{width:14px;height:14px;fill:none;stroke:var(--deep);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.pitch-body{padding:1.6rem 2rem 2rem}
+.pitch-h{font-family:'Fraunces',serif;font-weight:800;font-size:28px;color:var(--steel);line-height:1.15;margin:.6rem 0 .4rem}
+.pitch-h em{color:var(--mustard);font-style:normal}
+.pitch-sub{font-family:'Fraunces',serif;font-style:italic;font-size:14.5px;color:rgba(230,236,239,.75);margin-bottom:1.4rem;line-height:1.6;max-width:640px}
+.pitch-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:1.3rem}
+.pitch-step{padding:1rem 1.1rem;background:rgba(230,236,239,.06);border-left:3px solid var(--sky);position:relative}
+.pitch-step:nth-child(2){border-left-color:var(--coral)}
+.pitch-step:nth-child(3){border-left-color:var(--mint)}
+.pitch-step-num{font-family:'Bungee',sans-serif;font-size:11px;color:rgba(230,236,239,.35);letter-spacing:.1em;display:block;margin-bottom:4px}
+.pitch-step b{color:var(--mustard);display:block;margin-bottom:6px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-family:'Space Grotesk',sans-serif;font-weight:700}
+.pitch-step-t{font-family:'Fraunces',serif;font-size:13.5px;color:var(--steel);line-height:1.5}
+.pitch-ex{font-family:'Fraunces',serif;font-style:italic;font-size:14.5px;color:rgba(230,236,239,.85);line-height:1.75;padding:1rem 1.1rem;background:rgba(240,168,24,.08);border-left:3px solid var(--mustard)}
+.pitch-ex-lbl{display:block;font-family:'Space Grotesk',sans-serif;font-style:normal;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--mustard);font-weight:700;margin-bottom:6px}
 
-/* Writing */
 .write-s{background:var(--paper);padding:5rem 2rem;border-top:4px solid var(--deep)}
 .write-in{max-width:1100px;margin:0 auto}
 .wr-g{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:1.8rem;align-items:stretch}
-.wr-card{background:var(--steel);border:2px solid var(--deep);border-top:5px solid var(--coral);padding:1.6rem;display:flex;flex-direction:column}
+.wr-card{background:var(--steel);border:2px solid var(--deep);border-top:5px solid var(--coral);padding:1.6rem;display:flex;flex-direction:column;gap:.7rem}
 .wr-card:nth-child(2){border-top-color:var(--mustard)}
 .wr-card:nth-child(3){border-top-color:var(--teal-mid)}
-.wr-letter{font-family:'Bungee',sans-serif;font-size:22px;color:var(--coral);line-height:1;margin-bottom:.5rem}
+.wr-letter{font-family:'Bungee',sans-serif;font-size:22px;color:var(--coral);line-height:1}
 .wr-card:nth-child(2) .wr-letter{color:var(--mustard-dark)}
 .wr-card:nth-child(3) .wr-letter{color:var(--teal-mid)}
-.wr-h{font-family:'Fraunces',serif;font-weight:700;font-size:16px;color:var(--deep);margin-bottom:.7rem;line-height:1.3}
-.wr-txt{font-size:13.5px;line-height:1.65;color:var(--ink);margin-bottom:.9rem}
-.wr-template{background:var(--steel-soft);border-left:3px solid var(--teal-mid);padding:.9rem 1rem;margin:.4rem 0 .9rem;font-family:'Space Grotesk',sans-serif;font-size:11.5px;line-height:1.9;color:var(--deep);white-space:pre-line;flex:1}
-.wr-hint{font-size:12.5px;color:var(--muted);font-style:italic;line-height:1.5;padding-top:.7rem;border-top:1px dashed var(--line);font-family:'Fraunces',serif;margin-top:auto}
+.wr-h{font-family:'Fraunces',serif;font-weight:700;font-size:16px;color:var(--deep);line-height:1.3}
+.wr-txt{font-size:13.5px;line-height:1.65;color:var(--ink)}
+.wr-template{background:var(--steel-soft);border-left:3px solid var(--teal-mid);padding:.9rem 1rem;font-family:'Space Grotesk',sans-serif;font-size:11.5px;line-height:1.9;color:var(--deep);white-space:pre-line}
+.wr-body{flex:1;display:flex;flex-direction:column;gap:.7rem}
+.wr-hint{font-size:12.5px;color:var(--muted);font-style:italic;line-height:1.5;padding-top:.7rem;border-top:1px dashed var(--line);font-family:'Fraunces',serif;margin-top:auto;display:flex;align-items:flex-start;gap:8px}
+.wr-hint svg{flex-shrink:0;width:16px;height:16px;stroke:var(--teal-mid);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;margin-top:2px}
 
-/* Exit */
 .exit-s{background:var(--coral);padding:4rem 2rem;color:var(--steel);position:relative;overflow:hidden}
 .exit-s::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:repeating-linear-gradient(90deg,var(--deep) 0 20px,var(--mustard) 20px 40px)}
 .exit-in{max-width:900px;margin:0 auto;position:relative;z-index:2}
@@ -310,21 +318,21 @@ body{font-family:'Inter',sans-serif;background:var(--steel);color:var(--ink);ove
 .exit-lines{margin-top:.8rem;display:flex;flex-direction:column;gap:6px}
 .exit-line{height:26px;border-bottom:1.5px dashed rgba(230,236,239,.5)}
 
-/* Footer */
 .site-footer{background:var(--deep);border-top:2px solid var(--coral)}
 .site-footer-in{max-width:1100px;margin:0 auto;padding:1.6rem 2rem;display:flex;justify-content:space-between;align-items:center;gap:1.5rem;flex-wrap:wrap}
 .foot-sig{display:flex;align-items:center;gap:10px;text-decoration:none}
 .foot-sig::before{content:'';width:24px;height:1px;background:rgba(230,236,239,.25);transition:background .2s,width .2s}
 .foot-sig:hover::before{background:var(--mustard);width:32px}
 .foot-sig-name{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(230,236,239,.55);transition:color .2s}
-.foot-sig-role{font-family:'Fraunces',serif;font-style:italic;font-size:12px;color:var(--sky);margin-left:4px;opacity:.6}
+.foot-sig-role{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--sky);margin-left:4px;opacity:.7}
 .foot-sig:hover .foot-sig-name{color:var(--mustard)}
 .foot-links{display:flex;gap:1.4rem}
 .foot-link{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:rgba(230,236,239,.45);text-decoration:none;padding-bottom:2px;border-bottom:1px solid transparent;transition:color .2s,border-color .2s}
 .foot-link:hover{color:var(--mustard);border-bottom-color:var(--mustard)}
 
-@media(max-width:1000px){.hero-grid{grid-template-columns:1fr}.warm-in{grid-template-columns:1fr;gap:1.5rem}.warm-title-wrap{position:static}.dq-g{grid-template-columns:1fr}.ph-g{grid-template-columns:1fr 1fr}.wr-g{grid-template-columns:1fr}.exit-g{grid-template-columns:1fr}}
-@media(max-width:720px){.hero{padding:3rem 1.3rem 4rem}.warm-s,.art-s,.tf-s,.speak-s,.write-s{padding:3.5rem 1.3rem}.exit-s{padding:3rem 1.3rem}.tcard{padding:1.5rem 1.3rem}.hcard{padding:1.4rem}.tf-it{flex-direction:column;align-items:stretch;gap:10px}.tf-bts{padding-top:0}.tbtn{flex:1;min-width:0}.match-unmatched{grid-template-columns:1fr}.match-matched-row{grid-template-columns:1fr}.match-word,.match-def{height:auto;min-height:56px}.ph-g{grid-template-columns:1fr}.pitch-steps{flex-direction:column}.wu-pair{grid-template-columns:1fr}.wu-or{padding:.3rem}.wu-traits{grid-template-columns:1fr}.site-footer-in{padding:1.3rem;flex-direction:column;align-items:flex-start;gap:1rem}.foot-links{width:100%;gap:1.2rem}}
+@media(max-width:1000px){.hero-grid{grid-template-columns:1fr}.warm-in{grid-template-columns:1fr;gap:1.5rem}.warm-title-wrap{position:static}.dq-g{grid-template-columns:1fr}.ph-g{grid-template-columns:1fr 1fr}.wr-g{grid-template-columns:1fr}.exit-g{grid-template-columns:1fr}.pitch-steps{grid-template-columns:1fr}}
+@media(max-width:900px){.hero{grid-template-columns:1fr;grid-template-rows:auto 360px}.hero-right{min-height:360px}.hero-left{padding:3.5rem 1.5rem 2.5rem}.hero-scroll{position:static;margin-top:2rem;left:auto;bottom:auto}.hero-stamp{right:1.2rem;bottom:1.2rem;font-size:20px}h1.hero-h{font-size:clamp(72px,22vw,140px)}}
+@media(max-width:720px){.warm-s,.art-s,.tf-s,.speak-s,.write-s{padding:3.5rem 1.3rem}.exit-s{padding:3rem 1.3rem}.tcard{padding:1.5rem 1.3rem}.hcard{padding:1.4rem}.tf-it{flex-direction:column;align-items:stretch;gap:10px}.tf-bts{padding-top:0}.tbtn{flex:1;min-width:0}.match-unmatched{grid-template-columns:1fr}.match-matched-row{grid-template-columns:1fr}.match-word,.match-def{height:auto;min-height:56px}.ph-g{grid-template-columns:1fr}.pitch-steps{flex-direction:column}.wu-pair{grid-template-columns:1fr}.wu-or{padding:.3rem}.wu-traits{grid-template-columns:1fr}.site-footer-in{padding:1.3rem;flex-direction:column;align-items:flex-start;gap:1rem}.foot-links{width:100%;gap:1.2rem}}
 </style>
 </head>
 <body>
@@ -334,19 +342,19 @@ body{font-family:'Inter',sans-serif;background:var(--steel);color:var(--ink);ove
     <span class="sss-lbl">Your score</span>
     <div class="sss-track"><div class="sss-fill" id="prog" style="width:0%"></div></div>
     <span class="sss-num" id="snum">0 / 35</span>
-    <span class="sss-tier t1" id="stier">🌱 Sprout</span>
+    <span class="sss-tier t1" id="stier"><svg viewBox="0 0 24 24"><path d="M12 20v-6"/><path d="M12 14c-4 0-6-2-6-6 4 0 6 2 6 6z"/><path d="M12 14c4 0 6-2 6-6-4 0-6 2-6 6z"/></svg><span id="stier-text">Sprout</span></span>
   </div>
 </div>
 
 <section class="hero">
-  <div class="hero-in">
-    <div class="hero-top">Teen English · A2–B1 · Reading + Speaking</div>
+  <div class="hero-left">
+    <div class="hero-eyebrow">Teen English · A2–B1 · Reading + Speaking</div>
     <h1 class="hero-h">
       <span class="l1">H</span><span class="l2">E</span><span class="l3">R</span><span class="l4">O</span>
     </h1>
     <div class="hero-word">ranking</div>
     <p class="hero-sub">What makes a <em>true</em> hero? Unlimited bravery? Total honesty? Fabulous hair and a great line in spectacles? Meet six characters — from a K-pop demon hunter to a reluctant survivor — and decide who belongs at the top.</p>
-    <div class="hero-meta">
+    <div class="hero-pills">
       <span class="pill pill-coral">55 min</span>
       <span class="pill pill-out">Interactive</span>
       <span class="pill pill-out">Aquila Magazine</span>
@@ -355,8 +363,14 @@ body{font-family:'Inter',sans-serif;background:var(--steel);color:var(--ink);ove
       <span>Words by</span>
       <span class="hero-author-pen">Jennifer Newton-Brown</span>
     </div>
+    <div class="hero-scroll">Scroll to begin</div>
   </div>
-  <div class="hero-star">★ rank them yourself ★</div>
+  <div class="hero-right">
+    <div class="hero-img-wrap">
+      <img src="../assets/hero.png" alt="Six heroes" onerror="this.parentElement.style.background='var(--teal)';this.remove();"/>
+    </div>
+    <div class="hero-stamp">rank them yourself</div>
+  </div>
 </section>
 
 <section class="warm-s">
@@ -377,7 +391,7 @@ body{font-family:'Inter',sans-serif;background:var(--steel);color:var(--ink);ove
           <div class="wu-pair"><div class="wu-opt" onclick="pickWU(this)">Famous but misunderstood</div><div class="wu-or">OR</div><div class="wu-opt" onclick="pickWU(this)">Unknown but happy</div></div>
           <div class="wu-pair"><div class="wu-opt" onclick="pickWU(this)">Fight with magic</div><div class="wu-or">OR</div><div class="wu-opt" onclick="pickWU(this)">Fight with technology</div></div>
         </div>
-        <div class="starter">"I'd rather ______ because ______."</div>
+        <div class="starter"><svg xmlns="http://www.w3.org/2000/svg" class="starter-ico" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg><span>"I'd rather ______ because ______."</span></div>
       </div>
       <div class="warm-b">
         <span class="warm-b-tag">warm-up 02</span>
@@ -395,7 +409,7 @@ body{font-family:'Inter',sans-serif;background:var(--steel);color:var(--ink);ove
           <span><b>↑</b> Top 2</span>
           <span><b>↓</b> Bottom 1</span>
         </div>
-        <div class="starter">"For me, the most important is ______. The least important is ______ because ______."</div>
+        <div class="starter"><svg xmlns="http://www.w3.org/2000/svg" class="starter-ico" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg><span>"For me, the most important is ______. The least important is ______ because ______."</span></div>
       </div>
     </div>
   </div>
@@ -416,7 +430,7 @@ body{font-family:'Inter',sans-serif;background:var(--steel);color:var(--ink);ove
 
       <div class="hcard fade">
         <div class="hcard-top">
-          <div class="hcard-img c1">[Rumi image]</div>
+          <div class="hcard-img c1"><img src="../assets/rumi.png" alt="Rumi"/></div>
           <div>
             <div class="hcard-name">Rumi</div>
             <div class="hcard-aka">K-Pop Demon Hunter · <span>AKA The Star Slayer</span></div>
@@ -439,7 +453,7 @@ body{font-family:'Inter',sans-serif;background:var(--steel);color:var(--ink);ove
 
       <div class="hcard fade">
         <div class="hcard-top">
-          <div class="hcard-img c2">[Sherlock image]</div>
+          <div class="hcard-img c2"><img src="../assets/sherlock.png" alt="Sherlock Holmes"/></div>
           <div>
             <div class="hcard-name">Sherlock Holmes</div>
             <div class="hcard-aka">The Detective · <span>AKA The Baker Street Brainbox</span></div>
@@ -462,7 +476,7 @@ body{font-family:'Inter',sans-serif;background:var(--steel);color:var(--ink);ove
 
       <div class="hcard fade">
         <div class="hcard-top">
-          <div class="hcard-img c3">[Harry image]</div>
+          <div class="hcard-img c3"><img src="../assets/harry.png" alt="Harry Potter"/></div>
           <div>
             <div class="hcard-name">Harry Potter</div>
             <div class="hcard-aka">The Wizard · <span>AKA The Boy Who Lived</span></div>
@@ -485,7 +499,7 @@ body{font-family:'Inter',sans-serif;background:var(--steel);color:var(--ink);ove
 
       <div class="hcard fade">
         <div class="hcard-top">
-          <div class="hcard-img c4">[Odysseus image]</div>
+          <div class="hcard-img c4"><img src="../assets/odysseus.png" alt="Odysseus"/></div>
           <div>
             <div class="hcard-name">Odysseus</div>
             <div class="hcard-aka">The Strategist · <span>AKA Iliad Lad</span></div>
@@ -508,7 +522,7 @@ body{font-family:'Inter',sans-serif;background:var(--steel);color:var(--ink);ove
 
       <div class="hcard fade">
         <div class="hcard-top">
-          <div class="hcard-img c5">[Elsa image]</div>
+          <div class="hcard-img c5"><img src="../assets/elsa.png" alt="Elsa"/></div>
           <div>
             <div class="hcard-name">Elsa</div>
             <div class="hcard-aka">The Ice Queen · <span>AKA Queen of Arendelle</span></div>
@@ -531,7 +545,7 @@ body{font-family:'Inter',sans-serif;background:var(--steel);color:var(--ink);ove
 
       <div class="hcard fade">
         <div class="hcard-top">
-          <div class="hcard-img c6">[Katniss image]</div>
+          <div class="hcard-img c6"><img src="../assets/katniss.png" alt="Katniss Everdeen"/></div>
           <div>
             <div class="hcard-name">Katniss Everdeen</div>
             <div class="hcard-aka">The Survivor · <span>AKA The Reluctant Hero</span></div>
@@ -566,15 +580,15 @@ body{font-family:'Inter',sans-serif;background:var(--steel);color:var(--ink);ove
     <p class="sec-intro-light fade">Highlighted words in the article above are clickable — tap to flip to the definition. The tasks below lock the vocabulary in and check your understanding. Your score stays with you at the top of the screen.</p>
 
     <div class="tier-legend fade">
-      <div class="tier-item"><span class="tier-emoji">🌱</span><div class="tier-text t1"><b>Sprout</b><span>0 – 12 points</span></div></div>
-      <div class="tier-item"><span class="tier-emoji">⚔️</span><div class="tier-text t2"><b>Warrior</b><span>13 – 24 points</span></div></div>
-      <div class="tier-item"><span class="tier-emoji">🏆</span><div class="tier-text t3"><b>Legend</b><span>25 – 35 points</span></div></div>
+      <div class="tier-item"><svg class="tier-ico t1" viewBox="0 0 24 24"><path d="M12 22V12"/><path d="M12 12C7 12 4 9 4 4c5 0 8 3 8 8z"/><path d="M12 12c5 0 8-3 8-8-5 0-8 3-8 8z"/></svg><div class="tier-text t1"><b>Sprout</b><span>0 – 12 points</span></div></div>
+      <div class="tier-item"><svg class="tier-ico t2" viewBox="0 0 24 24"><path d="M14.5 17.5 3 6V3h3l11.5 11.5"/><path d="m13 19 6-6"/><path d="m16 16 4 4"/><path d="m19 21 2-2"/><path d="M18.5 11 22 7.5 18 3l-3.5 3.5"/><path d="m9 11-6 6v3h3l6-6"/><path d="m5 19 1 1"/></svg><div class="tier-text t2"><b>Warrior</b><span>13 – 24 points</span></div></div>
+      <div class="tier-item"><svg class="tier-ico t3" viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg><div class="tier-text t3"><b>Legend</b><span>25 – 35 points</span></div></div>
     </div>
 
     <div class="tcard fade">
       <p class="tcard-tag">Task A · Vocabulary match</p>
       <h3 class="tcard-h">Connect the phrase to its meaning</h3>
-      <p class="tcard-i">Click a phrase on the left, then its meaning on the right. Correct pairs turn gold and lock in place. Wrong pairs just shake — try again!<b>8 pts</b></p>
+      <p class="tcard-i">Click a phrase on the left, then its meaning on the right. Correct pairs turn gold and lock in place. Wrong pairs just shake — try again!</p>
       <div class="match-pairs" id="match-area"></div>
       <div class="btn-row-snug">
         <button class="reset-btn" onclick="resetMatch()"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg><span>Reset</span></button>
@@ -585,7 +599,7 @@ body{font-family:'Inter',sans-serif;background:var(--steel);color:var(--ink);ove
     <div class="tcard fade">
       <p class="tcard-tag">Task B · Drag the phrase</p>
       <h3 class="tcard-h">Complete each sentence with the right phrase</h3>
-      <p class="tcard-i">Drag each phrase into the correct gap — or click a phrase, then click a gap. Press "Check" when you're done.<b>8 pts</b></p>
+      <p class="tcard-i">Drag each phrase into the correct gap — or click a phrase, then click a gap. Press "Check" when you're done.</p>
       <div class="drag-bank" id="drag-bank"></div>
       <div id="drag-sentences"></div>
       <div class="btn-row-snug">
@@ -598,7 +612,7 @@ body{font-family:'Inter',sans-serif;background:var(--steel);color:var(--ink);ove
     <div class="tcard fade">
       <p class="tcard-tag">Task C · Reading comprehension</p>
       <h3 class="tcard-h">True, False, or Not Stated?</h3>
-      <p class="tcard-i">Read each statement. Mark T (True), F (False) or NS (Not Stated). After Check, tap the 💡 for a hint if you're not sure.<b>10 pts</b></p>
+      <p class="tcard-i">Read each statement. Mark T (True), F (False) or NS (Not Stated). After Check, tap the bulb for a hint if you're not sure.</p>
       <div id="tf-w"></div>
       <div class="btn-row-snug">
         <button class="check-btn" onclick="checkAllTF()">Check answers</button>
@@ -610,7 +624,7 @@ body{font-family:'Inter',sans-serif;background:var(--steel);color:var(--ink);ove
     <div class="tcard fade">
       <p class="tcard-tag">Task D · Read between the lines</p>
       <h3 class="tcard-h">What does the text imply?</h3>
-      <p class="tcard-i">Choose the best answer (A, B or C). After Check, wrong picks turn red — tap 💡 for a hint.<b>5 pts</b></p>
+      <p class="tcard-i">Choose the best answer (A, B or C). After Check, wrong picks turn red — tap the bulb for a hint.</p>
       <div id="mc-w"></div>
       <div class="btn-row-snug">
         <button class="check-btn" onclick="checkAllMC()">Check answers</button>
@@ -664,14 +678,17 @@ body{font-family:'Inter',sans-serif;background:var(--steel);color:var(--ink);ove
     </div>
 
     <div class="pitch-box fade">
-      <div class="pitch-h">Bonus: 60-second pitch</div>
-      <p class="pitch-sub">Pick your favourite hero from the article and pitch a brand-new series about them. Use this 3-step structure:</p>
-      <div class="pitch-steps">
-        <div class="pitch-step"><b>Hook</b><div class="pitch-step-t">One-line intro that makes people curious.</div></div>
-        <div class="pitch-step"><b>Conflict</b><div class="pitch-step-t">One line about their struggle or enemy.</div></div>
-        <div class="pitch-step"><b>Why watch?</b><div class="pitch-step-t">One line about the vibe or emotion.</div></div>
+      <div class="pitch-ribbon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l2.5 2.5"/></svg>Bonus round · 60 seconds</div>
+      <div class="pitch-body">
+        <h3 class="pitch-h"><em>Pitch</em> a brand-new series about your favourite hero.</h3>
+        <p class="pitch-sub">You have one minute on stage. Use this 3-step structure to sell it to the room.</p>
+        <div class="pitch-steps">
+          <div class="pitch-step"><span class="pitch-step-num">01</span><b>Hook</b><div class="pitch-step-t">One-line intro that makes people curious.</div></div>
+          <div class="pitch-step"><span class="pitch-step-num">02</span><b>Conflict</b><div class="pitch-step-t">One line about their struggle or enemy.</div></div>
+          <div class="pitch-step"><span class="pitch-step-num">03</span><b>Why watch?</b><div class="pitch-step-t">One line about the vibe or emotion.</div></div>
+        </div>
+        <div class="pitch-ex"><span class="pitch-ex-lbl">Example pitch</span>"What if a K-pop star was secretly hunting demons? Rumi's story is about identity, loyalty, and the cost of power. Watch if you like action, emotion, and killer outfits."</div>
       </div>
-      <p class="pitch-ex">Example → "What if a K-pop star was secretly hunting demons? Rumi's story is about identity, loyalty, and the cost of power. Watch if you like action, emotion, and killer outfits."</p>
     </div>
   </div>
 </section>
@@ -689,22 +706,38 @@ body{font-family:'Inter',sans-serif;background:var(--steel);color:var(--ink);ove
       <div class="wr-card">
         <div class="wr-letter">A</div>
         <div class="wr-h">Short opinion post — 80 words</div>
-        <p class="wr-txt">Which hero from the article would you want on your team in a crisis? Explain in 5–7 sentences.</p>
-        <p class="wr-hint">Starter → "If I had to choose a hero for my team, I'd pick ______. First, ______. Also, ______."</p>
+        <div class="wr-body">
+          <p class="wr-txt">Which hero from the article would you want on your team in a crisis? Explain in 5–7 sentences.</p>
+          <div class="wr-template">Starter:
+If I had to choose a hero for my team, I'd pick ______.
+First, ______.
+Also, ______.
+But one thing I'd watch out for is ______.
+Overall, ______.</div>
+        </div>
+        <p class="wr-hint"><svg viewBox="0 0 24 24"><path d="M12 2v4"/><path d="M12 18v4"/><path d="m4.93 4.93 2.83 2.83"/><path d="m16.24 16.24 2.83 2.83"/><path d="M2 12h4"/><path d="M18 12h4"/><path d="m4.93 19.07 2.83-2.83"/><path d="m16.24 7.76 2.83-2.83"/></svg><span>Aim for one vocabulary phrase in every other sentence.</span></p>
       </div>
       <div class="wr-card">
         <div class="wr-letter">B</div>
         <div class="wr-h">Character analysis — 120 words</div>
-        <p class="wr-txt">Pick one hero. What makes them strong? What holds them back? Would you trust them in real life? Write 6–8 sentences.</p>
-        <p class="wr-hint">Structure → intro (1) → strength + example (2) → weakness + example (3) → verdict (1).</p>
+        <div class="wr-body">
+          <p class="wr-txt">Pick one hero. What makes them strong? What holds them back? Would you trust them in real life? Write 6–8 sentences.</p>
+          <div class="wr-template">Structure:
+1. Intro — who & why you chose them
+2. Strength + example
+3. Weakness + example
+4. Final verdict</div>
+        </div>
+        <p class="wr-hint"><svg viewBox="0 0 24 24"><path d="M12 2v4"/><path d="M12 18v4"/><path d="m4.93 4.93 2.83 2.83"/><path d="m16.24 16.24 2.83 2.83"/><path d="M2 12h4"/><path d="M18 12h4"/><path d="m4.93 19.07 2.83-2.83"/><path d="m16.24 7.76 2.83-2.83"/></svg><span>Underline every vocabulary phrase you use.</span></p>
       </div>
       <div class="wr-card">
         <div class="wr-letter">C</div>
         <div class="wr-h">Create your own hero profile</div>
-        <p class="wr-txt">Invent a new hero for Aquila. Use the template:</p>
-        <div class="wr-template">Name: _______________
+        <div class="wr-body">
+          <p class="wr-txt">Invent a new hero for Aquila. Fill in the template:</p>
+          <div class="wr-template">Name: _______________
 AKA: _______________
-Background (1 sentence): _______________
+Background: _______________
 Power: _______________
 Flaw: _______________
 Motto: "_______________"
@@ -715,7 +748,8 @@ Scores (out of 10):
 • Crisis mgmt: ___/10
 • Style: ___/10
 TOTAL: ___/40</div>
-        <p class="wr-hint">Bonus → add a 2-line bio written in Rumi-style cursive energy ✨</p>
+        </div>
+        <p class="wr-hint"><svg viewBox="0 0 24 24"><path d="M12 2v4"/><path d="M12 18v4"/><path d="m4.93 4.93 2.83 2.83"/><path d="m16.24 16.24 2.83 2.83"/><path d="M2 12h4"/><path d="M18 12h4"/><path d="m4.93 19.07 2.83-2.83"/><path d="m16.24 7.76 2.83-2.83"/></svg><span>Bonus — add a two-line bio in your hero's voice.</span></p>
       </div>
     </div>
   </div>
@@ -765,7 +799,9 @@ window.addEventListener('scroll',reveal);reveal();
 
 var stickyEl=document.getElementById('stickyScore');
 function updateSticky(){
-  var show=window.scrollY>window.innerHeight*.75;
+  var target=document.querySelector('.tf-s');
+  if(!target){return;}
+  var show=window.scrollY+80>=target.offsetTop;
   if(show)stickyEl.classList.add('show');
   else stickyEl.classList.remove('show');
 }
@@ -1037,10 +1073,11 @@ function updateScore(section,n){
   var pct=Math.round(total/TOTAL*100);
   document.getElementById('prog').style.width=pct+'%';
   var tier=document.getElementById('stier');
+  var tierText=document.getElementById('stier-text');
   tier.classList.remove('t1','t2','t3');
-  if(total<=12){tier.textContent='🌱 Sprout';tier.classList.add('t1');}
-  else if(total<=24){tier.textContent='⚔️ Warrior';tier.classList.add('t2');}
-  else{tier.textContent='🏆 Legend';tier.classList.add('t3');}
+  if(total<=12){tierText.textContent='Sprout';tier.classList.add('t1');}
+  else if(total<=24){tierText.textContent='Warrior';tier.classList.add('t2');}
+  else{tierText.textContent='Legend';tier.classList.add('t3');}
 }
 
 function toggleHint(id){
@@ -1065,7 +1102,8 @@ function buildTF(){
   var w=document.getElementById('tf-w');
   TF.forEach(function(item,i){
     var d=document.createElement('div');
-    d.innerHTML='<div class="tf-it"><span class="tf-tx"><span class="tf-n">'+(i+1)+'.</span>'+item.t+'</span><span class="tf-bts" id="tfbtns'+i+'"><button class="tbtn" id="tT'+i+'" onclick="selTF('+i+',\'T\')">T</button><button class="tbtn" id="tF'+i+'" onclick="selTF('+i+',\'F\')">F</button><button class="tbtn" id="tN'+i+'" onclick="selTF('+i+',\'NS\')">NS</button></span></div><div class="hint-box" id="tfhint'+i+'">'+item.hint+'</div>';
+    d.className='tf-it';
+    d.innerHTML='<div class="tf-row"><span class="tf-tx"><span class="tf-n">'+(i+1)+'.</span>'+item.t+'</span><span class="tf-bts" id="tfbtns'+i+'"><button class="tbtn" id="tT'+i+'" onclick="selTF('+i+',\'T\')">T</button><button class="tbtn" id="tF'+i+'" onclick="selTF('+i+',\'F\')">F</button><button class="tbtn" id="tN'+i+'" onclick="selTF('+i+',\'NS\')">NS</button></span></div><div class="hint-box" id="tfhint'+i+'">'+item.hint+'</div>';
     w.appendChild(d);
   });
 }
@@ -1169,7 +1207,6 @@ function resetMC(){
   updateScore('mc',0);
 }
 
-/* INIT */
 initMatch();
 initDrag();
 buildTF();
