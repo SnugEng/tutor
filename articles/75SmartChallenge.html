@@ -103,6 +103,8 @@ h1.hero-h em{color:var(--lime);font-style:normal;display:block}
 .drag-chip{padding:6px 14px;background:var(--navy);color:var(--white);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;border-radius:3px;cursor:grab;user-select:none;transition:opacity .18s,transform .15s}
 .drag-chip:active{cursor:grabbing;transform:scale(1.06)}
 .drag-chip.used{opacity:.2;pointer-events:none}
+.drag-chip.picked{background:var(--lime);color:var(--navy);transform:scale(1.04)}
+.drag-slot.target{background:rgba(223,244,120,.12);border-bottom-color:var(--lime);color:var(--navy)}
 .drag-sentence{display:flex;flex-wrap:wrap;align-items:baseline;gap:5px;margin-bottom:12px;font-size:16px;font-family:'DM Sans',sans-serif;color:var(--navy);line-height:2.1}
 .drag-num{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--kawaii);min-width:20px;font-weight:600}
 .drag-slot{display:inline-flex;align-items:center;justify-content:center;min-width:120px;height:34px;border-bottom:2px solid rgba(23,36,63,.25);padding:0 8px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:16px;font-weight:500;color:var(--navy);transition:border-color .18s,background .18s;border-radius:2px 2px 0 0}
@@ -206,9 +208,16 @@ h1.hero-h em{color:var(--lime);font-style:normal;display:block}
 .wr-hint{font-size:12px;color:var(--muted);margin-top:.8rem;font-style:italic}
 
 .site-footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.08)}
-.site-footer-in{max-width:860px;margin:0 auto;padding:18px 2rem;display:flex;justify-content:space-between;align-items:center;font-family:'DM Sans',sans-serif;font-size:.75rem;flex-wrap:wrap;gap:8px}
-.site-footer-in a{color:rgba(255,255,255,.4);text-decoration:none;transition:color .2s}
-.site-footer-in a:hover{color:var(--lime)}
+.site-footer-in{max-width:860px;margin:0 auto;padding:1.6rem 2rem;display:flex;justify-content:space-between;align-items:center;gap:1.5rem;flex-wrap:wrap}
+.foot-sig{display:flex;align-items:center;gap:10px;text-decoration:none}
+.foot-sig::before{content:'';width:24px;height:1px;background:rgba(255,255,255,.25);transition:background .2s,width .2s}
+.foot-sig:hover::before{background:var(--lime);width:32px}
+.foot-sig-name{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.55);transition:color .2s}
+.foot-sig-role{font-family:'Lora',serif;font-style:italic;font-size:12px;color:rgba(146,186,213,.5);margin-left:4px}
+.foot-sig:hover .foot-sig-name{color:var(--lime)}
+.foot-links{display:flex;gap:1.4rem}
+.foot-link{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.45);text-decoration:none;padding-bottom:2px;border-bottom:1px solid transparent;transition:color .2s,border-color .2s}
+.foot-link:hover{color:var(--lime);border-bottom-color:var(--lime)}
 
 @media(max-width:900px){
   .ph-g{grid-template-columns:repeat(2,1fr)}
@@ -245,6 +254,8 @@ h1.hero-h em{color:var(--lime);font-style:normal;display:block}
   .mc-t{font-size:15px;padding-top:5px}
   .drag-sentence{font-size:15px;line-height:1.9}
   .expert{padding:1.2rem 1.2rem 1.2rem 0}
+  .site-footer-in{padding:1.4rem 1.3rem;flex-direction:column;gap:1rem;align-items:flex-start}
+  .foot-links{width:100%;gap:1.2rem}
 }
 </style>
 </head>
@@ -340,7 +351,7 @@ h1.hero-h em{color:var(--lime);font-style:normal;display:block}
     <div class="tcard-light fade">
       <p class="tcard-tag">Task B · Collocations</p>
       <h3 class="tcard-h">Drag the Phrase Into the Gap</h3>
-      <p class="tcard-i">Drag a collocation chip into the correct gap. Click a filled slot to return it to the bank. Press Check when done.</p>
+      <p class="tcard-i">Place each collocation into the correct gap to complete the sentence. Press Check when done.</p>
       <div class="drag-bank" id="drag-bank"></div>
       <div id="drag-sentences"></div>
       <div class="btn-row-snug"><button class="check-btn" onclick="checkDrag()">Check answers</button><button class="reset-btn" onclick="resetDrag()" title="Start over"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg><span>Reset</span></button></div>
@@ -483,8 +494,14 @@ h1.hero-h em{color:var(--lime);font-style:normal;display:block}
 
 <div class="site-footer">
   <div class="site-footer-in">
-    <a href="../index.html">Анастасия · Преподаватель →</a>
-    <a href="https://t.me/+6JRA3AbAyAZkN2Ni">SE: там вообще-то шутка была →</a>
+    <a class="foot-sig" href="../index.html">
+      <span class="foot-sig-name">Анастасия</span>
+      <span class="foot-sig-role">· Преподаватель</span>
+    </a>
+    <div class="foot-links">
+      <a class="foot-link" href="https://vk.com/snugenglish" target="_blank">VK</a>
+      <a class="foot-link" href="https://t.me/+wiAl8ae-UoAxMDE6" target="_blank">Telegram</a>
+    </div>
   </div>
 </div>
 
@@ -600,9 +617,26 @@ var DD=[
   {b:"Silent walks and focused reading help",                       a:"sharpen cognition",          e:"and boost mental clarity."},
   {b:"Scrolling on autopilot is the opposite of",                   a:"mindful content consumption",e:"which demands real attention."}
 ];
-var ddSlots={},dragging=null;
+var ddSlots={},dragging=null,picked=null;
+function clearPicked(){
+  if(!picked)return;
+  var c=document.getElementById('chip_'+picked.replace(/[\s]/g,'_'));
+  if(c)c.classList.remove('picked');
+  picked=null;
+  var slots=document.querySelectorAll('.drag-slot');
+  for(var k=0;k<slots.length;k++)slots[k].classList.remove('target');
+}
+function setPicked(w){
+  if(picked===w){clearPicked();return;}
+  clearPicked();
+  picked=w;
+  var c=document.getElementById('chip_'+w.replace(/[\s]/g,'_'));
+  if(c)c.classList.add('picked');
+  var slots=document.querySelectorAll('.drag-slot');
+  for(var k=0;k<slots.length;k++)slots[k].classList.add('target');
+}
 function initDrag(){
-  ddSlots={};dragging=null;
+  ddSlots={};dragging=null;clearPicked();
   var bank=document.getElementById('drag-bank');
   var cont=document.getElementById('drag-sentences');
   bank.innerHTML='';
@@ -612,8 +646,9 @@ function initDrag(){
   DD.map(function(d){return d.a;}).sort(function(){return Math.random()-.5;}).forEach(function(w){
     var chip=document.createElement('div');chip.className='drag-chip';chip.textContent=w;chip.id='chip_'+w.replace(/[\s]/g,'_');
     chip.draggable=true;
-    chip.addEventListener('dragstart',function(e){dragging=w;e.dataTransfer.setData('text',w);});
-    chip.addEventListener('touchstart',function(){dragging=w;},{passive:true});
+    chip.addEventListener('dragstart',function(e){dragging=w;clearPicked();e.dataTransfer.setData('text',w);});
+    chip.addEventListener('dragend',function(){dragging=null;});
+    chip.addEventListener('click',function(e){e.stopPropagation();if(chip.classList.contains('used'))return;setPicked(w);});
     bank.appendChild(chip);
   });
   DD.forEach(function(item,i){
@@ -621,9 +656,17 @@ function initDrag(){
     var slot=document.createElement('div');slot.className='drag-slot';slot.id='slot'+i;
     slot.addEventListener('dragover',function(e){e.preventDefault();slot.classList.add('over');});
     slot.addEventListener('dragleave',function(){slot.classList.remove('over');});
-    slot.addEventListener('drop',function(e){e.preventDefault();slot.classList.remove('over');var w=e.dataTransfer.getData('text')||dragging;if(w)dropSlot(slot,w,i);});
-    slot.addEventListener('touchend',function(){if(dragging){dropSlot(slot,dragging,i);dragging=null;}});
-    slot.addEventListener('click',function(){if(!ddSlots[i])return;returnChip(ddSlots[i]);delete ddSlots[i];slot.textContent='';slot.classList.remove('filled','ok','no');});
+    slot.addEventListener('drop',function(e){e.preventDefault();slot.classList.remove('over');var w=e.dataTransfer.getData('text')||dragging;if(w){dropSlot(slot,w,i);dragging=null;}});
+    slot.addEventListener('click',function(e){
+      e.stopPropagation();
+      if(picked){
+        var w=picked;clearPicked();
+        dropSlot(slot,w,i);
+        return;
+      }
+      if(!ddSlots[i])return;
+      returnChip(ddSlots[i]);delete ddSlots[i];slot.textContent='';slot.classList.remove('filled','ok','no');
+    });
     row.innerHTML='<span class="drag-num">'+(i+1)+'.</span><span>'+item.b+' </span>';
     row.appendChild(slot);
     var aft=document.createElement('span');aft.textContent=' '+item.e;
@@ -632,6 +675,12 @@ function initDrag(){
   });
 }
 initDrag();
+document.addEventListener('click',function(e){
+  if(!picked)return;
+  if(e.target.closest('.drag-chip'))return;
+  if(e.target.closest('.drag-slot'))return;
+  clearPicked();
+});
 function dropSlot(slot,word,i){
   if(ddSlots[i])returnChip(ddSlots[i]);
   ddSlots[i]=word;slot.textContent=word;slot.classList.add('filled');slot.classList.remove('ok','no');
@@ -643,6 +692,7 @@ function returnChip(word){
   if(chip)chip.classList.remove('used');
 }
 function checkDrag(){
+  clearPicked();
   var ok=0;
   DD.forEach(function(item,i){
     var slot=document.getElementById('slot'+i);
