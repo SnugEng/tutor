@@ -5,7 +5,9 @@
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <link rel="icon" type="image/png" href="/assets/favicon.png">
 <title>SE · Hero Ranking · A2–B1 English Lesson</title>
-<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Caveat:wght@500;700&family=Fraunces:ital,wght@0,600;0,800;1,600&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bungee&family=Caveat:wght@500;700&family=Fraunces:ital,wght@0,600;0,800;1,600&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=block">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -379,7 +381,7 @@ h1.hero-h{font-family:'Bungee',sans-serif;font-size:clamp(64px,9vw,128px);line-h
   </div>
   <div class="hero-right">
     <div class="hero-img-wrap">
-      <img src="../assets/hero.png" alt="Six heroes" onerror="this.parentElement.style.background='var(--teal)';this.remove();"/>
+      <img src="../assets/hero.png" alt="Six heroes" loading="eager" decoding="async" onerror="this.parentElement.style.background='var(--teal)';this.remove();"/>
     </div>
     <div class="hero-stamp">rank them yourself</div>
   </div>
@@ -442,7 +444,7 @@ h1.hero-h{font-family:'Bungee',sans-serif;font-size:clamp(64px,9vw,128px);line-h
 
       <div class="hcard fade">
         <div class="hcard-top">
-          <div class="hcard-img c1"><img src="../assets/rumi.png" alt="Rumi"/></div>
+          <div class="hcard-img c1"><img src="../assets/rumi.png" alt="Rumi" loading="lazy" decoding="async"/></div>
           <div>
             <div class="hcard-name">Rumi</div>
             <div class="hcard-aka">K-Pop Demon Hunter · <span>AKA The Star Slayer</span></div>
@@ -465,7 +467,7 @@ h1.hero-h{font-family:'Bungee',sans-serif;font-size:clamp(64px,9vw,128px);line-h
 
       <div class="hcard fade">
         <div class="hcard-top">
-          <div class="hcard-img c2"><img src="../assets/sherlock.png" alt="Sherlock Holmes"/></div>
+          <div class="hcard-img c2"><img src="../assets/sherlock.png" alt="Sherlock Holmes" loading="lazy" decoding="async"/></div>
           <div>
             <div class="hcard-name">Sherlock Holmes</div>
             <div class="hcard-aka">The Detective · <span>AKA The Baker Street Brainbox</span></div>
@@ -488,7 +490,7 @@ h1.hero-h{font-family:'Bungee',sans-serif;font-size:clamp(64px,9vw,128px);line-h
 
       <div class="hcard fade">
         <div class="hcard-top">
-          <div class="hcard-img c3"><img src="../assets/harry.png" alt="Harry Potter"/></div>
+          <div class="hcard-img c3"><img src="../assets/harry.png" alt="Harry Potter" loading="lazy" decoding="async"/></div>
           <div>
             <div class="hcard-name">Harry Potter</div>
             <div class="hcard-aka">The Wizard · <span>AKA The Boy Who Lived</span></div>
@@ -511,7 +513,7 @@ h1.hero-h{font-family:'Bungee',sans-serif;font-size:clamp(64px,9vw,128px);line-h
 
       <div class="hcard fade">
         <div class="hcard-top">
-          <div class="hcard-img c4"><img src="../assets/odysseus.png" alt="Odysseus"/></div>
+          <div class="hcard-img c4"><img src="../assets/odysseus.png" alt="Odysseus" loading="lazy" decoding="async"/></div>
           <div>
             <div class="hcard-name">Odysseus</div>
             <div class="hcard-aka">The Strategist · <span>AKA Iliad Lad</span></div>
@@ -534,7 +536,7 @@ h1.hero-h{font-family:'Bungee',sans-serif;font-size:clamp(64px,9vw,128px);line-h
 
       <div class="hcard fade">
         <div class="hcard-top">
-          <div class="hcard-img c5"><img src="../assets/elsa.png" alt="Elsa"/></div>
+          <div class="hcard-img c5"><img src="../assets/elsa.png" alt="Elsa" loading="lazy" decoding="async"/></div>
           <div>
             <div class="hcard-name">Elsa</div>
             <div class="hcard-aka">The Ice Queen · <span>AKA Queen of Arendelle</span></div>
@@ -557,7 +559,7 @@ h1.hero-h{font-family:'Bungee',sans-serif;font-size:clamp(64px,9vw,128px);line-h
 
       <div class="hcard fade">
         <div class="hcard-top">
-          <div class="hcard-img c6"><img src="../assets/katniss.png" alt="Katniss Everdeen"/></div>
+          <div class="hcard-img c6"><img src="../assets/katniss.png" alt="Katniss Everdeen" loading="lazy" decoding="async"/></div>
           <div>
             <div class="hcard-name">Katniss Everdeen</div>
             <div class="hcard-aka">The Survivor · <span>AKA The Reluctant Hero</span></div>
@@ -805,9 +807,8 @@ TOTAL: ___/40</div>
 </div>
 
 <script>
-var els=document.querySelectorAll('.fade');
-function reveal(){els.forEach(function(e){if(e.getBoundingClientRect().top<window.innerHeight-40)e.classList.add('in');})}
-window.addEventListener('scroll',reveal);reveal();
+var _io=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');_io.unobserve(e.target);}});},{rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.fade').forEach(function(e){_io.observe(e);});
 
 var stickyEl=document.getElementById('stickyScore');
 function updateSticky(){

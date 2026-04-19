@@ -5,7 +5,9 @@
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>SE · 75 Smart Challenge · B1–B2 English Lesson</title>
 <link rel="icon" type="image/png" href="/assets/favicon.png">
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=Lora:ital@1&display=swap" rel="stylesheet"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=Lora:ital@1&display=block">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -275,7 +277,7 @@ h1.hero-h em{color:var(--lime);font-style:normal;display:block}
   </div>
   <div class="hero-right">
     <div class="hero-img-wrap">
-      <img src="../assets/75.png" alt="75 Smart Challenge" onerror="this.parentElement.style.background='var(--kawaii)'"/>
+      <img src="../assets/75.png" alt="75 Smart Challenge" loading="eager" decoding="async" onerror="this.parentElement.style.background='var(--kawaii)'"/>
     </div>
   </div>
 </section>
@@ -506,9 +508,8 @@ h1.hero-h em{color:var(--lime);font-style:normal;display:block}
 </div>
 
 <script>
-var els=document.querySelectorAll('.fade');
-function reveal(){els.forEach(function(e){if(e.getBoundingClientRect().top<window.innerHeight-40)e.classList.add('in');})}
-window.addEventListener('scroll',reveal);reveal();
+var _io=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');_io.unobserve(e.target);}});},{rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.fade').forEach(function(e){_io.observe(e);});
 
 function toggleTip(el){el.classList.toggle('open');}
 
