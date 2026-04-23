@@ -27,7 +27,6 @@
   --white:#FAF7F2;
 }
 
-
 html{scroll-behavior:smooth}
 [id]{scroll-margin-top:64px}
 
@@ -75,89 +74,126 @@ body{
   padding-top:16px;padding-bottom:16px;
 }
 
-.snug-hero-band{background:var(--dark)}
+.snug-hero-band{
+  background:var(--dark);
+  position:relative;
+  overflow:hidden;
+  min-height:calc(100vh - 57px);
+  min-height:calc(100svh - 57px);
+  display:flex;
+  align-items:center;
+}
+
+.snug-hero-band::before{
+  content:'En';
+  position:absolute;
+  left:50%;top:50%;
+  transform:translate(-50%,-50%);
+  font-family:var(--serif);font-style:italic;font-weight:300;
+  font-size:min(90vh,90vw);
+  line-height:.82;letter-spacing:-.05em;
+  color:rgba(191,140,48,.05);
+  pointer-events:none;user-select:none;
+  z-index:0;white-space:nowrap;
+}
 
 .snug-hero{
-  max-width:none;
-  padding:0;
+  width:100%;
+  max-width:1100px;
+  margin:0 auto;
+  padding:40px 48px;
   display:grid;
-  grid-template-columns:45% 55%;
-  height:calc(100vh - 57px);
-  max-height:860px;
-  min-height:520px;
-  overflow:hidden;
+  grid-template-columns:minmax(320px,42%) 1fr;
+  gap:56px;
+  align-items:stretch;
+  position:relative;
+  z-index:1;
 }
 
 .snug-hero-photo{
   position:relative;
+  align-self:stretch;
+  background:#241a10;
+  background-image:linear-gradient(160deg,#3a2d1e 0%,#14100a 100%);
   overflow:hidden;
-  height:100%;
+  opacity:0;animation:snug-up .8s .15s ease forwards;
+  box-shadow:0 0 0 1px rgba(191,140,48,.22), 0 24px 60px -30px rgba(0,0,0,.6);
 }
 .snug-hero-photo img{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
+  position:absolute;inset:0;
+  width:100%;height:100%;
   object-fit:cover;
-  object-position:center 10%;
+  object-position:center 15%;
   display:block;
-  filter:brightness(.7) contrast(1.08) saturate(1.05);
-}
-.snug-hero-photo::after{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(
-    to right,
-    rgba(24,18,12,.15) 0%,
-    rgba(24,18,12,.55) 70%,
-    rgba(24,18,12,.92) 100%
-  );
+  filter:brightness(.85) contrast(1.05) saturate(1.02);
 }
 .snug-photo-ph{display:none}
 
 .snug-hero-text{
-  display:flex;flex-direction:column;justify-content:center;
-  padding:48px 64px 48px 52px;
-  background:var(--dark);
-  height:100%;
-  overflow:hidden;
+  display:flex;flex-direction:column;
+  justify-content:center;
+  min-width:0;
 }
-.snug-hero-name{
-  font-family:var(--serif);font-size:clamp(3rem,4.5vw,6rem);
-  font-weight:300;line-height:1.02;margin-bottom:12px;
-  color:var(--white);
+
+.snug-hero-text::before{
+  content:'ANASTASIA  ·  ENGLISH THROUGH MEDIA';
+  display:block;
+  font-size:.66rem;letter-spacing:.28em;
+  color:var(--accent-lt);
+  margin-bottom:24px;
   opacity:0;animation:snug-up .8s .25s ease forwards;
 }
-.snug-hero-name em{font-style:italic;color:var(--accent-lt)}
+
+.snug-hero-name{
+  font-family:var(--serif);
+  font-size:clamp(2.6rem,5.2vw,4.4rem);
+  font-weight:300;line-height:1.02;letter-spacing:-.015em;
+  color:var(--white);
+  margin:0 0 20px;
+  opacity:0;animation:snug-up .8s .35s ease forwards;
+}
+.snug-hero-name em{font-style:italic;color:var(--accent-lt);font-weight:300}
+
 .snug-hero-role{
-  font-family:var(--serif);font-style:italic;font-size:1.2rem;
-  color:rgba(255,255,255,.42);
-  margin-bottom:26px;
-  opacity:0;animation:snug-up .8s .4s ease forwards;
+  font-family:var(--serif);font-style:italic;
+  font-size:1.1rem;color:rgba(255,255,255,.5);
+  margin:0 0 24px;
+  opacity:0;animation:snug-up .8s .42s ease forwards;
 }
+
 .snug-hero-desc{
-  font-size:1rem;color:rgba(255,255,255,.5);line-height:1.85;margin-bottom:34px;
-  max-width:360px;
-  opacity:0;animation:snug-up .8s .55s ease forwards;
+  font-size:1rem;color:rgba(255,255,255,.65);line-height:1.8;
+  margin:0 0 32px;max-width:480px;
+  opacity:0;animation:snug-up .8s .5s ease forwards;
 }
+
 .snug-hero-btns{
-  display:flex;flex-direction:column;gap:10px;
-  opacity:0;animation:snug-up .8s .7s ease forwards;
+  display:flex;flex-direction:column;align-items:flex-start;gap:16px;
+  opacity:0;animation:snug-up .8s .65s ease forwards;
 }
+
 .snug-btn-primary{
-  display:inline-block;background:var(--accent);color:var(--white);
-  padding:14px 30px;font-size:.73rem;font-weight:400;
-  letter-spacing:.12em;text-transform:uppercase;text-decoration:none;
-  text-align:center;transition:background .3s;
-  align-self:flex-start;
+  display:inline-block;background:transparent;color:var(--white);
+  border:1px solid var(--accent);
+  padding:16px 34px;font-size:.72rem;font-weight:400;
+  letter-spacing:.18em;text-transform:uppercase;text-decoration:none;
+  text-align:center;
+  transition:background .3s,color .3s;
 }
-.snug-btn-primary:hover{background:rgba(255,255,255,.95);color:var(--accent)}
+.snug-btn-primary:hover{background:var(--accent);color:var(--white)}
+
 .snug-btn-text{
-  font-size:.75rem;color:rgba(255,255,255,.35);text-decoration:none;
-  border-bottom:1px solid rgba(255,255,255,.18);transition:color .2s,border-color .2s;
-  align-self:flex-start;
+  font-size:.76rem;color:rgba(255,255,255,.42);text-decoration:none;
+  border-bottom:1px solid rgba(255,255,255,.2);padding-bottom:2px;
+  transition:color .2s,border-color .2s;
 }
-.snug-btn-text:hover{color:var(--white);border-color:rgba(255,255,255,.55)}
-.snug-hero-note{font-size:.69rem;color:rgba(255,255,255,.22);margin-top:4px}
+.snug-btn-text:hover{color:var(--white);border-color:var(--accent-lt)}
+
+.snug-hero-note{
+  font-size:.66rem;color:rgba(255,255,255,.32);
+  letter-spacing:.14em;text-transform:uppercase;
+  margin:0;
+}
 
 .snug-ticker-band{background:var(--warm);border-bottom:1px solid var(--border);border-top:1px solid var(--border);overflow:hidden}
 .snug-ticker-overflow{white-space:nowrap;padding:18px 0}
@@ -329,46 +365,87 @@ body{
 .snug-r{opacity:0;transform:translateY(12px);transition:opacity .55s ease,transform .55s ease}
 .snug-r.on{opacity:1;transform:none}
 @keyframes snug-up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
-@media(max-width:700px){
+
+@media(max-width:900px){
   .snug-hero{
-    display:flex;
-    align-items:flex-end;
+    max-width:720px;
+    padding:32px 32px;
+    gap:36px;
+    grid-template-columns:minmax(260px,38%) 1fr;
+  }
+  .snug-hero-name{font-size:clamp(2.2rem,5vw,3.2rem)}
+  .snug-hero-desc{font-size:.95rem;margin-bottom:32px}
+}
+
+@media(max-width:640px){
+  .snug-hero-band::before{display:none}
+  .snug-hero{
+    grid-template-columns:1fr;
+    gap:0;
+    padding:0;
+    align-items:stretch;
+    max-width:none;
     position:relative;
-    height:100svh;
-    max-height:none;
-    min-height:unset;
-    overflow:hidden;
+    min-height:calc(100vh - 57px);
+    min-height:calc(100svh - 57px);
   }
   .snug-hero-photo{
     position:absolute;
     inset:0;
-    height:100%;
-    width:100%;
+    width:100%;height:100%;
+    min-height:0;
+    aspect-ratio:auto;
+    align-self:auto;
+    box-shadow:none;
     z-index:0;
   }
   .snug-hero-photo::after{
+    content:'';
+    position:absolute;inset:0;
     background:linear-gradient(
-      to bottom,
-      rgba(24,18,12,0) 20%,
-      rgba(24,18,12,.6) 55%,
-      rgba(24,18,12,.95) 100%
+      180deg,
+      rgba(24,18,12,.15) 0%,
+      rgba(24,18,12,.35) 40%,
+      rgba(24,18,12,.85) 75%,
+      rgba(24,18,12,.96) 100%
     );
+    z-index:1;pointer-events:none;
   }
+  .snug-hero-photo img{object-position:center 20%;filter:brightness(.9) contrast(1.05) saturate(1.02)}
   .snug-hero-text{
     position:relative;
     z-index:2;
-    background:transparent;
-    height:auto;
-    padding:0 var(--p) 48px;
     justify-content:flex-end;
-    width:100%;
+    padding:60vh var(--p) 40px;
+    min-height:calc(100vh - 57px);
+    min-height:calc(100svh - 57px);
   }
-  .snug-hero-name{font-size:clamp(2.6rem,10vw,3.8rem)}
-  .snug-hero-desc{max-width:none}
+  .snug-hero-text::before{
+    font-size:.56rem;letter-spacing:.22em;margin-bottom:18px;
+    color:var(--accent-lt);
+  }
+  .snug-hero-name{font-size:clamp(1.9rem,8vw,2.5rem);margin:0 0 14px;line-height:1.05;color:var(--white)}
+  .snug-hero-role{font-size:.95rem;margin:0 0 18px;color:rgba(255,255,255,.65)}
+  .snug-hero-desc{font-size:.88rem;margin:0 0 24px;line-height:1.65;color:rgba(255,255,255,.8)}
+  .snug-btn-primary{padding:13px 24px;font-size:.64rem;background:var(--accent);color:var(--white);border-color:var(--accent)}
+  .snug-btn-primary:hover{background:var(--accent-lt)}
+  .snug-btn-text{font-size:.72rem}
+  .snug-hero-note{font-size:.6rem;margin:0}
+  .snug-hero-btns{gap:12px}
   .snug-nav-cta{padding:7px 12px;font-size:.58rem;}
   .snug-nav-links{gap:8px;}
   .snug-ls{width:calc(var(--w) - var(--p) * 17 - -45px);}
   .snug-ls-thumb{height:152px;}
+}
+
+@media (max-height:700px) and (max-width:640px){
+  .snug-hero-text{padding-top:50vh}
+}
+
+@media (max-height:560px){
+  .snug-hero-band{min-height:auto}
+  .snug-hero{min-height:auto}
+  .snug-hero-text{padding:30vh var(--p) 24px;min-height:auto}
 }
 </style>
 </head>
@@ -396,11 +473,11 @@ body{
       <div class="snug-photo-ph"></div>
     </div>
     <div class="snug-hero-text">
-      <h1 class="snug-hero-name">Анастасия<br><em>Английский</em></h1>
-      <p class="snug-hero-role">для подростков и взрослых</p>
-      <p class="snug-hero-desc">Через живой язык — фильмы, медиа, настоящие тексты. Без зубрёжки, с видимым результатом.</p>
+      <h1 class="snug-hero-name">Смотреть, читать<br>и <em>говорить.</em></h1>
+      <p class="snug-hero-role">Английский для подростков и взрослых</p>
+      <p class="snug-hero-desc">Учимся понимать носителей, смотреть кино без субтитров и мыслить на языке. Для тех, кому важна суть, а не зубрежка правил.</p>
       <div class="snug-hero-btns">
-        <a href="https://t.me/m/E980QaoaYzgy" class="snug-btn-primary">Бесплатная консультация</a>
+        <a href="https://t.me/m/E980QaoaYzgy" class="snug-btn-primary">Записаться на консультацию</a>
         <a href="#snug-about" class="snug-btn-text">Узнать подробнее</a>
         <span class="snug-hero-note">Первая встреча ~30 минут — бесплатно</span>
       </div>
