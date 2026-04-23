@@ -5,11 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>Анастасия · Преподаватель</title>
 <link rel="icon" type="image/png" href="assets/favicon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="assets/fonts.css">
+<link rel="stylesheet" href="assets/fonts.css">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-
 :root{
   --w:600px;
   --p:20px;
@@ -380,10 +379,11 @@ body{
 @media(max-width:640px){
   .snug-hero-band::before{display:none}
   .snug-hero{
-    grid-template-columns:1fr;
+    display:flex;
+    grid-template-columns:none;
+    flex-direction:column;
     gap:0;
     padding:0;
-    align-items:stretch;
     max-width:none;
     position:relative;
     min-height:calc(100vh - 57px);
@@ -404,9 +404,9 @@ body{
     position:absolute;inset:0;
     background:linear-gradient(
       180deg,
-      rgba(24,18,12,.15) 0%,
-      rgba(24,18,12,.35) 40%,
-      rgba(24,18,12,.85) 75%,
+      rgba(24,18,12,.1) 0%,
+      rgba(24,18,12,.2) 35%,
+      rgba(24,18,12,.75) 65%,
       rgba(24,18,12,.96) 100%
     );
     z-index:1;pointer-events:none;
@@ -415,37 +415,40 @@ body{
   .snug-hero-text{
     position:relative;
     z-index:2;
+    flex:1;
     justify-content:flex-end;
-    padding:60vh var(--p) 40px;
-    min-height:calc(100vh - 57px);
-    min-height:calc(100svh - 57px);
+    padding:24px var(--p) 28px;
+    min-height:0;
   }
   .snug-hero-text::before{
-    font-size:.56rem;letter-spacing:.22em;margin-bottom:18px;
+    font-size:.52rem;letter-spacing:.22em;margin:0 0 12px;
     color:var(--accent-lt);
   }
-  .snug-hero-name{font-size:clamp(1.9rem,8vw,2.5rem);margin:0 0 14px;line-height:1.05;color:var(--white)}
-  .snug-hero-role{font-size:.95rem;margin:0 0 18px;color:rgba(255,255,255,.65)}
-  .snug-hero-desc{font-size:.88rem;margin:0 0 24px;line-height:1.65;color:rgba(255,255,255,.8)}
-  .snug-btn-primary{padding:13px 24px;font-size:.64rem;background:var(--accent);color:var(--white);border-color:var(--accent)}
+  .snug-hero-name{font-size:clamp(1.7rem,7vw,2.2rem);margin:0 0 10px;line-height:1.05;color:var(--white)}
+  .snug-hero-role{font-size:.85rem;margin:0 0 14px;color:rgba(255,255,255,.65)}
+  .snug-hero-desc{font-size:.82rem;margin:0 0 18px;line-height:1.55;color:rgba(255,255,255,.82)}
+  .snug-btn-primary{padding:12px 22px;font-size:.6rem;background:var(--accent);color:var(--white);border-color:var(--accent)}
   .snug-btn-primary:hover{background:var(--accent-lt)}
-  .snug-btn-text{font-size:.72rem}
-  .snug-hero-note{font-size:.6rem;margin:0}
-  .snug-hero-btns{gap:12px}
+  .snug-btn-text{font-size:.7rem}
+  .snug-hero-note{font-size:.56rem;margin:0}
+  .snug-hero-btns{gap:10px}
   .snug-nav-cta{padding:7px 12px;font-size:.58rem;}
   .snug-nav-links{gap:8px;}
   .snug-ls{width:calc(var(--w) - var(--p) * 17 - -45px);}
   .snug-ls-thumb{height:152px;}
 }
 
-@media (max-height:700px) and (max-width:640px){
-  .snug-hero-text{padding-top:50vh}
+@media (max-height:720px) and (max-width:640px){
+  .snug-hero-name{font-size:clamp(1.5rem,6.5vw,1.9rem)}
+  .snug-hero-desc{font-size:.78rem;margin-bottom:14px}
+  .snug-hero-role{margin-bottom:10px}
+  .snug-hero-text{padding-bottom:20px}
 }
 
 @media (max-height:560px){
   .snug-hero-band{min-height:auto}
   .snug-hero{min-height:auto}
-  .snug-hero-text{padding:30vh var(--p) 24px;min-height:auto}
+  .snug-hero-text{padding:240px var(--p) 20px;min-height:auto}
 }
 </style>
 </head>
@@ -469,7 +472,7 @@ body{
 <div class="snug-hero-band">
   <div class="snug-hero">
     <div class="snug-hero-photo">
-      <img src="assets/profile.png" onerror="this.style.display='none'">
+      <img src="assets/profile.png" alt="Anastasia" fetchpriority="high" decoding="async" onerror="this.style.display='none'">
       <div class="snug-photo-ph"></div>
     </div>
     <div class="snug-hero-text">
@@ -549,7 +552,7 @@ body{
 
         <div class="snug-ls">
           <div class="snug-ls-thumb">
-            <img src="assets/lesson1.png" onerror="this.style.display='none'">
+            <img src="assets/lesson1.png" alt="Материал урока 1" loading="lazy" decoding="async" onerror="this.style.display='none'">
           </div>
           <div class="snug-ls-body">
             <span class="snug-ls-tag">Сериал · от A2</span>
@@ -560,7 +563,7 @@ body{
 
         <div class="snug-ls">
           <div class="snug-ls-thumb">
-            <img src="assets/lesson2.png" onerror="this.style.display='none'">
+            <img src="assets/lesson2.png" alt="Материал урока 2" loading="lazy" decoding="async" onerror="this.style.display='none'">
           </div>
           <div class="snug-ls-body">
             <span class="snug-ls-tag">УМК · взрослые</span>
@@ -571,7 +574,7 @@ body{
 
         <div class="snug-ls">
           <div class="snug-ls-thumb">
-            <img src="assets/lesson3.png" onerror="this.style.display='none'">
+            <img src="assets/lesson3.png" alt="Материал урока 3" loading="lazy" decoding="async" onerror="this.style.display='none'">
                    </div>
           <div class="snug-ls-body">
             <span class="snug-ls-tag">Фильм · взрослые</span>
@@ -582,7 +585,7 @@ body{
 
         <div class="snug-ls">
           <div class="snug-ls-thumb">
-            <img src="assets/lesson4.png" onerror="this.style.display='none'">
+            <img src="assets/lesson4.png" alt="Материал урока 4" loading="lazy" decoding="async" onerror="this.style.display='none'">
                     </div>
           <div class="snug-ls-body">
             <span class="snug-ls-tag">Статья · B2–C1</span>
@@ -593,7 +596,7 @@ body{
 
         <div class="snug-ls">
           <div class="snug-ls-thumb">
-            <img src="assets/lesson5.png" onerror="this.style.display='none'">
+            <img src="assets/lesson5.png" alt="Материал урока 5" loading="lazy" decoding="async" onerror="this.style.display='none'">
                    </div>
           <div class="snug-ls-body">
             <span class="snug-ls-tag">УМК · подростки</span>
@@ -604,7 +607,7 @@ body{
 
         <div class="snug-ls">
           <div class="snug-ls-thumb">
-            <img src="assets/lesson6.png" onerror="this.style.display='none'">
+            <img src="assets/lesson6.png" alt="Материал урока 6" loading="lazy" decoding="async" onerror="this.style.display='none'">
                   </div>
           <div class="snug-ls-body">
             <span class="snug-ls-tag">Подкаст · A2–B1</span>
@@ -615,7 +618,7 @@ body{
 
         <div class="snug-ls">
           <div class="snug-ls-thumb">
-            <img src="assets/lesson7.png" onerror="this.style.display='none'">
+            <img src="assets/lesson7.png" alt="Материал урока 7" loading="lazy" decoding="async" onerror="this.style.display='none'">
               </div>
           <div class="snug-ls-body">
             <span class="snug-ls-tag">Песня · детектив</span>

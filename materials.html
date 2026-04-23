@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>Материалы · Анастасия</title>
 <link rel="icon" type="image/png" href="assets/favicon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="assets/fonts.css">
+<link rel="stylesheet" href="assets/fonts.css">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
@@ -15,13 +15,14 @@
   --serif:'Cormorant Garamond',serif;
   --sans:'DM Sans',sans-serif;
   --cream:#EDE8DF;
-  --warm:#F0EBE2;
+  --warm:#faf7f2;
   --dark:#18120C;
   --ink:#18120C;
   --mid:#6B5A3E;
   --dim:#A08B6E;
   --border:rgba(60,44,20,.11);
   --accent:#BF8C30;
+  --accent-lt:#D4A94A;
   --white:#FAF7F2;
 }
 html{scroll-behavior:smooth}
@@ -33,8 +34,8 @@ body{
 
 .snug-nav{
   position:sticky;top:0;z-index:100;
-  background:rgba(20,14,6,.85);backdrop-filter:blur(14px);
-  border-bottom:1px solid var(--border);
+  background:rgba(20,14,6,.72);backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(255,255,255,.07);
   width:100%;
 }
 .snug-nav-in{
@@ -42,12 +43,13 @@ body{
   padding:16px var(--p);
   width:100%;max-width:var(--w);margin:0 auto;
 }
-.snug-logo{font-family:var(--serif);font-size:1rem;font-weight:400;color:var(--accent);text-decoration:none;opacity:.5}
+.snug-logo{font-family:var(--serif);font-size:1rem;font-weight:400;color:var(--accent);text-decoration:none;opacity:.6;display:flex;align-items:center;gap:8px}
+.snug-logo em{font-style:italic;color:var(--accent)}
 .snug-nav-links{display:flex;align-items:center;gap:18px}
 .snug-nav-link{font-family:var(--serif);font-size:.9rem;font-weight:300;font-style:italic;color:rgba(255,255,255,.5);text-decoration:none;transition:color .2s;white-space:nowrap}
-.snug-nav-link:hover{color:var(--accent)}
+.snug-nav-link:hover{color:var(--accent-lt)}
 .snug-nav-cta{font-size:.72rem;font-weight:400;letter-spacing:.12em;text-transform:uppercase;color:var(--white);background:var(--accent);padding:9px 22px;text-decoration:none;transition:background .25s}
-.snug-nav-cta:hover{background:var(--ink)}
+.snug-nav-cta:hover{background:rgba(255,255,255,.9);color:var(--accent)}
 
 .hero-band{background:var(--cream);padding:52px var(--p) 40px;}
 .hero-inner{max-width:var(--w);margin:0 auto;}
@@ -97,10 +99,10 @@ body{
 .cards-section{transition:opacity .3s}
 .cards-section.hidden{display:none}
 
-.footer-band{background:var(--cream);border-top:1px solid var(--border)}
-.footer-inner{max-width:var(--w);margin:0 auto;padding:18px var(--p);display:flex;justify-content:space-between;align-items:center;font-size:.67rem;color:var(--dim)}
-.footer-inner a{color:var(--dim);text-decoration:none;transition:color .2s}
-.footer-inner a:hover{color:var(--accent)}
+.snug-footer-band{background:var(--cream);border-top:1px solid var(--border)}
+.snug-footer{max-width:var(--w);margin:0 auto;padding:18px var(--p);display:flex;justify-content:space-between;align-items:center;font-size:.67rem;color:var(--dim);letter-spacing:.04em}
+.snug-footer a{color:var(--dim);text-decoration:none;transition:color .2s}
+.snug-footer a:hover{color:var(--accent)}
 
 .fade-in{opacity:0;transform:translateY(10px);animation:up .5s ease forwards}
 @keyframes up{to{opacity:1;transform:none}}
@@ -137,6 +139,7 @@ body{
       <a class="snug-nav-link" href="index.html#snug-about">Обо мне</a>
       <a class="snug-nav-link" href="index.html#snug-reviews">Отзывы</a>
       <a class="snug-nav-link" href="index.html#snug-pricing">Цены</a>
+      <a class="snug-nav-link" href="index.html#snug-steps">Как начать</a>
     </nav>
     <a class="snug-nav-cta" href="https://t.me/m/E980QaoaYzgy">Записаться</a>
   </div>
@@ -387,11 +390,11 @@ body{
 
   </div>
 </div>
-<div class="footer-band">
-  <div class="footer-inner">
-    <a href="index.html">Анастасия · Преподаватель →</a>
-    <a href="https://t.me/+6JRA3AbAyAZkN2Ni">SE: там вообще-то шутка была →</a>
-  </div>
+<div class="snug-footer-band">
+  <footer class="snug-footer">
+    <a href="https://t.me/m/E980QaoaYzgy">Анастасия · Преподаватель →</a>
+    <a href="https://t.me/+wiAl8ae-UoAxMDE6">SE: там вообще-то шутка была →</a>
+  </footer>
 </div>
 
 <script>
