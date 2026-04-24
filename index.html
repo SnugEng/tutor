@@ -79,6 +79,7 @@ body{
   overflow:hidden;
   min-height:calc(100vh - 57px);
   min-height:calc(100svh - 57px);
+  min-height:calc(100dvh - 57px);
   display:flex;
   align-items:center;
 }
@@ -368,16 +369,34 @@ body{
 @media(max-width:900px){
   .snug-hero{
     max-width:720px;
-    padding:32px 32px;
-    gap:36px;
-    grid-template-columns:minmax(260px,38%) 1fr;
+    padding:24px 32px;
+    gap:32px;
+    grid-template-columns:minmax(240px,36%) 1fr;
   }
-  .snug-hero-name{font-size:clamp(2.2rem,5vw,3.2rem)}
-  .snug-hero-desc{font-size:.95rem;margin-bottom:32px}
+  .snug-hero-text::before{margin-bottom:20px}
+  .snug-hero-name{font-size:clamp(1.9rem,4.5vw,2.6rem);margin-bottom:16px}
+  .snug-hero-role{font-size:1rem;margin-bottom:18px}
+  .snug-hero-desc{font-size:.9rem;margin-bottom:24px;line-height:1.7}
+  .snug-btn-primary{padding:13px 28px;font-size:.68rem}
+  .snug-hero-btns{gap:12px}
+}
+
+@media(max-width:900px) and (max-height:800px){
+  .snug-hero{padding:16px 28px;gap:28px}
+  .snug-hero-text::before{margin-bottom:14px}
+  .snug-hero-name{font-size:clamp(1.7rem,4vw,2.2rem);margin-bottom:12px}
+  .snug-hero-role{font-size:.92rem;margin-bottom:14px}
+  .snug-hero-desc{font-size:.85rem;margin-bottom:18px}
+  .snug-btn-primary{padding:11px 24px}
+  .snug-hero-btns{gap:10px}
 }
 
 @media(max-width:640px){
   .snug-hero-band::before{display:none}
+  .snug-hero-band{
+    min-height:calc(100svh - 57px);
+    height:calc(100svh - 57px);
+  }
   .snug-hero{
     display:flex;
     grid-template-columns:none;
@@ -386,13 +405,14 @@ body{
     padding:0;
     max-width:none;
     position:relative;
-    min-height:calc(100vh - 57px);
+    height:calc(100svh - 57px);
     min-height:calc(100svh - 57px);
   }
   .snug-hero-photo{
     position:absolute;
     inset:0;
-    width:100%;height:100%;
+    width:100%;
+    height:calc(100svh - 57px);
     min-height:0;
     aspect-ratio:auto;
     align-self:auto;
@@ -795,7 +815,7 @@ if (ticker) {
   ticker.replaceWith(set1);
   set1.after(set2);
 
-  const speed = 0.4; // px per frame
+  const speed = 0.4; 
   let x = 0;
   let paused = false;
   let raf;
@@ -804,7 +824,7 @@ if (ticker) {
     if (!paused) {
       x -= speed;
       const w = set1.offsetWidth;
-      if (Math.abs(x) >= w) x = 0; // seamless reset
+      if (Math.abs(x) >= w) x = 0; 
       set1.style.transform = `translateX(${x}px)`;
       set2.style.transform = `translateX(${x}px)`;
     }
