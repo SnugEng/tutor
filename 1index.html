@@ -138,32 +138,32 @@ body{
 .snug-hero-text::before{
   content:'ANASTASIA  ·  ENGLISH THROUGH MEDIA';
   display:block;
-  font-size:.66rem;letter-spacing:.28em;
+  font-size:.78rem;letter-spacing:.28em;
   color:var(--accent-lt);
-  margin-bottom:24px;
+  margin-bottom:26px;
   opacity:0;animation:snug-up .8s .25s ease forwards;
 }
 
 .snug-hero-name{
   font-family:var(--serif);
-  font-size:clamp(2.6rem,5.2vw,4.4rem);
+  font-size:clamp(3rem,5.8vw,4.8rem);
   font-weight:300;line-height:1.02;letter-spacing:-.015em;
   color:var(--white);
-  margin:0 0 20px;
+  margin:0 0 22px;
   opacity:0;animation:snug-up .8s .35s ease forwards;
 }
 .snug-hero-name em{font-style:italic;color:var(--accent-lt);font-weight:300}
 
 .snug-hero-role{
   font-family:var(--serif);font-style:italic;
-  font-size:1.1rem;color:rgba(255,255,255,.5);
-  margin:0 0 24px;
+  font-size:1.25rem;color:rgba(255,255,255,.5);
+  margin:0 0 26px;
   opacity:0;animation:snug-up .8s .42s ease forwards;
 }
 
 .snug-hero-desc{
-  font-size:1rem;color:rgba(255,255,255,.65);line-height:1.8;
-  margin:0 0 32px;max-width:480px;
+  font-size:1.1rem;color:rgba(255,255,255,.65);line-height:1.75;
+  margin:0 0 34px;max-width:520px;
   opacity:0;animation:snug-up .8s .5s ease forwards;
 }
 
@@ -175,7 +175,7 @@ body{
 .snug-btn-primary{
   display:inline-block;background:transparent;color:var(--white);
   border:1px solid var(--accent);
-  padding:16px 34px;font-size:.72rem;font-weight:400;
+  padding:18px 38px;font-size:.82rem;font-weight:400;
   letter-spacing:.18em;text-transform:uppercase;text-decoration:none;
   text-align:center;
   transition:background .3s,color .3s;
@@ -183,14 +183,14 @@ body{
 .snug-btn-primary:hover{background:var(--accent);color:var(--white)}
 
 .snug-btn-text{
-  font-size:.76rem;color:rgba(255,255,255,.42);text-decoration:none;
+  font-size:.86rem;color:rgba(255,255,255,.42);text-decoration:none;
   border-bottom:1px solid rgba(255,255,255,.2);padding-bottom:2px;
   transition:color .2s,border-color .2s;
 }
 .snug-btn-text:hover{color:var(--white);border-color:var(--accent-lt)}
 
 .snug-hero-note{
-  font-size:.66rem;color:rgba(255,255,255,.32);
+  font-size:.76rem;color:rgba(255,255,255,.32);
   letter-spacing:.14em;text-transform:uppercase;
   margin:0;
 }
@@ -451,40 +451,6 @@ body{
   .snug-hero-note{font-size:.56rem;margin:0}
   .snug-hero-btns{gap:10px}
   .snug-btn-text{font-size:.66rem}
-}
-
-@media (orientation:landscape) and (min-width:901px) and (max-height:700px){
-  .snug-hero-band{
-    height:calc(var(--app-vh, 100vh) - 57px);
-    min-height:calc(var(--app-vh, 100vh) - 57px);
-  }
-  .snug-hero{
-    padding:18px 40px;
-    gap:36px;
-    align-items:center;
-    height:100%;
-    grid-template-columns:minmax(260px,38%) 1fr;
-  }
-  .snug-hero-photo{align-self:stretch;max-height:100%;min-height:0}
-  .snug-hero-text::before{margin-bottom:10px;font-size:.58rem;letter-spacing:.22em}
-  .snug-hero-name{font-size:clamp(1.7rem,3.6vw,2.6rem);margin-bottom:10px;line-height:1.04}
-  .snug-hero-role{font-size:.88rem;margin-bottom:10px}
-  .snug-hero-desc{font-size:.84rem;margin-bottom:14px;line-height:1.55}
-  .snug-btn-primary{padding:11px 24px;font-size:.62rem}
-  .snug-hero-btns{gap:8px}
-  .snug-hero-note{font-size:.56rem}
-  .snug-btn-text{font-size:.66rem}
-}
-
-@media (orientation:landscape) and (min-width:901px) and (max-height:600px){
-  .snug-hero{padding:10px 32px;gap:26px}
-  .snug-hero-text::before{margin-bottom:6px;font-size:.54rem}
-  .snug-hero-name{font-size:clamp(1.4rem,3vw,2rem);margin-bottom:6px}
-  .snug-hero-role{font-size:.8rem;margin-bottom:6px}
-  .snug-hero-desc{font-size:.78rem;margin-bottom:10px;line-height:1.5}
-  .snug-btn-primary{padding:9px 20px;font-size:.6rem}
-  .snug-hero-btns{gap:5px}
-  .snug-hero-note{font-size:.54rem}
 }
 
 @media(max-width:640px){
