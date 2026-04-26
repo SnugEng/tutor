@@ -394,8 +394,8 @@ body{
 @media (orientation:portrait) and (min-width:641px) and (max-width:1024px){
   .snug-hero-band::before{display:none}
   .snug-hero-band{
-    height:calc(100vh - 57px);
-    min-height:calc(100vh - 57px);
+    height:calc(var(--app-vh, 100vh) - 57px);
+    min-height:calc(var(--app-vh, 100vh) - 57px);
   }
   .snug-hero{
     display:flex;
@@ -405,14 +405,14 @@ body{
     padding:0;
     max-width:none;
     position:relative;
-    height:calc(100vh - 57px);
-    min-height:calc(100vh - 57px);
+    height:calc(var(--app-vh, 100vh) - 57px);
+    min-height:calc(var(--app-vh, 100vh) - 57px);
   }
   .snug-hero-photo{
     position:absolute;
     inset:0;
     width:100%;
-    height:calc(100vh - 57px);
+    height:calc(var(--app-vh, 100vh) - 57px);
     min-height:0;
     aspect-ratio:auto;
     align-self:auto;
@@ -425,9 +425,9 @@ body{
     background:linear-gradient(
       180deg,
       rgba(24,18,12,.05) 0%,
-      rgba(24,18,12,.15) 30%,
-      rgba(24,18,12,.7) 62%,
-      rgba(24,18,12,.96) 100%
+      rgba(24,18,12,.18) 32%,
+      rgba(24,18,12,.78) 60%,
+      rgba(24,18,12,.97) 100%
     );
     z-index:1;pointer-events:none;
   }
@@ -437,39 +437,54 @@ body{
     z-index:2;
     flex:1;
     justify-content:flex-end;
-    padding:32px 40px 40px;
+    padding:24px 36px 28px;
     min-height:0;
     max-width:680px;
   }
   .snug-hero-text::before{
-    font-size:.62rem;letter-spacing:.24em;margin:0 0 16px;
+    font-size:.58rem;letter-spacing:.22em;margin:0 0 12px;
   }
-  .snug-hero-name{font-size:clamp(2.2rem,5.5vw,3rem);margin:0 0 14px;line-height:1.04;color:var(--white)}
-  .snug-hero-role{font-size:1rem;margin:0 0 18px;color:rgba(255,255,255,.7)}
-  .snug-hero-desc{font-size:.95rem;margin:0 0 22px;line-height:1.65;color:rgba(255,255,255,.85);max-width:520px}
-  .snug-btn-primary{padding:14px 28px;font-size:.66rem;background:var(--accent);color:var(--white);border-color:var(--accent)}
-  .snug-hero-note{font-size:.62rem}
-  .snug-hero-btns{gap:14px}
+  .snug-hero-name{font-size:clamp(1.9rem,4.6vw,2.6rem);margin:0 0 10px;line-height:1.04;color:var(--white)}
+  .snug-hero-role{font-size:.9rem;margin:0 0 12px;color:rgba(255,255,255,.7)}
+  .snug-hero-desc{font-size:.88rem;margin:0 0 16px;line-height:1.55;color:rgba(255,255,255,.85);max-width:520px}
+  .snug-btn-primary{padding:12px 24px;font-size:.62rem;background:var(--accent);color:var(--white);border-color:var(--accent)}
+  .snug-hero-note{font-size:.56rem;margin:0}
+  .snug-hero-btns{gap:10px}
+  .snug-btn-text{font-size:.66rem}
 }
 
 @media (orientation:landscape) and (min-width:901px) and (max-height:820px){
-  .snug-hero{padding:24px 44px;gap:40px;align-items:center}
-  .snug-hero-text::before{margin-bottom:14px;font-size:.62rem}
-  .snug-hero-name{font-size:clamp(2.1rem,4.4vw,3.2rem);margin-bottom:14px;line-height:1.04}
-  .snug-hero-role{font-size:.95rem;margin-bottom:14px}
-  .snug-hero-desc{font-size:.9rem;margin-bottom:20px;line-height:1.65}
-  .snug-btn-primary{padding:13px 28px;font-size:.68rem}
-  .snug-hero-btns{gap:12px}
+  .snug-hero-band{
+    height:calc(var(--app-vh, 100vh) - 57px);
+    min-height:calc(var(--app-vh, 100vh) - 57px);
+  }
+  .snug-hero{
+    padding:18px 40px;
+    gap:36px;
+    align-items:center;
+    height:100%;
+    grid-template-columns:minmax(260px,38%) 1fr;
+  }
+  .snug-hero-photo{align-self:stretch;max-height:100%;min-height:0}
+  .snug-hero-text::before{margin-bottom:10px;font-size:.58rem;letter-spacing:.22em}
+  .snug-hero-name{font-size:clamp(1.7rem,3.6vw,2.6rem);margin-bottom:10px;line-height:1.04}
+  .snug-hero-role{font-size:.88rem;margin-bottom:10px}
+  .snug-hero-desc{font-size:.84rem;margin-bottom:14px;line-height:1.55}
+  .snug-btn-primary{padding:11px 24px;font-size:.62rem}
+  .snug-hero-btns{gap:8px}
+  .snug-hero-note{font-size:.56rem}
+  .snug-btn-text{font-size:.66rem}
 }
 
 @media (orientation:landscape) and (min-width:901px) and (max-height:680px){
-  .snug-hero{padding:14px 36px;gap:32px}
-  .snug-hero-text::before{margin-bottom:10px;font-size:.58rem}
-  .snug-hero-name{font-size:clamp(1.7rem,3.6vw,2.5rem);margin-bottom:10px}
-  .snug-hero-role{font-size:.86rem;margin-bottom:10px}
-  .snug-hero-desc{font-size:.82rem;margin-bottom:14px;line-height:1.55}
-  .snug-btn-primary{padding:11px 24px;font-size:.66rem}
-  .snug-hero-btns{gap:8px}
+  .snug-hero{padding:10px 32px;gap:26px}
+  .snug-hero-text::before{margin-bottom:6px;font-size:.54rem}
+  .snug-hero-name{font-size:clamp(1.4rem,3vw,2rem);margin-bottom:6px}
+  .snug-hero-role{font-size:.8rem;margin-bottom:6px}
+  .snug-hero-desc{font-size:.78rem;margin-bottom:10px;line-height:1.5}
+  .snug-btn-primary{padding:9px 20px;font-size:.6rem}
+  .snug-hero-btns{gap:5px}
+  .snug-hero-note{font-size:.54rem}
 }
 
 @media(max-width:640px){
