@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<link rel="icon" type="image/png" href="/assets/favicon.png">
+<title>SE · Hero Ranking · A2–B1 English Lesson</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bungee&family=Caveat:wght@500;700&family=Fraunces:ital,wght@0,600;0,800;1,600&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=block">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --deep:#0a2230;
+  --teal:#124a5a;
+  --teal-mid:#1e6778;
+  --steel:#e6ecef;
+  --steel-soft:#f1f5f7;
+  --paper:#f7f9fa;
+  --coral:#e24524;
+  --coral-dark:#b8341a;
+  --mustard:#f0a818;
+  --mustard-dark:#c88500;
+  --sky:#7cb8c9;
+  --mint:#64c0a4;
+  --pink:#eb7f88;
+  --ink:#0a1518;
+  --line:#c8d1d5;
+  --line-dark:#8a9ba2;
+  --muted:#5a6d75;
+  --red:#c12a15;
+  --lime-ok:#3d9144;
+}
+html{scroll-behavior:smooth}
+img{filter:url(#lesson-grade) saturate(.82) contrast(1.06);}
+body{font-family:'Inter',sans-serif;background:var(--steel);color:var(--ink);overflow-x:hidden;font-size:16px;line-height:1.55}
+.fade{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+.fade.in{opacity:1;transform:none}
+
+.sticky-score{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--deep);border-bottom:2px solid var(--coral);padding:.7rem 1.2rem;transform:translateY(-100%);transition:transform .35s ease;box-shadow:0 6px 20px rgba(0,0,0,.2)}
+.sticky-score.show{transform:translateY(0)}
+.sticky-score-in{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:1.2rem}
+.sss-lbl{font-family:'Space Grotesk',sans-serif;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--sky);font-weight:600;flex-shrink:0}
+.sss-track{flex:1;height:8px;background:rgba(255,255,255,.08);position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.12)}
+.sss-fill{position:absolute;inset-block:0;left:0;background:linear-gradient(90deg,var(--coral) 0,var(--mustard) 50%,var(--mint) 100%);transition:width .6s cubic-bezier(.4,0,.2,1)}
+.sss-num{font-family:'Bungee',sans-serif;font-size:22px;color:var(--mustard);line-height:1;flex-shrink:0}
+.sss-tier{display:inline-flex;align-items:center;gap:8px;font-family:'Caveat',cursive;font-size:22px;font-weight:700;line-height:1;flex-shrink:0;min-width:110px;justify-content:flex-end;color:var(--mint)}
+.sss-tier svg{width:20px;height:20px;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.sss-tier.t1{color:var(--mint)}
+.sss-tier.t1 svg{stroke:var(--mint)}
+.sss-tier.t2{color:var(--mustard)}
+.sss-tier.t2 svg{stroke:var(--mustard)}
+.sss-tier.t3{color:var(--coral)}
+.sss-tier.t3 svg{stroke:var(--coral)}
+@media(max-width:720px){.sticky-score{padding:.5rem .8rem}.sss-lbl{display:none}.sss-num{font-size:18px}.sss-tier{font-size:18px;min-width:90px}}
+
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;background:var(--deep);overflow:hidden;position:relative;color:var(--steel);border-bottom:5px solid var(--coral)}
+.hero::after{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:repeating-linear-gradient(90deg,var(--coral) 0 30px,var(--mustard) 30px 60px,var(--sky) 60px 90px,var(--pink) 90px 120px);z-index:3}
+.hero-left{padding:5rem 4rem;display:flex;flex-direction:column;justify-content:center;z-index:2;position:relative}
+.hero-left::before{content:'';position:absolute;inset:0;background-image:linear-gradient(transparent 97%,rgba(124,184,201,.08) 97%),linear-gradient(90deg,transparent 97%,rgba(124,184,201,.08) 97%);background-size:40px 40px;pointer-events:none;opacity:.5}
+.hero-left > *{position:relative;z-index:1}
+.hero-right{position:relative;overflow:hidden;display:flex;align-items:stretch;justify-content:stretch;background:var(--teal)}
+.hero-eyebrow{color:var(--sky);font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;margin-bottom:2rem;display:flex;align-items:center;gap:10px}
+.hero-eyebrow::before{content:'';width:24px;height:1px;background:rgba(124,184,201,.4)}
+h1.hero-h{font-family:'Bungee',sans-serif;font-size:clamp(64px,9vw,128px);line-height:.85;letter-spacing:-.02em;color:var(--steel);margin-bottom:.4rem;text-transform:uppercase}
+.hero-h .l1{color:var(--coral)}
+.hero-h .l2{color:var(--mustard)}
+.hero-h .l3{color:var(--sky)}
+.hero-h .l4{color:var(--steel)}
+.hero-word{font-family:'Caveat',cursive;font-size:clamp(40px,5vw,68px);color:var(--mustard);line-height:1;transform:rotate(-3deg);display:inline-block;font-weight:700;margin:.2rem 0 1.6rem -.2rem}
+.hero-sub{font-size:15.5px;color:rgba(230,236,239,.78);line-height:1.75;max-width:440px;margin-bottom:2.4rem;font-weight:300}
+.hero-sub em{color:var(--mustard);font-style:italic}
+.hero-pills{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:2.4rem}
+.pill{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;padding:8px 16px;border:1.5px solid}
+.pill-coral{background:var(--coral);color:var(--steel);border-color:var(--coral)}
+.pill-out{background:transparent;border-color:rgba(124,184,201,.4);color:var(--sky)}
+.hero-author{padding-top:1.3rem;border-top:1px solid rgba(124,184,201,.25);display:flex;align-items:center;gap:14px;font-family:'Space Grotesk',sans-serif;font-size:11px;color:rgba(230,236,239,.5);letter-spacing:.12em;text-transform:uppercase;max-width:440px}
+.hero-author-pen{font-family:'Caveat',cursive;font-size:22px;color:var(--mustard);text-transform:none;letter-spacing:0;font-weight:600}
+.hero-scroll{position:absolute;bottom:2.5rem;left:4rem;color:rgba(230,236,239,.5);font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;display:flex;align-items:center;gap:10px;z-index:2}
+.hero-scroll::before{content:'';width:24px;height:1px;background:rgba(230,236,239,.3)}
+.hero-img-wrap{width:100%;height:100%;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.hero-img-wrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero-img-wrap::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,34,48,.4) 0%,rgba(10,34,48,0) 25%);pointer-events:none}
+.hero-stamp{position:absolute;right:2.5rem;bottom:2.5rem;font-family:'Caveat',cursive;font-size:24px;color:var(--mustard);transform:rotate(-4deg);letter-spacing:0;z-index:2;background:rgba(10,34,48,.55);padding:.5rem 1rem;border:1.5px solid var(--mustard)}
+
+.warm-s{background:var(--paper);padding:4.5rem 2rem;position:relative;border-bottom:3px solid var(--deep)}
+.warm-in{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1.2fr;gap:3.5rem;align-items:start}
+.warm-title-wrap{position:sticky;top:2rem}
+.warm-tag{font-family:'Space Grotesk',sans-serif;font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--coral);font-weight:700;margin-bottom:1rem;display:flex;align-items:center;gap:10px}
+.warm-tag::before{content:'';width:24px;height:3px;background:var(--coral)}
+.warm-h{font-family:'Fraunces',serif;font-size:clamp(30px,4vw,44px);line-height:1.1;color:var(--deep);font-weight:800;margin-bottom:1.1rem}
+.warm-h em{font-style:italic;color:var(--coral);font-weight:600}
+.warm-h .hl{background:var(--mustard);padding:0 .15em;color:var(--deep);font-style:normal}
+.warm-intro{font-family:'Fraunces',serif;font-style:italic;font-size:16.5px;color:var(--muted);line-height:1.6}
+.warm-blocks{display:flex;flex-direction:column;gap:1.5rem}
+.warm-b{background:var(--steel-soft);border:2px solid var(--deep);padding:1.7rem 1.8rem;position:relative}
+.warm-b-tag{font-family:'Caveat',cursive;font-size:26px;color:var(--coral);position:absolute;top:-15px;right:16px;background:var(--paper);padding:0 12px;transform:rotate(-3deg);font-weight:700;line-height:1.3}
+.warm-b-h{font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--deep);margin-bottom:1rem;padding-bottom:.6rem;border-bottom:2px solid var(--deep)}
+.wu-instr{font-size:13.5px;color:var(--muted);margin-bottom:1.1rem;line-height:1.55}
+
+.wu-pairs{display:flex;flex-direction:column;gap:10px}
+.wu-pair{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:stretch;background:rgba(10,34,48,.04);border:2px solid var(--line);padding:10px}
+.wu-opt{padding:.85rem 1rem;background:var(--paper);border:2px solid var(--line);font-family:'Space Grotesk',sans-serif;font-size:13.5px;font-weight:500;color:var(--deep);cursor:pointer;transition:all .18s;text-align:center;line-height:1.3;user-select:none;min-height:54px;display:flex;align-items:center;justify-content:center}
+.wu-opt:hover{border-color:var(--coral);color:var(--coral)}
+.wu-opt.picked{background:var(--coral);color:var(--steel);border-color:var(--coral);font-weight:600}
+.wu-or{display:flex;align-items:center;justify-content:center;font-family:'Bungee',sans-serif;font-size:11px;color:var(--mustard-dark);padding:0 .3rem;letter-spacing:.1em}
+
+.wu-traits{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:.4rem}
+.wu-trait{padding:.8rem 1rem;background:var(--paper);border:2px solid var(--line);font-family:'Space Grotesk',sans-serif;font-size:13.5px;font-weight:500;color:var(--deep);cursor:pointer;transition:all .18s;user-select:none;display:flex;align-items:center;gap:10px;min-height:48px}
+.wu-trait::before{content:'';width:14px;height:14px;border:2px solid var(--line-dark);flex-shrink:0;transition:all .18s}
+.wu-trait:hover{border-color:var(--teal);color:var(--teal)}
+.wu-trait.top{background:var(--mint);color:var(--deep);border-color:var(--mint);font-weight:600}
+.wu-trait.top::before{background:var(--deep);border-color:var(--deep);content:'↑';color:var(--mint);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;line-height:1}
+.wu-trait.bot{background:var(--coral);color:var(--steel);border-color:var(--coral);font-weight:600}
+.wu-trait.bot::before{background:var(--steel);border-color:var(--steel);content:'↓';color:var(--coral);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;line-height:1}
+.wu-trait-hint{font-family:'Space Grotesk',sans-serif;font-size:11.5px;color:var(--muted);display:flex;gap:1rem;flex-wrap:wrap;padding-top:.2rem}
+.wu-trait-hint span b{color:var(--mint);font-weight:700;margin-right:4px}
+.wu-trait-hint span:last-child b{color:var(--coral)}
+.starter{margin-top:1.1rem;padding:.9rem 1rem;background:rgba(240,168,24,.13);border-left:3px solid var(--mustard);font-family:'Fraunces',serif;font-style:italic;font-size:14px;color:var(--deep);line-height:1.6}
+.starter{display:flex;gap:10px;align-items:flex-start}
+.starter-ico{flex-shrink:0;width:18px;height:18px;stroke:var(--mustard-dark);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;margin-top:2px}
+
+.art-s{background:var(--teal);padding:5rem 2rem 5rem;position:relative;color:var(--steel)}
+.art-s::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:repeating-linear-gradient(90deg,var(--coral) 0 60px,var(--mustard) 60px 120px)}
+.art-in{max-width:1100px;margin:0 auto;position:relative;z-index:2}
+.art-hdr{text-align:center;margin-bottom:3rem;position:relative}
+.art-kick{font-family:'Space Grotesk',sans-serif;font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--sky);margin-bottom:1rem;font-weight:600}
+.art-h{font-family:'Bungee',sans-serif;font-size:clamp(42px,7vw,82px);line-height:.85;color:var(--steel);letter-spacing:-.01em}
+.art-h .em1{color:var(--coral)}
+.art-h .em2{color:var(--mustard)}
+.art-deck{max-width:640px;margin:1.6rem auto 0;font-family:'Fraunces',serif;font-style:italic;font-size:16.5px;line-height:1.7;color:rgba(230,236,239,.75)}
+.art-intro-card{max-width:720px;margin:2.5rem auto 3rem;background:rgba(230,236,239,.04);border:2px solid rgba(230,236,239,.18);padding:1.5rem 1.8rem;font-family:'Fraunces',serif;font-size:15.5px;line-height:1.75;color:rgba(230,236,239,.82);position:relative}
+.art-intro-card::before{content:'?';position:absolute;top:-20px;left:18px;background:var(--mustard);color:var(--deep);font-family:'Bungee',sans-serif;font-size:22px;width:40px;height:40px;display:flex;align-items:center;justify-content:center}
+
+.hero-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;margin-top:1rem}
+.hcard{background:rgba(230,236,239,.04);border:2px solid rgba(230,236,239,.15);padding:1.8rem;position:relative;transition:border-color .25s,transform .25s;display:flex;flex-direction:column}
+.hcard:hover{border-color:var(--mustard);transform:translateY(-3px)}
+.hcard-top{display:flex;align-items:flex-start;gap:1.2rem;margin-bottom:1rem}
+.hcard-img{width:88px;height:88px;background:var(--steel);flex-shrink:0;overflow:hidden;border:3px solid var(--mustard);display:flex;align-items:center;justify-content:center}
+.hcard-img img{width:100%;height:100%;object-fit:cover;display:block}
+.hcard-img.c1{border-color:var(--coral)}
+.hcard-img.c2{border-color:var(--sky)}
+.hcard-img.c3{border-color:var(--mustard)}
+.hcard-img.c4{border-color:var(--pink)}
+.hcard-img.c5{border-color:var(--mint)}
+.hcard-img.c6{border-color:var(--coral)}
+.hcard-name{font-family:'Caveat',cursive;font-size:38px;line-height:1;color:var(--steel);margin-bottom:.25rem;font-weight:700}
+.hcard-aka{font-family:'Space Grotesk',sans-serif;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--mustard);font-weight:600;line-height:1.4}
+.hcard-aka span{color:rgba(230,236,239,.5);font-weight:400}
+.hcard-body{font-size:14.5px;line-height:1.7;color:rgba(230,236,239,.88);margin-bottom:1.2rem;flex:1}
+.hcard-body p{margin-bottom:.7em}
+.hcard-body .keyidea{display:block;margin-top:.9rem;padding:.7rem .9rem;background:rgba(226,69,36,.14);border-left:3px solid var(--coral);font-family:'Fraunces',serif;font-style:italic;font-size:13.5px;color:var(--steel)}
+.vhl{cursor:pointer}
+.vhl-word{background:rgba(240,168,24,.22);color:var(--mustard);border-bottom:1.5px dashed var(--mustard);padding:0 3px}
+.vhl-word:hover{background:rgba(240,168,24,.4)}
+.vhl-def{display:none;background:var(--mustard);color:var(--deep);padding:2px 7px;font-size:.92em;font-style:normal;font-weight:600;font-family:'Space Grotesk',sans-serif}
+.vhl.open .vhl-word{display:none}
+.vhl.open .vhl-def{display:inline}
+.hcard-scores{margin-top:auto;padding-top:1rem;border-top:1px dashed rgba(230,236,239,.22);display:grid;grid-template-columns:1fr 1fr;gap:.5rem 1.2rem;font-family:'Space Grotesk',sans-serif;font-size:13px;color:rgba(230,236,239,.82)}
+.hcard-sc{display:flex;justify-content:space-between;align-items:center}
+.hcard-sc b{color:var(--steel);font-weight:500}
+.hcard-sc i{font-style:normal;color:var(--mustard);font-weight:700}
+.hcard-total{grid-column:span 2;margin-top:.6rem;padding-top:.7rem;border-top:1px solid rgba(230,236,239,.14);display:flex;justify-content:space-between;align-items:baseline}
+.hcard-total-lbl{font-family:'Space Grotesk',sans-serif;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:rgba(230,236,239,.55);font-weight:600}
+.hcard-total-v{font-family:'Bungee',sans-serif;font-size:28px;color:var(--coral);line-height:1}
+.hcard-quote{margin-top:.9rem;font-family:'Caveat',cursive;font-size:18px;color:var(--sky);line-height:1.3;transform:rotate(-1deg);font-weight:500}
+
+.sec-head{max-width:1100px;margin:0 auto 2rem;display:flex;align-items:center;gap:1.2rem}
+.sec-num{font-family:'Bungee',sans-serif;font-size:42px;color:var(--coral);line-height:1;flex-shrink:0}
+.sec-tag{font-family:'Space Grotesk',sans-serif;font-size:12px;letter-spacing:.26em;text-transform:uppercase;font-weight:700}
+.sec-line{flex:1;height:2px;background:var(--line)}
+
+.tf-s{background:var(--steel);padding:5rem 2rem;position:relative}
+.tf-in{max-width:1100px;margin:0 auto}
+.sec-intro-light{font-family:'Fraunces',serif;font-style:italic;font-size:16px;color:var(--muted);margin:0 auto 2.5rem;max-width:720px;line-height:1.7}
+.tcard{background:var(--paper);border:2px solid var(--deep);padding:2rem 2.2rem;margin-bottom:1.8rem;position:relative}
+.tcard::before{content:'';position:absolute;top:-2px;left:-2px;right:-2px;height:6px;background:linear-gradient(90deg,var(--coral) 0 33%,var(--mustard) 33% 66%,var(--sky) 66% 100%)}
+.tcard-tag{font-family:'Space Grotesk',sans-serif;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--coral);font-weight:700;margin-bottom:.4rem}
+.tcard-h{font-family:'Fraunces',serif;font-size:26px;font-weight:800;color:var(--deep);margin-bottom:.5rem;line-height:1.2}
+.tcard-i{font-size:13.5px;color:var(--muted);line-height:1.6;margin-bottom:1.5rem}
+
+.tf-it{margin-bottom:14px;padding-bottom:14px;border-bottom:1px dashed var(--line)}
+.tf-it:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.tf-row{display:flex;gap:14px;align-items:flex-start}
+.tf-tx{flex:1;font-size:15px;line-height:1.65;color:var(--ink)}
+.tf-n{font-family:'Bungee',sans-serif;font-size:14px;color:var(--coral);margin-right:6px}
+.tf-bts{display:flex;gap:6px;flex-shrink:0;padding-top:2px}
+.tbtn{width:44px;height:36px;border:2px solid var(--line);background:var(--paper);font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;color:var(--muted);cursor:pointer;transition:all .18s}
+.tbtn:hover{border-color:var(--deep);color:var(--deep)}
+.tbtn.sel{border-color:var(--deep);color:var(--deep);background:rgba(10,34,48,.08)}
+.tbtn.ok{background:rgba(61,145,68,.18);border-color:var(--lime-ok);color:var(--deep)}
+.tbtn.no{background:rgba(193,42,21,.14);border-color:var(--red);color:var(--red)}
+
+.match-pairs{display:flex;flex-direction:column;gap:8px}
+.match-unmatched{display:grid;grid-template-columns:200px 1fr;gap:6px}
+.match-words-col,.match-defs-col{display:flex;flex-direction:column;gap:5px}
+.match-word{padding:.7rem 1rem;background:var(--paper);border:2px solid var(--line);cursor:pointer;font-family:'Space Grotesk',sans-serif;font-size:14.5px;font-weight:600;color:var(--deep);transition:all .18s;user-select:none;text-align:center;display:flex;align-items:center;justify-content:center;height:72px}
+.match-def{padding:.7rem 1rem;background:var(--paper);border:2px solid var(--line);cursor:pointer;font-size:14px;color:var(--ink);transition:all .18s;user-select:none;line-height:1.45;display:flex;align-items:center;height:72px}
+.match-word.selected,.match-def.selected{border-color:var(--coral);background:rgba(226,69,36,.08)}
+.match-word.wrong,.match-def.wrong{border-color:var(--red);background:rgba(193,42,21,.12);animation:shake .3s}
+.match-matched-row{display:grid;grid-template-columns:200px 1fr;gap:6px;animation:snapIn .35s ease;padding-bottom:6px}
+.match-matched-row .match-word,.match-matched-row .match-def{border-color:var(--mustard);background:rgba(240,168,24,.18);cursor:default;color:var(--deep)}
+#match-matched-zone:not(:empty){padding-bottom:10px;border-bottom:2px solid rgba(240,168,24,.4);margin-bottom:12px}
+@keyframes snapIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+
+.drag-bank{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:1.5rem;padding:1rem;background:rgba(10,34,48,.05);min-height:48px;border:2px dashed var(--line)}
+.drag-chip{padding:8px 14px;background:var(--deep);color:var(--steel);font-family:'Space Grotesk',sans-serif;font-size:13.5px;font-weight:600;cursor:grab;user-select:none;transition:all .18s}
+.drag-chip:active{cursor:grabbing;transform:scale(1.05)}
+.drag-chip.used{opacity:.25;pointer-events:none}
+.drag-chip.picked{background:var(--mustard);color:var(--deep);transform:scale(1.04)}
+.drag-slot.target{background:rgba(240,168,24,.18);border-bottom-color:var(--mustard)}
+.drag-sentence{display:flex;flex-wrap:wrap;align-items:baseline;gap:5px;margin-bottom:14px;font-size:15.5px;color:var(--ink);line-height:2.1}
+.drag-num{font-family:'Bungee',sans-serif;font-size:13px;color:var(--coral);min-width:24px}
+.drag-slot{display:inline-flex;align-items:center;justify-content:center;min-width:150px;height:36px;border-bottom:3px solid var(--line);padding:0 10px;cursor:pointer;font-family:'Space Grotesk',sans-serif;font-size:14.5px;font-weight:600;color:var(--deep);transition:all .18s}
+.drag-slot.over{border-color:var(--coral);background:rgba(226,69,36,.08)}
+.drag-slot.filled{background:rgba(240,168,24,.14);border-color:var(--mustard)}
+.drag-slot.ok{border-color:var(--lime-ok);background:rgba(61,145,68,.14);color:var(--deep)}
+.drag-slot.no{border-color:var(--red);background:rgba(193,42,21,.12);color:var(--red)}
+
+.mc-block-snug{margin-bottom:1.8rem}
+.mc-block-snug:last-child{margin-bottom:0}
+.mc-q{font-size:15px;color:var(--ink);line-height:1.65;margin-bottom:.9rem;font-weight:600}
+.mc-os-snug{display:flex;flex-direction:column;gap:8px;margin-bottom:6px}
+.mc-r{display:flex;gap:11px;align-items:flex-start;cursor:pointer}
+.mc-l{width:32px;height:32px;border:2px solid var(--line);display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;color:var(--muted);flex-shrink:0;cursor:pointer;transition:all .18s}
+.mc-l:hover{border-color:var(--deep);color:var(--deep)}
+.mc-l.sel{border-color:var(--deep);color:var(--deep);background:rgba(10,34,48,.08)}
+.mc-l.ok{background:rgba(61,145,68,.18);border-color:var(--lime-ok);color:var(--deep)}
+.mc-l.no{background:rgba(193,42,21,.14);border-color:var(--red);color:var(--red)}
+.mc-t{font-size:14.5px;color:var(--ink);line-height:1.6;padding-top:6px}
+
+.btn-row-snug{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:1.4rem}
+.check-btn{padding:11px 26px;background:var(--coral);border:none;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--steel);cursor:pointer;transition:all .2s}
+.check-btn:hover{background:var(--coral-dark)}
+.reset-btn{display:inline-flex;align-items:center;gap:6px;padding:10px 14px;background:transparent;border:2px solid var(--line);color:var(--muted);font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;transition:all .2s}
+.reset-btn:hover{border-color:var(--deep);color:var(--deep)}
+.reset-btn svg{width:12px;height:12px}
+.fb{margin-top:14px;padding:10px 14px;font-size:13.5px;font-weight:500;display:none}
+.fb.ok{background:rgba(61,145,68,.15);color:var(--deep);border-left:3px solid var(--lime-ok);display:block}
+.fb.no{background:rgba(193,42,21,.1);color:var(--red);border-left:3px solid var(--red);display:block}
+
+.hint-lamp{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border:1.5px solid var(--coral);background:rgba(226,69,36,.1);border-radius:50%;cursor:pointer;flex-shrink:0;transition:all .18s;margin-left:8px;vertical-align:middle;padding:0}
+.hint-lamp svg{width:14px;height:14px;stroke:var(--coral);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:stroke .18s}
+.hint-lamp:hover{background:var(--coral);border-color:var(--coral)}
+.hint-lamp:hover svg{stroke:var(--steel)}
+.hint-lamp.active{background:var(--mustard);border-color:var(--mustard)}
+.hint-lamp.active svg{stroke:var(--deep);fill:var(--mustard)}
+.hint-box{display:none;margin:10px 0 4px 0;padding:11px 14px 11px 40px;background:rgba(240,168,24,.13);border-left:3px solid var(--mustard);font-size:13.5px;line-height:1.6;color:var(--deep);position:relative}
+.hint-box::before{content:'';position:absolute;left:14px;top:12px;width:16px;height:16px;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23e24524' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><path d='M9 18h6'/><path d='M10 22h4'/><path d='M12 2a7 7 0 0 0-4 12.7c.7.5 1 1.3 1 2.1v.2h6v-.2c0-.8.3-1.6 1-2.1A7 7 0 0 0 12 2z'/></svg>")}
+.hint-box.show{display:block}
+
+.tier-legend{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:2rem;background:var(--deep);padding:1.2rem 1.4rem;color:var(--steel)}
+.tier-item{display:flex;align-items:center;gap:12px;padding:.4rem 0}
+.tier-ico{flex-shrink:0;width:26px;height:26px;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.tier-ico.t1{stroke:var(--mint)}
+.tier-ico.t2{stroke:var(--mustard)}
+.tier-ico.t3{stroke:var(--coral)}
+.tier-text{font-family:'Space Grotesk',sans-serif;font-size:11px;line-height:1.3}
+.tier-text b{display:block;font-size:14px;font-weight:700;margin-bottom:2px}
+.tier-text.t1 b{color:var(--mint)}
+.tier-text.t2 b{color:var(--mustard)}
+.tier-text.t3 b{color:var(--coral)}
+.tier-text span{color:rgba(230,236,239,.55);letter-spacing:.1em;text-transform:uppercase;font-size:10px}
+@media(max-width:720px){.tier-legend{grid-template-columns:1fr;gap:6px;padding:1rem}}
+
+.speak-s{background:var(--deep);padding:5rem 2rem;color:var(--steel)}
+.speak-in{max-width:1100px;margin:0 auto}
+.ph-g{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:2rem 0 2.5rem}
+.pg{background:rgba(230,236,239,.05);border:2px solid rgba(230,236,239,.12);padding:1.4rem}
+.pg-h{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;margin-bottom:.9rem;padding-bottom:.5rem;border-bottom:2px solid rgba(230,236,239,.18);color:var(--mustard)}
+.pg-it{font-family:'Fraunces',serif;font-style:italic;font-size:13.5px;color:rgba(230,236,239,.78);line-height:1.65;padding:.25rem 0}
+.dq-g{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:1.5rem}
+.dq{background:rgba(230,236,239,.04);border:2px solid rgba(230,236,239,.1);padding:1.6rem 1.8rem;transition:border-color .2s;display:flex;flex-direction:column;gap:.8rem}
+.dq:hover{border-color:var(--mustard)}
+.dq-n{font-family:'Bungee',sans-serif;font-size:22px;color:var(--coral);line-height:1}
+.dq-t{font-size:15px;color:var(--steel);line-height:1.7;font-weight:300}
+.pitch-box{margin-top:3rem;background:rgba(230,236,239,.04);border:2px solid rgba(240,168,24,.4);padding:0;position:relative;overflow:hidden}
+.pitch-ribbon{background:var(--mustard);color:var(--deep);padding:.55rem 1.6rem;font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;display:inline-flex;align-items:center;gap:8px}
+.pitch-ribbon svg{width:14px;height:14px;fill:none;stroke:var(--deep);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.pitch-body{padding:1.6rem 2rem 2rem}
+.pitch-h{font-family:'Fraunces',serif;font-weight:800;font-size:28px;color:var(--steel);line-height:1.15;margin:.6rem 0 .4rem}
+.pitch-h em{color:var(--mustard);font-style:normal}
+.pitch-sub{font-family:'Fraunces',serif;font-style:italic;font-size:14.5px;color:rgba(230,236,239,.75);margin-bottom:1.4rem;line-height:1.6;max-width:640px}
+.pitch-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:1.3rem}
+.pitch-step{padding:1rem 1.1rem;background:rgba(230,236,239,.06);border-left:3px solid var(--sky);position:relative}
+.pitch-step:nth-child(2){border-left-color:var(--coral)}
+.pitch-step:nth-child(3){border-left-color:var(--mint)}
+.pitch-step-num{font-family:'Bungee',sans-serif;font-size:11px;color:rgba(230,236,239,.35);letter-spacing:.1em;display:block;margin-bottom:4px}
+.pitch-step b{color:var(--mustard);display:block;margin-bottom:6px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-family:'Space Grotesk',sans-serif;font-weight:700}
+.pitch-step-t{font-family:'Fraunces',serif;font-size:13.5px;color:var(--steel);line-height:1.5}
+.pitch-ex{font-family:'Fraunces',serif;font-style:italic;font-size:14.5px;color:rgba(230,236,239,.85);line-height:1.75;padding:1rem 1.1rem;background:rgba(240,168,24,.08);border-left:3px solid var(--mustard)}
+.pitch-ex-lbl{display:block;font-family:'Space Grotesk',sans-serif;font-style:normal;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--mustard);font-weight:700;margin-bottom:6px}
+
+.write-s{background:var(--paper);padding:5rem 2rem;border-top:4px solid var(--deep)}
+.write-in{max-width:1100px;margin:0 auto}
+.wr-g{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:1.8rem;align-items:stretch}
+.wr-card{background:var(--steel);border:2px solid var(--deep);border-top:5px solid var(--coral);padding:1.6rem;display:flex;flex-direction:column;gap:.7rem}
+.wr-card:nth-child(2){border-top-color:var(--mustard)}
+.wr-card:nth-child(3){border-top-color:var(--teal-mid)}
+.wr-letter{font-family:'Bungee',sans-serif;font-size:22px;color:var(--coral);line-height:1}
+.wr-card:nth-child(2) .wr-letter{color:var(--mustard-dark)}
+.wr-card:nth-child(3) .wr-letter{color:var(--teal-mid)}
+.wr-h{font-family:'Fraunces',serif;font-weight:700;font-size:16px;color:var(--deep);line-height:1.3}
+.wr-txt{font-size:13.5px;line-height:1.65;color:var(--ink)}
+.wr-template{background:var(--steel-soft);border-left:3px solid var(--teal-mid);padding:.9rem 1rem;font-family:'Space Grotesk',sans-serif;font-size:11.5px;line-height:1.9;color:var(--deep);white-space:pre-line}
+.wr-body{flex:1;display:flex;flex-direction:column;gap:.7rem}
+.wr-hint{font-size:12.5px;color:var(--muted);font-style:italic;line-height:1.5;padding-top:.7rem;border-top:1px dashed var(--line);font-family:'Fraunces',serif;margin-top:auto;display:flex;align-items:flex-start;gap:8px}
+.wr-hint svg{flex-shrink:0;width:16px;height:16px;stroke:var(--teal-mid);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;margin-top:2px}
+
+.exit-s{background:var(--coral);padding:4rem 2rem;color:var(--steel);position:relative;overflow:hidden}
+.exit-s::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:repeating-linear-gradient(90deg,var(--deep) 0 20px,var(--mustard) 20px 40px)}
+.exit-in{max-width:900px;margin:0 auto;position:relative;z-index:2}
+.exit-h{font-family:'Bungee',sans-serif;font-size:clamp(40px,6vw,70px);color:var(--steel);line-height:.9;text-transform:uppercase;margin-bottom:.3rem}
+.exit-h em{font-style:normal;color:var(--deep)}
+.exit-sub{font-family:'Caveat',cursive;font-size:28px;color:var(--mustard);font-weight:700;margin-bottom:2rem;transform:rotate(-2deg);display:inline-block}
+.exit-g{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:1.5rem}
+.exit-c{background:rgba(230,236,239,.12);border:2px dashed rgba(230,236,239,.4);padding:1.4rem 1.6rem}
+.exit-num{font-family:'Bungee',sans-serif;font-size:48px;color:var(--mustard);line-height:1;margin-bottom:.3rem}
+.exit-t{font-family:'Space Grotesk',sans-serif;font-size:13px;color:var(--steel);font-weight:500;line-height:1.5;min-height:60px}
+.exit-lines{margin-top:.8rem;display:flex;flex-direction:column;gap:6px}
+.exit-line{height:26px;border-bottom:1.5px dashed rgba(230,236,239,.5)}
+
+.site-footer{background:var(--deep);border-top:2px solid var(--coral)}
+.site-footer-in{max-width:1100px;margin:0 auto;padding:1.6rem 2rem;display:flex;justify-content:space-between;align-items:center;gap:1.5rem;flex-wrap:wrap}
+.foot-sig{display:flex;align-items:center;gap:10px;text-decoration:none}
+.foot-sig::before{content:'';width:24px;height:1px;background:rgba(230,236,239,.25);transition:background .2s,width .2s}
+.foot-sig:hover::before{background:var(--mustard);width:32px}
+.foot-sig-name{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(230,236,239,.55);transition:color .2s}
+.foot-sig-role{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:rgba(230,236,239,.3);margin-left:4px}
+.foot-sig:hover .foot-sig-name{color:var(--mustard)}
+.foot-links{display:flex;gap:1.4rem}
+.foot-link{font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:rgba(230,236,239,.45);text-decoration:none;padding-bottom:2px;border-bottom:1px solid transparent;transition:color .2s,border-color .2s}
+.foot-link:hover{color:var(--mustard);border-bottom-color:var(--mustard)}
+
+@media(max-width:1000px){.hero-grid{grid-template-columns:1fr}.warm-in{grid-template-columns:1fr;gap:1.5rem}.warm-title-wrap{position:static}.dq-g{grid-template-columns:1fr}.ph-g{grid-template-columns:1fr 1fr}.wr-g{grid-template-columns:1fr}.exit-g{grid-template-columns:1fr}.pitch-steps{grid-template-columns:1fr}}
+@media(max-width:900px){.hero{grid-template-columns:1fr;grid-template-rows:auto 360px}.hero-right{min-height:360px}.hero-left{padding:3.5rem 1.5rem 2.5rem}.hero-scroll{position:static;margin-top:2rem;left:auto;bottom:auto}.hero-stamp{right:1.2rem;bottom:1.2rem;font-size:20px}h1.hero-h{font-size:clamp(72px,22vw,140px)}}
+
+@media (min-width:901px) and (max-height:900px){
+  .hero{min-height:100vh;min-height:100svh;min-height:100dvh}
+  .hero-left{padding:2.4rem 2.5rem 2rem}
+  .hero-eyebrow{margin-bottom:1.2rem}
+  h1.hero-h{font-size:clamp(48px,7vw,96px);line-height:.88;margin-bottom:.3rem}
+  .hero-word{font-size:clamp(32px,4vw,52px);margin:.1rem 0 1.2rem -.2rem}
+  .hero-sub{font-size:14px;line-height:1.6;margin-bottom:1.6rem;max-width:420px}
+  .hero-pills{margin-bottom:1.6rem}
+  .hero-author{padding-top:1rem}
+  .hero-scroll{bottom:1.2rem;left:2.5rem}
+  .hero-stamp{right:1.4rem;bottom:1.4rem;font-size:20px}
+}
+@media (min-width:901px) and (max-height:760px){
+  .hero-left{padding:1.6rem 2.2rem 1.4rem}
+  .hero-eyebrow{margin-bottom:.8rem;font-size:10px}
+  h1.hero-h{font-size:clamp(40px,5.8vw,76px);margin-bottom:.2rem}
+  .hero-word{font-size:clamp(26px,3.4vw,42px);margin:.05rem 0 .9rem -.2rem}
+  .hero-sub{font-size:13px;margin-bottom:1.1rem;line-height:1.5}
+  .hero-pills{margin-bottom:1.1rem;gap:6px}
+  .hero-author{padding-top:.7rem;font-size:10px}
+  .hero-scroll{bottom:.8rem;left:2.2rem}
+}
+@media(max-width:720px){.warm-s,.art-s,.tf-s,.speak-s,.write-s{padding:3.5rem 1.3rem}.exit-s{padding:3rem 1.3rem}.tcard{padding:1.5rem 1.3rem}.hcard{padding:1.4rem}.tf-it{flex-direction:column;align-items:stretch;gap:10px}.tf-bts{padding-top:0}.tbtn{flex:1;min-width:0}.match-unmatched{grid-template-columns:1fr}.match-matched-row{grid-template-columns:1fr}.match-word,.match-def{height:auto;min-height:56px}.ph-g{grid-template-columns:1fr}.pitch-steps{flex-direction:column}.wu-pair{grid-template-columns:1fr;gap:6px}.wu-or{padding:.4rem 0;display:flex;align-items:center;gap:8px;font-size:10px}.wu-or::before,.wu-or::after{content:'';flex:1;height:1px;background:var(--line)}.wu-traits{grid-template-columns:1fr}.site-footer-in{padding:1.3rem;flex-direction:column;align-items:flex-start;gap:1rem}.foot-links{width:100%;gap:1.2rem}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute;pointer-events:none">
+  <defs>
+    <filter id="lesson-grade" color-interpolation-filters="sRGB" x="0%" y="0%" width="100%" height="100%">
+      <feColorMatrix type="matrix" values="
+        0.88  0.10  0.06  0  0.02
+        0.04  0.86  0.08  0  0.01
+        0.06  0.08  0.78  0  0.04
+        0     0     0     1  0"/>
+    </filter>
+  </defs>
+</svg>
+<div class="sticky-score" id="stickyScore">
+  <div class="sticky-score-in">
+    <span class="sss-lbl">Your score</span>
+    <div class="sss-track"><div class="sss-fill" id="prog" style="width:0%"></div></div>
+    <span class="sss-num" id="snum">0 / 35</span>
+    <span class="sss-tier t1" id="stier"><svg viewBox="0 0 24 24"><path d="M12 20v-6"/><path d="M12 14c-4 0-6-2-6-6 4 0 6 2 6 6z"/><path d="M12 14c4 0 6-2 6-6-4 0-6 2-6 6z"/></svg><span id="stier-text">Sprout</span></span>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Teen English · A2–B1 · Reading + Speaking</div>
+    <h1 class="hero-h">
+      <span class="l1">H</span><span class="l2">E</span><span class="l3">R</span><span class="l4">O</span>
+    </h1>
+    <div class="hero-word">ranking</div>
+    <p class="hero-sub">What makes a <em>true</em> hero? Unlimited bravery? Total honesty? Fabulous hair and a great line in spectacles? Meet six characters — from a K-pop demon hunter to a reluctant survivor — and decide who belongs at the top.</p>
+    <div class="hero-pills">
+      <span class="pill pill-coral">55 min</span>
+      <span class="pill pill-out">Interactive</span>
+      <span class="pill pill-out">Aquila Magazine</span>
+    </div>
+    <div class="hero-author">
+      <span>Words by</span>
+      <span class="hero-author-pen">Jennifer Newton-Brown</span>
+    </div>
+    <div class="hero-scroll">Scroll to begin</div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-img-wrap">
+      <img src="../assets/hero.png" alt="Six heroes" loading="eager" decoding="async" onerror="this.parentElement.style.background='var(--teal)';this.remove();"/>
+    </div>
+    <div class="hero-stamp">rank them yourself</div>
+  </div>
+</section>
+
+<section class="warm-s">
+  <div class="warm-in">
+    <div class="warm-title-wrap fade">
+      <div class="warm-tag">Before you read</div>
+      <h2 class="warm-h">What do <em>you</em> look for in a <span class="hl">truly great hero?</span></h2>
+      <p class="warm-intro">Before we meet the six candidates, let's figure out what you value. There's no wrong answer — your personal ranking is the whole point.</p>
+    </div>
+    <div class="warm-blocks fade">
+      <div class="warm-b">
+        <span class="warm-b-tag">warm-up 01</span>
+        <div class="warm-b-h">Would you rather?</div>
+        <p class="wu-instr">Tap one option in each pair. Say your answer using the phrase below.</p>
+        <div class="wu-pairs">
+          <div class="wu-pair"><div class="wu-opt" onclick="pickWU(this)">Have super strength</div><div class="wu-or">OR</div><div class="wu-opt" onclick="pickWU(this)">Be super smart</div></div>
+          <div class="wu-pair"><div class="wu-opt" onclick="pickWU(this)">Save the world alone</div><div class="wu-or">OR</div><div class="wu-opt" onclick="pickWU(this)">Save your best friend</div></div>
+          <div class="wu-pair"><div class="wu-opt" onclick="pickWU(this)">Famous but misunderstood</div><div class="wu-or">OR</div><div class="wu-opt" onclick="pickWU(this)">Unknown but happy</div></div>
+          <div class="wu-pair"><div class="wu-opt" onclick="pickWU(this)">Fight with magic</div><div class="wu-or">OR</div><div class="wu-opt" onclick="pickWU(this)">Fight with technology</div></div>
+        </div>
+        <div class="starter"><svg xmlns="http://www.w3.org/2000/svg" class="starter-ico" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg><span>"I'd rather ______ because ______."</span></div>
+      </div>
+      <div class="warm-b">
+        <span class="warm-b-tag">warm-up 02</span>
+        <div class="warm-b-h">Pick your TOP 2 & BOTTOM 1</div>
+        <p class="wu-instr">Click once for TOP (↑), twice for BOTTOM (↓), third time to clear. Max 2 TOP and 1 BOTTOM.</p>
+        <div class="wu-traits">
+          <div class="wu-trait" onclick="toggleTrait(this)">Physical power</div>
+          <div class="wu-trait" onclick="toggleTrait(this)">Intelligence</div>
+          <div class="wu-trait" onclick="toggleTrait(this)">Loyalty / empathy</div>
+          <div class="wu-trait" onclick="toggleTrait(this)">Style / charisma</div>
+          <div class="wu-trait" onclick="toggleTrait(this)">Courage under pressure</div>
+          <div class="wu-trait" onclick="toggleTrait(this)">Teamwork / leadership</div>
+        </div>
+        <div class="wu-trait-hint">
+          <span><b>↑</b> Top 2</span>
+          <span><b>↓</b> Bottom 1</span>
+        </div>
+        <div class="starter"><svg xmlns="http://www.w3.org/2000/svg" class="starter-ico" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg><span>"For me, the most important is ______. The least important is ______ because ______."</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="art-s">
+  <div class="art-in">
+    <div class="art-hdr fade">
+      <p class="art-kick">Aquila Magazine · Pop Culture</p>
+      <h2 class="art-h">The <span class="em1">Hero</span> <span class="em2">Rankings</span></h2>
+      <p class="art-deck">Six very different characters. One very subjective scoring system. Let's see who deserves the top spot — and who might be overrated.</p>
+      <div class="art-intro-card">
+        A word on the ranking system: scores are out of 10 on traits like <b>Bravery</b>, <b>Loyalty</b>, <b>Crisis management</b>, <b>Diplomacy</b>, <b>Great entrances</b>, <b>Outfit game</b>, and <b>Daring deeds</b>. You don't have to agree. Argue with us!
+      </div>
+    </div>
+
+    <div class="hero-grid">
+
+      <div class="hcard fade">
+        <div class="hcard-top">
+          <div class="hcard-img c1"><img src="../assets/rumi.png" alt="Rumi" loading="lazy" decoding="async"/></div>
+          <div>
+            <div class="hcard-name">Rumi</div>
+            <div class="hcard-aka">K-Pop Demon Hunter · <span>AKA The Star Slayer</span></div>
+          </div>
+        </div>
+        <div class="hcard-body">
+          <p>Rumi lives a <span class="vhl" onclick="toggleTip(this)"><span class="vhl-word">dual nature</span><span class="vhl-def">two very different sides to your personality</span></span>. By day: K-pop star with millions of fans. By night: demon hunter.</p>
+          <p>But here's the twist: she's <em>half-demon herself</em>. <span class="vhl" onclick="toggleTip(this)"><span class="vhl-word">Spoiler alert</span><span class="vhl-def">warning: I'm about to reveal something important</span></span>, that's a problem. If she <span class="vhl" onclick="toggleTip(this)"><span class="vhl-word">gives in to</span><span class="vhl-def">stops resisting a feeling or impulse</span></span> her darker instincts, she could lose herself completely.</p>
+          <span class="keyidea">Key idea → Powerful but conflicted. Loyal but isolated.</span>
+        </div>
+        <div class="hcard-scores">
+          <div class="hcard-sc"><b>Bravery</b><i>5/10</i></div>
+          <div class="hcard-sc"><b>Loyalty</b><i>10/10</i></div>
+          <div class="hcard-sc"><b>Crisis mgmt</b><i>6/10</i></div>
+          <div class="hcard-sc"><b>Outfit game</b><i>10/10</i></div>
+          <div class="hcard-total"><span class="hcard-total-lbl">Total</span><span class="hcard-total-v">54/70</span></div>
+        </div>
+        <div class="hcard-quote">"I'm done hidin'. Now I'm shinin'."</div>
+      </div>
+
+      <div class="hcard fade">
+        <div class="hcard-top">
+          <div class="hcard-img c2"><img src="../assets/sherlock.png" alt="Sherlock Holmes" loading="lazy" decoding="async"/></div>
+          <div>
+            <div class="hcard-name">Sherlock Holmes</div>
+            <div class="hcard-aka">The Detective · <span>AKA The Baker Street Brainbox</span></div>
+          </div>
+        </div>
+        <div class="hcard-body">
+          <p>Sherlock doesn't have superpowers. He has a genius-level mind. He notices what others miss. He connects dots no one else sees — and he'd rather not be thanked afterwards.</p>
+          <p>But being the smartest person in the room has a cost. He can be cold, awkward, <span class="vhl" onclick="toggleTip(this)"><span class="vhl-word">emotionally unavailable</span><span class="vhl-def">not good at sharing or connecting emotionally</span></span>. His friend Dr Watson helps him connect with actual humans. Sherlock cares about <em>truth</em>, not praise.</p>
+          <span class="keyidea">Key idea → Brilliant but difficult. Effective but lonely.</span>
+        </div>
+        <div class="hcard-scores">
+          <div class="hcard-sc"><b>Bravery</b><i>7/10</i></div>
+          <div class="hcard-sc"><b>Loyalty</b><i>6/10</i></div>
+          <div class="hcard-sc"><b>Diplomacy</b><i>5/10</i></div>
+          <div class="hcard-sc"><b>Outfit game</b><i>10/10</i></div>
+          <div class="hcard-total"><span class="hcard-total-lbl">Total</span><span class="hcard-total-v">53/70</span></div>
+        </div>
+        <div class="hcard-quote">"You see, but you do not observe."</div>
+      </div>
+
+      <div class="hcard fade">
+        <div class="hcard-top">
+          <div class="hcard-img c3"><img src="../assets/harry.png" alt="Harry Potter" loading="lazy" decoding="async"/></div>
+          <div>
+            <div class="hcard-name">Harry Potter</div>
+            <div class="hcard-aka">The Wizard · <span>AKA The Boy Who Lived</span></div>
+          </div>
+        </div>
+        <div class="hcard-body">
+          <p>Harry's story starts with loss. But that pain shapes him. At Hogwarts, he finds friendship, purpose, and a fight worth joining. He's a classic hero — orphaned, unloved, but fiercely <span class="vhl" onclick="toggleTip(this)"><span class="vhl-word">resilient</span><span class="vhl-def">able to bounce back from hard times</span></span>.</p>
+          <p>He's not perfect. He gets angry. He makes mistakes. But when it matters, he shows up. He <span class="vhl" onclick="toggleTip(this)"><span class="vhl-word">stands up to</span><span class="vhl-def">bravely opposes something unfair</span></span> injustice — even at risk to himself. His outfit game, however, lets him down.</p>
+          <span class="keyidea">Key idea → Classic hero. Flawed but fearless.</span>
+        </div>
+        <div class="hcard-scores">
+          <div class="hcard-sc"><b>Bravery</b><i>10/10</i></div>
+          <div class="hcard-sc"><b>Loyalty</b><i>10/10</i></div>
+          <div class="hcard-sc"><b>Crisis mgmt</b><i>8/10</i></div>
+          <div class="hcard-sc"><b>Outfit game</b><i>3/10</i></div>
+          <div class="hcard-total"><span class="hcard-total-lbl">Total</span><span class="hcard-total-v">48/70</span></div>
+        </div>
+        <div class="hcard-quote">"Expecto Patronum!"</div>
+      </div>
+
+      <div class="hcard fade">
+        <div class="hcard-top">
+          <div class="hcard-img c4"><img src="../assets/odysseus.png" alt="Odysseus" loading="lazy" decoding="async"/></div>
+          <div>
+            <div class="hcard-name">Odysseus</div>
+            <div class="hcard-aka">The Strategist · <span>AKA Iliad Lad</span></div>
+          </div>
+        </div>
+        <div class="hcard-body">
+          <p>Odysseus isn't just strong — he's smart. He outwits monsters. He invents the Trojan Horse. He survives gods, storms, and his own mistakes. One of the earliest heroes in Greek mythology, he uses wit, not brute force.</p>
+          <p>But his biggest enemy is his ego. His <span class="vhl" onclick="toggleTip(this)"><span class="vhl-word">hubris</span><span class="vhl-def">excessive pride that leads to problems</span></span> costs him years, and hurts the people he loves. Brave and cunning, but arrogant.</p>
+          <span class="keyidea">Key idea → Cunning and courageous — but pride is his weakness.</span>
+        </div>
+        <div class="hcard-scores">
+          <div class="hcard-sc"><b>Bravery</b><i>10/10</i></div>
+          <div class="hcard-sc"><b>Loyalty</b><i>2/10</i></div>
+          <div class="hcard-sc"><b>Diplomacy</b><i>2/10</i></div>
+          <div class="hcard-sc"><b>Gr. entrances</b><i>10/10</i></div>
+          <div class="hcard-total"><span class="hcard-total-lbl">Total</span><span class="hcard-total-v">44/70</span></div>
+        </div>
+        <div class="hcard-quote">"My fame has reached the skies."</div>
+      </div>
+
+      <div class="hcard fade">
+        <div class="hcard-top">
+          <div class="hcard-img c5"><img src="../assets/elsa.png" alt="Elsa" loading="lazy" decoding="async"/></div>
+          <div>
+            <div class="hcard-name">Elsa</div>
+            <div class="hcard-aka">The Ice Queen · <span>AKA Queen of Arendelle</span></div>
+          </div>
+        </div>
+        <div class="hcard-body">
+          <p>Elsa's power is beautiful — and dangerous. When she accidentally hurts her sister Anna, she does what she thinks is right: she isolates herself, choosing to hide away to keep Anna and her kingdom safe.</p>
+          <p>Her journey isn't about defeating a villain. It's about accepting herself — learning that love isn't about hiding, it's about being seen. <em>(Real talk: Anna might be the actual hero here.)</em></p>
+          <span class="keyidea">Key idea → Powerful but fearful. Vulnerability is strength.</span>
+        </div>
+        <div class="hcard-scores">
+          <div class="hcard-sc"><b>Bravery</b><i>8/10</i></div>
+          <div class="hcard-sc"><b>Loyalty</b><i>10/10</i></div>
+          <div class="hcard-sc"><b>Gr. entrances</b><i>10/10</i></div>
+          <div class="hcard-sc"><b>Outfit game</b><i>10/10</i></div>
+          <div class="hcard-total"><span class="hcard-total-lbl">Total</span><span class="hcard-total-v">54/70</span></div>
+        </div>
+        <div class="hcard-quote">"The cold never bothered me anyway."</div>
+      </div>
+
+      <div class="hcard fade">
+        <div class="hcard-top">
+          <div class="hcard-img c6"><img src="../assets/katniss.png" alt="Katniss Everdeen" loading="lazy" decoding="async"/></div>
+          <div>
+            <div class="hcard-name">Katniss Everdeen</div>
+            <div class="hcard-aka">The Survivor · <span>AKA The Reluctant Hero</span></div>
+          </div>
+        </div>
+        <div class="hcard-body">
+          <p>Katniss never asked to be a symbol. In <em>The Hunger Games</em>, a <span class="vhl" onclick="toggleTip(this)"><span class="vhl-word">reluctant hero</span><span class="vhl-def">someone who helps but doesn't want recognition</span></span> emerges. When her sister is chosen, Katniss volunteers in her place — to save her, not for fame.</p>
+          <p>She's not polished. She's suspicious. She makes impulsive decisions. She hates being watched, praised, labelled "a hero." But when it counts, she acts. Not for glory. For people.</p>
+          <span class="keyidea">Key idea → Real, raw, resilient. A hero who doesn't want the title.</span>
+        </div>
+        <div class="hcard-scores">
+          <div class="hcard-sc"><b>Bravery</b><i>10/10</i></div>
+          <div class="hcard-sc"><b>Loyalty</b><i>10/10</i></div>
+          <div class="hcard-sc"><b>Diplomacy</b><i>8/10</i></div>
+          <div class="hcard-sc"><b>Daring deeds</b><i>10/10</i></div>
+          <div class="hcard-total"><span class="hcard-total-lbl">Total</span><span class="hcard-total-v">51/70</span></div>
+        </div>
+        <div class="hcard-quote">"No one will forget me. Not my name."</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="tf-s">
+  <div class="tf-in">
+    <div class="sec-head fade">
+      <span class="sec-num">02</span>
+      <span class="sec-tag" style="color:var(--coral)">Vocabulary + Tasks</span>
+      <span class="sec-line"></span>
+    </div>
+    <p class="sec-intro-light fade">Highlighted words in the article above are clickable — tap to flip to the definition. The tasks below lock the vocabulary in and check your understanding. Your score stays with you at the top of the screen.</p>
+
+    <div class="tier-legend fade">
+      <div class="tier-item"><svg class="tier-ico t1" viewBox="0 0 24 24"><path d="M12 22V12"/><path d="M12 12C7 12 4 9 4 4c5 0 8 3 8 8z"/><path d="M12 12c5 0 8-3 8-8-5 0-8 3-8 8z"/></svg><div class="tier-text t1"><b>Sprout</b><span>0 – 12 points</span></div></div>
+      <div class="tier-item"><svg class="tier-ico t2" viewBox="0 0 24 24"><path d="M14.5 17.5 3 6V3h3l11.5 11.5"/><path d="m13 19 6-6"/><path d="m16 16 4 4"/><path d="m19 21 2-2"/><path d="M18.5 11 22 7.5 18 3l-3.5 3.5"/><path d="m9 11-6 6v3h3l6-6"/><path d="m5 19 1 1"/></svg><div class="tier-text t2"><b>Warrior</b><span>13 – 24 points</span></div></div>
+      <div class="tier-item"><svg class="tier-ico t3" viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg><div class="tier-text t3"><b>Legend</b><span>25 – 35 points</span></div></div>
+    </div>
+
+    <div class="tcard fade">
+      <p class="tcard-tag">Task A · Vocabulary match</p>
+      <h3 class="tcard-h">Connect the phrase to its meaning</h3>
+      <p class="tcard-i">Click a phrase on the left, then its meaning on the right. Correct pairs turn gold and lock in place. Wrong pairs just shake — try again!</p>
+      <div class="match-pairs" id="match-area"></div>
+      <div class="btn-row-snug">
+        <button class="reset-btn" onclick="resetMatch()"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg><span>Reset</span></button>
+      </div>
+      <div class="fb" id="match-fb"></div>
+    </div>
+
+    <div class="tcard fade">
+      <p class="tcard-tag">Task B · Drag the phrase</p>
+      <h3 class="tcard-h">Complete each sentence with the right phrase</h3>
+      <p class="tcard-i">Drag each phrase into the correct gap — or click a phrase, then click a gap. Press "Check" when you're done.</p>
+      <div class="drag-bank" id="drag-bank"></div>
+      <div id="drag-sentences"></div>
+      <div class="btn-row-snug">
+        <button class="check-btn" onclick="checkDrag()">Check answers</button>
+        <button class="reset-btn" onclick="resetDrag()"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg><span>Reset</span></button>
+      </div>
+      <div class="fb" id="drag-fb"></div>
+    </div>
+
+    <div class="tcard fade">
+      <p class="tcard-tag">Task C · Reading comprehension</p>
+      <h3 class="tcard-h">True, False, or Not Stated?</h3>
+      <p class="tcard-i">Read each statement. Mark T (True), F (False) or NS (Not Stated). After Check, tap the bulb for a hint if you're not sure.</p>
+      <div id="tf-w"></div>
+      <div class="btn-row-snug">
+        <button class="check-btn" onclick="checkAllTF()">Check answers</button>
+        <button class="reset-btn" onclick="resetTF()"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg><span>Reset</span></button>
+      </div>
+      <div class="fb" id="tf-fb"></div>
+    </div>
+
+    <div class="tcard fade">
+      <p class="tcard-tag">Task D · Read between the lines</p>
+      <h3 class="tcard-h">What does the text imply?</h3>
+      <p class="tcard-i">Choose the best answer (A, B or C). After Check, wrong picks turn red — tap the bulb for a hint.</p>
+      <div id="mc-w"></div>
+      <div class="btn-row-snug">
+        <button class="check-btn" onclick="checkAllMC()">Check answers</button>
+        <button class="reset-btn" onclick="resetMC()"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg><span>Reset</span></button>
+      </div>
+      <div class="fb" id="mc-fb"></div>
+    </div>
+
+  </div>
+</section>
+
+<section class="speak-s">
+  <div class="speak-in">
+    <div class="sec-head fade">
+      <span class="sec-num" style="color:var(--mustard)">03</span>
+      <span class="sec-tag" style="color:var(--mustard)">Speak your mind</span>
+      <span class="sec-line" style="background:rgba(230,236,239,.2)"></span>
+    </div>
+    <p class="sec-intro-light fade" style="color:rgba(230,236,239,.78)">Discuss these questions with a partner — or think them through solo. Try to use 2–3 vocabulary words per answer. The phrase bank below will help you sound natural.</p>
+
+    <div class="ph-g fade">
+      <div class="pg">
+        <div class="pg-h">Sharing your opinion</div>
+        <div class="pg-it">For me, the real hero is…</div>
+        <div class="pg-it">I'd say the strongest is…</div>
+        <div class="pg-it">What stands out for me is…</div>
+      </div>
+      <div class="pg">
+        <div class="pg-h">Giving reasons</div>
+        <div class="pg-it">…because they show up when it matters.</div>
+        <div class="pg-it">One thing people forget is…</div>
+        <div class="pg-it">Take, for example…</div>
+      </div>
+      <div class="pg">
+        <div class="pg-h">Pushing back</div>
+        <div class="pg-it">I see it differently, though…</div>
+        <div class="pg-it">That may be true, but…</div>
+        <div class="pg-it">On the other hand…</div>
+      </div>
+    </div>
+
+    <div class="dq-g fade">
+      <div class="dq"><div class="dq-n">01</div><p class="dq-t">Which hero's struggle feels most relatable to you? Why?</p></div>
+      <div class="dq"><div class="dq-n">02</div><p class="dq-t">Can someone be a hero if they're not likable? Give an example from the article or from real life.</p></div>
+      <div class="dq"><div class="dq-n">03</div><p class="dq-t">Is it harder to be a hero when you're famous, like Rumi? Or easier?</p></div>
+      <div class="dq"><div class="dq-n">04</div><p class="dq-t">What's one "weakness" on this page that could actually be a strength in disguise?</p></div>
+      <div class="dq"><div class="dq-n">05</div><p class="dq-t">If you could give one hero real-life advice, who would you pick and what would you say?</p></div>
+      <div class="dq"><div class="dq-n">06</div><p class="dq-t">Do you think a hero's clothes or style matter? Why or why not?</p></div>
+      <div class="dq"><div class="dq-n">07</div><p class="dq-t">Rank your personal Top 3 from the article. Why does your #1 deserve the top spot?</p></div>
+      <div class="dq"><div class="dq-n">08</div><p class="dq-t">Who is a hero from your own culture that should be added to Aquila's ranking — and why?</p></div>
+    </div>
+
+    <div class="pitch-box fade">
+      <div class="pitch-ribbon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l2.5 2.5"/></svg>Bonus round · 60 seconds</div>
+      <div class="pitch-body">
+        <h3 class="pitch-h"><em>Pitch</em> a brand-new series about your favourite hero.</h3>
+        <p class="pitch-sub">You have one minute on stage. Use this 3-step structure to sell it to the room.</p>
+        <div class="pitch-steps">
+          <div class="pitch-step"><span class="pitch-step-num">01</span><b>Hook</b><div class="pitch-step-t">One-line intro that makes people curious.</div></div>
+          <div class="pitch-step"><span class="pitch-step-num">02</span><b>Conflict</b><div class="pitch-step-t">One line about their struggle or enemy.</div></div>
+          <div class="pitch-step"><span class="pitch-step-num">03</span><b>Why watch?</b><div class="pitch-step-t">One line about the vibe or emotion.</div></div>
+        </div>
+        <div class="pitch-ex"><span class="pitch-ex-lbl">Example pitch</span>"What if a K-pop star was secretly hunting demons? Rumi's story is about identity, loyalty, and the cost of power. Watch if you like action, emotion, and killer outfits."</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="write-s">
+  <div class="write-in">
+    <div class="sec-head fade">
+      <span class="sec-num">04</span>
+      <span class="sec-tag" style="color:var(--coral)">Write</span>
+      <span class="sec-line"></span>
+    </div>
+    <p class="sec-intro-light fade">Choose ONE option and write a short response. Use at least <b>3 vocabulary phrases</b> from the lesson and underline them.</p>
+
+    <div class="wr-g fade">
+      <div class="wr-card">
+        <div class="wr-letter">A</div>
+        <div class="wr-h">Short opinion post — 80 words</div>
+        <div class="wr-body">
+          <p class="wr-txt">Which hero from the article would you want on your team in a crisis? Explain in 5–7 sentences.</p>
+          <div class="wr-template">Starter:
+If I had to choose a hero for my team, I'd pick ______.
+First, ______.
+Also, ______.
+But one thing I'd watch out for is ______.
+Overall, ______.</div>
+        </div>
+        <p class="wr-hint"><svg viewBox="0 0 24 24"><path d="M12 2v4"/><path d="M12 18v4"/><path d="m4.93 4.93 2.83 2.83"/><path d="m16.24 16.24 2.83 2.83"/><path d="M2 12h4"/><path d="M18 12h4"/><path d="m4.93 19.07 2.83-2.83"/><path d="m16.24 7.76 2.83-2.83"/></svg><span>Aim for one vocabulary phrase in every other sentence.</span></p>
+      </div>
+      <div class="wr-card">
+        <div class="wr-letter">B</div>
+        <div class="wr-h">Character analysis — 120 words</div>
+        <div class="wr-body">
+          <p class="wr-txt">Pick one hero. What makes them strong? What holds them back? Would you trust them in real life? Write 6–8 sentences.</p>
+          <div class="wr-template">Structure:
+1. Intro — who & why you chose them
+2. Strength + example
+3. Weakness + example
+4. Final verdict</div>
+        </div>
+        <p class="wr-hint"><svg viewBox="0 0 24 24"><path d="M12 2v4"/><path d="M12 18v4"/><path d="m4.93 4.93 2.83 2.83"/><path d="m16.24 16.24 2.83 2.83"/><path d="M2 12h4"/><path d="M18 12h4"/><path d="m4.93 19.07 2.83-2.83"/><path d="m16.24 7.76 2.83-2.83"/></svg><span>Underline every vocabulary phrase you use.</span></p>
+      </div>
+      <div class="wr-card">
+        <div class="wr-letter">C</div>
+        <div class="wr-h">Create your own hero profile</div>
+        <div class="wr-body">
+          <p class="wr-txt">Invent a new hero for Aquila. Fill in the template:</p>
+          <div class="wr-template">Name: _______________
+AKA: _______________
+Background: _______________
+Power: _______________
+Flaw: _______________
+Motto: "_______________"
+
+Scores (out of 10):
+• Bravery: ___/10
+• Loyalty: ___/10
+• Crisis mgmt: ___/10
+• Style: ___/10
+TOTAL: ___/40</div>
+        </div>
+        <p class="wr-hint"><svg viewBox="0 0 24 24"><path d="M12 2v4"/><path d="M12 18v4"/><path d="m4.93 4.93 2.83 2.83"/><path d="m16.24 16.24 2.83 2.83"/><path d="M2 12h4"/><path d="M18 12h4"/><path d="m4.93 19.07 2.83-2.83"/><path d="m16.24 7.76 2.83-2.83"/></svg><span>Bonus — add a two-line bio in your hero's voice.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="exit-s">
+  <div class="exit-in">
+    <h2 class="exit-h fade">3 · 2 · 1 <em>Exit Ticket</em></h2>
+    <div class="exit-sub fade">Before you go — a quick personal wrap-up.</div>
+    <div class="exit-g fade">
+      <div class="exit-c">
+        <div class="exit-num">3</div>
+        <div class="exit-t">Words or phrases you're taking away from this lesson.</div>
+        <div class="exit-lines"><div class="exit-line"></div><div class="exit-line"></div><div class="exit-line"></div></div>
+      </div>
+      <div class="exit-c">
+        <div class="exit-num">2</div>
+        <div class="exit-t">Heroes you'd actually watch in a new series.</div>
+        <div class="exit-lines"><div class="exit-line"></div><div class="exit-line"></div></div>
+      </div>
+      <div class="exit-c">
+        <div class="exit-num">1</div>
+        <div class="exit-t">Trait you think matters most — in a hero AND in real life.</div>
+        <div class="exit-lines"><div class="exit-line"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="site-footer">
+  <div class="site-footer-in">
+    <a class="foot-sig" href="../index.html">
+      <span class="foot-sig-name">Анастасия</span>
+      <span class="foot-sig-role">· Преподаватель</span>
+    </a>
+    <div class="foot-links">
+      <a class="foot-link" href="https://vk.com/snugenglish" target="_blank">VK</a>
+      <a class="foot-link" href="https://t.me/+wiAl8ae-UoAxMDE6" target="_blank">Telegram</a>
+    </div>
+  </div>
+</div>
+
+<script>
+var _io=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');_io.unobserve(e.target);}});},{rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.fade').forEach(function(e){_io.observe(e);});
+
+var stickyEl=document.getElementById('stickyScore');
+function updateSticky(){
+  var target=document.querySelector('.tf-s');
+  if(!target){return;}
+  var show=window.scrollY+80>=target.offsetTop;
+  if(show)stickyEl.classList.add('show');
+  else stickyEl.classList.remove('show');
+}
+window.addEventListener('scroll',updateSticky);updateSticky();
+
+function toggleTip(el){el.classList.toggle('open');}
+
+function pickWU(el){
+  var pair=el.parentElement;
+  pair.querySelectorAll('.wu-opt').forEach(function(o){o.classList.remove('picked');});
+  el.classList.add('picked');
+}
+
+function toggleTrait(el){
+  var st=el.dataset.state||'0';
+  var top=document.querySelectorAll('.wu-trait.top').length;
+  var bot=document.querySelectorAll('.wu-trait.bot').length;
+  el.classList.remove('top','bot');
+  if(st==='0'){
+    if(top<2){el.classList.add('top');el.dataset.state='top';}
+    else if(bot<1){el.classList.add('bot');el.dataset.state='bot';}
+    else{el.dataset.state='0';}
+  } else if(st==='top'){
+    if(bot<1){el.classList.add('bot');el.dataset.state='bot';}
+    else{el.dataset.state='0';}
+  } else {
+    el.dataset.state='0';
+  }
+}
+
+var MATCH_DATA=[
+  {w:"dual nature",           d:"Having two very different sides to your personality"},
+  {w:"spoiler alert",         d:"Warning: I'm about to reveal something important"},
+  {w:"give in to",            d:"Stop resisting a feeling or impulse"},
+  {w:"emotionally unavailable",d:"Not good at sharing or connecting emotionally with others"},
+  {w:"resilient",             d:"Able to bounce back from hard times"},
+  {w:"stand up to",           d:"Bravely oppose something or someone unfair"},
+  {w:"hubris",                d:"Excessive pride that eventually causes problems"},
+  {w:"reluctant hero",        d:"Someone who helps others but doesn't want the recognition"}
+];
+var shuffledDefs=[];
+var matchSel=null,matchDone=0;
+function initMatch(){
+  matchSel=null;matchDone=0;
+  var area=document.getElementById('match-area');
+  area.innerHTML='';
+  var matchFb=document.getElementById('match-fb');
+  matchFb.style.display='none';matchFb.textContent='';matchFb.className='fb';
+  var matchedZone=document.createElement('div');
+  matchedZone.id='match-matched-zone';
+  area.appendChild(matchedZone);
+  var unmatchedGrid=document.createElement('div');
+  unmatchedGrid.className='match-unmatched';
+  unmatchedGrid.id='match-unmatched-zone';
+  var wordsCol=document.createElement('div');
+  wordsCol.className='match-words-col';
+  var defsCol=document.createElement('div');
+  defsCol.className='match-defs-col';
+  unmatchedGrid.appendChild(wordsCol);
+  unmatchedGrid.appendChild(defsCol);
+  area.appendChild(unmatchedGrid);
+  shuffledDefs=MATCH_DATA.map(function(m){return m.d;}).sort(function(){return Math.random()-.5;});
+  MATCH_DATA.forEach(function(m){
+    var wd=document.createElement('div');
+    wd.className='match-word';wd.textContent=m.w;wd.dataset.word=m.w;
+    wd.onclick=function(){selectMatch(this,'word');};
+    wordsCol.appendChild(wd);
+  });
+  shuffledDefs.forEach(function(d){
+    var dd=document.createElement('div');
+    dd.className='match-def';dd.textContent=d;dd.dataset.def=d;
+    dd.onclick=function(){selectMatch(this,'def');};
+    defsCol.appendChild(dd);
+  });
+  updateScore('match',0);
+}
+
+function selectMatch(el,type){
+  if(el.dataset.done)return;
+  if(matchSel===null){
+    el.classList.add('selected');
+    matchSel={el:el,type:type};
+  } else if(matchSel.type===type){
+    matchSel.el.classList.remove('selected');
+    el.classList.add('selected');
+    matchSel={el:el,type:type};
+  } else {
+    var wEl=type==='word'?el:matchSel.el;
+    var dEl=type==='def'?el:matchSel.el;
+    var cor=MATCH_DATA.find(function(m){return m.w===wEl.dataset.word;});
+    if(cor&&cor.d===dEl.dataset.def){
+      wEl.classList.remove('selected');
+      dEl.classList.remove('selected');
+      wEl.dataset.done='1';
+      dEl.dataset.done='1';
+      wEl.remove();
+      dEl.remove();
+      var matchedRow=document.createElement('div');
+      matchedRow.className='match-matched-row';
+      var wClone=document.createElement('div');
+      wClone.className='match-word';wClone.textContent=cor.w;
+      var dClone=document.createElement('div');
+      dClone.className='match-def';dClone.textContent=cor.d;
+      matchedRow.appendChild(wClone);matchedRow.appendChild(dClone);
+      document.getElementById('match-matched-zone').appendChild(matchedRow);
+      matchDone++;
+      updateScore('match',matchDone);
+      if(matchDone===MATCH_DATA.length){
+        var fb=document.getElementById('match-fb');
+        fb.className='fb ok';fb.textContent='All 8 matched! Well done.';fb.style.display='block';
+        var un=document.getElementById('match-unmatched-zone');
+        if(un)un.style.display='none';
+      }
+    } else {
+      wEl.classList.add('wrong');dEl.classList.add('wrong');
+      setTimeout(function(){wEl.classList.remove('wrong','selected');dEl.classList.remove('wrong','selected');},500);
+    }
+    matchSel=null;
+  }
+}
+
+var DD=[
+  {b:"Rumi lives a",                                   a:"dual nature",              e:"— she's a pop star by day and a demon hunter by night."},
+  {b:"Harry is flawed but",                            a:"resilient",                e:"— he keeps getting back up after every loss."},
+  {b:"Katniss never asked for glory; she's a",         a:"reluctant hero",           e:"who acts for her sister, not for fame."},
+  {b:"Sherlock solves crimes brilliantly, but he's",   a:"emotionally unavailable",  e:"when it comes to real friendships."},
+  {b:"Odysseus's greatest flaw is his",                a:"hubris",                   e:"— his pride costs him years of his life."},
+  {b:"Elsa has to learn not to",                       a:"give in to",               e:"her fear, and to trust people instead."},
+  {b:"A true hero is ready to",                        a:"stand up to",              e:"injustice, even when it's dangerous."},
+  {b:"One last thing — ",                              a:"spoiler alert",            e:": Rumi is actually half-demon herself."}
+];
+var ddSlots={},dragging=null,picked=null;
+function clearPicked(){
+  if(!picked)return;
+  var c=document.getElementById('chip_'+picked.replace(/[\s]/g,'_'));
+  if(c)c.classList.remove('picked');
+  picked=null;
+  var slots=document.querySelectorAll('.drag-slot');
+  for(var k=0;k<slots.length;k++)slots[k].classList.remove('target');
+}
+function setPicked(w){
+  if(picked===w){clearPicked();return;}
+  clearPicked();
+  picked=w;
+  var c=document.getElementById('chip_'+w.replace(/[\s]/g,'_'));
+  if(c)c.classList.add('picked');
+  var slots=document.querySelectorAll('.drag-slot');
+  for(var k=0;k<slots.length;k++)slots[k].classList.add('target');
+}
+function initDrag(){
+  ddSlots={};dragging=null;clearPicked();
+  var bank=document.getElementById('drag-bank');
+  var cont=document.getElementById('drag-sentences');
+  bank.innerHTML='';
+  cont.innerHTML='';
+  var dragFb=document.getElementById('drag-fb');
+  dragFb.style.display='none';dragFb.textContent='';dragFb.className='fb';
+  DD.map(function(d){return d.a;}).sort(function(){return Math.random()-.5;}).forEach(function(w){
+    var chip=document.createElement('div');chip.className='drag-chip';chip.textContent=w;chip.id='chip_'+w.replace(/[\s]/g,'_');
+    chip.draggable=true;
+    chip.addEventListener('dragstart',function(e){dragging=w;clearPicked();e.dataTransfer.setData('text',w);});
+    chip.addEventListener('dragend',function(){dragging=null;});
+    chip.addEventListener('click',function(e){e.stopPropagation();if(chip.classList.contains('used'))return;setPicked(w);});
+    bank.appendChild(chip);
+  });
+  DD.forEach(function(item,i){
+    var row=document.createElement('div');row.className='drag-sentence';
+    var slot=document.createElement('div');slot.className='drag-slot';slot.id='slot'+i;
+    slot.addEventListener('dragover',function(e){e.preventDefault();slot.classList.add('over');});
+    slot.addEventListener('dragleave',function(){slot.classList.remove('over');});
+    slot.addEventListener('drop',function(e){e.preventDefault();slot.classList.remove('over');var w=e.dataTransfer.getData('text')||dragging;if(w){dropSlot(slot,w,i);dragging=null;}});
+    slot.addEventListener('click',function(e){
+      e.stopPropagation();
+      if(picked){
+        var w=picked;clearPicked();
+        dropSlot(slot,w,i);
+        return;
+      }
+      if(!ddSlots[i])return;
+      returnChip(ddSlots[i]);delete ddSlots[i];slot.textContent='';slot.classList.remove('filled','ok','no');
+    });
+    row.innerHTML='<span class="drag-num">'+(i+1)+'.</span><span>'+item.b+' </span>';
+    row.appendChild(slot);
+    var aft=document.createElement('span');aft.textContent=' '+item.e;
+    row.appendChild(aft);
+    cont.appendChild(row);
+  });
+  updateScore('dd',0);
+}
+document.addEventListener('click',function(e){
+  if(!picked)return;
+  if(e.target.closest('.drag-chip'))return;
+  if(e.target.closest('.drag-slot'))return;
+  clearPicked();
+});
+function dropSlot(slot,word,i){
+  if(ddSlots[i])returnChip(ddSlots[i]);
+  ddSlots[i]=word;slot.textContent=word;slot.classList.add('filled');slot.classList.remove('ok','no');
+  var chip=document.getElementById('chip_'+word.replace(/[\s]/g,'_'));
+  if(chip)chip.classList.add('used');
+}
+function returnChip(word){
+  var chip=document.getElementById('chip_'+word.replace(/[\s]/g,'_'));
+  if(chip)chip.classList.remove('used');
+}
+function checkDrag(){
+  clearPicked();
+  var ok=0;
+  DD.forEach(function(item,i){
+    var slot=document.getElementById('slot'+i);
+    slot.classList.remove('ok','no');
+    var userWord=ddSlots[i];
+    if((userWord||'').toLowerCase()===item.a.toLowerCase()){
+      slot.classList.add('ok');ok++;
+    } else {
+      slot.classList.add('no');
+      if(userWord){
+        returnChip(userWord);
+        delete ddSlots[i];
+        slot.textContent='';
+        slot.classList.remove('filled');
+      }
+    }
+  });
+  var fb=document.getElementById('drag-fb');
+  fb.className='fb '+(ok===DD.length?'ok':'no');
+  fb.textContent=ok+' of '+DD.length+' correct.'+(ok===DD.length?' Excellent!':' Wrong answers went back to the bank — try again.');
+  fb.style.display='block';
+  updateScore('dd',ok);
+}
+
+var TF=[
+  {t:"Rumi is completely human.", a:"F", hint:"The article says she is half-demon herself — that's the plot twist."},
+  {t:"Sherlock Holmes is great at understanding people's emotions.", a:"F", hint:"The opposite is true — he's described as cold, awkward, and emotionally unavailable."},
+  {t:"Sherlock's friend Dr Watson helps him connect with other people.", a:"T", hint:"Directly stated: 'His friend Dr Watson helps him connect with actual humans.'"},
+  {t:"Harry Potter had a loving, supportive childhood.", a:"F", hint:"The article says his story 'starts with loss' and describes him as 'orphaned, unloved'."},
+  {t:"Odysseus invented the Trojan Horse.", a:"T", hint:"Directly stated: 'He invents the Trojan Horse.'"},
+  {t:"Odysseus scores 10/10 on both bravery and loyalty.", a:"F", hint:"He gets 10/10 for Bravery but only 2/10 for Loyalty. Ouch."},
+  {t:"Elsa leaves her kingdom because she wants personal freedom.", a:"F", hint:"She isolates herself to protect her sister and kingdom — not to be free."},
+  {t:"Katniss volunteered for the Hunger Games to become famous.", a:"F", hint:"She volunteered to save her sister Primrose — not for fame."},
+  {t:"Aquila Magazine is a real magazine published monthly.", a:"NS", hint:"The article mentions Aquila as the source but says nothing about its publishing schedule."},
+  {t:"Every hero in the ranking scores at least 8/10 for bravery.", a:"F", hint:"Rumi gets 5/10 and Sherlock 7/10 for Bravery — both under 8."}
+];
+
+var MC=[
+  {q:"1. What does the phrase \"lives a dual nature\" suggest about Rumi?",
+   o:["She has twin siblings.","She has two very different sides to her life.","She lives in two different countries."],
+   c:1, hint:"\"Dual\" comes from Latin for \"two\" — a dual nature means two sides of personality, not two locations or people."},
+  {q:"2. Why does the article say Sherlock's intelligence \"comes with a cost\"?",
+   o:["He spends too much money on detective equipment.","His intelligence creates distance between him and others.","He is always tired after solving cases."],
+   c:1, hint:"The next sentences describe him as cold, awkward, emotionally unavailable — the 'cost' is social, not financial."},
+  {q:"3. What does the writer mean when they say Harry \"shows up\" when it matters?",
+   o:["He arrives physically at a place.","He acts bravely and takes responsibility.","He appears on television."],
+   c:1, hint:"'Show up' as an idiom means to be present and ready to act — especially when things are hard."},
+  {q:"4. What does the article hint about Elsa at the end of her entry?",
+   o:["She is the perfect Disney hero.","Her sister Anna might deserve the hero title more than Elsa.","She doesn't want to be queen anymore."],
+   c:1, hint:"The line in italics — '(Real talk: Anna might be the actual hero here.)' — is a direct comment from the writer."},
+  {q:"5. Why is Katniss called \"a hero who doesn't want the title\"?",
+   o:["She thinks she doesn't deserve it.","She acts out of love, not for fame or recognition.","She is too shy to speak in public."],
+   c:1, hint:"The article stresses she acts 'Not for glory. For people.' Her motivation is family, not image."}
+];
+
+var TOTAL=35;
+var scoreMap={match:0,dd:0,tf:0,mc:0};
+function updateScore(section,n){
+  scoreMap[section]=n;
+  var total=scoreMap.match+scoreMap.dd+scoreMap.tf+scoreMap.mc;
+  document.getElementById('snum').textContent=total+' / '+TOTAL;
+  var pct=Math.round(total/TOTAL*100);
+  document.getElementById('prog').style.width=pct+'%';
+  var tier=document.getElementById('stier');
+  var tierText=document.getElementById('stier-text');
+  tier.classList.remove('t1','t2','t3');
+  if(total<=12){tierText.textContent='Sprout';tier.classList.add('t1');}
+  else if(total<=24){tierText.textContent='Warrior';tier.classList.add('t2');}
+  else{tierText.textContent='Legend';tier.classList.add('t3');}
+}
+
+function toggleHint(id){
+  var box=document.getElementById(id);
+  var lamp=document.getElementById(id+'_lamp');
+  if(box.classList.contains('show')){box.classList.remove('show');lamp.classList.remove('active');}
+  else{box.classList.add('show');lamp.classList.add('active');}
+}
+var LAMP_SVG='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.7.5 1 1.3 1 2.1v.2h6v-.2c0-.8.3-1.6 1-2.1A7 7 0 0 0 12 2z"/></svg>';
+function makeLamp(id,onClickHandler){
+  var lamp=document.createElement('span');
+  lamp.className='hint-lamp';
+  lamp.id=id+'_lamp';
+  lamp.title='Show hint';
+  lamp.innerHTML=LAMP_SVG;
+  lamp.onclick=onClickHandler;
+  return lamp;
+}
+
+var tfAns={};
+function buildTF(){
+  var w=document.getElementById('tf-w');
+  TF.forEach(function(item,i){
+    var d=document.createElement('div');
+    d.className='tf-it';
+    d.innerHTML='<div class="tf-row"><span class="tf-tx"><span class="tf-n">'+(i+1)+'.</span>'+item.t+'</span><span class="tf-bts" id="tfbtns'+i+'"><button class="tbtn" id="tT'+i+'" onclick="selTF('+i+',\'T\')">T</button><button class="tbtn" id="tF'+i+'" onclick="selTF('+i+',\'F\')">F</button><button class="tbtn" id="tN'+i+'" onclick="selTF('+i+',\'NS\')">NS</button></span></div><div class="hint-box" id="tfhint'+i+'">'+item.hint+'</div>';
+    w.appendChild(d);
+  });
+}
+function selTF(i,v){
+  tfAns[i]=v;
+  ['T','F','N'].forEach(function(x){var btn=document.getElementById('t'+x+i);btn.className='tbtn';});
+  var btnId='t'+(v==='NS'?'N':v)+i;
+  document.getElementById(btnId).className='tbtn sel';
+}
+function checkAllTF(){
+  var ok=0;
+  TF.forEach(function(item,i){
+    ['T','F','N'].forEach(function(x){var b=document.getElementById('t'+x+i);b.className='tbtn';});
+    var c=tfAns.hasOwnProperty(i)?tfAns[i]:null;
+    if(c){
+      var userId='t'+(c==='NS'?'N':c)+i;
+      if(c===item.a){document.getElementById(userId).className='tbtn ok';ok++;}
+      else{document.getElementById(userId).className='tbtn no';}
+    }
+    var btns=document.getElementById('tfbtns'+i);
+    if(!document.getElementById('tfhint'+i+'_lamp')){
+      btns.appendChild(makeLamp('tfhint'+i,function(){toggleHint('tfhint'+i);}));
+    }
+  });
+  updateScore('tf',ok);
+  var fb=document.getElementById('tf-fb');
+  fb.style.display='block';
+  fb.className=ok===TF.length?'fb ok':'fb no';
+  fb.textContent=ok+' of '+TF.length+' correct. '+(ok===TF.length?'Excellent!':'Wrong answers marked in red — try again, or tap the bulb for a hint.');
+}
+
+var mcAns={};
+function buildMC(){
+  var w=document.getElementById('mc-w');
+  MC.forEach(function(item,qi){
+    var bl=document.createElement('div');
+    bl.className='mc-block-snug';
+    var opts=item.o.map(function(o,oi){return '<div class="mc-r"><div class="mc-l" id="mc'+qi+'_'+oi+'" onclick="selMC('+qi+','+oi+')">'+['A','B','C'][oi]+'</div><span class="mc-t">'+o+'</span></div>';}).join('');
+    bl.innerHTML='<div id="mcq'+qi+'" class="mc-q-snug"><p class="mc-q">'+item.q+'</p></div><div class="mc-os-snug">'+opts+'</div><div class="hint-box" id="mchint'+qi+'">'+item.hint+'</div>';
+    w.appendChild(bl);
+  });
+}
+function selMC(qi,oi){
+  [0,1,2].forEach(function(x){var el=document.getElementById('mc'+qi+'_'+x);el.className='mc-l';});
+  document.getElementById('mc'+qi+'_'+oi).className='mc-l sel';
+  mcAns[qi]=oi;
+}
+function checkAllMC(){
+  var ok=0;
+  MC.forEach(function(item,qi){
+    [0,1,2].forEach(function(oi){var el=document.getElementById('mc'+qi+'_'+oi);el.className='mc-l';});
+    var c=mcAns.hasOwnProperty(qi)?mcAns[qi]:null;
+    if(c!==null){
+      if(c===item.c){document.getElementById('mc'+qi+'_'+c).className='mc-l ok';ok++;}
+      else{document.getElementById('mc'+qi+'_'+c).className='mc-l no';}
+    }
+    var qBlock=document.getElementById('mcq'+qi).querySelector('.mc-q');
+    if(!document.getElementById('mchint'+qi+'_lamp')){
+      qBlock.appendChild(makeLamp('mchint'+qi,function(){toggleHint('mchint'+qi);}));
+    }
+  });
+  updateScore('mc',ok);
+  var fb=document.getElementById('mc-fb');
+  fb.style.display='block';
+  fb.className=ok===MC.length?'fb ok':'fb no';
+  fb.textContent=ok+' of '+MC.length+' correct. '+(ok===MC.length?'Perfect!':'Wrong answers marked red — pick again, or tap the bulb for a hint.');
+}
+
+function resetMatch(){initMatch();}
+function resetDrag(){initDrag();}
+function resetTF(){
+  tfAns={};
+  TF.forEach(function(item,i){
+    ['T','F','N'].forEach(function(x){
+      var btn=document.getElementById('t'+x+i);
+      if(btn)btn.className='tbtn';
+    });
+    var lamp=document.getElementById('tfhint'+i+'_lamp');
+    if(lamp)lamp.remove();
+    var hintBox=document.getElementById('tfhint'+i);
+    if(hintBox)hintBox.classList.remove('show');
+  });
+  var fb=document.getElementById('tf-fb');
+  fb.style.display='none';fb.textContent='';fb.className='fb';
+  updateScore('tf',0);
+}
+function resetMC(){
+  mcAns={};
+  MC.forEach(function(item,qi){
+    [0,1,2].forEach(function(oi){
+      var el=document.getElementById('mc'+qi+'_'+oi);
+      if(el)el.className='mc-l';
+    });
+    var lamp=document.getElementById('mchint'+qi+'_lamp');
+    if(lamp)lamp.remove();
+    var hintBox=document.getElementById('mchint'+qi);
+    if(hintBox)hintBox.classList.remove('show');
+  });
+  var fb=document.getElementById('mc-fb');
+  fb.style.display='none';fb.textContent='';fb.className='fb';
+  updateScore('mc',0);
+}
+
+initMatch();
+initDrag();
+buildTF();
+buildMC();
+updateScore('match',0);
+</script>
+
+</body>
+</html>
