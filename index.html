@@ -391,6 +391,68 @@ body{
   .snug-hero-btns{gap:10px}
 }
 
+@media (orientation:portrait) and (min-width:641px) and (max-width:1024px){
+  .snug-hero-band::before{display:none}
+  .snug-hero-band{
+    height:calc(var(--app-vh, 100vh) - 57px);
+    min-height:calc(var(--app-vh, 100vh) - 57px);
+  }
+  .snug-hero{
+    display:flex;
+    grid-template-columns:none;
+    flex-direction:column;
+    gap:0;
+    padding:0;
+    max-width:none;
+    position:relative;
+    height:calc(var(--app-vh, 100vh) - 57px);
+    min-height:calc(var(--app-vh, 100vh) - 57px);
+  }
+  .snug-hero-photo{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:calc(var(--app-vh, 100vh) - 57px);
+    min-height:0;
+    aspect-ratio:auto;
+    align-self:auto;
+    box-shadow:none;
+    z-index:0;
+  }
+  .snug-hero-photo::after{
+    content:'';
+    position:absolute;inset:0;
+    background:linear-gradient(
+      180deg,
+      rgba(24,18,12,.05) 0%,
+      rgba(24,18,12,.18) 32%,
+      rgba(24,18,12,.78) 60%,
+      rgba(24,18,12,.97) 100%
+    );
+    z-index:1;pointer-events:none;
+  }
+  .snug-hero-photo img{object-position:center 18%}
+  .snug-hero-text{
+    position:relative;
+    z-index:2;
+    flex:1;
+    justify-content:flex-end;
+    padding:24px 36px 28px;
+    min-height:0;
+    max-width:680px;
+  }
+  .snug-hero-text::before{
+    font-size:.58rem;letter-spacing:.22em;margin:0 0 12px;
+  }
+  .snug-hero-name{font-size:clamp(1.9rem,4.6vw,2.6rem);margin:0 0 10px;line-height:1.04;color:var(--white)}
+  .snug-hero-role{font-size:.9rem;margin:0 0 12px;color:rgba(255,255,255,.7)}
+  .snug-hero-desc{font-size:.88rem;margin:0 0 16px;line-height:1.55;color:rgba(255,255,255,.85);max-width:520px}
+  .snug-btn-primary{padding:12px 24px;font-size:.62rem;background:var(--accent);color:var(--white);border-color:var(--accent)}
+  .snug-hero-note{font-size:.56rem;margin:0}
+  .snug-hero-btns{gap:10px}
+  .snug-btn-text{font-size:.66rem}
+}
+
 @media(max-width:640px){
   .snug-hero-band::before{display:none}
   .snug-hero-band{
