@@ -230,20 +230,32 @@ h1.hero-h em{color:var(--lime);font-style:normal;display:block}
   .warmup-h{font-size:20px}
 }
 
-@media (min-width:721px) and (max-height:900px){
-  .hero-left{padding:2.5rem 2.5rem 2rem}
-  .hero-eyebrow{margin-bottom:1.2rem;font-size:12px}
-  h1.hero-h{font-size:clamp(36px,5vw,64px);margin-bottom:1rem}
-  .hero-sub{font-size:14px;line-height:1.6;margin-bottom:1.6rem}
-  .hero-scroll{bottom:1.2rem;left:2.5rem;font-size:12px}
+@media (orientation:portrait) and (min-width:721px) and (max-width:1024px){
+  .hero{grid-template-columns:1fr;grid-template-rows:1fr 42vh;min-height:100vh;height:100vh}
+  .hero-right{min-height:0;height:42vh}
+  .hero-left{padding:3.5rem 3rem 2.5rem;justify-content:center}
+  h1.hero-h{font-size:clamp(48px,7.5vw,72px);margin-bottom:1.4rem}
+  .hero-sub{font-size:15px;line-height:1.65;margin-bottom:2rem;max-width:520px}
+  .hero-eyebrow{margin-bottom:1.5rem;font-size:12px}
+  .hero-scroll{position:static;margin-top:1.5rem;left:auto;bottom:auto;font-size:12px}
 }
-@media (min-width:721px) and (max-height:760px){
-  .hero-left{padding:1.6rem 2.2rem 1.4rem}
-  .hero-eyebrow{margin-bottom:.9rem}
-  h1.hero-h{font-size:clamp(32px,4.5vw,54px);margin-bottom:.8rem;line-height:1}
-  .hero-sub{font-size:13.5px;margin-bottom:1.2rem;line-height:1.55}
+
+@media (orientation:landscape) and (min-width:721px) and (max-height:820px){
+  .hero{min-height:100vh;height:100vh}
+  .hero-left{padding:2.4rem 2.6rem 2rem;justify-content:center}
+  .hero-eyebrow{margin-bottom:1.2rem;font-size:12px}
+  h1.hero-h{font-size:clamp(38px,5.2vw,64px);margin-bottom:1rem;line-height:.96}
+  .hero-sub{font-size:14px;line-height:1.6;margin-bottom:1.6rem}
+  .hero-scroll{bottom:1.2rem;left:2.6rem;font-size:12px}
+}
+
+@media (orientation:landscape) and (min-width:721px) and (max-height:680px){
+  .hero-left{padding:1.5rem 2.2rem 1.3rem}
+  .hero-eyebrow{margin-bottom:.8rem;font-size:11px}
+  h1.hero-h{font-size:clamp(30px,4.4vw,52px);margin-bottom:.7rem;line-height:.98}
+  .hero-sub{font-size:13.5px;margin-bottom:1.1rem;line-height:1.55}
   .hero-pills{gap:6px}
-  .hero-scroll{bottom:.8rem;left:2.2rem}
+  .hero-scroll{bottom:.7rem;left:2.2rem}
 }
 @media(max-width:720px){
   .hero{grid-template-columns:1fr;grid-template-rows:auto 340px}
