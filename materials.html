@@ -1,110 +1,17 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>Материалы · Анастасия</title>
-<link rel="icon" type="image/png" href="assets/favicon.png">
-<link rel="preload" as="style" href="fonts.css">
-<link rel="stylesheet" href="fonts.css">
-<style>
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{--w:600px;--p:20px;--sans:'DM Sans';--black:#1a1a1a;--acid:#f4ed6b;--white:#f0ece0;--gray:#8a8a8a;--line:rgba(240,236,224,.12)}
-html{scroll-behavior:smooth}
-body{font-family:var(--sans);font-weight:400;background:var(--black);color:var(--white);line-height:1.5;overflow-x:hidden;width:100%}
-.snug-nav{position:sticky;top:0;z-index:100;background:var(--black);border-bottom:2px solid var(--acid);width:100%}
-.snug-nav-in{width:100%;max-width:var(--w);margin:0 auto;padding:8px var(--p);display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:18px;min-height:50px}
-.snug-logo{justify-self:center;color:var(--acid);text-decoration:none;line-height:0;font-size:0}
-.snug-logo svg{width:18px;height:18px;display:block;color:var(--acid)}
-.snug-logo svg+*{display:none}
-.snug-nav-links{display:flex;align-items:center;gap:24px;justify-self:start}
-.snug-nav-link{font-size:.65rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:rgba(240,236,224,.45);text-decoration:none;transition:.2s;white-space:nowrap}
-.snug-nav-link:hover{color:var(--acid)}
-.snug-nav-cta{justify-self:end;font-size:.65rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--black);background:var(--acid);padding:11px 18px;text-decoration:none;transition:.2s;white-space:nowrap}
-.snug-nav-cta:hover{background:var(--white)}
-.hero-band{background:var(--black);position:relative;overflow:hidden;border-bottom:2px solid var(--acid)}
-.hero-band::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0,rgba(244,237,107,.13),transparent 38%);pointer-events:none}
-.hero-inner{width:100%;max-width:var(--w);margin:0 auto;padding:72px var(--p) 64px;position:relative;z-index:1}
-.hero-back{display:inline-flex;align-items:center;margin-bottom:24px;color:rgba(240,236,224,.4);text-decoration:none;border-bottom:1px solid rgba(240,236,224,.18);font-size:.65rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase;transition:.2s}
-.hero-back:hover{color:var(--acid);border-color:var(--acid)}
-.hero-tag{display:block;font-size:.63rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:var(--acid);margin-bottom:12px}
-.hero-title{font-size:clamp(3.4rem,10vw,6.4rem);line-height:.86;letter-spacing:-.07em;text-transform:uppercase;font-weight:900;color:var(--white);max-width:570px;margin-bottom:22px}
-.hero-title strong{font-weight:900;color:var(--white)}
-.hero-title br{display:none}
-.hero-title::after{content:'.';color:var(--acid)}
-.hero-sub{font-size:.95rem;color:rgba(240,236,224,.56);line-height:1.7;max-width:430px}
-.tabs-band{position:sticky;top:52px;z-index:80;background:rgba(26,26,26,.96);border-bottom:1px solid var(--line);backdrop-filter:blur(10px)}
-.tabs-inner{width:100%;max-width:var(--w);margin:0 auto;padding:0 var(--p);display:flex;gap:0;overflow-x:auto;scrollbar-width:none}
-.tabs-inner::-webkit-scrollbar{display:none}
-.tab{padding:16px 18px;background:none;border:0;border-bottom:2px solid transparent;color:rgba(240,236,224,.42);cursor:pointer;font-family:var(--sans);font-size:.65rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase;transition:.2s;white-space:nowrap}
-.tab:hover{color:var(--white)}
-.tab.active{color:var(--acid);border-bottom-color:var(--acid)}
-.grid-band{background:var(--black);padding:42px var(--p) 72px}
-.grid-inner{width:100%;max-width:var(--w);margin:0 auto}
-.section-label{display:block;color:var(--acid);font-size:.6rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;margin:0 0 13px}
-.cards{display:flex;flex-direction:column;gap:8px;margin-bottom:42px}
-.card{background:rgba(240,236,224,.045);border:1px solid rgba(240,236,224,.08);display:flex;align-items:center;justify-content:space-between;gap:18px;padding:17px 18px;text-decoration:none;transition:.2s;color:var(--white)}
-.card:hover{background:var(--acid);border-color:var(--acid);color:var(--black);transform:translateX(3px)}
-.card.stub{opacity:.3;cursor:default;pointer-events:none}
-.card-left{display:flex;align-items:center;gap:14px;min-width:0}
-.card-icon{width:34px;height:34px;border:1px solid rgba(244,237,107,.28);display:flex;align-items:center;justify-content:center;color:var(--acid);flex:0 0 auto;transition:.2s}
-.card:hover .card-icon{border-color:rgba(0,0,0,.22);color:var(--black)}
-.card-title{font-size:1rem;font-weight:900;letter-spacing:-.02em;color:currentColor;margin-bottom:2px}
-.card-meta{font-size:.72rem;color:rgba(240,236,224,.5);line-height:1.45}
-.card:hover .card-meta{color:rgba(0,0,0,.62)}
-.card-arr{color:rgba(240,236,224,.22);font-weight:900;transition:.2s;flex:0 0 auto}
-.card:hover .card-arr{color:var(--black);transform:translateX(3px)}
-.card.stub .card-arr{opacity:0}
-.cards-section.hidden{display:none}
-.snug-footer-band{background:var(--black);border-top:2px solid var(--acid)}
-.snug-footer{width:100%;max-width:var(--w);margin:0 auto;padding:17px var(--p);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
-.snug-footer a{color:rgba(240,236,224,.3);text-decoration:none;font-size:.62rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;transition:.2s}
-.snug-footer a:hover{color:var(--acid)}
-.fade-in{opacity:0;transform:translateY(8px);animation:up .45s ease forwards}
-.card:nth-child(1){animation-delay:.04s}.card:nth-child(2){animation-delay:.08s}.card:nth-child(3){animation-delay:.12s}.card:nth-child(4){animation-delay:.16s}.card:nth-child(5){animation-delay:.20s}.card:nth-child(6){animation-delay:.24s}.card:nth-child(7){animation-delay:.28s}.card:nth-child(8){animation-delay:.32s}.card:nth-child(9){animation-delay:.36s}.card:nth-child(10){animation-delay:.40s}.card:nth-child(11){animation-delay:.44s}.card:nth-child(12){animation-delay:.48s}.card:nth-child(13){animation-delay:.52s}.card:nth-child(14){animation-delay:.56s}
-@keyframes up{to{opacity:1;transform:none}}
-@media(max-width:700px){.snug-nav-links{display:none}.snug-nav-in{grid-template-columns:1fr auto 1fr}.snug-nav-cta{padding:10px 14px;font-size:.58rem}.hero-inner{padding-top:56px;padding-bottom:52px}.hero-title{font-size:clamp(3rem,17vw,5.2rem)}}
-@media(max-width:420px){.card{padding:15px 14px}.tab{padding-left:14px;padding-right:14px}.hero-sub{font-size:.88rem}}
-</style>
-</head>
-<body>
-
-<div class="snug-nav">
-  <div class="snug-nav-in">
-    <a class="snug-logo" href="index.html">
-      <svg width="14" height="14" viewBox="0 0 48 48" fill="currentColor"><path d="M45.97 17.13c-.52-1.24-1.38-2.13-2.5-2.58l-.02-.01c-.51-.2-1.05-.3-1.59-.3h-.06c-2.55.04-5.16 2.21-6.49 5.4-.97 2.33-1.08 4.84-.3 6.72.52 1.24 1.39 2.13 2.51 2.58l.01.01c.51.2 1.05.3 1.59.3 2.58 0 5.21-2.17 6.56-5.4.96-2.33 1.07-4.84.28-6.71Z"/><path d="M35.77 30.9c-1.47-.89-2.87-1.72-3.77-3.23C29.49 23.51 27.97 21 24 21s-5.49 2.51-8.01 6.67c-.91 1.51-2.31 2.34-3.78 3.23-1.69 1.02-3.44 2.07-4.2 4.14-.29.75-.44 1.54-.44 2.34 0 3.37 2.63 6.11 5.85 6.11 1.66 0 3.44-.58 5.31-1.19 1.8-.59 3.66-1.19 5.28-1.19s3.47.61 5.26 1.19c1.87.61 3.63 1.18 5.3 1.18 3.22 0 5.84-2.74 5.84-6.11 0-.8-.15-1.6-.45-2.34-.76-2.07-2.51-3.12-4.2-4.14Z"/><path d="M14.06 17.7c1.12 1.4 2.53 2.17 3.99 2.17.2 0 .4-.01.59-.04 3.03-.45 4.93-4.15 4.3-8.44-.26-1.8-.95-3.48-1.95-4.73-1.11-1.4-2.53-2.17-3.98-2.17-.2 0-.4.01-.59.04-3.03.45-4.93 4.15-4.3 8.44.26 1.8.95 3.48 1.94 4.73Z"/><path d="M29.36 19.83c.2.03.39.04.59.04 1.46 0 2.87-.77 3.99-2.17.99-1.25 1.68-2.92 1.95-4.72.62-4.29-1.27-7.99-4.3-8.44-.2-.03-.39-.04-.59-.04-1.45.002-2.87.77-3.98 2.17-.99 1.24-1.69 2.92-1.95 4.73-.62 4.29 1.27 7.99 4.3 8.44Z"/><path d="m10.46 28.95.01-.01c1.12-.45 1.98-1.34 2.5-2.58.79-1.87.68-4.38-.3-6.72-1.34-3.23-3.98-5.4-6.55-5.4-.55-.001-1.09.1-1.59.3l-.01.01c-1.12.45-1.98 1.34-2.5 2.58-.79 1.87-.67 4.38.3 6.72 1.34 3.23 3.98 5.4 6.55 5.4.54.001 1.08-.1 1.59-.3Z"/></svg>
-      Анастасия
-    </a>
-    <nav class="snug-nav-links">
-      <a class="snug-nav-link" href="index.html#about">Обо мне</a>
-      <a class="snug-nav-link" href="index.html#reviews">Отзывы</a>
-      <a class="snug-nav-link" href="index.html#pricing">Цены</a>
-      <a class="snug-nav-link" href="index.html#steps">Как начать</a>
-    </nav>
-    <a class="snug-nav-cta" href="https://t.me/m/E980QaoaYzgy">Записаться</a>
-  </div>
-</div>
-
-<div class="hero-band">
-  <div class="hero-inner">
-    <a class="hero-back" href="index.html">← На главную</a>
-    <span class="hero-tag">Учебные материалы</span>
-    <h1 class="hero-title"><strong>Словарь, грамматика</strong><br>и игры</h1>
-    <p class="hero-sub">Интерактивные упражнения для самостоятельной работы и закрепления пройденного.</p>
-  </div>
-</div>
-
-<div class="tabs-band">
-  <div class="tabs-inner">
-    <button class="tab active" data-filter="all">Все</button>
-    <button class="tab" data-filter="grammar">Грамматика</button>
-    <button class="tab" data-filter="vocabulary">Лексика</button>
-    <button class="tab" data-filter="games">Игры</button>
-    <button class="tab" data-filter="articles">Статьи</button>
-  </div>
-</div>
-
-<div class="grid-band">
+<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"><title>Материалы · Anastasiia English</title><link rel="icon" type="image/png" href="assets/favicon.png"><link rel="preload" as="style" href="fonts.css"><link rel="stylesheet" href="fonts.css"><style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--max:1120px;--sans:'DM Sans','Inter',Arial,sans-serif;--mono:'Space Mono','IBM Plex Mono',monospace;--bg:#111;--paper:#f1ede3;--acid:#ece45a;--ink:#111;--shadow:0 28px 80px rgba(0,0,0,.45)}
+html{scroll-behavior:smooth;background:var(--bg)}
+body{font-family:var(--sans);background:radial-gradient(circle at 12% 8%,rgba(236,228,90,.08),transparent 28%),radial-gradient(circle at 80% 10%,rgba(255,255,255,.04),transparent 30%),var(--bg);color:var(--paper);line-height:1.55;overflow-x:hidden;min-height:100vh}
+a{color:inherit}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;opacity:.14;mix-blend-mode:screen;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.35' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E")}
+.w{width:min(100% - 40px,var(--max));margin:0 auto}.topbar{position:sticky;top:0;z-index:100;background:rgba(17,17,17,.94);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.1)}
+.nav{height:72px;display:flex;align-items:center;gap:22px;width:min(100% - 40px,var(--max));margin:0 auto}.brand{text-decoration:none;text-transform:uppercase;font-weight:950;letter-spacing:.06em;font-size:.8rem;white-space:nowrap}.brand span{color:var(--acid)}
+.links{margin-left:auto;display:flex;align-items:center;gap:6px}.links a{text-decoration:none;white-space:nowrap;padding:10px 9px;text-transform:uppercase;font-size:.58rem;font-weight:900;letter-spacing:.12em;color:rgba(255,255,255,.52);transition:color .2s ease}.links a:hover,.links a:focus{color:var(--acid)}
+.nav-cta{text-decoration:none;white-space:nowrap;background:var(--acid);color:var(--ink);padding:14px 18px;text-transform:uppercase;font-size:.58rem;font-weight:950;letter-spacing:.12em;transition:background .2s ease,color .2s ease}.nav-cta:hover,.nav-cta:focus{background:var(--paper);color:var(--ink)}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 28px;background:var(--acid);color:var(--ink);text-decoration:none;text-transform:uppercase;font-size:.7rem;font-weight:950;letter-spacing:.12em;border:1px solid var(--acid);transition:background .2s,color .2s,border-color .2s,transform .2s}.btn:hover,.btn:focus{background:var(--ink);color:var(--paper);border-color:rgba(255,255,255,.22);transform:translateY(-1px)}.btn.ghost{background:rgba(17,17,17,.35);color:var(--paper);border-color:rgba(255,255,255,.18)}.btn.ghost:hover,.btn.ghost:focus{background:var(--paper);color:var(--ink);border-color:var(--paper)}
+.footer{border-top:1px solid rgba(255,255,255,.12);background:#111}.footer-in{width:min(100% - 40px,var(--max));margin:0 auto;padding:22px 0;display:flex;gap:14px;justify-content:space-between;flex-wrap:wrap}.footer a{color:rgba(255,255,255,.42);text-decoration:none;text-transform:uppercase;font-size:.62rem;font-weight:900;letter-spacing:.1em;transition:color .2s}.footer a:hover{color:var(--acid)}
+@media(max-width:760px){.nav{height:58px;width:100%;padding:0 10px;justify-content:flex-end;gap:8px;overflow:hidden}.brand{display:none}.links{display:flex;flex:1 1 auto;min-width:0;margin-left:0;justify-content:flex-end;gap:0;white-space:nowrap}.links a{padding:9px 4px;font-size:clamp(.43rem,1.75vw,.56rem);letter-spacing:.07em;line-height:1;color:rgba(255,255,255,.58)}.nav-cta{padding:11px 12px;font-size:clamp(.48rem,1.85vw,.58rem);letter-spacing:.08em;line-height:1}.w,.footer-in{width:min(100% - 28px,var(--max))}}
+@media(max-width:380px){.nav{padding:0 7px;gap:5px}.links a{padding:9px 3px;font-size:.42rem;letter-spacing:.055em}.nav-cta{padding:10px 9px;font-size:.46rem;letter-spacing:.055em}}.hero{position:relative;overflow:hidden;border-bottom:1px solid rgba(236,228,90,.62)}.hero::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(17,17,17,.18),rgba(17,17,17,.72));pointer-events:none}.hero-inner{position:relative;z-index:1;padding:78px 0 72px;display:grid;grid-template-columns:minmax(0,.92fr) minmax(320px,1.08fr);gap:46px;align-items:end}.hero-back{display:inline-flex;margin-bottom:22px;color:rgba(255,255,255,.45);text-decoration:none;border-bottom:1px solid rgba(255,255,255,.16);font-family:var(--mono);font-size:.64rem;font-weight:900;letter-spacing:.14em;text-transform:uppercase;transition:.2s}.hero-back:hover{color:var(--acid);border-color:var(--acid)}.hero-tag,.section-label{display:block;font-family:var(--mono);font-size:.62rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:var(--acid)}.hero-tag{margin-bottom:14px}.hero-title{font-size:clamp(4.1rem,9.2vw,8rem);line-height:.83;letter-spacing:-.075em;text-transform:uppercase;font-weight:950;max-width:7.2ch}.hero-title::after{content:".";color:var(--acid)}.hero-sub{font-size:1.12rem;color:rgba(241,237,227,.72);max-width:560px;line-height:1.65}.tabs-band{position:sticky;top:72px;z-index:80;background:rgba(17,17,17,.92);border-bottom:1px solid rgba(255,255,255,.1);backdrop-filter:blur(12px)}.tabs-inner{width:min(100% - 40px,var(--max));margin:0 auto;display:flex;gap:0;overflow-x:auto;scrollbar-width:none}.tabs-inner::-webkit-scrollbar{display:none}.tab{padding:18px 20px;background:none;border:0;border-bottom:2px solid transparent;color:rgba(255,255,255,.45);cursor:pointer;font-family:var(--sans);font-size:.65rem;font-weight:950;letter-spacing:.12em;text-transform:uppercase;transition:.2s;white-space:nowrap}.tab:hover{color:var(--paper)}.tab.active{color:var(--acid);border-bottom-color:var(--acid)}.grid-band{padding:56px 0 84px;background:linear-gradient(180deg,rgba(255,255,255,.02),transparent 22%)}.grid-inner{width:min(100% - 40px,var(--max));margin:0 auto}.section-label{margin:0 0 14px;color:rgba(236,228,90,.82)}.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:48px}.card{min-height:122px;background:rgba(17,17,17,.36);border:1px solid rgba(255,255,255,.12);display:flex;align-items:flex-start;justify-content:space-between;gap:18px;padding:23px 24px;text-decoration:none;transition:border-color .2s,background .2s,transform .2s;color:var(--paper)}.card:hover{background:rgba(17,17,17,.82);border-color:var(--acid);color:var(--paper);transform:translateY(-2px)}.card-left{display:flex;align-items:flex-start;gap:16px;min-width:0}.card-icon{width:36px;height:36px;border:1px solid rgba(236,228,90,.32);display:flex;align-items:center;justify-content:center;color:var(--acid);flex:0 0 auto;transition:.2s}.card:hover .card-icon{border-color:var(--acid);background:rgba(236,228,90,.08)}.card-title{font-size:1.02rem;font-weight:950;letter-spacing:-.035em;line-height:1.05;text-transform:uppercase;color:currentColor;margin-bottom:8px}.card-meta{font-size:.88rem;color:rgba(241,237,227,.54);line-height:1.45}.card:hover .card-meta{color:rgba(241,237,227,.72)}.card-arr{color:var(--acid);font-weight:950;transition:.2s;flex:0 0 auto}.card:hover .card-arr{transform:translate(4px,-4px)}.cards-section.hidden{display:none}.fade-in{opacity:0;transform:translateY(8px);animation:up .45s ease forwards}@keyframes up{to{opacity:1;transform:none}}@media(max-width:900px){.hero-inner{grid-template-columns:1fr;gap:22px;padding:58px 0}.hero-title{font-size:clamp(3.4rem,15vw,6rem)}.cards{grid-template-columns:1fr}.tabs-band{top:58px}.tabs-inner,.grid-inner{width:min(100% - 28px,var(--max))}}@media(max-width:520px){.hero-sub{font-size:.96rem}.card{padding:18px 16px;min-height:112px}.card-icon{display:none}.tab{padding:15px 14px;font-size:.58rem}.hero-inner{padding:44px 0 48px}}</style></head><body><header class="topbar"><div class="nav"><a class="brand" href="index.html#">ANASTASIIA · <span>ENGLISH</span></a><nav class="links"><a href="index.html#about">Обо мне</a><a href="index.html#reviews">Отзывы</a><a href="index.html#pricing">Цены</a><a href="index.html#steps">Как начать</a></nav><a class="nav-cta" href="https://t.me/m/E980QaoaYzgy">Записаться</a></div></header><section class="hero"><div class="w hero-inner"><div><a class="hero-back" href="index.html#">← на главную</a><span class="hero-tag">Archive / материалы</span><h1 class="hero-title">Загляните внутрь</h1></div><p class="hero-sub">Интерактивные упражнения, словари, грамматика, игры и статьи для самостоятельной работы и закрепления пройденного.</p></div></section><div class="tabs-band"><div class="tabs-inner"><button class="tab active" data-filter="all">Все</button><button class="tab" data-filter="grammar">Грамматика</button><button class="tab" data-filter="vocabulary">Лексика</button><button class="tab" data-filter="games">Игры</button><button class="tab" data-filter="articles">Статьи</button></div></div><div class="grid-band">
   <div class="grid-inner">
 
     <div class="cards-section" data-type="vocabulary">
@@ -154,16 +61,7 @@ body{font-family:var(--sans);font-weight:400;background:var(--black);color:var(-
     </div>
 
   </div>
-</div>
-
-<div class="snug-footer-band">
-  <footer class="snug-footer">
-    <a href="https://t.me/m/E980QaoaYzgy">Анастасия · Преподаватель →</a>
-    <a href="https://t.me/+wiAl8ae-UoAxMDE6">SE: там вообще-то шутка была →</a>
-  </footer>
-</div>
-
-<script>
+</div><footer class="footer"><div class="footer-in"><a href="https://t.me/m/E980QaoaYzgy">Анастасия · преподаватель →</a><a href="index.html#">Вернуться на главную →</a></div></footer><script>
 const tabs=document.querySelectorAll('.tab');
 const sections=document.querySelectorAll('.cards-section');
 tabs.forEach(tab=>{
@@ -174,6 +72,4 @@ tabs.forEach(tab=>{
     sections.forEach(s=>{s.classList.toggle('hidden',f!=='all'&&s.dataset.type!==f)});
   });
 });
-</script>
-</body>
-</html>
+</script></body></html>
