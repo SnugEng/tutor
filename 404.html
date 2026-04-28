@@ -2,162 +2,64 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>404 · Страница не найдена · SE</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>404 · Страница не найдена · Анастасия</title>
 <link rel="icon" type="image/png" href="assets/favicon.png">
-<link rel="preload" as="style" href="assets/fonts.css">
-<link rel="stylesheet" href="assets/fonts.css">
+<link rel="preload" as="style" href="fonts.css">
+<link rel="stylesheet" href="fonts.css">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --w:600px;--p:20px;
-  --serif:'Cormorant Garamond',serif;
-  --sans:'DM Sans',sans-serif;
-  --dark:#18120C;--dim:#A08B6E;
-  --border:rgba(60,44,20,.11);
-  --accent:#BF8C30;
-  --white:#FAF7F2;
-}
-html,body{height:100%;margin:0;padding:0;}
-body{
-  font-family:var(--sans);font-weight:300;
-  background:var(--dark);
-  color:var(--white);
-  display:grid;
-  grid-template-rows:auto 1fr auto;
-  min-height:100vh;
-}
-
-.nav{background:rgba(237,232,223,.95);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10;}
-.nav-in{max-width:var(--w);margin:0 auto;padding:16px var(--p);display:flex;align-items:center;}
-.logo{font-family:var(--serif);font-size:1rem;font-weight:400;color:#6B5A3E;text-decoration:none;opacity:1;display:flex;align-items:center;gap:7px;transition:color .2s;}
-.logo:hover{color:var(--accent);}
-.logo em{font-style:italic;color:var(--accent);}
-.logo svg{width:13px;height:13px;flex-shrink:0;color:var(--accent);}
-
-.main{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:0;
-  overflow:hidden;
-  position:relative;
-}
-
-.map-bg{position:absolute;inset:0;width:100%;height:100%;opacity:0;pointer-events:none;user-select:none;animation:mapIn 1.2s .2s ease forwards;overflow:hidden}
-.map-bg svg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:max(1400px,130%);height:auto;display:block}
-.map-bg::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 520px 340px at center,rgba(24,18,12,.78) 0%,rgba(24,18,12,.5) 45%,transparent 78%);pointer-events:none}
-@keyframes mapIn{from{opacity:0;transform:scale(.98)}to{opacity:.75;transform:scale(1)}}
-
-.content{
-  position:relative;
-  z-index:2;
-  text-align:center;
-  width:100%;
-  max-width:var(--w);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  padding:80px var(--p);
-}
-
-.title{
-  font-family:var(--serif);font-size:clamp(2.2rem,6vw,3.6rem);
-  font-weight:300;line-height:1.1;
-  color:var(--white);margin-bottom:14px;
-  opacity:0;animation:up .8s .7s ease forwards;
-}
-.title em{font-style:italic;color:rgba(212,169,74,.95)}
-.desc{
-  font-size:.87rem;color:var(--dim);line-height:1.85;
-  max-width:360px;margin:0 auto 32px;
-  opacity:0;animation:up .8s .85s ease forwards;
-}
-.btn{
-  display:inline-block;background:var(--accent);color:var(--white);
-  padding:13px 32px;font-size:.73rem;font-weight:400;
-  letter-spacing:.12em;text-transform:uppercase;text-decoration:none;
-  transition:background .3s;
-  opacity:0;animation:up .8s 1s ease forwards;
-}
-.btn:hover{background:rgba(191,140,48,.8)}
-
-.footer-band{background:rgba(0,0,0,.18);border-top:1px solid rgba(255,255,255,.05);}
-.footer{max-width:var(--w);margin:0 auto;padding:20px var(--p);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
-.footer a{font-family:var(--serif);font-style:italic;font-size:.82rem;color:var(--dim);text-decoration:none;transition:color .2s;}
-.footer a:hover{color:var(--accent)}
-
-@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+:root{--w:600px;--p:20px;--sans:'DM Sans';--black:#1a1a1a;--acid:#f4ed6b;--white:#f0ece0;--gray:#8a8a8a}
+html,body{min-height:100%}
+body{font-family:var(--sans);font-weight:400;background:var(--black);color:var(--white);line-height:1.5;overflow-x:hidden;display:grid;grid-template-rows:auto 1fr auto;min-height:100vh}
+.nav{position:sticky;top:0;z-index:100;background:var(--black);border-bottom:2px solid var(--acid)}
+.nav-in{width:100%;max-width:var(--w);margin:0 auto;padding:8px var(--p);display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px;min-height:50px}
+.nav-logo{justify-self:center;color:var(--acid);line-height:0;text-decoration:none}
+.nav-logo svg{width:18px;height:18px;display:block}
+.nav-links{display:flex;align-items:center;gap:24px;justify-self:end}
+.nav-link{font-size:.65rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:rgba(240,236,224,.45);text-decoration:none;transition:.2s}
+.nav-link:hover{color:var(--acid)}
+.nav-cta{font-size:.65rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--black);background:var(--acid);padding:11px 18px;text-decoration:none;justify-self:end;transition:.2s}
+.nav-cta:hover{background:var(--white)}
+.main{position:relative;overflow:hidden;display:flex;align-items:center;min-height:calc(100vh - 104px);background:radial-gradient(circle at 50% 0,rgba(244,237,107,.11),transparent 35%),var(--black)}
+.main::before{content:'404';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:min(58vw,32rem);font-weight:900;letter-spacing:.08em;color:rgba(244,237,107,.05);line-height:.8;pointer-events:none}
+.wrap{width:100%;max-width:var(--w);margin:0 auto;padding:76px var(--p);position:relative;z-index:2}
+.kicker{display:block;font-size:.63rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:var(--acid);margin-bottom:14px}
+.title{font-size:clamp(3.9rem,12vw,7.2rem);line-height:.86;letter-spacing:-.07em;text-transform:uppercase;font-weight:900;max-width:560px;color:var(--white);margin-bottom:24px}
+.title span{display:block;color:var(--acid)}
+.text{max-width:390px;font-size:.92rem;color:rgba(240,236,224,.58);line-height:1.7;margin-bottom:30px}
+.actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:43px;background:var(--acid);color:var(--black);padding:0 26px;text-decoration:none;font-size:.7rem;font-weight:900;letter-spacing:.16em;text-transform:uppercase;transition:.2s}
+.btn:hover{background:var(--white)}
+.ghost{display:inline-flex;align-items:center;color:rgba(240,236,224,.38);text-decoration:none;border-bottom:1px solid rgba(240,236,224,.2);font-size:.68rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase;transition:.2s}
+.ghost:hover{color:var(--acid);border-color:var(--acid)}
+.footer{background:var(--black);border-top:2px solid var(--acid)}
+.footer-in{width:100%;max-width:var(--w);margin:0 auto;padding:17px var(--p);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.footer a{color:rgba(240,236,224,.3);text-decoration:none;font-size:.62rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;transition:.2s}
+.footer a:hover{color:var(--acid)}
+@media(max-width:700px){.main::before{display:none}.nav-links{display:none}.nav-in{grid-template-columns:1fr auto 1fr}.nav-cta{padding:10px 14px;font-size:.58rem}.wrap{padding-top:58px;padding-bottom:58px}.title{font-size:clamp(3.2rem,18vw,5.4rem)}}
 </style>
 </head>
 <body>
-
-<nav class="nav">
+<header class="nav">
   <div class="nav-in">
-    <a href="index.html" class="logo">
-      <svg viewBox="0 0 48 48" fill="currentColor"><path d="M45.97 17.13c-.52-1.24-1.38-2.13-2.5-2.58l-.02-.01c-.51-.2-1.05-.3-1.59-.3h-.06c-2.55.04-5.16 2.21-6.49 5.4-.97 2.33-1.08 4.84-.3 6.72.52 1.24 1.39 2.13 2.51 2.58l.01.01c.51.2 1.05.3 1.59.3 2.58 0 5.21-2.17 6.56-5.4.96-2.33 1.07-4.84.28-6.71Z"/><path d="M35.77 30.9c-1.47-.89-2.87-1.72-3.77-3.23C29.49 23.51 27.97 21 24 21s-5.49 2.51-8.01 6.67c-.91 1.51-2.31 2.34-3.78 3.23-1.69 1.02-3.44 2.07-4.2 4.14-.29.75-.44 1.54-.44 2.34 0 3.37 2.63 6.11 5.85 6.11 1.66 0 3.44-.58 5.31-1.19 1.8-.59 3.66-1.19 5.28-1.19s3.47.61 5.26 1.19c1.87.61 3.63 1.18 5.3 1.18 3.22 0 5.84-2.74 5.84-6.11 0-.8-.15-1.6-.45-2.34-.76-2.07-2.51-3.12-4.2-4.14Z"/><path d="M14.06 17.7c1.12 1.4 2.53 2.17 3.99 2.17.2 0 .4-.01.59-.04 3.03-.45 4.93-4.15 4.3-8.44-.26-1.8-.95-3.48-1.95-4.73-1.11-1.4-2.53-2.17-3.98-2.17-.2 0-.4.01-.59.04-3.03.45-4.93 4.15-4.3 8.44.26 1.8.95 3.48 1.94 4.73Z"/><path d="M29.36 19.83c.2.03.39.04.59.04 1.46 0 2.87-.77 3.99-2.17.99-1.25 1.68-2.92 1.95-4.72.62-4.29-1.27-7.99-4.3-8.44-.2-.03-.39-.04-.59-.04-1.45.002-2.87.77-3.98 2.17-.99 1.24-1.69 2.92-1.95 4.73-.62 4.29 1.27 7.99 4.3 8.44Z"/><path d="m10.46 28.95.01-.01c1.12-.45 1.98-1.34 2.5-2.58.79-1.87.68-4.38-.3-6.72-1.34-3.23-3.98-5.4-6.55-5.4-.55-.001-1.09.1-1.59.3l-.01.01c-1.12.45-1.98 1.34-2.5 2.58-.79 1.87-.67 4.38.3 6.72 1.34 3.23 3.98 5.4 6.55 5.4.54.001 1.08-.1 1.59-.3Z"/></svg>
-      <em>Анастасия</em> · Преподаватель
-    </a>
   </div>
-</nav>
-
+</header>
 <main class="main">
-
-  <div class="map-bg">
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice">
-<g stroke="#BF8C30" stroke-width="1" fill="none" stroke-linecap="round" opacity=".55">
-<path d="M-20 80 Q120 50 260 80 T540 60 Q700 58 860 78 T1220 85"/>
-<path d="M-20 160 Q140 145 280 165 Q420 185 560 158 T840 168 Q1000 160 1220 175"/>
-<path d="M-20 240 Q160 215 320 240 Q460 260 600 232 T900 242 Q1060 245 1220 232"/>
-<path d="M-20 330 Q140 315 280 338 Q440 360 600 325 T900 338 Q1060 330 1220 345"/>
-<path d="M-20 420 Q180 400 360 425 T660 410 Q820 418 980 400 T1220 415"/>
-<path d="M-20 510 Q160 490 320 515 Q480 540 640 508 T940 520 Q1080 515 1220 528"/>
-<path d="M-20 600 Q200 580 400 610 T720 595 Q900 605 1080 585 T1230 600"/>
-</g>
-<g stroke="#BF8C30" stroke-width="0.7" fill="none" stroke-dasharray="5 7" opacity=".35">
-<path d="M100 -20 Q115 200 140 440 Q155 600 170 720"/>
-<path d="M280 -20 Q305 220 275 460 Q260 600 305 720"/>
-<path d="M480 -20 Q455 240 490 490 Q510 620 475 720"/>
-<path d="M720 -20 Q745 240 710 490 Q700 620 735 720"/>
-<path d="M920 -20 Q945 230 915 480 Q905 610 935 720"/>
-<path d="M1080 -20 Q1100 220 1065 480 Q1055 620 1085 720"/>
-</g>
-<g fill="#BF8C30">
-<circle cx="80" cy="150" r="2.5" opacity=".7"/>
-<circle cx="210" cy="95" r="2" opacity=".6"/>
-<circle cx="360" cy="175" r="3" opacity=".85"/>
-<circle cx="520" cy="130" r="2" opacity=".55"/>
-<circle cx="820" cy="90" r="2" opacity=".6"/>
-<circle cx="960" cy="165" r="2.5" opacity=".75"/>
-<circle cx="1100" cy="120" r="2" opacity=".55"/>
-<circle cx="130" cy="325" r="2" opacity=".6"/>
-<circle cx="280" cy="405" r="2.5" opacity=".7"/>
-<circle cx="890" cy="390" r="2.5" opacity=".7"/>
-<circle cx="1030" cy="330" r="2" opacity=".55"/>
-<circle cx="160" cy="570" r="2.5" opacity=".7"/>
-<circle cx="340" cy="510" r="2" opacity=".6"/>
-<circle cx="500" cy="610" r="2" opacity=".55"/>
-<circle cx="760" cy="640" r="2.5" opacity=".7"/>
-<circle cx="940" cy="585" r="2" opacity=".55"/>
-<circle cx="1140" cy="560" r="2" opacity=".6"/>
-</g>
-</svg>
-</div>
-
-  <div class="content">
-    <h1 class="title">Кажется, вы<br>свернули <em>не туда</em></h1>
-    <p class="desc">Такой страницы не существует или она была перемещена.</p>
-    <a href="index.html" class="btn">На главную</a>
-  </div>
-
+  <section class="wrap">
+    <span class="kicker">Ошибка 404</span>
+    <h1 class="title">Свернули<span>не туда.</span></h1>
+    <p class="text">Такой страницы нет или она переехала. Вернитесь на главную — там всё на месте.</p>
+    <div class="actions">
+      <a class="btn" href="index.html">На главную</a>
+    </div>
+  </section>
 </main>
-
-<div class="footer-band">
-  <footer class="footer">
+<footer class="footer">
+  <div class="footer-in">
     <a href="https://t.me/m/E980QaoaYzgy">Анастасия · Преподаватель →</a>
     <a href="index.html">Вернуться на главную →</a>
-  </footer>
-</div>
-
+  </div>
+</footer>
 </body>
 </html>
