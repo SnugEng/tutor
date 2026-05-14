@@ -334,8 +334,8 @@ h1.hero-h{font-family:'Bungee',sans-serif;font-size:clamp(64px,9vw,128px);line-h
 .foot-link:hover{color:var(--mustard);border-bottom-color:var(--mustard)}
 
 @media(max-width:1000px){.hero-grid{grid-template-columns:1fr}.warm-in{grid-template-columns:1fr;gap:1.5rem}.warm-title-wrap{position:static}.dq-g{grid-template-columns:1fr}.ph-g{grid-template-columns:1fr 1fr}.wr-g{grid-template-columns:1fr}.exit-g{grid-template-columns:1fr}.pitch-steps{grid-template-columns:1fr}}
-@media(max-width:900px){.hero{grid-template-columns:1fr;grid-template-rows:auto 360px}.hero-right{min-height:360px}.hero-left{padding:3.5rem 1.5rem 2.5rem}.hero-scroll{position:static;margin-top:2rem;left:auto;bottom:auto}.hero-stamp{right:1.2rem;bottom:1.2rem;font-size:20px}h1.hero-h{font-size:clamp(72px,22vw,140px)}}
-@media(max-width:720px){.warm-s,.art-s,.tf-s,.speak-s,.write-s{padding:3.5rem 1.3rem}.exit-s{padding:3rem 1.3rem}.tcard{padding:1.5rem 1.3rem}.hcard{padding:1.4rem}.tf-it{flex-direction:column;align-items:stretch;gap:10px}.tf-bts{padding-top:0}.tbtn{flex:1;min-width:0}.match-unmatched{grid-template-columns:1fr}.match-matched-row{grid-template-columns:1fr}.match-word,.match-def{height:auto;min-height:56px}.ph-g{grid-template-columns:1fr}.pitch-steps{flex-direction:column}.wu-pair{grid-template-columns:1fr;gap:6px}.wu-or{padding:.4rem 0;display:flex;align-items:center;gap:8px;font-size:10px}.wu-or::before,.wu-or::after{content:'';flex:1;height:1px;background:var(--line)}.wu-traits{grid-template-columns:1fr}.site-footer-in{padding:1.3rem;flex-direction:column;align-items:flex-start;gap:1rem}.foot-links{width:100%;gap:1.2rem}}
+@media(max-width:900px){.hero{grid-template-columns:56% 44%}.hero-left{padding:2.5rem 1.2rem 2rem 1.4rem}.hero-right{min-height:0}.hero-img-wrap img{object-fit:cover;object-position:center top}.hero-stamp{right:1rem;bottom:1rem;font-size:16px;padding:.35rem .7rem}.hero-scroll{position:static;margin-top:1.5rem;left:auto;bottom:auto;font-size:10px}h1.hero-h{font-size:clamp(40px,9vw,90px)}.hero-word{font-size:clamp(26px,5.5vw,52px);margin-bottom:1rem}.hero-sub{font-size:13px;margin-bottom:1.6rem;max-width:none;line-height:1.6}.hero-eyebrow{font-size:10px;margin-bottom:1.2rem}.hero-pills{gap:5px;margin-bottom:1.4rem}.pill{font-size:10px;padding:6px 12px}}
+@media(max-width:720px){.warm-s,.art-s,.tf-s,.speak-s,.write-s{padding:3.5rem 1.3rem}.exit-s{padding:3rem 1.3rem}.tcard{padding:1.5rem 1.3rem}.hcard{padding:1.4rem}.tf-row{flex-direction:column;gap:8px}.tf-bts{padding-top:0;display:flex;gap:6px;width:100%}.tf-bts .tbtn{flex:1;width:auto}.match-unmatched{grid-template-columns:1fr}.match-matched-row{grid-template-columns:1fr}.match-word,.match-def{height:auto;min-height:56px}.ph-g{grid-template-columns:1fr}.pitch-steps{flex-direction:column}.wu-pair{grid-template-columns:1fr;gap:6px}.wu-or{padding:.4rem 0;display:flex;align-items:center;gap:8px;font-size:10px}.wu-or::before,.wu-or::after{content:'';flex:1;height:1px;background:var(--line)}.wu-traits{grid-template-columns:1fr}.drag-sentence{font-size:14px;line-height:1.9}.drag-slot{min-width:100px;font-size:14px}.mc-r{gap:9px}.mc-t{font-size:14px;padding-top:5px}.site-footer-in{padding:1.3rem;flex-direction:column;align-items:flex-start;gap:1rem}.foot-links{width:100%;gap:1.2rem}}
 </style>
 </head>
 <body>
@@ -812,10 +812,12 @@ document.querySelectorAll('.fade').forEach(function(e){_io.observe(e);});
 
 var stickyEl=document.getElementById('stickyScore');
 function updateSticky(){
-  var target=document.querySelector('.tf-s');
-  if(!target){return;}
-  var show=window.scrollY+80>=target.offsetTop;
-  if(show)stickyEl.classList.add('show');
+  var start=document.querySelector('.tf-s');
+  var end=document.querySelector('.write-s');
+  if(!start){return;}
+  var pastStart=window.scrollY+80>=start.offsetTop;
+  var pastEnd=end&&window.scrollY+80>=end.offsetTop;
+  if(pastStart&&!pastEnd)stickyEl.classList.add('show');
   else stickyEl.classList.remove('show');
 }
 window.addEventListener('scroll',updateSticky);updateSticky();
@@ -1116,7 +1118,7 @@ function buildTF(){
   TF.forEach(function(item,i){
     var d=document.createElement('div');
     d.className='tf-it';
-    d.innerHTML='<div class="tf-row"><span class="tf-tx"><span class="tf-n">'+(i+1)+'.</span>'+item.t+'</span><span class="tf-bts" id="tfbtns'+i+'"><button class="tbtn" id="tT'+i+'" onclick="selTF('+i+',\'T\')">T</button><button class="tbtn" id="tF'+i+'" onclick="selTF('+i+',\'F\')">F</button><button class="tbtn" id="tN'+i+'" onclick="selTF('+i+',\'NS\')">NS</button></span></div><div class="hint-box" id="tfhint'+i+'">'+item.hint+'</div>';
+    d.innerHTML='<div class="tf-row"><span class="tf-tx"><span class="tf-n">'+(i+1)+'.</span>'+item.t+'</span></div><div class="tf-bts" id="tfbtns'+i+'"><button class="tbtn" id="tT'+i+'" onclick="selTF('+i+',\'T\')">T</button><button class="tbtn" id="tF'+i+'" onclick="selTF('+i+',\'F\')">F</button><button class="tbtn" id="tN'+i+'" onclick="selTF('+i+',\'NS\')">NS</button></div><div class="hint-box" id="tfhint'+i+'">'+item.hint+'</div>';
     w.appendChild(d);
   });
 }
@@ -1136,8 +1138,8 @@ function checkAllTF(){
       if(c===item.a){document.getElementById(userId).className='tbtn ok';ok++;}
       else{document.getElementById(userId).className='tbtn no';}
     }
-    var btns=document.getElementById('tfbtns'+i);
     if(!document.getElementById('tfhint'+i+'_lamp')){
+      var btns=document.getElementById('tfbtns'+i);
       btns.appendChild(makeLamp('tfhint'+i,function(){toggleHint('tfhint'+i);}));
     }
   });

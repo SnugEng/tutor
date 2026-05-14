@@ -230,10 +230,16 @@ h1.hero-h em{color:var(--lime);font-style:normal;display:block}
   .warmup-h{font-size:20px}
 }
 @media(max-width:720px){
-  .hero{grid-template-columns:1fr;grid-template-rows:auto 340px}
-  .hero-right{display:flex;min-height:340px}
-  .hero-left{padding:2.5rem 1.5rem 2rem}
-  .hero-scroll{position:static;margin-top:2rem;left:auto;bottom:auto}
+  .hero{grid-template-columns:58% 42%;min-height:100svh}
+  .hero-left{padding:2.2rem 1.2rem 2rem 1.4rem;justify-content:center}
+  .hero-right{min-height:0}
+  .hero-img-wrap img{object-fit:cover;object-position:center top}
+  h1.hero-h{font-size:clamp(28px,7vw,48px);margin-bottom:1rem}
+  .hero-sub{font-size:13px;margin-bottom:1.6rem;max-width:none;line-height:1.6}
+  .hero-pills{gap:6px}
+  .pill{font-size:10px;padding:5px 12px}
+  .hero-eyebrow{font-size:11px;margin-bottom:1.4rem}
+  .hero-scroll{position:static;margin-top:1.6rem;left:auto;bottom:auto;font-size:11px}
   .warmup-s{padding:2.5rem 1.3rem 2.4rem}
   .warmup-h{font-size:20px}
   .warmup-words{font-size:13px;line-height:1.85}
