@@ -319,7 +319,7 @@ h1.hero-h em{color:var(--lime);font-style:normal;display:block}
     <p class="dc">'Mum, you're always on your phone.' These words from my seven-year-old daughter landed a gut-punch of pure, undiluted guilt. As beauty editor of <em>Women's Health</em>, I need to be extremely online. But somewhere between watching dermatologists dissect influencer nonsense and posting stories about pieces I've published, I fall into a <span class="vhl" onclick="toggleTip(this)"><span class="vhl-word">scroll vortex</span><span class="vhl-def">getting completely absorbed in scrolling, losing all track of time</span></span>, one I can feel corroding my fruit fly-adjacent <span class="vhl" onclick="toggleTip(this)"><span class="vhl-word">attention span</span><span class="vhl-def">the length of time you can concentrate on one thing</span></span>.</p>
     <p>So, when (ironic, I know) TikTok's algorithm began pushing its latest <span class="vhl" onclick="toggleTip(this)"><span class="vhl-word">self-improvement</span><span class="vhl-def">activities aimed at making yourself better or more successful</span></span> obsession, the 75 Smart challenge, I felt both defensive and seen. Created by Sarah Lynn after she felt her brain turning to 'absolute mush', the 75-day challenge promises sharper <span class="vhl" onclick="toggleTip(this)"><span class="vhl-word">cognition</span><span class="vhl-def">the ability to think clearly and understand things quickly</span></span> and more <span class="vhl" onclick="toggleTip(this)"><span class="vhl-word">mindful</span><span class="vhl-def">paying deliberate attention to the present moment; intentional</span></span> content consumption. It's essentially the intellectual equivalent of the 75 Hard fitness challenge.</p>
     <div class="pull">"The brain doesn't repair itself in noise — it repairs itself in quiet."</div>
-    <p>It's all peak <span class="vhl" onclick="toggleTip(this)"><span class="vhl-word">analogue</span><span class="vhl-def">not digital; using physical objects like paper instead of screens</span></span>: audio-free morning walks, no social media between 9.30pm and 10am, reading a paper book daily, writing a morning page, no <span class="vhl" onclick="toggleTip(this)"><span class="vhl-word">multitasking</span><span class="vhl-def">doing more than one thing at the same time</span></span> media, seven hours' sleep, playing an instrument and learning a language thrice weekly. I discard language or instrument learning (I have two young kids) but replace with creative writing — and adhere to the rest.</p>
+    <p>It's all peak <span class="vhl" onclick="toggleTip(this)"><span class="vhl-word">analogue</span><span class="vhl-def">not digital; using physical objects like paper instead of screens</span></span>: audio-free morning walks, no social media between 9.30pm and 10am, reading a paper book daily, writing a morning page, no <span class="vhl" onclick="toggleTip(this)"><span class="vhl-word">multitasking media</span><span class="vhl-def">using multiple digital devices or apps at the same time</span></span>, seven hours' sleep, playing an instrument and learning a language thrice weekly. I discard language or instrument learning (I have two young kids) but replace with creative writing — and adhere to the rest.</p>
     <p>The audio-free mornings were the easiest. I ditched podcasts and resisted firing off voice notes on dog walks. Initially, I felt bored, but plans began to form — and problems untangled.</p>
     <div class="expert">
       <div class="exp-bar"></div>
@@ -529,7 +529,7 @@ var MATCH_DATA=[
   {w:"piecemeal",         d:"Done in small, unconnected parts; unsystematic"},
   {w:"hooked",            d:"Addicted; unable to stop using something despite negative effects"},
   {w:"self-improvement",  d:"Activities aimed at making yourself better or more successful"},
-  {w:"multitasking",      d:"Using more than one type of media or app at the same time"},
+  {w:"multitasking media",      d:"Using multiple digital devices or apps at the same time"},
   {w:"neuroplasticity",   d:"The brain's capacity to change its structure through experience"},
   {w:"mindful",           d:"Paying deliberate attention to the present moment; intentional"}
 ];
@@ -617,14 +617,14 @@ function selectMatch(el,type){
 }
 
 var DD=[
-  {b:"Devices and apps are deliberately designed to",               a:"keep users hooked",          e:"— that's why they're so hard to put down."},
-  {b:"Reading a paper book before bed is a great",                  a:"analogue alternative",       e:"to scrolling on your phone."},
-  {b:"Constant notifications gradually",                            a:"corrode your attention span",e:"until focusing feels almost impossible."},
-  {b:"Every morning I try to",                                      a:"resist the urge to scroll",  e:"before I've even had coffee."},
-  {b:"Small, unconnected fixes rarely work — ",                     a:"piecemeal changes",          e:"don't lead to lasting transformation."},
-  {b:"Quiet time and new habits can",                               a:"rewire your brain",          e:"thanks to the way neurons adapt."},
-  {b:"Silent walks and focused reading help",                       a:"sharpen cognition",          e:"and boost mental clarity."},
-  {b:"Scrolling on autopilot is the opposite of",                   a:"mindful content consumption",e:"which demands real attention."}
+  {b:"Devices and platforms are deliberately designed to keep",           a:"users hooked",          e:"and spending hours online."},
+  {b:"Reading a physical book before bed is a wonderful",            a:"analogue alternative",       e:"to looking at a screen."},
+  {b:"Constant notifications and distractions can easily corrode your",           a:"attention span",e:"over time."},
+  {b:"Opening Instagram on autopilot makes it incredibly easy to fall",   a:"into a scroll",  e:"vortex and lose track of time."},
+  {b:"Isolated, chaotic fixes rarely work because scattered,",       a:"piecemeal efforts",          e:"don't bring lasting change."},
+  {b:"Giving your mind quiet time creates the perfect conditions for",              a:"neuroplasticity", e:"to reshape your brain pathways."},
+  {b:"Engaging in silent morning walks can significantly",           a:"sharpen cognition",          e:"and improve daily focus."},
+  {b:"Choosing what you watch intentionally leads to more mindful",          a:"content consumption",e:"instead of mindless scrolling."}
 ];
 var ddSlots={},dragging=null,picked=null;
 function clearPicked(){
@@ -730,7 +730,7 @@ var TF=[
   {t:"The 75 Smart Challenge was created by a neuroscientist.", a:"NS", hint:"The text only tells us the challenge was created by Sarah Lynn — her profession is never mentioned."},
   {t:"One rule of the challenge is: no social media between 9:30pm and 10am.", a:"T", hint:"Directly listed in the rules: 'no social media between 9.30pm and 10am'."},
   {t:"The author found audio-free morning walks the most difficult rule.", a:"F", hint:"She says the opposite: 'The audio-free mornings were the easiest.'"},
-  {t:"Deleting the app from the home screen helped the author scroll less in the morning.", a:"T", hint:"She writes: 'I deleted the app from my home screen and logged in only via my browser' — as a strategy against morning scrolling."},
+  {t:"The author deleted the social media app from her home screen to prevent mindless morning scrolling.", a:"T", hint:"She writes that the before-10am rule was harder, so she deleted the app to break the habit of scrolling immediately upon waking."},
   {t:"The challenge requires learning a new language and playing an instrument every day.", a:"F", hint:"The rule is 'thrice weekly' (three times a week), not every day. Also, the author replaces this rule with creative writing."},
   {t:"The author believes the challenge is a perfect solution to digital addiction.", a:"F", hint:"She asks rhetorically: 'Is this the silver bullet solution…? No.' — the challenge helps but isn't a magic fix."},
   {t:"Handwriting the morning page felt natural and easy from the first day.", a:"F", hint:"It 'felt slower, almost resistant at first' — the opposite of natural and easy."},
@@ -740,47 +740,47 @@ var TF=[
 
 var MC=[
   {q:"1. Why does the author feel 'defensive and seen' when TikTok shows her the challenge?",
-   o:["She thinks the challenge is silly.","She recognises her own problem in the description.","She wants to criticise the algorithm."],
+   o:["She wants to prove that the TikTok algorithm targets her unfairly.","She feels exposed because the challenge accurately targets her digital habits.","She feels the need to defend her screen time to her editor."],
    c:1, hint:"She admits her attention span is corroding — so the challenge exposes a weakness she already knew about but hadn't addressed."},
   {q:"2. What does the phrase 'fruit fly-adjacent attention span' suggest?",
-   o:["The author loves insects.","Her ability to focus has become very short.","She is studying biology."],
-   c:1, hint:"A fruit fly's attention is famously fleeting — this is a self-mocking metaphor for her very short concentration ability."},
+   o:["Her concentration span has become extremely short and unstable.","She has developed a medical condition affecting her long-term memory.","She finds it easier to focus on short, scientific articles about nature."],
+   c:0, hint:"A fruit fly's attention is famously fleeting — this is a self-mocking metaphor for her very short concentration ability."},
   {q:"3. Why does the author replace 'learning a language' with creative writing?",
-   o:["She doesn't like languages.","She has two young kids and needs a more flexible option.","Creative writing is part of the original challenge."],
-   c:1, hint:"She explicitly writes '(I have two young kids)' as the reason — practical flexibility, not dislike."},
+   o:["She values artistic expression over linguistic skills.","She requires a more adaptable routine due to family commitments.","She believes language apps contribute to digital fatigue."],
+   c:1, hint:"She explicitly writes '(I have two young kids)' as the reason — she needs practical flexibility, not rigid rules."},
   {q:"4. What is the main purpose of the 'morning page'?",
-   o:["To plan the day's tasks.","To activate language and emotional processing pathways.","To replace social media scrolling."],
+   o:["To systematically organize her daily workload.","To stimulate neural and cognitive pathways for the day ahead.","To draft her upcoming articles for Women's Health."],
    c:1, hint:"Dr Velazquez says it 'activates language, emotional processing and motor pathways for the day ahead'."},
   {q:"5. What does Dr Velazquez mean by 'rewire your brain'?",
-   o:["Change the physical structure of the brain through new habits.","Install new software on your devices.","Delete addictive apps permanently."],
+   o:["Alter and adapt neural pathways through consistent behavioral changes.","Reset the brain's baseline chemical tolerance to boredom.","Eliminate psychological dependencies formed during childhood."],
    c:0, hint:"He's talking about neuroplasticity — the brain's ability to physically reorganise itself through experience and new habits."},
   {q:"6. Why does the author say 'the pushback shouldn't be down to individuals'?",
-   o:["People are too lazy to change.","Companies design addictive platforms, so systemic change is also needed.","Challenges like this never work."],
+   o:["Most individuals lack the psychological training to manage screen time.","Tech platforms are systematically engineered for addiction, requiring corporate responsibility.","Personal self-improvement challenges cause unnecessary mental stress."],
    c:1, hint:"She argues platforms are 'designed to keep users hooked' — so blaming individuals alone ignores the system manipulating them."},
   {q:"7. What is the author's attitude towards the challenge by the end?",
-   o:["Completely disappointed.","Cautiously optimistic — it helps, but isn't a magic fix.","Enthusiastic — she recommends it to everyone."],
-   c:1, hint:"She says 'No' to silver bullet, but also 'I do feel more in control' — a balanced, measured position."},
+   o:["Highly cynical about short-term viral internet trends.","Cautiously positive, viewing it as a practical tool rather than a flawless cure.","Unconditionally enthusiastic, planning to complete the full 75 days."],
+   c:1, hint:"She says 'No' to silver bullet, but also 'I do feel more in control' — a balanced, measured, cautiously optimistic position."},
   {q:"8. What does 'corroding my attention span' imply?",
-   o:["Her focus is slowly getting worse.","She is physically damaging her eyes.","She is becoming more creative."],
+   o:["Her ability to maintain deep focus is being progressively damaged.","Her vision is deteriorating due to prolonged blue light exposure.","Her creative output is increasing due to constant internet exposure."],
    c:0, hint:"'Corrode' means to gradually eat away or weaken — her ability to concentrate is slowly being destroyed by constant scrolling."}
 ];
 
 var FI=[
-  {b:"After three hours of", a:"doomscrolling", e:"she felt anxious and couldn't sleep.",
-   def:"scrolling through negative news for a long time even when it makes you feel worse",
-   hint:"The noun form follows the preposition 'of' — you need a gerund/noun meaning endless negative-news scrolling."},
-  {b:"Reading a paper book is a great", a:"analogue", e:"alternative to screens before bed.",
+  {b:"The writer's late-night habit of", a:"doomscrolling", e:"ruined her sleep quality.",
+   def:"scrolling through addictive or negative content on your phone for a long time",
+   hint:"A noun or gerund that describes endlessly moving through social media feeds on autopilot."},
+  {b:"She chose to embrace", a:"analogue", e:"habits, like reading actual paper books.",
    def:"using physical, non-digital methods instead of screens",
-   hint:"Opposite of digital. Collocates with 'alternative' to describe non-screen options."},
-  {b:"The course aims to improve students'", a:"cognition", e:"through critical thinking exercises.",
-   def:"the mental ability to think clearly, learn and understand",
-   hint:"An abstract, uncountable noun — no article needed, just the plain form."},
-  {b:"Practising", a:"mindful", e:"eating means paying full attention to the taste and texture of food.",
-   def:"paying deliberate attention to the present moment; intentional",
-   hint:"An adjective meaning deliberately attentive — it modifies the gerund 'eating'."},
-  {b:"Constant notifications can seriously shorten your", a:"attention span", e:".",
-   def:"the length of time you can concentrate on one thing",
-   hint:"A two-word noun phrase about focus duration — 'shorten your ___' is a very common collocation."}
+   hint:"An adjective meaning non-digital. It modifies 'habits' to describe physical objects."},
+  {b:"The challenge promises sharper", a:"cognition", e:"and much better focus.",
+   def:"the mental ability to think clearly, integrate memory, and understand things",
+   hint:"An abstract noun related to brain function and intellectual processing."},
+  {b:"She wanted to build a more", a:"mindful", e:"approach to consuming media.",
+   def:"paying deliberate, intentional attention to the present moment",
+   hint:"An adjective that means being fully aware of what you are doing, the opposite of brain mush."},
+  {b:"Constant notifications had badly damaged her", a:"attention span", e:"over the years.",
+   def:"the length of time a person can concentrate on one thing without getting distracted",
+   hint:"A two-word noun phrase that describes your capacity to stay focused on a task."}
 ];
 
 var ST=[
@@ -793,9 +793,9 @@ var ST=[
   {q:"3. The challenge replaces bad habits with good ones — it's not pure ____.",
    o:["cognition","deprivation","neuroplasticity"],
    c:1, hint:"'Pure ___' = being forced to live without something. The article contrasts it with replacement."},
-  {q:"4. Media ____ while studying — scrolling, videos, podcasts at once — reduces learning.",
-   o:["multitasking","cognition","piecemeal"],
-   c:0, hint:"'Media ___' is a set collocation: using several media types at the same time."},
+{q:"4. Engaging in ____ media while studying — combining scrolling, videos, and podcasts — severely reduces learning efficiency.",
+ o:["multitasking","cognition","piecemeal"],
+ c:0, hint:"The article refers to combining digital tasks and content as multitasking media."},
   {q:"5. Quiet time and new habits support ____, letting the brain form new pathways.",
    o:["deprivation","hooked","neuroplasticity"],
    c:2, hint:"The brain's ability to change and form new connections. No other word fits 'form new pathways'."}
