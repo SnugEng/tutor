@@ -596,6 +596,18 @@ nav.hero-cta-visible .nav-cta{opacity:0;transform:translateY(-6px);pointer-event
   .mark .pen path{transition:none;stroke-dasharray:none;stroke-dashoffset:0}
   .btn,.nav-cta,.car-arrow,.biglink,.plat{transition:none}
 }
+#reviews .review-card{display:flex!important;flex-direction:column!important}
+#reviews .review-card .review-who{margin-top:auto!important}
+#reviews .review-card .review-text.clamped{display:-webkit-box!important;-webkit-box-orient:vertical!important;-webkit-line-clamp:7!important;overflow:hidden!important}
+.review-more{align-self:flex-start;margin:10px 0 16px;padding:0 0 2px;background:none;border:0;border-bottom:2px solid var(--acid);cursor:pointer;font-family:var(--sans);font-size:.64rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);transition:color .2s ease}
+.review-more:hover,.review-more:focus-visible{color:rgba(17,17,17,.55);outline:none}
+.review-modal{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(17,17,17,.72)}
+.review-modal.open{display:flex}
+.review-modal-card{position:relative;width:min(560px,100%);max-height:min(82svh,660px);overflow-y:auto;background:var(--paper);color:var(--ink);border-left:4px solid var(--acid);padding:30px 34px 26px;box-shadow:0 24px 80px rgba(0,0,0,.45)}
+.review-modal-card .review-text{max-width:none;white-space:normal;overflow-wrap:anywhere}
+.review-modal-close{position:absolute;top:12px;right:12px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid rgba(17,17,17,.25);color:var(--ink);cursor:pointer;font-size:15px;line-height:1;transition:border-color .2s ease}
+.review-modal-close:hover,.review-modal-close:focus-visible{border-color:var(--ink)}
+@media (max-width:520px){.review-modal-card{padding:24px 20px 20px}}
 </style>
 
 </head>
@@ -766,21 +778,17 @@ nav.hero-cta-visible .nav-cta{opacity:0;transform:translateY(-6px);pointer-event
     <h2 class="h2 reveal">Что <span class="accent">говорят</span></h2>
     <div class="car-wrap reveal">
       <div class="car-track" id="reviewTrack">
-        <article class="review-card" data-review="0"><span class="review-level">A2 → Low B2</span><p class="review-text">Я начал читать книги на английском, смотреть фильмы и даже что-то понимать при просмотре ))) для меня это уже достижение. 
-<br>А так же при поездках за границу получалось общаться с людьми - это вообще за гранью )). 
-<br>Наши уроки мне очень нравились и в общем все было отлично. 
-<br>Еще раз большое спасибо. 🌺</p><div class="review-who">Ученик, взрослый</div></article>
+        <article class="review-card" data-review="0"><span class="review-level">A2 → Low B2</span><p class="review-text">Я начал читать книги на английском, смотреть фильмы и даже что-то понимать при просмотре ))) для меня это уже достижение. А так же при поездках за границу получалось общаться с людьми - это вообще за гранью )). 
+<br>Наши уроки мне очень нравились и в общем все было отлично. Еще раз большое спасибо. 🌺</p><div class="review-who">взрослый ученик</div></article>
         <article class="review-card" data-review="1"><span class="review-level">С нуля → Low A2</span><p class="review-text">Я честно не думал что в 30+ можно вообще начать говорить на английском, но вот недавно в поездке сам общался в кафе и даже понял, что мне отвечали. Это был культурный шок! <br>Спасибо за терпение.)</p><div class="review-who">взрослый ученик</div></article>
         <article class="review-card" data-review="2"><span class="review-level">A2 → B2</span><p class="review-text">О сотрудничестве с Вами могу отозваться только в положительном ключе. Занимается сын, конечно, но лично мне нравится Ваш современный подход к занятиям. О нюансах мне трудно судить, но тот факт, что сын свободно разговаривает на английском, для меня является ценным результатом. Также хочу отметить Вашу компетентность, вежливость, пунктуальность, применение разнообразных методик,  регулярные отчеты о проделанной работе и результатах, а также  индивидуальный подход к ученику ( этот пункт для меня важен). Однозначно, я рекомендую Вас как репетитора и надеюсь на дальнейшее взаимодействие)</p><div class="review-who">об ученике студенте</div></article>
-        <article class="review-card" data-review="3"><span class="review-level">A2 → B2</span><p class="review-text">мне так нравятся все эти игровые приложения и оформления! <br>после работы я обычно вообще ничего не хочу, а тут подключилась к уроку и даже не заметила как он закончился!! 🙈💕</p><div class="review-who">взрослая ученица</div></article>
+        <article class="review-card" data-review="3"><span class="review-level">A2 → B2</span><p class="review-text">мне так нравятся все эти игровые приложения и оформления! после работы я обычно вообще ничего не хочу, а тут подключилась к уроку и даже не заметила как он закончился!! 🙈💕</p><div class="review-who">взрослая ученица</div></article>
         <article class="review-card" data-review="4"><span class="review-level">A2 → Low B1</span><p class="review-text">Мне все нравится, я вижу интерес дочери к занятиям. Так же стала замечать, что она стала понимать на слух, произношение стало намного лучше. Лучше стала читать, очень возмущается, когда неправильно переводят названия фильмов 🤣. 
-<br>Так что результат у нас заметен, планируем дальше развиваться. 
-<br>Я вас конечно всем рекомендую, потому что вы феноменально находите подход к подросткам, умеете их заинтересовать предметов и результат не заставляет себе долго ждать. 
+<br>Так что результат у нас заметен, планируем дальше развиваться. Я вас конечно всем рекомендую, потому что вы феноменально находите подход к подросткам, умеете их заинтересовать предметов и результат не заставляет себе долго ждать. 
 <br>Спасибо вам!</p><div class="review-who">об ученице подростке</div></article>
         <article class="review-card" data-review="5"><span class="review-level">A1 → A2</span><p class="review-text">Добрый день Анастасия, спасибо за информацию и за успехи дочери, я вижу, что ей нравится с вами заниматься, и мне понравилось, что она уверенно выбрала Английский для МЦКО, и собралась на следующий год сдавать ОГЭ</p><div class="review-who">об ученице подростке</div></article>
-        <article class="review-card" data-review="6"><span class="review-level">A2 → Low B1</span><p class="review-text">Ему очень нравится на занятиях, спасибо большое за то, что нашли подход! <br>Кстати, зачёт и экзамен в университете сдал сразу. <br>Это результат вашей совместной работы 🌺</p><div class="review-who">об ученике студенте</div></article>
-        <article class="review-card" data-review="7"><span class="review-level">A2 → Low B1</span><p class="review-text">Прогресс у нее есть, видно, что старается. Перестала страдать, что ничего не понимает на уроках. 
-<br>В путешествии даже сама говорила немного по-английски. <br>Спасибо большое :)</p><div class="review-who">об ученице подростке</div></article>
+        <article class="review-card" data-review="6"><span class="review-level">A2 → Low B1</span><p class="review-text">Ему очень нравится на занятиях, спасибо большое за то, что нашли подход! Кстати, зачёт и экзамен в университете сдал сразу. <br>Это результат вашей совместной работы 🌺</p><div class="review-who">об ученике студенте</div></article>
+        <article class="review-card" data-review="7"><span class="review-level">A2 → Low B1</span><p class="review-text">Прогресс у нее есть, видно, что старается. Перестала страдать, что ничего не понимает на уроках. В путешествии даже сама говорила немного по-английски. <br>Спасибо большое :)</p><div class="review-who">об ученице подростке</div></article>
         <article class="review-card" data-review="8"><span class="review-level">low B1 → B2</span><p class="review-text">В начале занятий мы разбирали короткие отрывки, и это было тяжело, 15 минут выдерживал еле. Сейчас мы спокойно обсуждаем интересные темы и я вообще не замечаю как пролетает час. Жду следующий урок по Kikoriki!)) </p><div class="review-who">взрослый ученик</div></article>
       </div>
       <div class="car-controls">
@@ -1017,7 +1025,7 @@ const tickerData = [
     track.addEventListener('touchend', restart, { passive: true });
     window.addEventListener('resize', () => goTo(current, false));
 
-    return { goTo };
+    return { goTo, stop, start };
   }
 
   setupSimpleCarousel({
@@ -1047,6 +1055,87 @@ const tickerData = [
       }
     });
   });
+
+  const reviewModal = (() => {
+    const modal = document.createElement('div');
+    modal.className = 'review-modal';
+    modal.innerHTML = '<div class="review-modal-card" role="dialog" aria-modal="true" aria-label="Полный текст отзыва"><button type="button" class="review-modal-close" aria-label="Закрыть">✕</button><span class="review-level"></span><p class="review-text"></p><div class="review-who"></div></div>';
+    document.body.appendChild(modal);
+    const card = modal.querySelector('.review-modal-card');
+    const closeBtn = modal.querySelector('.review-modal-close');
+    const levelEl = modal.querySelector('.review-level');
+    const textEl = modal.querySelector('.review-text');
+    const whoEl = modal.querySelector('.review-who');
+    let lastFocus = null;
+
+    const close = () => {
+      modal.classList.remove('open');
+      document.body.style.overflow = '';
+      document.body.style.paddingRight = '';
+      if (reviewCarousel) reviewCarousel.start();
+      if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
+      lastFocus = null;
+    };
+
+    const open = (sourceCard) => {
+      const level = sourceCard.querySelector('.review-level');
+      const text = sourceCard.querySelector('.review-text');
+      const who = sourceCard.querySelector('.review-who');
+      levelEl.textContent = level ? level.textContent : '';
+      textEl.innerHTML = text ? text.innerHTML : '';
+      whoEl.textContent = who ? who.textContent : '';
+      lastFocus = document.activeElement;
+      const zoomFactor = parseFloat(document.body.style.zoom) || 1;
+      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      if (scrollbarWidth > 0) document.body.style.paddingRight = (scrollbarWidth / zoomFactor) + 'px';
+      if (reviewCarousel) reviewCarousel.stop();
+      card.scrollTop = 0;
+      closeBtn.focus();
+    };
+
+    closeBtn.addEventListener('click', close);
+    modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('open')) close();
+    });
+
+    return { open };
+  })();
+
+  const refreshReviewClamp = () => {
+    document.querySelectorAll('#reviews .review-card').forEach((cardEl) => {
+      const text = cardEl.querySelector('.review-text');
+      if (!text) return;
+      const oldBtn = cardEl.querySelector('.review-more');
+      if (oldBtn) oldBtn.remove();
+      text.classList.add('clamped');
+      if (text.scrollHeight <= text.clientHeight + 2) {
+        text.classList.remove('clamped');
+        return;
+      }
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'review-more';
+      btn.textContent = 'Читать целиком';
+      btn.addEventListener('click', () => reviewModal.open(cardEl));
+      text.after(btn);
+    });
+  };
+
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(refreshReviewClamp);
+  } else {
+    refreshReviewClamp();
+  }
+  refreshReviewClamp();
+
+  let clampTimer = null;
+  window.addEventListener('resize', () => {
+    if (clampTimer) clearTimeout(clampTimer);
+    clampTimer = setTimeout(refreshReviewClamp, 150);
+  }, { passive: true });
 });
 
   const fitScale = () => {
