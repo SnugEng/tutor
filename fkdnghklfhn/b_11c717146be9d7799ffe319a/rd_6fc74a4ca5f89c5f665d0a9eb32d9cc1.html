@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reading — SNUG Archive</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#111111;--bg2:#181818;--paper:#f1ede3;--paper2:#f7f3ea;--ink:#111111;--acid:#ece45a;--course:#c7a3e8;--line:rgba(255,255,255,.11);--line-dark:rgba(17,17,17,.13);--sans:Inter,"DM Sans",Arial,sans-serif;--mono:"Space Mono","IBM Plex Mono",Consolas,monospace}
+html,body{height:100%;width:100%;overflow:hidden}body{background:var(--bg);color:var(--paper);font-family:var(--sans)}body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.045;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='170' height='170'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.05' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}a{color:inherit;text-decoration:none}button,input{font:inherit}*{scrollbar-width:thin;scrollbar-color:var(--course) transparent}*::-webkit-scrollbar{width:10px;height:0}*::-webkit-scrollbar-track{background:transparent}*::-webkit-scrollbar-thumb{background:var(--course);border:3px solid transparent;background-clip:padding-box}
+.topbar{height:64px;border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 24px;background:rgba(17,17,17,.96)}.archive-brand{font-weight:950;text-transform:uppercase;letter-spacing:.16em;font-size:.72rem;white-space:nowrap}.archive-brand span{color:var(--acid)}.source{margin-left:auto;height:38px;border:1px solid var(--line);display:flex;align-items:center;padding:0 14px;font:800 .54rem/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.7);transition:.2s}.source:hover{border-color:var(--course);color:var(--course)}
+.app{display:grid;grid-template-columns:294px minmax(0,1fr);width:100%;height:calc(100vh - 64px);overflow:hidden}.sidebar{height:100%;padding:22px 18px;overflow-x:hidden;overflow-y:auto;background:var(--bg);border-right:1px solid var(--line);scrollbar-color:var(--course) var(--bg)}.board-kicker{font:700 .54rem/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.38)}.board-title{margin:10px 0 7px;font-size:2rem;line-height:1;font-weight:950;text-transform:uppercase;letter-spacing:-.055em;white-space:nowrap;color:var(--paper)}.board-title span{color:var(--course)}.meta{font:700 .52rem/1.5 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.42);margin-bottom:18px}.search{width:100%;height:40px;background:var(--bg2);border:1px solid var(--line);color:var(--paper);padding:0 11px;outline:none;margin-bottom:20px}.search::placeholder{color:rgba(255,255,255,.35)}.search:focus{border-color:var(--course)}.cap{font:700 .49rem/1 var(--mono);letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.35);margin:0 0 8px 2px}.nav{display:grid;gap:6px}.nav-btn{min-height:46px;width:100%;border:1px solid rgba(255,255,255,.13);background:rgba(255,255,255,.015);color:rgba(241,237,227,.88);padding:7px 9px 7px 11px;display:grid;grid-template-columns:26px minmax(0,1fr) auto;gap:8px;align-items:center;text-align:left;cursor:pointer;transition:.2s ease}.nav-btn:hover{border-color:var(--course);background:rgba(255,255,255,.035);color:#fff;transform:translateX(2px)}.nav-btn.active{background:transparent;border-color:var(--course);color:#fff;transform:none;box-shadow:inset 0 0 0 1px var(--course)}.nav-index{font:700 .5rem/1 var(--mono);color:rgba(255,255,255,.38)}.nav-btn.active .nav-index{color:var(--course)}.nav-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.71rem;font-weight:900;text-transform:uppercase;letter-spacing:.02em;line-height:1.05}.nav-count{min-width:25px;height:21px;border:1px solid rgba(255,255,255,.16);display:grid;place-items:center;font:700 .48rem/1 var(--mono);color:rgba(255,255,255,.62)}.nav-btn.active .nav-count{background:transparent;border-color:var(--course);color:var(--course)}
+.main{height:100%;background:var(--paper);color:var(--ink);display:grid;grid-template-rows:auto minmax(0,1fr);min-width:0}.top{position:relative;display:flex;align-items:end;justify-content:space-between;gap:24px;padding:22px 34px 18px;border-bottom:1px solid var(--line-dark);background:var(--paper)}.top::before{content:"";position:absolute;left:0;top:0;bottom:0;width:8px;background:var(--course)}.top-copy{min-width:0}.top-label{font:700 .5rem/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:rgba(17,17,17,.38);margin-bottom:8px}.top h2{font-size:clamp(2.3rem,3.8vw,4rem);line-height:.87;letter-spacing:-.06em;text-transform:uppercase;font-weight:950;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.top-stats{display:flex;flex:0 0 auto;border:1px solid var(--line-dark);background:var(--paper2)}.pill{min-width:152px;padding:12px;font:700 .48rem/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:rgba(17,17,17,.46);text-align:center}
+.board-wrap{overflow-x:hidden;overflow-y:auto;padding:20px 34px 48px;background:var(--paper);scrollbar-color:var(--course) var(--paper)}.board{display:grid;align-content:start;gap:18px;width:100%;min-width:0}.column{width:100%;min-width:0;border:1px solid var(--line-dark);background:#ebe5d8;overflow:hidden}.column-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:13px;background:#ebe5d8;border-bottom:1px solid var(--line-dark)}.column-title{font-size:.86rem;line-height:1.08;text-transform:uppercase;font-weight:950;letter-spacing:-.01em}.column-count{flex:0 0 auto;min-width:25px;height:21px;border:1px solid var(--ink);display:grid;place-items:center;background:var(--ink);color:var(--course);font:700 .48rem/1 var(--mono)}.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:stretch;gap:10px;padding:10px}.card{display:flex;min-width:0;overflow:hidden;flex-direction:column;color:inherit;border:1px solid var(--line-dark);background:var(--paper2);transition:.2s ease}.card:hover{border-color:var(--course);transform:translateY(-2px)}.preview-link{display:block}.preview,.placeholder{display:block;width:100%;height:150px;border-bottom:1px solid var(--line-dark)}.preview{object-fit:cover;background:#d5cfc3}.placeholder{position:relative;overflow:hidden;background:linear-gradient(145deg,color-mix(in srgb,var(--course) 36%,#ebe5d8),#cbc3b6);color:transparent}.placeholder::before{content:"";position:absolute;width:58%;height:76%;left:21%;top:12%;background:#fbf7ee;border:1px solid rgba(17,17,17,.18);transform:rotate(-1.7deg)}.placeholder::after{content:"";position:absolute;left:28%;top:26%;width:39%;height:7px;background:#111;box-shadow:0 15px 0 rgba(17,17,17,.22),0 30px 0 var(--course),0 45px 0 rgba(17,17,17,.18),0 60px 0 rgba(17,17,17,.12)}.card-body{display:flex;flex:1;flex-direction:column;padding:13px}.service{margin-bottom:7px;font:700 .46rem/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:rgba(17,17,17,.36)}.card-title{font-size:.91rem;line-height:1.08;text-transform:uppercase;font-weight:950;letter-spacing:-.015em}.description{display:-webkit-box;margin-top:7px;overflow:hidden;color:rgba(17,17,17,.5);font-size:.73rem;line-height:1.45;-webkit-box-orient:vertical;-webkit-line-clamp:3}.card-actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:12px}.card-action{display:flex;align-items:center;justify-content:center;min-height:30px;padding:0 9px;border:1px solid var(--ink);background:var(--ink);color:var(--paper2);font:800 .45rem/1 var(--mono);letter-spacing:.08em;text-transform:uppercase}.card-action:hover{border-color:var(--course);color:var(--course)}.card-action.alt{background:var(--course);border-color:var(--course);color:var(--ink)}.card-action.alt:hover{background:transparent;color:var(--ink)}.empty{display:grid;place-items:center;width:100%;min-height:360px;color:rgba(17,17,17,.45);border:1px dashed var(--line-dark)}.hidden{display:none!important}
+.app{grid-template-columns:330px minmax(0,1fr)}
+.sidebar{min-height:0}
+.board-title{font-size:2rem;line-height:.92;letter-spacing:-.045em;white-space:normal}
+.board-title span{display:block}
+.nav{gap:7px}
+.nav-btn{min-height:52px;padding:9px 10px 9px 11px;grid-template-columns:27px minmax(0,1fr) auto;gap:9px;border-color:rgba(255,255,255,.16)}
+.nav-index{font-size:.53rem;color:rgba(255,255,255,.48)}
+.nav-name{min-width:0;overflow:visible;text-overflow:clip;white-space:normal;overflow-wrap:anywhere;font-size:.77rem;line-height:1.22}
+.nav-count{min-width:27px;height:23px;font-size:.51rem;color:rgba(255,255,255,.72)}
+.main{min-height:0;overflow:hidden}
+.board-wrap{height:100%;min-height:0;overflow-x:hidden;overflow-y:scroll;overscroll-behavior:contain}
+.column-title,.card-title{overflow-wrap:anywhere}
+/* Shared compact layout: fixed cards, stable type and no horizontal drift. */
+:root{--sans:Arial,Helvetica,sans-serif;--mono:Consolas,"Courier New",monospace}
+html,body{max-width:100%;overflow:hidden}
+.app{width:100%;max-width:100vw;grid-template-columns:330px minmax(0,1fr)}
+.sidebar,.main,.top,.top-copy,.board-wrap,.board,.column,.cards,.card{min-width:0;max-width:100%}
+.top{overflow:hidden}.top-copy{flex:1 1 auto;overflow:hidden}.top h2{width:100%;font-family:var(--sans)}
+.nav-btn{width:100%}.nav-name{font-family:var(--sans);font-variant-ligatures:none}
+.cards{grid-template-columns:repeat(auto-fill,210px);justify-content:start;align-items:start}
+.card{width:210px;height:210px;aspect-ratio:1/1}
+.preview-link{display:block;flex:0 0 76px;height:76px;overflow:hidden}
+.preview,.placeholder{height:76px}
+.card-body{min-height:0;overflow:hidden;padding:9px 10px 10px}
+.service{margin-bottom:4px;font-size:.42rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card-title{display:-webkit-box;overflow:hidden;font-size:.78rem;line-height:1.08;-webkit-box-orient:vertical;-webkit-line-clamp:3}
+.description{margin-top:5px;font-size:.64rem;line-height:1.25;-webkit-line-clamp:1}
+.card-actions{gap:5px;padding-top:7px}
+.card-action{min-height:26px;padding:0 7px;font-size:.42rem}
+@media(max-width:1080px){.app{grid-template-columns:290px minmax(0,1fr)}.board-wrap{padding-left:20px;padding-right:20px}.top{padding-left:20px;padding-right:20px}}
+@media(max-width:760px){.topbar{height:52px}.app{height:calc(100vh - 52px);grid-template-columns:1fr;grid-template-rows:minmax(190px,32vh) minmax(0,1fr)}.sidebar{display:block;height:auto;padding:14px 18px;border-right:0;border-bottom:1px solid var(--line)}.board-title{margin:7px 0 5px;font-size:1.45rem}.meta{margin-bottom:10px}.search{height:36px;margin-bottom:10px}.nav-btn{min-height:44px}.top{gap:10px}.top-stats{display:none}.cards{grid-template-columns:repeat(auto-fill,minmax(150px,210px))}.card{width:100%;height:auto;aspect-ratio:1/1}}
+
+/* READABILITY_FIX_V4 */
+@media(min-width:761px){
+  .app{grid-template-columns:clamp(340px,26vw,380px) minmax(0,1fr)}
+  .sidebar{padding:20px 14px 28px}
+}
+.board-title{
+  font-family:Tahoma,Arial,Helvetica,sans-serif;
+  font-size:1.72rem;
+  line-height:1.02;
+  font-weight:700;
+  letter-spacing:0;
+  font-variant-ligatures:none;
+  font-feature-settings:"liga" 0,"clig" 0,"calt" 0,"kern" 0;
+  font-kerning:none;
+  font-synthesis:none;
+  text-rendering:auto;
+  white-space:normal;
+  overflow-wrap:normal;
+  word-break:normal;
+}
+.board-title span{display:inline}
+.nav{gap:6px}
+.nav-btn{
+  min-height:48px;
+  padding:8px 9px;
+  grid-template-columns:24px minmax(0,1fr) 27px;
+  gap:8px;
+}
+.nav-index{font-size:.52rem}
+.nav-name{
+  display:block;
+  font-family:Tahoma,Arial,Helvetica,sans-serif;
+  font-variant-ligatures:none;
+  font-feature-settings:"liga" 0,"clig" 0,"calt" 0,"kern" 0;
+  font-kerning:none;
+  font-synthesis:none;
+  text-rendering:auto;
+  font-size:.76rem;
+  line-height:1.28;
+  font-weight:700;
+  letter-spacing:0;
+  text-transform:none;
+  white-space:normal;
+  overflow:visible;
+  text-overflow:clip;
+  overflow-wrap:break-word;
+  word-break:normal;
+}
+.top{align-items:center}
+.top-copy{overflow:visible}
+.top h2{
+  font-family:Tahoma,Arial,Helvetica,sans-serif;
+  font-size:clamp(2rem,3vw,3.2rem);
+  line-height:1;
+  font-weight:700;
+  letter-spacing:0;
+  font-variant-ligatures:none;
+  font-feature-settings:"liga" 0,"clig" 0,"calt" 0,"kern" 0;
+  font-kerning:none;
+  font-synthesis:none;
+  text-rendering:auto;
+  text-transform:none;
+  white-space:normal;
+  overflow:visible;
+  text-overflow:clip;
+  overflow-wrap:break-word;
+  word-break:normal;
+}
+.column-title,.card-title{
+  font-family:Tahoma,Arial,Helvetica,sans-serif;
+  font-weight:700;
+  letter-spacing:0;
+  font-variant-ligatures:none;
+  font-feature-settings:"liga" 0,"clig" 0,"calt" 0,"kern" 0;
+  font-kerning:none;
+  font-synthesis:none;
+}
+.column-title{line-height:1.2}
+.card-title{line-height:1.12}
+.nav{display:block}
+.nav-group{
+  position:sticky;
+  top:-1px;
+  z-index:3;
+  margin:14px 0 7px;
+  padding:8px 3px 6px;
+  border-bottom:1px solid rgba(255,255,255,.18);
+  background:var(--bg);
+  color:var(--course);
+  font:700 .66rem/1 Tahoma,Arial,Helvetica,sans-serif;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.nav-group:first-child{margin-top:0}
+.nav-btn{
+  grid-template-columns:minmax(0,1fr) 27px;
+  margin-bottom:6px;
+}
+.nav-index{display:none}
+</style>
+</head>
+<body>
+<header class="topbar"><div class="archive-brand">SNUG <span>· ARCHIVE</span></div></header>
+<div class="app">
+  <aside class="sidebar">
+    <div class="board-kicker">reading board</div>
+    <h1 class="board-title"><span>Reading</span></h1>
+    <div class="meta">8 вкладок · 25 материалов</div>
+    <input id="search" class="search" type="search" placeholder="Найти материал…" autocomplete="off">
+    <div class="cap">Юниты и разделы</div>
+    <nav id="nav" class="nav" aria-label="Разделы доски"></nav>
+  </aside>
+  <main class="main">
+    <header class="top">
+      <div class="top-copy"><div class="top-label">section / <span id="smallTitle"></span></div><h2 id="tabTitle"></h2></div>
+      <div class="top-stats"><span id="tabStats" class="pill"></span></div>
+    </header>
+    <section id="boardWrap" class="board-wrap"><div id="board" class="board"></div><div id="empty" class="empty hidden">Ничего не найдено</div></section>
+  </main>
+</div>
+<script id="boardData" type="application/json">{"title":"Reading","sourceUrl":"https://mtoybar.netboard.me/22shovropr/","exportedAt":"2026-09-07T11:10:09.275Z","tabs":[{"id":"1036831","name":"Aa","sourceUrl":"https://mtoybar.netboard.me/22shovropr/?tab=1036831","sections":[{"id":"a43f8b750a27d-1728711131112","title":"Genially","order":1,"cards":[{"id":"6458937","title":"CVC 01 Short A","description":"","url":"https://view.genially.com/66cf20c7b91761095499a410","preview":"https://cdn.netboard.me/324207/files/s_206318c88846b9fd5453314083b517bb.png","service":"Genially"},{"id":"6458938","title":"Sorting 01 Short & Long A","description":"","url":"https://view.genially.com/66cf2119cc79a026e494ab65","preview":"https://cdn.netboard.me/324207/files/s_126f2c3d5ba682faaa6fe41197c3eab3.png","service":"Genially"},{"id":"6458939","title":"Sorting 03 Short & Long A","description":"","url":"https://view.genially.com/66cf21a1cc79a026e49511a8","preview":"https://cdn.netboard.me/324207/files/s_9bf303f7019eebfa373a573c7938923a.png","service":"Genially"},{"id":"6458940","title":"Sorting 02 Short & Long A","description":"","url":"https://view.genially.com/66cf215aafa9492f8e51ca75","preview":"https://cdn.netboard.me/324207/files/s_07cc2d0820ec50f5c207cd92fced1e7c.png","service":"Genially"}]},{"id":"1665880b8f8f5-1728711080091","title":"Workbook","order":2,"cards":[{"id":"6458941","title":"Short A – Google Drive","description":"","url":"https://drive.google.com/drive/folders/1Om43lYACNI4zR0DemfHiNnI-TESkDIyT","preview":null,"service":"Google Drive"}]}],"count":5},{"id":"1036832","name":"Ee","sourceUrl":"https://mtoybar.netboard.me/22shovropr/?tab=1036832","sections":[{"id":"40c5347ce3ca4-1732093243325","title":"Genially","order":1,"cards":[{"id":"6458942","title":"Sorting Short & Long E","description":"","url":"https://view.genially.com/66f10cfe60702dd975657c64","preview":"https://cdn.netboard.me/324207/files/s_2fb8eaa7a13e2fecbb17c27ec1abcbbf.png","service":"Genially"},{"id":"6458944","title":"Short E @mtoybar","description":"","url":"https://view.genially.com/66f10b237bbadc6f96c8d6ca","preview":"https://cdn.netboard.me/324207/files/s_6ca3f118c89ebdb5e5458c9841d75429.png","service":"Genially"}]},{"id":"a34c77c495e79-1732093251668","title":"Workbook","order":2,"cards":[{"id":"6458943","title":"Short E – Google Drive","description":"","url":"https://drive.google.com/drive/folders/1xD0khb5FoxvdYg_-8z-85z5t3_2lHyBF","preview":null,"service":"Google Drive"}]}],"count":3},{"id":"1036833","name":"Ii","sourceUrl":"https://mtoybar.netboard.me/22shovropr/?tab=1036833","sections":[{"id":"819e51b22b822-1732093299325","title":"Genially","order":1,"cards":[{"id":"6458947","title":"Sorting I @mtoybar","description":"","url":"https://view.genially.com/670015c41cc0d3ed8bee9c77","preview":"https://cdn.netboard.me/324207/files/s_d765e7cc85aba82e36be19673d09ce63.png","service":"Genially"},{"id":"6458946","title":"Sorting I @mtoybar","description":"","url":"https://view.genially.com/66f927779b9c4de02aba6fbe","preview":"https://cdn.netboard.me/324207/files/s_e982c07cac12361b29080d9db19e5865.png","service":"Genially"},{"id":"6458945","title":"Short I","description":"","url":"https://view.genially.com/66f8183150523b7c20773966","preview":"https://cdn.netboard.me/324207/files/s_17d2dfb1d52b21db7ef6afe1530308b3.png","service":"Genially"}]},{"id":"6e3f8de33082a-1732093306951","title":"Workbook","order":2,"cards":[{"id":"6458948","title":"Short I – Google Drive","description":"","url":"https://drive.google.com/drive/folders/1rtk0IsiwSdMJtytmSd4FXFkJ5AL6CJC_","preview":null,"service":"Google Drive"}]}],"count":4},{"id":"1036834","name":"Oo","sourceUrl":"https://mtoybar.netboard.me/22shovropr/?tab=1036834","sections":[{"id":"a66f40bd51eb5-1732093362610","title":"Genially","order":1,"cards":[{"id":"6458952","title":"Short O @mtoybar","description":"","url":"https://view.genially.com/6724854ce179212069a0dbf0","preview":"https://cdn.netboard.me/324207/files/s_7f6d14295af57f7ac552f7e663e7ba0e.png","service":"Genially"},{"id":"6458951","title":"Sorting O @mtoybar","description":"","url":"https://view.genially.com/672485a1e179212069a0fc41","preview":"https://cdn.netboard.me/324207/files/s_fc7e1411f3df4289322a46cc20a1a1a6.png","service":"Genially"},{"id":"6458950","title":"Sorting O @mtoybar","description":"","url":"https://view.genially.com/67248630e179212069a13fa9","preview":"https://cdn.netboard.me/324207/files/s_ab6cde64c6d72f1701e8ee16a51a0ce2.png","service":"Genially"}]},{"id":"81b038ff11468-1732093369932","title":"Workbook","order":2,"cards":[{"id":"6458949","title":"Short O – Google Drive","description":"","url":"https://drive.google.com/drive/folders/1PNWPHZCKNVYlHeOkNqQwhtJrH46-zWBM","preview":null,"service":"Google Drive"}]}],"count":4},{"id":"1036835","name":"Uu","sourceUrl":"https://mtoybar.netboard.me/22shovropr/?tab=1036835","sections":[{"id":"72c8dc0add53-1732093439598","title":"Genially","order":1,"cards":[{"id":"6458955","title":"Short U @mtoybar","description":"","url":"https://view.genially.com/672d9f64e415c9c19a004e63","preview":"https://cdn.netboard.me/324207/files/s_ca6a754c8b9df2334ae1072ab53e04c9.png","service":"Genially"},{"id":"6458954","title":"Sorting Short U & Long U @mtoybar","description":"","url":"https://view.genially.com/672da0d3e415c9c19a0118b4","preview":"https://cdn.netboard.me/324207/files/s_e2457480812b208f66601dd2533af24a.png","service":"Genially"}]},{"id":"380d7174a5947-1772609218330","title":"PDF","order":2,"cards":[{"id":"6458956","title":"Short U – Google Drive","description":"Google Drive","url":"https://drive.google.com/drive/folders/1CVj7BLdZRpYqMbqB1x9B3T-71CatrAFE?usp=drive_link","preview":null,"service":"Google Drive"}]}],"count":3},{"id":"1036836","name":"Yy","sourceUrl":"https://mtoybar.netboard.me/22shovropr/?tab=1036836","sections":[{"id":"e0a1b3edf6c11-1732093521615","title":"Genially","order":1,"cards":[{"id":"6458957","title":"Sorting Y @mtoybar","description":"","url":"https://view.genially.com/67248482c7b31ae13711de5f","preview":"https://cdn.netboard.me/324207/files/s_e567cf1b4b7951f241de4bad4e73b11f.png","service":"Genially"},{"id":"6458958","title":"Sorting Y @mtoybar","description":"","url":"https://view.genially.com/67248401e179212069a043ac","preview":"https://cdn.netboard.me/324207/files/s_391952e059a7554b2b406b4c2960af02.png","service":"Genially"}]}],"count":2},{"id":"1036837","name":"Reading revision","sourceUrl":"https://mtoybar.netboard.me/22shovropr/?tab=1036837","sections":[{"id":"e95adf857cfa9-1733672434751","title":"Колонка 1","order":1,"cards":[{"id":"6458959","title":"Reading Revision @mtoybar","description":"","url":"https://view.genially.com/67557d594877f8e8cc78a1ed","preview":"https://cdn.netboard.me/324207/files/s_dbd8c8d78f88c9623beaf9fff179ba99.png","service":"Genially"}]}],"count":1},{"id":"1036838","name":"Wacky Ricky (Level 2)","sourceUrl":"https://mtoybar.netboard.me/22shovropr/?tab=1036838","sections":[{"id":"1036838-main","title":"Wacky Ricky (Level 2)","order":1,"cards":[{"id":"6458969","title":"Wacky Ricky: 1) Hi, I'm Ricky.","description":"","url":"https://student.vznaniya.com/home/assessment/10406805?slug=KcUW9wF5&onlypreview=true","preview":"https://cdn.netboard.me/324207/files/s_f051e94c94e6c0a8f867b20c78668668.png","service":"VZNANIYA"},{"id":"6458966","title":"Wacky Ricky: Meeting Friends","description":"","url":"https://student.vznaniya.com/home/assessment/10501677?slug=54eCXmk4&onlypreview=true","preview":"https://cdn.netboard.me/324207/files/s_c27ce1c928b8557de5b65f7862543b04.png","service":"VZNANIYA"},{"id":"6503732","title":"Wacky Ricky: Playing in the Snow, Bullies","description":"","url":"https://student.shkola.app/home/assessment/10574683?slug=qNlw9tuo&onlypreview=true","preview":"https://cdn.netboard.me/324207/files/s_102f2b6c185024ee525a3cd35191f9d1.png","service":"SHKOLA"}]}],"count":3}],"counts":{"tabs":8,"sections":13,"cards":25,"localizedContentAssets":0,"remotePreviews":20,"failedAssets":0,"duplicatesRemoved":1,"mergedSources":2}}</script>
+<script>
+const data=JSON.parse(document.getElementById('boardData').textContent);
+const cleanText=value=>String(value??'').normalize('NFKC').replace(/\s+/g,' ').trim();
+for(const tab of data.tabs)tab.name=cleanText(tab.name);
+const nav=document.getElementById('nav'),boardEl=document.getElementById('board'),empty=document.getElementById('empty'),search=document.getElementById('search');
+let activeTab=(location.hash.slice(1)&&data.tabs.find(t=>t.id===location.hash.slice(1)))||data.tabs[0];
+const el=(tag,className,text)=>{const node=document.createElement(tag);if(className)node.className=className;if(text!==undefined)node.textContent=text;return node};
+function navGroupName(name,fallback){const normalized=cleanText(name);const explicit=normalized.match(/(?:^| )Units? +([0-9]+)(?: *[-–&] *([0-9]+))?/i);if(explicit)return explicit[2]?'UNITS '+explicit[1]+'–'+explicit[2]:'UNIT '+explicit[1];const direct=normalized.match(/^([0-9]+)[.]([0-9]+)(?: |$)/);if(direct)return 'UNIT '+direct[1];const review=normalized.match(/(?:Review|Revision) +([0-9]+)(?: *[&–-] *([0-9]+))?/i);if(review)return review[2]?'UNITS '+review[1]+'–'+review[2]:'UNIT '+review[1];return fallback||'COURSE FILES'}
+function renderNav(){const hasUnits=data.tabs.some(tab=>/^([0-9]+)[.]([0-9]+)(?: |$)/.test(tab.name)||/(?:^| )Units? +[0-9]+/i.test(tab.name));const items=[];let lastGroup='';for(const tab of data.tabs){const group=navGroupName(tab.name,lastGroup||(hasUnits?'COURSE FILES':'SECTIONS'));if(group!==lastGroup){items.push(el('div','nav-group',group));lastGroup=group}const btn=el('button','nav-btn'+(tab.id===activeTab.id?' active':''));btn.type='button';btn.append(el('span','nav-name',tab.name),el('span','nav-count',String(tab.count).padStart(2,'0')));btn.onclick=()=>{activeTab=tab;location.hash=tab.id;search.value='';render()};items.push(btn)}nav.replaceChildren(...items)}
+function cardLinks(url){try{const parsed=new URL(url,location.href);if(/(^|\.)vznaniya\.com$/i.test(parsed.hostname)){const alt=new URL(parsed.href);alt.protocol='https:';alt.hostname=alt.hostname.replace(/vznaniya\.com$/i,'shkola.app');return[{label:'VZNANIYA',url:parsed.href},{label:'SHKOLA',url:alt.href,alt:true}]}if(/(^|\.)shkola\.app$/i.test(parsed.hostname)){const alt=new URL(parsed.href);alt.protocol='https:';alt.hostname=alt.hostname.replace(/shkola\.app$/i,'vznaniya.com');return[{label:'SHKOLA',url:parsed.href,alt:true},{label:'VZNANIYA',url:alt.href}]}return[{label:'ОТКРЫТЬ',url:url}]}catch{return[{label:'ОТКРЫТЬ',url:url||'#'}]}}
+function render(){renderNav();document.getElementById('tabTitle').textContent=activeTab.name;document.getElementById('smallTitle').textContent=activeTab.name.toLocaleLowerCase('ru');const q=search.value.trim().toLocaleLowerCase('ru');let visibleCards=0;const sections=[];for(const section of activeTab.sections){const cards=section.cards.filter(card=>!q||[card.title,card.description,card.service].join(' ').toLocaleLowerCase('ru').includes(q));if(!cards.length)continue;visibleCards+=cards.length;const sectionEl=el('section','column');const head=el('header','column-head');head.append(el('h3','column-title',section.title),el('span','column-count',String(cards.length).padStart(2,'0')));const list=el('div','cards');for(const card of cards){const cardEl=el('article','card');const previewLink=el('a','preview-link');previewLink.href=card.url||'#';previewLink.target='_blank';previewLink.rel='nofollow noopener noreferrer';if(card.preview){const img=el('img','preview');img.src=card.preview;img.alt='';img.loading='lazy';previewLink.append(img)}else{previewLink.append(el('div','placeholder',card.service))}const body=el('div','card-body');body.append(el('div','service',card.service),el('h4','card-title',card.title));if(card.description)body.append(el('p','description',card.description));const actions=el('div','card-actions');for(const item of cardLinks(card.url)){const action=el('a','card-action'+(item.alt?' alt':''),item.label+' ↗');action.href=item.url;action.target='_blank';action.rel='nofollow noopener noreferrer';actions.append(action)}body.append(actions);cardEl.append(previewLink,body);list.append(cardEl)}sectionEl.append(head,list);sections.push(sectionEl)}boardEl.replaceChildren(...sections);const isEmpty=!sections.length;boardEl.classList.toggle('hidden',isEmpty);empty.classList.toggle('hidden',!isEmpty);document.getElementById('tabStats').textContent=String(visibleCards).padStart(2,'0')+' materials · '+String(sections.length).padStart(2,'0')+' sections';document.getElementById('boardWrap').scrollTo({top:0})}
+search.addEventListener('input',render);window.addEventListener('hashchange',()=>{const next=data.tabs.find(t=>t.id===location.hash.slice(1));if(next&&next.id!==activeTab.id){activeTab=next;search.value='';render()}});render();
+</script>
+</body>
+</html>
