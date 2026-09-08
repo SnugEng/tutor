@@ -1,0 +1,2062 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="theme-color" content="#171716">
+  <title>Teens — SNUG Archive</title>
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <style>
+    :root { --bg:#171716; --panel:#1d1d1b; --card:#242422; --line:#3a3a36; --text:#f3f1e9; --muted:#aaa89f; --accent:#ff8ac4; --accent-soft:rgba(255,138,196,.12); --side:290px; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; color-scheme:dark; background:var(--bg); }
+    body { margin:0; min-width:1080px; color:var(--text); background:var(--bg); font-family:Inter,Arial,sans-serif; overflow-x:hidden; }
+    a { color:inherit; }
+    .sidebar { position:fixed; inset:0 auto 0 0; width:var(--side); display:flex; flex-direction:column; border-right:1px solid var(--line); background:#141413; z-index:10; }
+    .side-head { padding:22px 20px 17px; border-bottom:1px solid var(--line); }
+    .archive { margin:0 0 15px; color:var(--accent); font:900 11px/1 ui-monospace,SFMono-Regular,Consolas,monospace; letter-spacing:.14em; }
+    .side-head h1 { margin:0; font-size:31px; line-height:.95; letter-spacing:-.045em; }
+    .side-head .count { display:block; margin-top:10px; color:var(--muted); font:700 11px/1 ui-monospace,SFMono-Regular,Consolas,monospace; }
+    .search-wrap { display:block; padding:13px 14px; border-bottom:1px solid var(--line); }
+    #board-search { width:100%; height:36px; border:1px solid var(--line); border-radius:5px; padding:0 11px; color:var(--text); background:var(--panel); outline:none; font:700 11px/1 ui-monospace,SFMono-Regular,Consolas,monospace; }
+    #board-search:focus { border-color:var(--accent); }
+    #board-search::placeholder { color:#74736d; }
+    .nav-label { margin:0; padding:14px 18px 8px; color:#77766f; font:800 9px/1 ui-monospace,SFMono-Regular,Consolas,monospace; letter-spacing:.13em; }
+    .nav { min-height:0; padding:0 8px 15px; overflow-y:auto; scrollbar-width:thin; scrollbar-color:#44443f transparent; }
+    .nav-tab { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:8px 10px; border-radius:5px; color:#bbb9b0; text-decoration:none; font-size:12px; line-height:1.25; }
+    .nav-tab:hover,.nav-tab.active { color:var(--text); background:var(--accent-soft); }
+    .nav-tab.active { box-shadow:inset 2px 0 var(--accent); }
+    .nav-tab small { flex:none; color:#74736d; font:700 9px ui-monospace,SFMono-Regular,Consolas,monospace; }
+    main { width:calc(100% - var(--side)); margin-left:var(--side); padding:36px clamp(28px,4vw,62px) 80px; }
+    .tab-panel { max-width:980px; margin:0 auto; padding:0 0 76px; scroll-margin-top:28px; }
+    .tab-panel + .tab-panel { padding-top:22px; border-top:1px solid var(--line); }
+    .tab-heading { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:6px 22px; align-items:end; margin-bottom:24px; }
+    .tab-heading p { grid-column:1/-1; margin:0; color:var(--accent); font:900 10px/1 ui-monospace,SFMono-Regular,Consolas,monospace; letter-spacing:.14em; }
+    .tab-heading h2 { margin:0; max-width:780px; font-size:clamp(34px,4vw,56px); line-height:.94; letter-spacing:-.05em; overflow-wrap:anywhere; }
+    .tab-heading span { padding-bottom:5px; color:var(--muted); font:700 11px/1 ui-monospace,SFMono-Regular,Consolas,monospace; white-space:nowrap; }
+    .board-section { margin-top:22px; }
+    .board-section h3 { margin:0 0 9px; color:#dad8d0; font-size:16px; line-height:1.2; letter-spacing:-.015em; }
+    .resource-list { display:flex; flex-direction:column; gap:7px; }
+    .resource-card { min-height:78px; display:grid; grid-template-columns:56px minmax(0,1fr) auto; gap:14px; align-items:center; padding:10px 11px; border:1px solid var(--line); border-radius:6px; background:var(--card); }
+    .resource-card:hover { border-color:#575650; background:#282826; }
+    .resource-mark { width:56px; height:56px; display:grid; place-items:center; border:1px solid #494943; border-radius:4px; color:#ddd9ce; background:linear-gradient(145deg,#353531,#20201e); font:900 10px/1 ui-monospace,SFMono-Regular,Consolas,monospace; letter-spacing:.06em; }
+    .resource-mark.lesson { color:#171716; border-color:#e8ff46; background:#e8ff46; }
+    .resource-mark.drive { color:#fff; border-color:#4a72df; background:#3459c7; }
+    .resource-mark.wordwall { color:#fff; border-color:#eb5b55; background:#d63f39; }
+    .resource-mark.isl { color:#fff; border-color:#49a871; background:#318c5b; }
+    .resource-mark.genially { color:#fff; border-color:#8767e6; background:#6747c8; }
+    .resource-mark.learningapps { color:#fff; border-color:#438fae; background:#28758f; }
+    .resource-mark.pdf { color:#fff; border-color:#dc554d; background:#c33c35; }
+    .resource-copy { min-width:0; }
+    .resource-copy h4 { margin:0; font-size:15px; line-height:1.18; letter-spacing:-.015em; overflow-wrap:anywhere; }
+    .resource-copy p { margin:5px 0 0; max-width:700px; color:var(--muted); font-size:11px; line-height:1.35; overflow-wrap:anywhere; }
+    .resource-actions { display:flex; gap:6px; justify-content:flex-end; }
+    .open-link { min-width:82px; padding:9px 10px; border:1px solid #4a4a45; border-radius:4px; color:#dedcd4; background:#1b1b19; text-align:center; text-decoration:none; font:800 10px/1 ui-monospace,SFMono-Regular,Consolas,monospace; white-space:nowrap; }
+    .open-link:hover,.open-link:focus-visible { color:#171716; border-color:var(--accent); background:var(--accent); outline:none; }
+    .resource-card[hidden],.board-section[hidden],.tab-panel[hidden] { display:none!important; }
+    .no-results { display:none; max-width:980px; margin:60px auto; color:var(--muted); font:800 13px ui-monospace,SFMono-Regular,Consolas,monospace; }
+    @media (prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } }
+  </style>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="side-head">
+      <p class="archive">SNUG ARCHIVE</p>
+      <h1>Teens</h1>
+      <span class="count">27 вкладок · 178 материалов</span>
+    </div>
+    <label class="search-wrap"><span hidden>Поиск по материалам</span><input id="board-search" type="search" autocomplete="off" placeholder="НАЙТИ МАТЕРИАЛ…"></label>
+    <p class="nav-label">РАЗДЕЛЫ</p>
+    <nav class="nav" aria-label="Разделы доски"><a class="nav-tab" href="#tab-1-back-to-school"><span>Back to School</span><small>3</small></a><a class="nav-tab" href="#tab-2-revision-lessons"><span>Revision Lessons</span><small>10</small></a><a class="nav-tab" href="#tab-3-grammar-songs"><span>Grammar + Songs</span><small>3</small></a><a class="nav-tab" href="#tab-4-kikoriki"><span>Kikoriki</span><small>7</small></a><a class="nav-tab" href="#tab-5-halloween"><span>Halloween</span><small>4</small></a><a class="nav-tab" href="#tab-6-thanksgiving-day"><span>Thanksgiving Day</span><small>2</small></a><a class="nav-tab" href="#tab-7-women-s-day-mother-s-day-household-chores"><span>Women&#39;s Day, Mother&#39;s Day (Household chores)</span><small>2</small></a><a class="nav-tab" href="#tab-8-christmas-new-year-winter"><span>Christmas, New Year, Winter</span><small>22</small></a><a class="nav-tab" href="#tab-9-valentine-s-day"><span>Valentine&#39;s Day</span><small>6</small></a><a class="nav-tab" href="#tab-10-environment-earth-day"><span>Environment, Earth Day</span><small>1</small></a><a class="nav-tab" href="#tab-11-home-sweet-home"><span>Home Sweet Home</span><small>1</small></a><a class="nav-tab" href="#tab-12-ket-a2-listening-tests"><span>KET (A2) Listening Tests</span><small>4</small></a><a class="nav-tab" href="#tab-13-a2-reading-tests"><span>A2 Reading Tests</span><small>5</small></a><a class="nav-tab" href="#tab-14-b1-preliminary-listening-tests"><span>B1 Preliminary Listening Tests</span><small>23</small></a><a class="nav-tab" href="#tab-15-b1-reading-tests"><span>B1 Reading Tests</span><small>5</small></a><a class="nav-tab" href="#tab-16-fce-b2-listening-tests"><span>FCE (B2) Listening Tests</span><small>3</small></a><a class="nav-tab" href="#tab-17-fce-b2-use-of-english"><span>FCE (B2) Use of English</span><small>4</small></a><a class="nav-tab" href="#tab-18-fce-b2-reading-test"><span>FCE (B2) Reading Test</span><small>3</small></a><a class="nav-tab" href="#tab-19-present-tenses"><span>Present Tenses</span><small>6</small></a><a class="nav-tab" href="#tab-20-past-tenses"><span>Past Tenses</span><small>9</small></a><a class="nav-tab" href="#tab-21-future-tenses"><span>Future Tenses</span><small>4</small></a><a class="nav-tab" href="#tab-22-comparisons"><span>Comparisons</span><small>4</small></a><a class="nav-tab" href="#tab-23-question-tags"><span>Question Tags</span><small>1</small></a><a class="nav-tab" href="#tab-24-conditionals"><span>Conditionals</span><small>2</small></a><a class="nav-tab" href="#tab-25-passive-voice"><span>Passive Voice</span><small>2</small></a><a class="nav-tab" href="#tab-26-reported-speech"><span>Reported Speech</span><small>1</small></a><a class="nav-tab" href="#tab-27-grammar-revision-a2"><span>Grammar Revision (A2)</span><small>41</small></a></nav>
+  </aside>
+  <main>
+        <section class="tab-panel" id="tab-1-back-to-school" data-tab-name="Back to School">
+          <header class="tab-heading">
+            <p>TEENS · 01</p>
+            <h2>Back to School</h2>
+            <span>3 материалов</span>
+          </header>
+            <section class="board-section" aria-labelledby="tab-1-back-to-school-section-1">
+              <h3 id="tab-1-back-to-school-section-1">Back to school</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="back to school a2 ">
+                  <div class="resource-mark genially" aria-hidden="true">GEN</div>
+                  <div class="resource-copy">
+                    <h4>Back to school A2</h4>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://view.genially.com/64ec9fa695836c0019c8600d" target="_blank" rel="noopener noreferrer">Открыть <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="back to school (a1/а2) ">
+                  <div class="resource-mark drive" aria-hidden="true">DRIVE</div>
+                  <div class="resource-copy">
+                    <h4>Back to School (A1/А2)</h4>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://drive.google.com/drive/folders/1WdkEEhsS5f19tTyXk8UdkYFYvIqkmLQP" target="_blank" rel="noopener noreferrer">Открыть папку <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+            <section class="board-section" aria-labelledby="tab-1-back-to-school-section-2">
+              <h3 id="tab-1-back-to-school-section-2">ВПР</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="get ready for vpr ">
+                  <div class="resource-mark drive" aria-hidden="true">DRIVE</div>
+                  <div class="resource-copy">
+                    <h4>Get Ready for VPR</h4>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://drive.google.com/drive/folders/1fZCwBZjg5LxZrSvfhLRe2E6_4ba71LLF" target="_blank" rel="noopener noreferrer">Открыть папку <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+        </section>
+        <section class="tab-panel" id="tab-2-revision-lessons" data-tab-name="Revision Lessons">
+          <header class="tab-heading">
+            <p>TEENS · 02</p>
+            <h2>Revision Lessons</h2>
+            <span>10 материалов</span>
+          </header>
+            <section class="board-section" aria-labelledby="tab-2-revision-lessons-section-1">
+              <h3 id="tab-2-revision-lessons-section-1">Rays and the Last Dragon</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="raya and the last dragon (present perfect, past simple, past continuous) students have to complete the sentences with the correct form of the verbs in brackets. · isl collective">
+                  <div class="resource-mark isl" aria-hidden="true">ISL</div>
+                  <div class="resource-copy">
+                    <h4>Raya and the Last Dragon (Present Perfect, Past Simple, Past Continuous)</h4>
+                    <p>Students have to complete the sentences with the correct form of the verbs in brackets. · iSL Collective</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://en.islcollective.com/english-esl-video-lessons/grammar-practice/general-grammar-practice/verb-tenses/raya-and-the-last-dragon-present-perfect-past-simple-past-continuous/797130" target="_blank" rel="noopener noreferrer">Открыть <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+            <section class="board-section" aria-labelledby="tab-2-revision-lessons-section-2">
+              <h3 id="tab-2-revision-lessons-section-2">The Riveras, B1</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="the riveras (b1) ">
+                  <div class="resource-mark drive" aria-hidden="true">DRIVE</div>
+                  <div class="resource-copy">
+                    <h4>The Riveras (B1)</h4>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://drive.google.com/drive/folders/1e2wa4It4b5ahaZRMtVlNx5PUfV6_35DW" target="_blank" rel="noopener noreferrer">Открыть папку <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+            <section class="board-section" aria-labelledby="tab-2-revision-lessons-section-3">
+              <h3 id="tab-2-revision-lessons-section-3">Minions</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="gru shrinks the moon - grammar revision students do tasks to revise present simple, present continuous, past simple, past continuous, present perfect, comparatives. · isl collective">
+                  <div class="resource-mark isl" aria-hidden="true">ISL</div>
+                  <div class="resource-copy">
+                    <h4>Gru Shrinks The Moon - Grammar Revision</h4>
+                    <p>Students do tasks to revise Present Simple, Present Continuous, Past Simple, Past Continuous, Present Perfect, Comparatives. · iSL Collective</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://en.islcollective.com/english-esl-video-lessons/grammar-practice/general-grammar-practice/verb-tenses/gru-shrinks-the-moon-grammar-revision/967720" target="_blank" rel="noopener noreferrer">Открыть <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="gru shrinks the moon - grammar revision vznaniya">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>Gru Shrinks The Moon - Grammar Revision</h4>
+                    <p>Vznaniya</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/video/10526003?slug=HLRko4eN&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/video/10526003?slug=HLRko4eN&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="minions: the rise of gru (past simpe, past continuous, present perfect) students have to watch the video, and do different types of activities, including multiple-choice, filling the gaps, unscrambling sentences, correcting the wrong words. · isl collective">
+                  <div class="resource-mark isl" aria-hidden="true">ISL</div>
+                  <div class="resource-copy">
+                    <h4>Minions: The Rise of Gru (Past Simpe, Past Continuous, Present Perfect)</h4>
+                    <p>Students have to watch the video, and do different types of activities, including multiple-choice, filling the gaps, unscrambling sentences, correcting the wrong words. · iSL Collective</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://en.islcollective.com/english-esl-video-lessons/grammar-practice/general-grammar-practice/verb-tenses/minions-the-rise-of-gru-past-simpe-past-continuous-present-perfect/802520" target="_blank" rel="noopener noreferrer">Открыть <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="grammar revision with minions (by @mtoybar) ">
+                  <div class="resource-mark drive" aria-hidden="true">DRIVE</div>
+                  <div class="resource-copy">
+                    <h4>Grammar Revision with Minions (by @mtoybar)</h4>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://drive.google.com/drive/folders/1o36ZWr2YkiivO2FXz1NdXwZ7PfVxEsJd" target="_blank" rel="noopener noreferrer">Открыть папку <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+            <section class="board-section" aria-labelledby="tab-2-revision-lessons-section-4">
+              <h3 id="tab-2-revision-lessons-section-4">K-pop</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="k-pop grammar revision-2
+to be, have got, plurals, pronouns ">
+                  <div class="resource-mark genially" aria-hidden="true">GEN</div>
+                  <div class="resource-copy">
+                    <h4>K-POP Grammar Revision-2
+to be, have got, plurals, pronouns</h4>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://view.genially.com/645f3c733ed7fb0011cdf922" target="_blank" rel="noopener noreferrer">Открыть <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="k-pop grammar revision
+времена, passive voice, comparatives &amp; superlatives, conditional 1 ">
+                  <div class="resource-mark genially" aria-hidden="true">GEN</div>
+                  <div class="resource-copy">
+                    <h4>K-POP Grammar Revision
+времена, passive voice, comparatives &amp; superlatives, conditional 1</h4>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://view.genially.com/6458bb29ff1f920011232d98" target="_blank" rel="noopener noreferrer">Открыть <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+            <section class="board-section" aria-labelledby="tab-2-revision-lessons-section-5">
+              <h3 id="tab-2-revision-lessons-section-5">Go Getter 3
+Go Getter 4</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="gogetter3 test ">
+                  <div class="resource-mark genially" aria-hidden="true">GEN</div>
+                  <div class="resource-copy">
+                    <h4>gogetter3 test</h4>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://view.genially.com/68a980704f99c8c38000669d" target="_blank" rel="noopener noreferrer">Открыть <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="gogetter 4 quiz want to create interactive content? it’s easy in genially!">
+                  <div class="resource-mark genially" aria-hidden="true">GEN</div>
+                  <div class="resource-copy">
+                    <h4>Gogetter 4 quiz</h4>
+                    <p>Want to create interactive content? It’s easy in Genially!</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://view.genially.com/68ab249c14854d403678dee9/interactive-content-gogetter-4-quiz" target="_blank" rel="noopener noreferrer">Открыть <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+        </section>
+        <section class="tab-panel" id="tab-3-grammar-songs" data-tab-name="Grammar + Songs">
+          <header class="tab-heading">
+            <p>TEENS · 03</p>
+            <h2>Grammar + Songs</h2>
+            <span>3 материалов</span>
+          </header>
+            <section class="board-section" aria-labelledby="tab-3-grammar-songs-section-1">
+              <h3 id="tab-3-grammar-songs-section-1">Present Perfect</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="grammar+songs (present perfect) ">
+                  <div class="resource-mark drive" aria-hidden="true">DRIVE</div>
+                  <div class="resource-copy">
+                    <h4>Grammar+Songs (Present Perfect)</h4>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://drive.google.com/drive/folders/1E1dBKvKCZZcDlwjxUFpQmlRTP4-142cO" target="_blank" rel="noopener noreferrer">Открыть папку <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+            <section class="board-section" aria-labelledby="tab-3-grammar-songs-section-2">
+              <h3 id="tab-3-grammar-songs-section-2">Past Simple</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="grammar+songs (past simple) ">
+                  <div class="resource-mark drive" aria-hidden="true">DRIVE</div>
+                  <div class="resource-copy">
+                    <h4>Grammar+Songs (Past Simple)</h4>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://drive.google.com/drive/folders/1A_zwY0fgljSaqUxuOGdvR50vAwU1tUYC" target="_blank" rel="noopener noreferrer">Открыть папку <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+            <section class="board-section" aria-labelledby="tab-3-grammar-songs-section-3">
+              <h3 id="tab-3-grammar-songs-section-3">Conditionals</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="grammar+songs (conditionals) ">
+                  <div class="resource-mark drive" aria-hidden="true">DRIVE</div>
+                  <div class="resource-copy">
+                    <h4>Grammar+Songs (Conditionals)</h4>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://drive.google.com/drive/folders/1IbXbvOAP-fXfYql18X048mZX6MGOjw88" target="_blank" rel="noopener noreferrer">Открыть папку <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+        </section>
+        <section class="tab-panel" id="tab-4-kikoriki" data-tab-name="Kikoriki">
+          <header class="tab-heading">
+            <p>TEENS · 04</p>
+            <h2>Kikoriki</h2>
+            <span>7 материалов</span>
+          </header>
+            <section class="board-section" aria-labelledby="tab-4-kikoriki-section-1">
+              <div class="resource-list">
+                <article class="resource-card" data-search="bad omens - kikoriki (first conditional) watch the video, and do different types of activities, including filling the gaps, unscrambling sentences, correcting the wrong words. · isl collective">
+                  <div class="resource-mark isl" aria-hidden="true">ISL</div>
+                  <div class="resource-copy">
+                    <h4>Bad Omens - KikoRiki (First Conditional)</h4>
+                    <p>Watch the video, and do different types of activities, including filling the gaps, unscrambling sentences, correcting the wrong words. · iSL Collective</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://en.islcollective.com/english-esl-video-lessons/grammar-practice/general-grammar-practice/first-conditional-1/bad-omens-kikoriki-first-conditional/894181" target="_blank" rel="noopener noreferrer">Открыть <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="kikoriki: space odyssey ">
+                  <div class="resource-mark drive" aria-hidden="true">DRIVE</div>
+                  <div class="resource-copy">
+                    <h4>Kikoriki: Space Odyssey</h4>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://drive.google.com/drive/folders/1_187X11rKfNuV6CjBSakXWc6HF2oCTId" target="_blank" rel="noopener noreferrer">Открыть папку <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="kikoriki pancake week ">
+                  <div class="resource-mark drive" aria-hidden="true">DRIVE</div>
+                  <div class="resource-copy">
+                    <h4>Kikoriki Pancake Week</h4>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://drive.google.com/drive/folders/1e7bAB6mz3S-5GF4hn2-lHwGIw8tTzSfX" target="_blank" rel="noopener noreferrer">Открыть папку <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="kikoriki: fear room ">
+                  <div class="resource-mark drive" aria-hidden="true">DRIVE</div>
+                  <div class="resource-copy">
+                    <h4>KikoRiki: Fear Room</h4>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://drive.google.com/drive/folders/1QE7zBVzcTKGEEdke9Y2xcycZ6YhDspu0?usp=drive_link" target="_blank" rel="noopener noreferrer">Открыть папку <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="kikoriki christmas ">
+                  <div class="resource-mark drive" aria-hidden="true">DRIVE</div>
+                  <div class="resource-copy">
+                    <h4>Kikoriki Christmas</h4>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://drive.google.com/drive/folders/1bX_tZCT1hfUPqkKHf4hRX-XBGN3FeICz?usp=drive_link" target="_blank" rel="noopener noreferrer">Открыть папку <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="kikoriki: who&#39;s the first? ">
+                  <div class="resource-mark drive" aria-hidden="true">DRIVE</div>
+                  <div class="resource-copy">
+                    <h4>Kikoriki: Who&#39;s the first?</h4>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://drive.google.com/drive/folders/1E-wxkY2xpElhXWjSxsrIpaBLjLEiOG5k?usp=drive_link" target="_blank" rel="noopener noreferrer">Открыть папку <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+            <section class="board-section" aria-labelledby="tab-4-kikoriki-section-2">
+              <div class="resource-list">
+                <article class="resource-card" data-search="kikoriki: april fool&#39;s day ">
+                  <div class="resource-mark drive" aria-hidden="true">DRIVE</div>
+                  <div class="resource-copy">
+                    <h4>Kikoriki: April Fool&#39;s Day</h4>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://drive.google.com/drive/folders/1VhPpwWL2vx4QwgHUVL-havWFZlw6H-t4" target="_blank" rel="noopener noreferrer">Открыть папку <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+        </section>
+        <section class="tab-panel" id="tab-5-halloween" data-tab-name="Halloween">
+          <header class="tab-heading">
+            <p>TEENS · 05</p>
+            <h2>Halloween</h2>
+            <span>4 материалов</span>
+          </header>
+            <section class="board-section" aria-labelledby="tab-5-halloween-section-1">
+              <div class="resource-list">
+                <article class="resource-card" data-search="halloween ">
+                  <div class="resource-mark drive" aria-hidden="true">DRIVE</div>
+                  <div class="resource-copy">
+                    <h4>HALLOWEEN</h4>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://drive.google.com/drive/folders/1aZxTSE6-Ufjx4uQG7QlK2GqTNqdlAQqY" target="_blank" rel="noopener noreferrer">Открыть папку <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="mr. bean halloween (present simple, present continuous) shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>Mr. Bean Halloween (Present Simple, Present Continuous)</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/video/9506983?slug=EUvAQamw&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/video/9506983?slug=EUvAQamw&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="kikoriki: fear room ">
+                  <div class="resource-mark drive" aria-hidden="true">DRIVE</div>
+                  <div class="resource-copy">
+                    <h4>KikoRiki: Fear Room</h4>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://drive.google.com/drive/folders/1QE7zBVzcTKGEEdke9Y2xcycZ6YhDspu0?usp=drive_link" target="_blank" rel="noopener noreferrer">Открыть папку <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="reported speech (facing your fears) vznaniya">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>Reported Speech (Facing your Fears)</h4>
+                    <p>Vznaniya</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/video/9461459?slug=bUUqVhcj&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/video/9461459?slug=bUUqVhcj&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+        </section>
+        <section class="tab-panel" id="tab-6-thanksgiving-day" data-tab-name="Thanksgiving Day">
+          <header class="tab-heading">
+            <p>TEENS · 06</p>
+            <h2>Thanksgiving Day</h2>
+            <span>2 материалов</span>
+          </header>
+            <section class="board-section" aria-labelledby="tab-6-thanksgiving-day-section-1">
+              <h3 id="tab-6-thanksgiving-day-section-1">Thanksgiving Day</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="thanksgiving day ">
+                  <div class="resource-mark drive" aria-hidden="true">DRIVE</div>
+                  <div class="resource-copy">
+                    <h4>Thanksgiving Day</h4>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://drive.google.com/drive/folders/1RXSl6gxFaHLopzXXAVuOKROfnmDpdGeg" target="_blank" rel="noopener noreferrer">Открыть папку <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+            <section class="board-section" aria-labelledby="tab-6-thanksgiving-day-section-2">
+              <h3 id="tab-6-thanksgiving-day-section-2">Kindness Boomerang (One Day)</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="kindness boomerang (one day) ">
+                  <div class="resource-mark drive" aria-hidden="true">DRIVE</div>
+                  <div class="resource-copy">
+                    <h4>Kindness Boomerang (One Day)</h4>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://drive.google.com/drive/folders/1BYqdUW0lXzIfoQ3gBoimVgnv2N6btdpa?usp=drive_link" target="_blank" rel="noopener noreferrer">Открыть папку <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+        </section>
+        <section class="tab-panel" id="tab-7-women-s-day-mother-s-day-household-chores" data-tab-name="Women&#39;s Day, Mother&#39;s Day (Household chores)">
+          <header class="tab-heading">
+            <p>TEENS · 07</p>
+            <h2>Women&#39;s Day, Mother&#39;s Day (Household chores)</h2>
+            <span>2 материалов</span>
+          </header>
+            <section class="board-section" aria-labelledby="tab-7-women-s-day-mother-s-day-household-chores-section-1">
+              <h3 id="tab-7-women-s-day-mother-s-day-household-chores-section-1">The Notebook</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="the notebook ">
+                  <div class="resource-mark drive" aria-hidden="true">DRIVE</div>
+                  <div class="resource-copy">
+                    <h4>The Notebook</h4>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://drive.google.com/drive/u/0/folders/1q3XelcKkAkoL3t1_-NTrZSDWNnxXihCk" target="_blank" rel="noopener noreferrer">Открыть папку <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+            <section class="board-section" aria-labelledby="tab-7-women-s-day-mother-s-day-household-chores-section-2">
+              <h3 id="tab-7-women-s-day-mother-s-day-household-chores-section-2">Thank you, Mom!</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="thank you, mom (commercials) ">
+                  <div class="resource-mark drive" aria-hidden="true">DRIVE</div>
+                  <div class="resource-copy">
+                    <h4>Thank you, Mom (Commercials)</h4>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://drive.google.com/drive/folders/1eUFvY0IkehTH5Xy-yH9kFLZIwtGIJYuu?usp=drive_link" target="_blank" rel="noopener noreferrer">Открыть папку <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+        </section>
+        <section class="tab-panel" id="tab-8-christmas-new-year-winter" data-tab-name="Christmas, New Year, Winter">
+          <header class="tab-heading">
+            <p>TEENS · 08</p>
+            <h2>Christmas, New Year, Winter</h2>
+            <span>22 материалов</span>
+          </header>
+            <section class="board-section" aria-labelledby="tab-8-christmas-new-year-winter-section-1">
+              <h3 id="tab-8-christmas-new-year-winter-section-1">Genially</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="the grinch christmas escape room (present simple, present continuous and past simple) ">
+                  <div class="resource-mark genially" aria-hidden="true">GEN</div>
+                  <div class="resource-copy">
+                    <h4>The Grinch CHRISTMAS ESCAPE ROOM (present simple, present continuous and past simple)</h4>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://view.genially.com/63a3249f7696e1001904c05d" target="_blank" rel="noopener noreferrer">Открыть <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+            <section class="board-section" aria-labelledby="tab-8-christmas-new-year-winter-section-2">
+              <h3 id="tab-8-christmas-new-year-winter-section-2">Interactive videos</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="the christmas chronicles (revision of tenses) students do tasks to revise present simple, present continuous, past simple, past continuous, present perfect, future simple. · isl collective">
+                  <div class="resource-mark isl" aria-hidden="true">ISL</div>
+                  <div class="resource-copy">
+                    <h4>The Christmas Chronicles (Revision of Tenses)</h4>
+                    <p>Students do tasks to revise Present Simple, Present Continuous, Past Simple, Past Continuous, Present Perfect, Future Simple. · iSL Collective</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://en.islcollective.com/english-esl-video-lessons/grammar-practice/general-grammar-practice/verb-tenses/the-christmas-chronicles-revision-of-tenses/911430" target="_blank" rel="noopener noreferrer">Открыть <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="the grinch (active &amp; passive voice) students should fill in the gaps with the correct verb forms. · isl collective">
+                  <div class="resource-mark isl" aria-hidden="true">ISL</div>
+                  <div class="resource-copy">
+                    <h4>The Grinch (Active &amp; Passive Voice)</h4>
+                    <p>Students should fill in the gaps with the correct verb forms. · iSL Collective</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://en.islcollective.com/english-esl-video-lessons/grammar-practice/general-grammar-practice/passive-voice-or-active-voice/the-grinch-active-passive-voice/904743" target="_blank" rel="noopener noreferrer">Открыть <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="how the grinch stole christmas (irregular verbs) irregular verbs (past v2) - basic. fill in the gaps with the correct verb forms. · isl collective">
+                  <div class="resource-mark isl" aria-hidden="true">ISL</div>
+                  <div class="resource-copy">
+                    <h4>How the Grinch Stole Christmas (Irregular verbs)</h4>
+                    <p>Irregular verbs (past V2) - basic. Fill in the gaps with the correct verb forms. · iSL Collective</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://en.islcollective.com/english-esl-video-lessons/grammar-practice/general-grammar-practice/irregular-verbs/how-the-grinch-stole-christmas-irregular-verbs/80455" target="_blank" rel="noopener noreferrer">Открыть <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+            <section class="board-section" aria-labelledby="tab-8-christmas-new-year-winter-section-3">
+              <h3 id="tab-8-christmas-new-year-winter-section-3">Christmas Adverts</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="westjet christmas miracle a2 vznaniya">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>WestJet Christmas Miracle A2</h4>
+                    <p>Vznaniya</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/assessment/6199396?slug=SIpvDZGN" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/assessment/6199396?slug=SIpvDZGN" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="what would christmas be without love? vznaniya">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>What would Christmas be without love?</h4>
+                    <p>Vznaniya</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/6199397?slug=vl5rNXId&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/6199397?slug=vl5rNXId&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="edgar the dragon (christmas ad) ">
+                  <div class="resource-mark drive" aria-hidden="true">DRIVE</div>
+                  <div class="resource-copy">
+                    <h4>Edgar the dragon (Christmas Ad)</h4>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://drive.google.com/drive/folders/1T6u2TtbcWRnccshoUy1zZZ_Vj6w2k-lD?usp=drive_link" target="_blank" rel="noopener noreferrer">Открыть папку <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="the letter (christmas advert) ">
+                  <div class="resource-mark drive" aria-hidden="true">DRIVE</div>
+                  <div class="resource-copy">
+                    <h4>The Letter (Christmas Advert)</h4>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://drive.google.com/drive/folders/1NTSQLcootV2-7aqhoRfToveGSdtk0CQM?usp=drive_link" target="_blank" rel="noopener noreferrer">Открыть папку <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="the letter (coca-cola advert) a2 vznaniya">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>The Letter (Coca-Cola Advert) A2</h4>
+                    <p>Vznaniya</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/assessment/6199395?slug=bLj7fgQt" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/assessment/6199395?slug=bLj7fgQt" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="just imagine b1 (christmas ad 2022) ">
+                  <div class="resource-mark drive" aria-hidden="true">DRIVE</div>
+                  <div class="resource-copy">
+                    <h4>Just Imagine B1 (Christmas Ad 2022)</h4>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://drive.google.com/drive/folders/1Re9vRuWfxkL9ojl0rAm16SmOL5P8RTg3" target="_blank" rel="noopener noreferrer">Открыть папку <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="a christmas love story | just imagine b1 (vznaniya) vznaniya">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>A Christmas Love Story | Just Imagine B1 (Vznaniya)</h4>
+                    <p>Vznaniya</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/1357308?slug=YQ5oV5Pl&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/1357308?slug=YQ5oV5Pl&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+            <section class="board-section" aria-labelledby="tab-8-christmas-new-year-winter-section-4">
+              <h3 id="tab-8-christmas-new-year-winter-section-4">Christmas</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="christmas oge ">
+                  <div class="resource-mark drive" aria-hidden="true">DRIVE</div>
+                  <div class="resource-copy">
+                    <h4>Christmas OGE</h4>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://drive.google.com/drive/folders/14LEJj699G5o2aD5nCORDAOaupKIJVXrR?usp=drive_link" target="_blank" rel="noopener noreferrer">Открыть папку <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="kikoriki christmas ">
+                  <div class="resource-mark drive" aria-hidden="true">DRIVE</div>
+                  <div class="resource-copy">
+                    <h4>Kikoriki Christmas</h4>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://drive.google.com/drive/folders/1bX_tZCT1hfUPqkKHf4hRX-XBGN3FeICz?usp=drive_link" target="_blank" rel="noopener noreferrer">Открыть папку <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+            <section class="board-section" aria-labelledby="tab-8-christmas-new-year-winter-section-5">
+              <h3 id="tab-8-christmas-new-year-winter-section-5">Winter</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="fun in the snow (a1+) shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>Fun in the snow (A1+)</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/1373793?slug=I4ijoT1I&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/1373793?slug=I4ijoT1I&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="back from winter break (@mtoybar) ">
+                  <div class="resource-mark drive" aria-hidden="true">DRIVE</div>
+                  <div class="resource-copy">
+                    <h4>Back From Winter Break (@mtoybar)</h4>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://drive.google.com/drive/folders/1bl3EDZ2yPmzYYysHpgjn34SplOYtuRHK" target="_blank" rel="noopener noreferrer">Открыть папку <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+            <section class="board-section" aria-labelledby="tab-8-christmas-new-year-winter-section-6">
+              <h3 id="tab-8-christmas-new-year-winter-section-6">A Christmas Carol</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="a christmas carol chapter 1 (a2) shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>A Christmas Carol Chapter 1 (A2)</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/3882498?slug=bxtzHGgc&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/3882498?slug=bxtzHGgc&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="a christmas carol chapter 2 (a2) shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>A Christmas Carol Chapter 2 (A2)</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/3940366?slug=dqkg1C8l&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/3940366?slug=dqkg1C8l&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="a christmas carol chapter 3 (a2) shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>A Christmas Carol Chapter 3 (A2)</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/3961402?slug=vL4PLuk0&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/3961402?slug=vL4PLuk0&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="a christmas carol chapter 4 (a2) shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>A Christmas Carol Chapter 4 (A2)</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/3989784?slug=VyXZtuc7&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/3989784?slug=VyXZtuc7&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="a christmas carol chapters 5-7 (a2) shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>A Christmas Carol Chapters 5-7 (A2)</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/4038587?slug=wUP80gpr&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/4038587?slug=wUP80gpr&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+            <section class="board-section" aria-labelledby="tab-8-christmas-new-year-winter-section-7">
+              <h3 id="tab-8-christmas-new-year-winter-section-7">Speaking cards</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="kevin&#39;s holidays a1 speaking cards @mtoybar ">
+                  <div class="resource-mark pdf" aria-hidden="true">PDF</div>
+                  <div class="resource-copy">
+                    <h4>Kevin&#39;S Holidays A1 Speaking Cards @Mtoybar</h4>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="assets/a_847ce06f318d4e649b86c192.pdf" target="_blank" rel="noopener noreferrer">Открыть PDF <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="traditional russian new year dishes mtoybar ">
+                  <div class="resource-mark pdf" aria-hidden="true">PDF</div>
+                  <div class="resource-copy">
+                    <h4>Traditional Russian New Year Dishes Mtoybar</h4>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="assets/a_b4a0d36ce2f84972a60713fd.pdf" target="_blank" rel="noopener noreferrer">Открыть PDF <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+        </section>
+        <section class="tab-panel" id="tab-9-valentine-s-day" data-tab-name="Valentine&#39;s Day">
+          <header class="tab-heading">
+            <p>TEENS · 09</p>
+            <h2>Valentine&#39;s Day</h2>
+            <span>6 материалов</span>
+          </header>
+            <section class="board-section" aria-labelledby="tab-9-valentine-s-day-section-1">
+              <h3 id="tab-9-valentine-s-day-section-1">ОГЭ
+Dating Listening</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="dating listening and speaking (b1) shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>Dating Listening and Speaking (B1)</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/1566875?slug=kJN0aIzC&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/1566875?slug=kJN0aIzC&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="огэ чтение (valentine’s day 275e6d) shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>ОГЭ Чтение (Valentine’s Day 275E6D)</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/4574747?slug=pi7rqhp0&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/4574747?slug=pi7rqhp0&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+            <section class="board-section" aria-labelledby="tab-9-valentine-s-day-section-2">
+              <h3 id="tab-9-valentine-s-day-section-2">Love on the balcony</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="love on the balcony ">
+                  <div class="resource-mark drive" aria-hidden="true">DRIVE</div>
+                  <div class="resource-copy">
+                    <h4>Love On The Balcony</h4>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://drive.google.com/drive/folders/1xAWCqSmzcOyHCH57e2X_qggQ7Lkv4pWe" target="_blank" rel="noopener noreferrer">Открыть папку <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+            <section class="board-section" aria-labelledby="tab-9-valentine-s-day-section-3">
+              <h3 id="tab-9-valentine-s-day-section-3">Lava</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="lava ">
+                  <div class="resource-mark drive" aria-hidden="true">DRIVE</div>
+                  <div class="resource-copy">
+                    <h4>Lava</h4>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://drive.google.com/drive/folders/1LVpPmrlu5BwDgwC0-vD1w110b5GLipof" target="_blank" rel="noopener noreferrer">Открыть папку <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+            <section class="board-section" aria-labelledby="tab-9-valentine-s-day-section-4">
+              <h3 id="tab-9-valentine-s-day-section-4">Wishgranter</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="the wishgranter ">
+                  <div class="resource-mark drive" aria-hidden="true">DRIVE</div>
+                  <div class="resource-copy">
+                    <h4>The Wishgranter</h4>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://drive.google.com/drive/folders/1H0k1ST7As1jb_2NdDejeb3_sjU3bEFMu" target="_blank" rel="noopener noreferrer">Открыть папку <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+            <section class="board-section" aria-labelledby="tab-9-valentine-s-day-section-5">
+              <h3 id="tab-9-valentine-s-day-section-5">Who&#39;s the first?</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="kikoriki: who&#39;s the first? ">
+                  <div class="resource-mark drive" aria-hidden="true">DRIVE</div>
+                  <div class="resource-copy">
+                    <h4>Kikoriki: Who&#39;s the first?</h4>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://drive.google.com/drive/folders/1E-wxkY2xpElhXWjSxsrIpaBLjLEiOG5k?usp=drive_link" target="_blank" rel="noopener noreferrer">Открыть папку <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+        </section>
+        <section class="tab-panel" id="tab-10-environment-earth-day" data-tab-name="Environment, Earth Day">
+          <header class="tab-heading">
+            <p>TEENS · 10</p>
+            <h2>Environment, Earth Day</h2>
+            <span>1 материал</span>
+          </header>
+            <section class="board-section" aria-labelledby="tab-10-environment-earth-day-section-1">
+              <h3 id="tab-10-environment-earth-day-section-1">Environment</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="environment ">
+                  <div class="resource-mark drive" aria-hidden="true">DRIVE</div>
+                  <div class="resource-copy">
+                    <h4>Environment</h4>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://drive.google.com/drive/folders/1_sYsWFkM3nSa1OJd8jipMunw6xSnFUH3?usp=drive_link" target="_blank" rel="noopener noreferrer">Открыть папку <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+        </section>
+        <section class="tab-panel" id="tab-11-home-sweet-home" data-tab-name="Home Sweet Home">
+          <header class="tab-heading">
+            <p>TEENS · 11</p>
+            <h2>Home Sweet Home</h2>
+            <span>1 материал</span>
+          </header>
+            <section class="board-section" aria-labelledby="tab-11-home-sweet-home-section-1">
+              <h3 id="tab-11-home-sweet-home-section-1">Home Sweet Home</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="home sweet home ">
+                  <div class="resource-mark drive" aria-hidden="true">DRIVE</div>
+                  <div class="resource-copy">
+                    <h4>Home Sweet Home</h4>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://drive.google.com/drive/folders/1-kYKfTLHBicZpkt9SpMQCUnGbcjXGTiV" target="_blank" rel="noopener noreferrer">Открыть папку <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+        </section>
+        <section class="tab-panel" id="tab-12-ket-a2-listening-tests" data-tab-name="KET (A2) Listening Tests">
+          <header class="tab-heading">
+            <p>TEENS · 12</p>
+            <h2>KET (A2) Listening Tests</h2>
+            <span>4 материалов</span>
+          </header>
+            <section class="board-section" aria-labelledby="tab-12-ket-a2-listening-tests-section-1">
+              <h3 id="tab-12-ket-a2-listening-tests-section-1">A2 Key for Schools 1
+Tets 1-2</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="a2 key 2020 listening test 1 vznaniya">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>A2 Key 2020 Listening Test 1</h4>
+                    <p>Vznaniya</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/2202763?slug=mSUdZb5S&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/2202763?slug=mSUdZb5S&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="a2 key 2020 listening test 2 vznaniya">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>A2 Key 2020 Listening Test 2</h4>
+                    <p>Vznaniya</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/2227504?slug=55rhTo5U&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/2227504?slug=55rhTo5U&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+            <section class="board-section" aria-labelledby="tab-12-ket-a2-listening-tests-section-2">
+              <h3 id="tab-12-ket-a2-listening-tests-section-2">A2 Key for Schools 1
+Tests 3-4</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="ket (a2) listening test 3 shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>KET (A2) Listening Test 3</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/7593130?slug=WuTsjlxk&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/7593130?slug=WuTsjlxk&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="a2 key for schools 1 (listening test 4) vznaniya">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>A2 Key for Schools 1 (Listening Test 4)</h4>
+                    <p>Vznaniya</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/1865565?slug=ufIov7xP&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/1865565?slug=ufIov7xP&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+        </section>
+        <section class="tab-panel" id="tab-13-a2-reading-tests" data-tab-name="A2 Reading Tests">
+          <header class="tab-heading">
+            <p>TEENS · 13</p>
+            <h2>A2 Reading Tests</h2>
+            <span>5 материалов</span>
+          </header>
+            <section class="board-section" aria-labelledby="tab-13-a2-reading-tests-section-1">
+              <h3 id="tab-13-a2-reading-tests-section-1">Reading A2
+1-2</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="pelt for a2 reading test 1 (jobs) shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>PELT for A2 Reading Test 1 (Jobs)</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/5059510?slug=gwGzv4z8&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/5059510?slug=gwGzv4z8&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="pelt for a2 reading test 2 (school boat festival) shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>PELT for A2 Reading Test 2 (School boat festival)</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/5059522?slug=nQt8zj9u&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/5059522?slug=nQt8zj9u&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+            <section class="board-section" aria-labelledby="tab-13-a2-reading-tests-section-2">
+              <h3 id="tab-13-a2-reading-tests-section-2">Reading A2
+3-4</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="pelt for a2 reading test 3 (our free-time activities) shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>PELT for A2 Reading Test 3 (Our free-time activities)</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/5146298?slug=Vzi2OwYd&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/5146298?slug=Vzi2OwYd&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="pelt for a2 reading test 4 (school cooking competition) shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>PELT for A2 Reading Test 4 (School cooking competition)</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/5146308?slug=UD98XD7a&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/5146308?slug=UD98XD7a&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+            <section class="board-section" aria-labelledby="tab-13-a2-reading-tests-section-3">
+              <h3 id="tab-13-a2-reading-tests-section-3">Reading A2
+5</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="computer games – a2 english reading test shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>Computer games – A2 English Reading Test</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/6848771?slug=XlO1Fsqp&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/6848771?slug=XlO1Fsqp&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+        </section>
+        <section class="tab-panel" id="tab-14-b1-preliminary-listening-tests" data-tab-name="B1 Preliminary Listening Tests">
+          <header class="tab-heading">
+            <p>TEENS · 14</p>
+            <h2>B1 Preliminary Listening Tests</h2>
+            <span>23 материалов</span>
+          </header>
+            <section class="board-section" aria-labelledby="tab-14-b1-preliminary-listening-tests-section-1">
+              <h3 id="tab-14-b1-preliminary-listening-tests-section-1">B1 Preliminary 1</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="b1 preliminary 1 (listening test 1) vznaniya">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>B1 Preliminary 1 (Listening Test 1)</h4>
+                    <p>Vznaniya</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/1877454?slug=KwUpEWP5&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/1877454?slug=KwUpEWP5&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="b1 preliminary 1 (listening test 2) vznaniya">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>B1 Preliminary 1 (Listening Test 2)</h4>
+                    <p>Vznaniya</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/1884349?slug=EKwLAxAu&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/1884349?slug=EKwLAxAu&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="b1 preliminary 1 (listening test 3) vznaniya">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>B1 Preliminary 1 (Listening Test 3)</h4>
+                    <p>Vznaniya</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/1884379?slug=JCcxFZlc&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/1884379?slug=JCcxFZlc&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="b1 preliminary 1 (listening test 4) vznaniya">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>B1 Preliminary 1 (Listening Test 4)</h4>
+                    <p>Vznaniya</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/1884965?slug=DZwfKdiz&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/1884965?slug=DZwfKdiz&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+            <section class="board-section" aria-labelledby="tab-14-b1-preliminary-listening-tests-section-2">
+              <h3 id="tab-14-b1-preliminary-listening-tests-section-2">B1 Preliminary for Schools 3</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="𝐁𝟏 𝐏𝐫𝐞𝐥𝐢𝐦𝐢𝐧𝐚𝐫𝐲 𝐟𝐨𝐫 𝐒𝐜𝐡𝐨𝐨𝐥𝐬 𝟑, 𝐋𝐢𝐬𝐭𝐞𝐧𝐢𝐧𝐠 𝐓𝐞𝐬𝐭 𝟏 vznaniya">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>𝐁𝟏 𝐏𝐫𝐞𝐥𝐢𝐦𝐢𝐧𝐚𝐫𝐲 𝐟𝐨𝐫 𝐒𝐜𝐡𝐨𝐨𝐥𝐬 𝟑, 𝐋𝐢𝐬𝐭𝐞𝐧𝐢𝐧𝐠 𝐓𝐞𝐬𝐭 𝟏</h4>
+                    <p>Vznaniya</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/9267096?slug=E9sO6hEg&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/9267096?slug=E9sO6hEg&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="𝐁𝟏 𝐏𝐫𝐞𝐥𝐢𝐦𝐢𝐧𝐚𝐫𝐲 𝐟𝐨𝐫 𝐒𝐜𝐡𝐨𝐨𝐥𝐬 𝟑, 𝐋𝐢𝐬𝐭𝐞𝐧𝐢𝐧𝐠 𝐓𝐞𝐬𝐭 𝟐 vznaniya">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>𝐁𝟏 𝐏𝐫𝐞𝐥𝐢𝐦𝐢𝐧𝐚𝐫𝐲 𝐟𝐨𝐫 𝐒𝐜𝐡𝐨𝐨𝐥𝐬 𝟑, 𝐋𝐢𝐬𝐭𝐞𝐧𝐢𝐧𝐠 𝐓𝐞𝐬𝐭 𝟐</h4>
+                    <p>Vznaniya</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/9274677?slug=qZS0Hr3A&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/9274677?slug=qZS0Hr3A&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+            <section class="board-section" aria-labelledby="tab-14-b1-preliminary-listening-tests-section-3">
+              <h3 id="tab-14-b1-preliminary-listening-tests-section-3">PELT
+Tests 1-5</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="pelt for b1 intermediate listening test 1 shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>PELT for B1 Intermediate Listening Test 1</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/2488206?slug=GKzfWOMx&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/2488206?slug=GKzfWOMx&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="pelt for b1 intermediate listening test 2 shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>PELT for B1 Intermediate Listening Test 2</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/2488437?slug=GqnJAnO4&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/2488437?slug=GqnJAnO4&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="pelt for b1 intermediate listening test 3 shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>PELT for B1 Intermediate Listening Test 3</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/2488573?slug=XuMp3rkF&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/2488573?slug=XuMp3rkF&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="pelt for b1 intermediate listening test 4 shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>PELT for B1 Intermediate Listening Test 4</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/2827200?slug=d7NrCCib&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/2827200?slug=d7NrCCib&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="pelt for b1 intermediate listening test 5 shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>PELT for B1 Intermediate Listening Test 5</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/4416012?slug=mpsB2Ipm&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/4416012?slug=mpsB2Ipm&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+            <section class="board-section" aria-labelledby="tab-14-b1-preliminary-listening-tests-section-4">
+              <h3 id="tab-14-b1-preliminary-listening-tests-section-4">PELT
+Tests 6-9</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="pelt for b1 intermediate listening test 6 shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>PELT for B1 Intermediate Listening Test 6</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/4432671?slug=4B7XuSG3&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/4432671?slug=4B7XuSG3&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="pelt for b1 intermediate listening test 7 shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>PELT for B1 Intermediate Listening Test 7</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/5268218?slug=cggP2bp9&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/5268218?slug=cggP2bp9&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="pelt for b1 intermediate listening test 8 shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>PELT for B1 Intermediate Listening Test 8</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/5397060?slug=MwJS6ASQ&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/5397060?slug=MwJS6ASQ&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="pelt for b1 intermediate listening test 9 shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>PELT for B1 Intermediate Listening Test 9</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/5397146?slug=yyBvrWYt&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/5397146?slug=yyBvrWYt&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+            <section class="board-section" aria-labelledby="tab-14-b1-preliminary-listening-tests-section-5">
+              <h3 id="tab-14-b1-preliminary-listening-tests-section-5">B1 Preliminary for Schools Trainer 1</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="b1 preliminary trainer 1 listening test 1 shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>B1 Preliminary Trainer 1 Listening Test 1</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/6830807?slug=72L7m8MG&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/6830807?slug=72L7m8MG&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="b1 preliminary trainer 1 listening test 2 shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>B1 Preliminary Trainer 1 Listening Test 2</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/6839167?slug=zm4bhjHi&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/6839167?slug=zm4bhjHi&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="b1 preliminary trainer 1 listening test 3 shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>B1 Preliminary Trainer 1 Listening Test 3</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/6904703?slug=5Blsl12z&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/6904703?slug=5Blsl12z&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="b1 preliminary trainer 1 listening test 4 shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>B1 Preliminary Trainer 1 Listening Test 4</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/7264200?slug=ayj0hOIM&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/7264200?slug=ayj0hOIM&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="b1 preliminary trainer 1 listening test 5 shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>B1 Preliminary Trainer 1 Listening Test 5</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/7265562?slug=haXF82K1&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/7265562?slug=haXF82K1&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="b1 preliminary trainer 1 listening test 6 shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>B1 Preliminary Trainer 1 Listening Test 6</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/7265693?slug=JGAW9eaT&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/7265693?slug=JGAW9eaT&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="b1 preliminary trainer 1 listening test 7 shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>B1 Preliminary Trainer 1 Listening Test 7</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/7593210?slug=keCsUWE0&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/7593210?slug=keCsUWE0&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="b1 preliminary trainer 1 listening test 8 shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>B1 Preliminary Trainer 1 Listening Test 8</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/7593281?slug=IFAGi4f5&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/7593281?slug=IFAGi4f5&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+        </section>
+        <section class="tab-panel" id="tab-15-b1-reading-tests" data-tab-name="B1 Reading Tests">
+          <header class="tab-heading">
+            <p>TEENS · 15</p>
+            <h2>B1 Reading Tests</h2>
+            <span>5 материалов</span>
+          </header>
+            <section class="board-section" aria-labelledby="tab-15-b1-reading-tests-section-1">
+              <h3 id="tab-15-b1-reading-tests-section-1">Reading 1-2</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="pelt for b1 reading test 1 (department stores) shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>PELT for B1 Reading Test 1 (Department Stores)</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/5059556?slug=S20D6T6I&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/5059556?slug=S20D6T6I&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="pelt for b1 reading test 2 (art courses) shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>PELT for B1 Reading Test 2 (Art Courses)</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/5059615?slug=bIlec1Zf&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/5059615?slug=bIlec1Zf&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+            <section class="board-section" aria-labelledby="tab-15-b1-reading-tests-section-2">
+              <h3 id="tab-15-b1-reading-tests-section-2">Reading 3-4</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="pelt for b1 reading test 3 (film studios) shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>PELT for B1 Reading Test 3 (Film Studios)</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/5146322?slug=Xodk9vr7&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/5146322?slug=Xodk9vr7&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="jobs available – b1 english reading test shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>Jobs Available – B1 English Reading Test</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/6882193?slug=5b3PGSXW&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/6882193?slug=5b3PGSXW&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+            <section class="board-section" aria-labelledby="tab-15-b1-reading-tests-section-3">
+              <h3 id="tab-15-b1-reading-tests-section-3">B1 Reading Tests (Multiple Choice)</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="𝐔𝐧𝐮𝐬𝐮𝐚𝐥 𝐚𝐧𝐝 𝐰𝐨𝐧𝐝𝐞𝐫𝐟𝐮𝐥 𝐣𝐨𝐛𝐬 (𝐁𝟏 𝐑𝐞𝐚𝐝𝐢𝐧𝐠) vznaniya">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>𝐔𝐧𝐮𝐬𝐮𝐚𝐥 𝐚𝐧𝐝 𝐰𝐨𝐧𝐝𝐞𝐫𝐟𝐮𝐥 𝐣𝐨𝐛𝐬 (𝐁𝟏 𝐑𝐞𝐚𝐝𝐢𝐧𝐠)</h4>
+                    <p>Vznaniya</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/9495585?slug=n1bubTlC&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/9495585?slug=n1bubTlC&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+        </section>
+        <section class="tab-panel" id="tab-16-fce-b2-listening-tests" data-tab-name="FCE (B2) Listening Tests">
+          <header class="tab-heading">
+            <p>TEENS · 16</p>
+            <h2>FCE (B2) Listening Tests</h2>
+            <span>3 материалов</span>
+          </header>
+            <section class="board-section" aria-labelledby="tab-16-fce-b2-listening-tests-section-1">
+              <h3 id="tab-16-fce-b2-listening-tests-section-1">FCE (B2 First for Schools 4)</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="practice fce (b2) listening test 01 shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>Practice FCE (B2) Listening Test 01</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/7539838?slug=5KiIg0Ov&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/7539838?slug=5KiIg0Ov&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="b2 first 4 listening test 2 vznaniya">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>B2 First 4 Listening Test 2</h4>
+                    <p>Vznaniya</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/6553950?slug=MoBaZawD&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/6553950?slug=MoBaZawD&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="b2 first 4 listening test 3 vznaniya">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>B2 First 4 Listening Test 3</h4>
+                    <p>Vznaniya</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/6572598?slug=1kK8RvzU&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/6572598?slug=1kK8RvzU&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+        </section>
+        <section class="tab-panel" id="tab-17-fce-b2-use-of-english" data-tab-name="FCE (B2) Use of English">
+          <header class="tab-heading">
+            <p>TEENS · 17</p>
+            <h2>FCE (B2) Use of English</h2>
+            <span>4 материалов</span>
+          </header>
+            <section class="board-section" aria-labelledby="tab-17-fce-b2-use-of-english-section-1">
+              <h3 id="tab-17-fce-b2-use-of-english-section-1">B2 First for Schools 4</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="b2 first 4 use of english test 3 shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>B2 First 4 Use of English Test 3</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/6749122?slug=ZYYF3HVc&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/6749122?slug=ZYYF3HVc&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="b2 first 4 use of english test 1 shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>B2 First 4 Use of English Test 1</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/6572609?slug=0i7rEP7P&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/6572609?slug=0i7rEP7P&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="b2 first 4 use of english test 2 shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>B2 First 4 Use of English Test 2</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/6749116?slug=I2RuyOot&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/6749116?slug=I2RuyOot&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+            <section class="board-section" aria-labelledby="tab-17-fce-b2-use-of-english-section-2">
+              <h3 id="tab-17-fce-b2-use-of-english-section-2">Word Formation</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="𝐁𝟐 𝐖𝐨𝐫𝐝 𝐟𝐨𝐫𝐦𝐚𝐭𝐢𝐨𝐧 𝐭𝐞𝐬𝐭𝐬 (𝐒𝐦𝐚𝐫𝐭𝐩𝐡𝐨𝐧𝐞𝐬 𝐚𝐭 𝐬𝐜𝐡𝐨𝐨𝐥, 𝐌𝐮𝐬𝐢𝐜 𝐢𝐧 𝐬𝐜𝐡𝐨𝐨𝐥𝐬, 𝐆𝐨𝐢𝐧𝐠 𝐭𝐨 𝐬𝐜𝐡𝐨𝐨𝐥 𝐢𝐧 𝐖𝐞𝐬𝐭 𝐀𝐟𝐫𝐢𝐜𝐚, 𝐁𝐞𝐢𝐧𝐠 𝐚 𝐭𝐞𝐚𝐜𝐡𝐞𝐫, 𝐋𝐞𝐬𝐬𝐨𝐧𝐬 𝐢𝐧 𝐇𝐚𝐩𝐩𝐢𝐧𝐞𝐬𝐬) vznaniya">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>𝐁𝟐 𝐖𝐨𝐫𝐝 𝐟𝐨𝐫𝐦𝐚𝐭𝐢𝐨𝐧 𝐭𝐞𝐬𝐭𝐬 (𝐒𝐦𝐚𝐫𝐭𝐩𝐡𝐨𝐧𝐞𝐬 𝐚𝐭 𝐬𝐜𝐡𝐨𝐨𝐥, 𝐌𝐮𝐬𝐢𝐜 𝐢𝐧 𝐬𝐜𝐡𝐨𝐨𝐥𝐬, 𝐆𝐨𝐢𝐧𝐠 𝐭𝐨 𝐬𝐜𝐡𝐨𝐨𝐥 𝐢𝐧 𝐖𝐞𝐬𝐭 𝐀𝐟𝐫𝐢𝐜𝐚, 𝐁𝐞𝐢𝐧𝐠 𝐚 𝐭𝐞𝐚𝐜𝐡𝐞𝐫, 𝐋𝐞𝐬𝐬𝐨𝐧𝐬 𝐢𝐧 𝐇𝐚𝐩𝐩𝐢𝐧𝐞𝐬𝐬)</h4>
+                    <p>Vznaniya</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/9271589?slug=s0AGWzcP&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/9271589?slug=s0AGWzcP&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+        </section>
+        <section class="tab-panel" id="tab-18-fce-b2-reading-test" data-tab-name="FCE (B2) Reading Test">
+          <header class="tab-heading">
+            <p>TEENS · 18</p>
+            <h2>FCE (B2) Reading Test</h2>
+            <span>3 материалов</span>
+          </header>
+            <section class="board-section" aria-labelledby="tab-18-fce-b2-reading-test-section-1">
+              <h3 id="tab-18-fce-b2-reading-test-section-1">B2 First for Schools 4</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="b2 first 4 reading test 1 shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>B2 First 4 Reading Test 1</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/6572605?slug=6T49bAMP&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/6572605?slug=6T49bAMP&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="b2 first 4 reading test 2 shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>B2 First 4 Reading Test 2</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/6749109?slug=adM1j2D5&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/6749109?slug=adM1j2D5&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="b2 first 4 reading test 3 shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>B2 First 4 Reading Test 3</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/6749119?slug=OwSXgbRZ&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/6749119?slug=OwSXgbRZ&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+        </section>
+        <section class="tab-panel" id="tab-19-present-tenses" data-tab-name="Present Tenses">
+          <header class="tab-heading">
+            <p>TEENS · 19</p>
+            <h2>Present Tenses</h2>
+            <span>6 материалов</span>
+          </header>
+            <section class="board-section" aria-labelledby="tab-19-present-tenses-section-1">
+              <h3 id="tab-19-present-tenses-section-1">Present Perfect</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="wednesday present perfect (irregular verbs) students will watch the video, and do different types of activities, including multiple-choice, filling the gaps, unscrambling sentences, correcting the wrong words. · isl collective">
+                  <div class="resource-mark isl" aria-hidden="true">ISL</div>
+                  <div class="resource-copy">
+                    <h4>Wednesday Present Perfect (Irregular Verbs)</h4>
+                    <p>Students will watch the video, and do different types of activities, including multiple-choice, filling the gaps, unscrambling sentences, correcting the wrong words. · iSL Collective</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://en.islcollective.com/english-esl-video-lessons/grammar-practice/general-grammar-practice/present-perfect-simple-tense/wednesday-present-perfect-irregular-verbs/753654" target="_blank" rel="noopener noreferrer">Открыть <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="despicable me 3 (present perfect) vznaniya">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>Despicable Me 3 (Present Perfect)</h4>
+                    <p>Vznaniya</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/video/10192735?slug=NYCVP1Ty&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/video/10192735?slug=NYCVP1Ty&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="present perfect (aladdin) vznaniya">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>Present Perfect (Aladdin)</h4>
+                    <p>Vznaniya</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/video/10836714?slug=5D1B94Bn&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/video/10836714?slug=5D1B94Bn&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+            <section class="board-section" aria-labelledby="tab-19-present-tenses-section-2">
+              <h3 id="tab-19-present-tenses-section-2">Present Simple
+Present Cont</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="present simple, present continuous, digital natives and digital immigrants (grammar in context 2, b1+) vznaniya">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>Present Simple, Present Continuous, Digital Natives and Digital Immigrants (Grammar in context 2, B1+)</h4>
+                    <p>Vznaniya</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/assessment/9068496?slug=fYXYAZJN" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/assessment/9068496?slug=fYXYAZJN" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="present simple &amp; present continuous (mr bean doing his chores) vznaniya">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>Present Simple &amp; Present Continuous (Mr Bean doing his chores)</h4>
+                    <p>Vznaniya</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/video/232341?slug=axrcJJbo&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/video/232341?slug=axrcJJbo&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="soul - present simple students fill in the gaps with the verbs in the present simple form. · isl collective">
+                  <div class="resource-mark isl" aria-hidden="true">ISL</div>
+                  <div class="resource-copy">
+                    <h4>Soul - Present Simple</h4>
+                    <p>Students fill in the gaps with the verbs in the Present Simple form. · iSL Collective</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://en.islcollective.com/english-esl-video-lessons/grammar-practice/general-grammar-practice/present-simple-tense/soul-present-simple/862625" target="_blank" rel="noopener noreferrer">Открыть <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+        </section>
+        <section class="tab-panel" id="tab-20-past-tenses" data-tab-name="Past Tenses">
+          <header class="tab-heading">
+            <p>TEENS · 20</p>
+            <h2>Past Tenses</h2>
+            <span>9 материалов</span>
+          </header>
+            <section class="board-section" aria-labelledby="tab-20-past-tenses-section-1">
+              <h3 id="tab-20-past-tenses-section-1">Present Perfect &amp; Past Simple</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="wednesday (present perfect &amp; past simple) ">
+                  <div class="resource-mark genially" aria-hidden="true">GEN</div>
+                  <div class="resource-copy">
+                    <h4>Wednesday (Present Perfect &amp; Past Simple)</h4>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://view.genially.com/63ad9dbf560d0500191ba62e" target="_blank" rel="noopener noreferrer">Открыть <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+            <section class="board-section" aria-labelledby="tab-20-past-tenses-section-2">
+              <h3 id="tab-20-past-tenses-section-2">Past Simple</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="the magician’s elephant (past simple, irregular verbs) students fill in the gaps with the verbs in the past simple form. · isl collective">
+                  <div class="resource-mark isl" aria-hidden="true">ISL</div>
+                  <div class="resource-copy">
+                    <h4>The Magician’s Elephant (Past Simple, Irregular Verbs)</h4>
+                    <p>Students fill in the gaps with the verbs in the Past Simple form. · iSL Collective</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://en.islcollective.com/english-esl-video-lessons/grammar-practice/general-grammar-practice/past-simple-tense/the-magicians-elephant-past-simple-irregular-verbs/784317" target="_blank" rel="noopener noreferrer">Открыть <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="luca (past simple, irregular verbs) vznaniya">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>Luca (Past Simple, Irregular Verbs)</h4>
+                    <p>Vznaniya</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/video/9126741?slug=o49DL6t7&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/video/9126741?slug=o49DL6t7&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="past simple: was/were vznaniya">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>Past Simple: was/were</h4>
+                    <p>Vznaniya</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/9423526?slug=tlTtr9Ia&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/9423526?slug=tlTtr9Ia&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="past simple: regular verbs vznaniya">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>Past Simple: regular verbs</h4>
+                    <p>Vznaniya</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/9433549?slug=nXS9I4r5&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/9433549?slug=nXS9I4r5&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="past simple: irregular verbs vznaniya">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>Past Simple: irregular verbs</h4>
+                    <p>Vznaniya</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/9433746?slug=Zh2ONqS8&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/9433746?slug=Zh2ONqS8&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+            <section class="board-section" aria-labelledby="tab-20-past-tenses-section-3">
+              <h3 id="tab-20-past-tenses-section-3">Past Tenses + Present Perfect</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="bomb quiz ">
+                  <div class="resource-mark genially" aria-hidden="true">GEN</div>
+                  <div class="resource-copy">
+                    <h4>Bomb Quiz</h4>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://view.genially.com/68c28073b153f97e2376fb76" target="_blank" rel="noopener noreferrer">Открыть <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="new round up 5 past forms (part 1) vznaniya">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>New Round Up 5 Past Forms (Part 1)</h4>
+                    <p>Vznaniya</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/9108993?slug=HRaGpqnT&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/9108993?slug=HRaGpqnT&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="new round up 5 past forms (part 2) vznaniya">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>New Round Up 5 Past Forms (Part 2)</h4>
+                    <p>Vznaniya</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/9109343?slug=vf537wXM&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/9109343?slug=vf537wXM&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+        </section>
+        <section class="tab-panel" id="tab-21-future-tenses" data-tab-name="Future Tenses">
+          <header class="tab-heading">
+            <p>TEENS · 21</p>
+            <h2>Future Tenses</h2>
+            <span>4 материалов</span>
+          </header>
+            <section class="board-section" aria-labelledby="tab-21-future-tenses-section-1">
+              <h3 id="tab-21-future-tenses-section-1">Genially</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="futures forms breakout ">
+                  <div class="resource-mark genially" aria-hidden="true">GEN</div>
+                  <div class="resource-copy">
+                    <h4>Futures Forms BREAKOUT</h4>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://view.genially.com/655302e702a8ea0012095ff4" target="_blank" rel="noopener noreferrer">Открыть <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="future forms quiz ">
+                  <div class="resource-mark genially" aria-hidden="true">GEN</div>
+                  <div class="resource-copy">
+                    <h4>Future Forms QUIZ</h4>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://view.genially.com/642548616adf930011205bc1" target="_blank" rel="noopener noreferrer">Открыть <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+            <section class="board-section" aria-labelledby="tab-21-future-tenses-section-2">
+              <h3 id="tab-21-future-tenses-section-2">Взнания</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="future forms: will, be going to, pr. continuous, simple vznaniya">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>Future forms: will, be going to, pr. continuous, simple</h4>
+                    <p>Vznaniya</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/3582833?slug=Tq45HhfG&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/3582833?slug=Tq45HhfG&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="new round up 5 future forms (unit 3) vznaniya">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>New Round Up 5 Future Forms (Unit 3)</h4>
+                    <p>Vznaniya</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/9306197?slug=Mka2qy2w&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/9306197?slug=Mka2qy2w&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+        </section>
+        <section class="tab-panel" id="tab-22-comparisons" data-tab-name="Comparisons">
+          <header class="tab-heading">
+            <p>TEENS · 22</p>
+            <h2>Comparisons</h2>
+            <span>4 материалов</span>
+          </header>
+            <section class="board-section" aria-labelledby="tab-22-comparisons-section-1">
+              <h3 id="tab-22-comparisons-section-1">Comparatives Superlatives</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="peppa pig - sports day (comparatives &amp; superlatives) vznaniya">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>Peppa Pig - Sports Day (Comparatives &amp; Superlatives)</h4>
+                    <p>Vznaniya</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/video/10525709?slug=h1LADIXz&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/video/10525709?slug=h1LADIXz&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="elio (comparative &amp; superlative adjectives) students fill in the gaps with the correct form of the adjectives in brackets. · isl collective">
+                  <div class="resource-mark isl" aria-hidden="true">ISL</div>
+                  <div class="resource-copy">
+                    <h4>Elio (Comparative &amp; Superlative Adjectives)</h4>
+                    <p>Students fill in the gaps with the correct form of the adjectives in brackets. · iSL Collective</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://en.islcollective.com/english-esl-video-lessons/grammar-practice/general-grammar-practice/comparison-comparative-and-superlative/elio-comparative-superlative-adjectives/830138" target="_blank" rel="noopener noreferrer">Открыть <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="wednesday comparatives superlatives ">
+                  <div class="resource-mark genially" aria-hidden="true">GEN</div>
+                  <div class="resource-copy">
+                    <h4>Wednesday Comparatives Superlatives</h4>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://view.genially.com/63bff574e028ef0019e20143" target="_blank" rel="noopener noreferrer">Открыть <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+            <section class="board-section" aria-labelledby="tab-22-comparisons-section-2">
+              <h3 id="tab-22-comparisons-section-2">Types of Comparisons, Like/ As</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="grammarway 4 b2 types of comparisons vznaniya">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>Grammarway 4 B2 Types of Comparisons</h4>
+                    <p>Vznaniya</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/9238529?slug=38TgHUr1&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/9238529?slug=38TgHUr1&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+        </section>
+        <section class="tab-panel" id="tab-23-question-tags" data-tab-name="Question Tags">
+          <header class="tab-heading">
+            <p>TEENS · 23</p>
+            <h2>Question Tags</h2>
+            <span>1 материал</span>
+          </header>
+            <section class="board-section" aria-labelledby="tab-23-question-tags-section-1">
+              <h3 id="tab-23-question-tags-section-1">Qustion Tags</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="despicable me 4 - question tags students do a few exercises to revise question tags. · isl collective">
+                  <div class="resource-mark isl" aria-hidden="true">ISL</div>
+                  <div class="resource-copy">
+                    <h4>Despicable Me 4 - Question Tags</h4>
+                    <p>Students do a few exercises to revise Question Tags. · iSL Collective</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://en.islcollective.com/english-esl-video-lessons/grammar-practice/general-grammar-practice/question-tags/despicable-me-4-question-tags/935373" target="_blank" rel="noopener noreferrer">Открыть <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+        </section>
+        <section class="tab-panel" id="tab-24-conditionals" data-tab-name="Conditionals">
+          <header class="tab-heading">
+            <p>TEENS · 24</p>
+            <h2>Conditionals</h2>
+            <span>2 материалов</span>
+          </header>
+            <section class="board-section" aria-labelledby="tab-24-conditionals-section-1">
+              <h3 id="tab-24-conditionals-section-1">Quiz</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="first conditional quiz ">
+                  <div class="resource-mark genially" aria-hidden="true">GEN</div>
+                  <div class="resource-copy">
+                    <h4>First Conditional QUIZ</h4>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://view.genially.com/6401bb8eef89410012d54324" target="_blank" rel="noopener noreferrer">Открыть <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+            <section class="board-section" aria-labelledby="tab-24-conditionals-section-2">
+              <h3 id="tab-24-conditionals-section-2">Kikoriki</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="bad omens - kikoriki (first conditional) watch the video, and do different types of activities, including filling the gaps, unscrambling sentences, correcting the wrong words. · isl collective">
+                  <div class="resource-mark isl" aria-hidden="true">ISL</div>
+                  <div class="resource-copy">
+                    <h4>Bad Omens - KikoRiki (First Conditional)</h4>
+                    <p>Watch the video, and do different types of activities, including filling the gaps, unscrambling sentences, correcting the wrong words. · iSL Collective</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://en.islcollective.com/english-esl-video-lessons/grammar-practice/general-grammar-practice/first-conditional-1/bad-omens-kikoriki-first-conditional/894181" target="_blank" rel="noopener noreferrer">Открыть <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+        </section>
+        <section class="tab-panel" id="tab-25-passive-voice" data-tab-name="Passive Voice">
+          <header class="tab-heading">
+            <p>TEENS · 25</p>
+            <h2>Passive Voice</h2>
+            <span>2 материалов</span>
+          </header>
+            <section class="board-section" aria-labelledby="tab-25-passive-voice-section-1">
+              <div class="resource-list">
+                <article class="resource-card" data-search="pelt for b1 english grammar test 2 passive voice vznaniya">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>PELT for B1 English Grammar Test 2 Passive Voice</h4>
+                    <p>Vznaniya</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/5677091?slug=2GcElp8C&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/5677091?slug=2GcElp8C&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="𝐓𝐡𝐞 𝐏𝐚𝐬𝐬𝐢𝐯𝐞 (𝐓𝐡𝐞 𝐋𝐨𝐫𝐝 𝐨𝐟 𝐭𝐡𝐞 𝐑𝐢𝐧𝐠𝐬) интерактивное видео vznaniya">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>𝐓𝐡𝐞 𝐏𝐚𝐬𝐬𝐢𝐯𝐞 (𝐓𝐡𝐞 𝐋𝐨𝐫𝐝 𝐨𝐟 𝐭𝐡𝐞 𝐑𝐢𝐧𝐠𝐬) интерактивное видео</h4>
+                    <p>Vznaniya</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/video/9303592?slug=VIyJZx4E&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/video/9303592?slug=VIyJZx4E&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+        </section>
+        <section class="tab-panel" id="tab-26-reported-speech" data-tab-name="Reported Speech">
+          <header class="tab-heading">
+            <p>TEENS · 26</p>
+            <h2>Reported Speech</h2>
+            <span>1 материал</span>
+          </header>
+            <section class="board-section" aria-labelledby="tab-26-reported-speech-section-1">
+              <div class="resource-list">
+                <article class="resource-card" data-search="reported speech vznaniya">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>Reported Speech</h4>
+                    <p>Vznaniya</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/9089105?slug=ei166ljn&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/9089105?slug=ei166ljn&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+        </section>
+        <section class="tab-panel" id="tab-27-grammar-revision-a2" data-tab-name="Grammar Revision (A2)">
+          <header class="tab-heading">
+            <p>TEENS · 27</p>
+            <h2>Grammar Revision (A2)</h2>
+            <span>41 материалов</span>
+          </header>
+            <section class="board-section" aria-labelledby="tab-27-grammar-revision-a2-section-1">
+              <h3 id="tab-27-grammar-revision-a2-section-1">Pr. Simple affirmative, negative; adverbs of frequency
+Present Simple: questions and answers</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="pr. simple affirmative, negative; adverbs of frequency shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>Pr. Simple affirmative, negative; adverbs of frequency</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/9340737?slug=jpKVCVQE&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/9340737?slug=jpKVCVQE&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="present simple: questions and answers shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>Present Simple: questions and answers</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/9340860?slug=BTxxNXTQ&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/9340860?slug=BTxxNXTQ&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+            <section class="board-section" aria-labelledby="tab-27-grammar-revision-a2-section-2">
+              <h3 id="tab-27-grammar-revision-a2-section-2">Present Continuous
+Present Simple and Present Continuous</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="present continuous shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>Present Continuous</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/9340924?slug=cmtOYH7g&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/9340924?slug=cmtOYH7g&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="present simple and present continuous shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>Present Simple and Present Continuous</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/9340962?slug=skDpubOB&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/9340962?slug=skDpubOB&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="present continuous complete the gaps in the conversations with the correct form of the verbs in the present continuous. use affirmative (+) or negative (–) forms. use contractions where you can.">
+                  <div class="resource-mark learningapps" aria-hidden="true">LA</div>
+                  <div class="resource-copy">
+                    <h4>Present Continuous</h4>
+                    <p>Complete the gaps in the conversations with the correct form of the verbs in the Present Continuous. Use affirmative (+) or negative (–) forms. Use contractions where you can.</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://learningapps.org/watch?v=pg6hqj60a25" target="_blank" rel="noopener noreferrer">Открыть <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="present continuous make questions in the present continuous using the words below and any other necessary words.">
+                  <div class="resource-mark learningapps" aria-hidden="true">LA</div>
+                  <div class="resource-copy">
+                    <h4>Present Continuous</h4>
+                    <p>Make questions in the Present Continuous using the words below and any other necessary words.</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://learningapps.org/watch?v=pdgsdcwgj25" target="_blank" rel="noopener noreferrer">Открыть <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="present simple and present continuous complete the sentence - a cloze activity where you drag and drop words into blank spaces within a text. · wordwall - create better lessons quicker">
+                  <div class="resource-mark wordwall" aria-hidden="true">WW</div>
+                  <div class="resource-copy">
+                    <h4>Present Simple and Present Continuous</h4>
+                    <p>Complete the sentence - A cloze activity where you drag and drop words into blank spaces within a text. · Wordwall - Create better lessons quicker</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://wordwall.net/play/98932/835/845" target="_blank" rel="noopener noreferrer">Открыть <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="present simple and present continuous complete the text with the correct forms of the verbs in the box. use the present simple or present continuous. use contractions where possible.">
+                  <div class="resource-mark learningapps" aria-hidden="true">LA</div>
+                  <div class="resource-copy">
+                    <h4>Present Simple and Present Continuous</h4>
+                    <p>Complete the text with the correct forms of the verbs in the box. Use the Present Simple or Present Continuous. Use contractions where possible.</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://learningapps.org/watch?v=pdqrwuuxj25" target="_blank" rel="noopener noreferrer">Открыть <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+            <section class="board-section" aria-labelledby="tab-27-grammar-revision-a2-section-3">
+              <h3 id="tab-27-grammar-revision-a2-section-3">Past Simple: was/were
+Past Simple: regular verbs</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="past simple: was/were shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>Past Simple: was/were</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/9423526?slug=tlTtr9Ia&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/9423526?slug=tlTtr9Ia&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="past simple: was/were quiz - a series of multiple choice questions. tap the correct answer to proceed. · wordwall - create better lessons quicker">
+                  <div class="resource-mark wordwall" aria-hidden="true">WW</div>
+                  <div class="resource-copy">
+                    <h4>Past Simple: was/were</h4>
+                    <p>Quiz - A series of multiple choice questions. Tap the correct answer to proceed. · Wordwall - Create better lessons quicker</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://wordwall.net/play/99752/532/445" target="_blank" rel="noopener noreferrer">Открыть <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="past simple: was/were quiz - a series of multiple choice questions. tap the correct answer to proceed. · wordwall - create better lessons quicker">
+                  <div class="resource-mark wordwall" aria-hidden="true">WW</div>
+                  <div class="resource-copy">
+                    <h4>Past Simple: was/were</h4>
+                    <p>Quiz - A series of multiple choice questions. Tap the correct answer to proceed. · Wordwall - Create better lessons quicker</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://wordwall.net/play/99753/218/979" target="_blank" rel="noopener noreferrer">Открыть <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="past simple: regular verbs shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>Past Simple: regular verbs</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/9433549?slug=nXS9I4r5&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/9433549?slug=nXS9I4r5&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="past simple: regular verbs type the answer - type the correct answer for each prompt or question. · wordwall - create better lessons quicker">
+                  <div class="resource-mark wordwall" aria-hidden="true">WW</div>
+                  <div class="resource-copy">
+                    <h4>Past Simple: regular verbs</h4>
+                    <p>Type the answer - Type the correct answer for each prompt or question. · Wordwall - Create better lessons quicker</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://wordwall.net/play/99843/403/194" target="_blank" rel="noopener noreferrer">Открыть <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="past simple: regular verbs complete the dialogue with the correct form of the verbs in brackets. use the past simple.">
+                  <div class="resource-mark learningapps" aria-hidden="true">LA</div>
+                  <div class="resource-copy">
+                    <h4>Past Simple: regular verbs</h4>
+                    <p>Complete the dialogue with the correct form of the verbs in brackets. Use the Past Simple.</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://learningapps.org/watch?v=ptv5or8zn25" target="_blank" rel="noopener noreferrer">Открыть <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+            <section class="board-section" aria-labelledby="tab-27-grammar-revision-a2-section-4">
+              <h3 id="tab-27-grammar-revision-a2-section-4">Past Simple: irregular verbs</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="past simple: irregular verbs shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>Past Simple: irregular verbs</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/9433746?slug=Zh2ONqS8&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/9433746?slug=Zh2ONqS8&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="past simple: irregular verbs complete the sentences using the past simple form of the verbs in brackets. use positive (+), negative (-) or question (?) forms">
+                  <div class="resource-mark learningapps" aria-hidden="true">LA</div>
+                  <div class="resource-copy">
+                    <h4>Past Simple: irregular verbs</h4>
+                    <p>Complete the sentences using the Past Simple form of the verbs in brackets. Use positive (+), negative (-) or question (?) forms</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://learningapps.org/watch?v=pgjajsawj25" target="_blank" rel="noopener noreferrer">Открыть <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="past simple: irregular verbs wordsearch - words are hidden in a letter grid. find them as fast as you can. · wordwall - create better lessons quicker">
+                  <div class="resource-mark wordwall" aria-hidden="true">WW</div>
+                  <div class="resource-copy">
+                    <h4>Past Simple: irregular verbs</h4>
+                    <p>Wordsearch - Words are hidden in a letter grid. Find them as fast as you can. · Wordwall - Create better lessons quicker</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://wordwall.net/play/99846/215/841" target="_blank" rel="noopener noreferrer">Открыть <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+            <section class="board-section" aria-labelledby="tab-27-grammar-revision-a2-section-5">
+              <h3 id="tab-27-grammar-revision-a2-section-5">Adverbs of manner</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="adverbs of manner shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>Adverbs of manner</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/9433968?slug=I6ysbQCk&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/9433968?slug=I6ysbQCk&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="adverbs of manner wordsearch - words are hidden in a letter grid. find them as fast as you can. · wordwall - create better lessons quicker">
+                  <div class="resource-mark wordwall" aria-hidden="true">WW</div>
+                  <div class="resource-copy">
+                    <h4>Adverbs of manner</h4>
+                    <p>Wordsearch - Words are hidden in a letter grid. Find them as fast as you can. · Wordwall - Create better lessons quicker</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://wordwall.net/play/99849/098/226" target="_blank" rel="noopener noreferrer">Открыть <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="adverbs of manner use the adjectives in the box to make adverbs to complete the sentences below.">
+                  <div class="resource-mark learningapps" aria-hidden="true">LA</div>
+                  <div class="resource-copy">
+                    <h4>Adverbs of manner</h4>
+                    <p>Use the adjectives in the box to make adverbs to complete the sentences below.</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://learningapps.org/watch?v=p86mnvsq525" target="_blank" rel="noopener noreferrer">Открыть <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+            <section class="board-section" aria-labelledby="tab-27-grammar-revision-a2-section-6">
+              <h3 id="tab-27-grammar-revision-a2-section-6">Countable and uncountable nouns</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="countable and uncountable nouns shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>Countable and uncountable nouns</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/9479926?slug=SSR9uINn&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/9479926?slug=SSR9uINn&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="countable and uncountable nouns look at the food vernon and lily bought for a party and complete the sentences below using some, a lot of, much, many or any. you need to use some of them more than once.">
+                  <div class="resource-mark learningapps" aria-hidden="true">LA</div>
+                  <div class="resource-copy">
+                    <h4>Countable and uncountable nouns</h4>
+                    <p>Look at the food Vernon and Lily bought for a party and complete the sentences below using some, a lot of, much, many or any. You need to use some of them more than once.</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://learningapps.org/watch?v=p8sungar325" target="_blank" rel="noopener noreferrer">Открыть <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="countable and uncountable nouns group sort - drag and drop each item into its correct group. · wordwall - create better lessons quicker">
+                  <div class="resource-mark wordwall" aria-hidden="true">WW</div>
+                  <div class="resource-copy">
+                    <h4>Countable and uncountable nouns</h4>
+                    <p>Group sort - Drag and drop each item into its correct group. · Wordwall - Create better lessons quicker</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://wordwall.net/play/100452/573/902" target="_blank" rel="noopener noreferrer">Открыть <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+            <section class="board-section" aria-labelledby="tab-27-grammar-revision-a2-section-7">
+              <h3 id="tab-27-grammar-revision-a2-section-7">Past Continuous and Past Simple</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="past continuous and past simple shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>Past Continuous and Past Simple</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/9490378?slug=0RKrCErz&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/9490378?slug=0RKrCErz&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="past simple or past continuous complete the sentence - a cloze activity where you drag and drop words into blank spaces within a text. · wordwall - create better lessons quicker">
+                  <div class="resource-mark wordwall" aria-hidden="true">WW</div>
+                  <div class="resource-copy">
+                    <h4>Past Simple or Past Continuous</h4>
+                    <p>Complete the sentence - A cloze activity where you drag and drop words into blank spaces within a text. · Wordwall - Create better lessons quicker</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://wordwall.net/play/100550/459/928" target="_blank" rel="noopener noreferrer">Открыть <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="past continuous and past simple complete the dialogue by choosing the correct form of the verbs: past simple or past continuous.">
+                  <div class="resource-mark learningapps" aria-hidden="true">LA</div>
+                  <div class="resource-copy">
+                    <h4>Past Continuous and Past Simple</h4>
+                    <p>Complete the dialogue by choosing the correct form of the verbs: Past Simple or Past Continuous.</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://learningapps.org/watch?v=pdq7jaco325" target="_blank" rel="noopener noreferrer">Открыть <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+            <section class="board-section" aria-labelledby="tab-27-grammar-revision-a2-section-8">
+              <h3 id="tab-27-grammar-revision-a2-section-8">Comparative and superlative adjectives</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="comparative and superlative adjectives shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>Comparative and superlative adjectives</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/9490451?slug=LPOml9xO&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/9490451?slug=LPOml9xO&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="comparative and superlative adjectives type the answer - type the correct answer for each prompt or question. · wordwall - create better lessons quicker">
+                  <div class="resource-mark wordwall" aria-hidden="true">WW</div>
+                  <div class="resource-copy">
+                    <h4>Comparative and superlative adjectives</h4>
+                    <p>Type the answer - Type the correct answer for each prompt or question. · Wordwall - Create better lessons quicker</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://wordwall.net/play/100551/467/807" target="_blank" rel="noopener noreferrer">Открыть <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="comparative and superlative adjectives word magnets - drag and drop the words or letters to arrange into sentences. · wordwall - create better lessons quicker">
+                  <div class="resource-mark wordwall" aria-hidden="true">WW</div>
+                  <div class="resource-copy">
+                    <h4>Comparative and superlative adjectives</h4>
+                    <p>Word magnets - Drag and drop the words or letters to arrange into sentences. · Wordwall - Create better lessons quicker</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://wordwall.net/play/100551/006/126" target="_blank" rel="noopener noreferrer">Открыть <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+            <section class="board-section" aria-labelledby="tab-27-grammar-revision-a2-section-9">
+              <h3 id="tab-27-grammar-revision-a2-section-9">Going to and the Present Continuous</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="going to and the present continuous shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>Going to and the Present Continuous</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/9490531?slug=isWmMNtV&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/9490531?slug=isWmMNtV&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="going to and the present continuous complete the voicemail using the best form of the verbs in brackets: going to or present continuous. use contractions if possible.">
+                  <div class="resource-mark learningapps" aria-hidden="true">LA</div>
+                  <div class="resource-copy">
+                    <h4>Going to and the Present Continuous</h4>
+                    <p>Complete the voicemail using the best form of the verbs in brackets: going to or present continuous. Use contractions if possible.</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://learningapps.org/watch?v=psyc4a30v25" target="_blank" rel="noopener noreferrer">Открыть <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="going to and the present continuous type the answer - type the correct answer for each prompt or question. · wordwall - create better lessons quicker">
+                  <div class="resource-mark wordwall" aria-hidden="true">WW</div>
+                  <div class="resource-copy">
+                    <h4>Going to and the Present Continuous</h4>
+                    <p>Type the answer - Type the correct answer for each prompt or question. · Wordwall - Create better lessons quicker</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://wordwall.net/play/100552/175/423" target="_blank" rel="noopener noreferrer">Открыть <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+            <section class="board-section" aria-labelledby="tab-27-grammar-revision-a2-section-10">
+              <h3 id="tab-27-grammar-revision-a2-section-10">Will for future predictions</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="will for future predictions shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>Will for future predictions</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/9495324?slug=PaSWAI1W&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/9495324?slug=PaSWAI1W&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="will for future predictions complete the sentence - a cloze activity where you drag and drop words into blank spaces within a text. · wordwall - create better lessons quicker">
+                  <div class="resource-mark wordwall" aria-hidden="true">WW</div>
+                  <div class="resource-copy">
+                    <h4>Will for future predictions</h4>
+                    <p>Complete the sentence - A cloze activity where you drag and drop words into blank spaces within a text. · Wordwall - Create better lessons quicker</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://wordwall.net/play/100626/684/208" target="_blank" rel="noopener noreferrer">Открыть <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="will for future predictions quiz - a series of multiple choice questions. tap the correct answer to proceed. · wordwall - create better lessons quicker">
+                  <div class="resource-mark wordwall" aria-hidden="true">WW</div>
+                  <div class="resource-copy">
+                    <h4>Will for future predictions</h4>
+                    <p>Quiz - A series of multiple choice questions. Tap the correct answer to proceed. · Wordwall - Create better lessons quicker</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://wordwall.net/play/100626/284/918" target="_blank" rel="noopener noreferrer">Открыть <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+            <section class="board-section" aria-labelledby="tab-27-grammar-revision-a2-section-11">
+              <h3 id="tab-27-grammar-revision-a2-section-11">Present Perfect</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="present perfect shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>Present Perfect</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/9495657?slug=ANskxBjN&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/9495657?slug=ANskxBjN&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="present perfect type the answer - type the correct answer for each prompt or question. · wordwall - create better lessons quicker">
+                  <div class="resource-mark wordwall" aria-hidden="true">WW</div>
+                  <div class="resource-copy">
+                    <h4>Present Perfect</h4>
+                    <p>Type the answer - Type the correct answer for each prompt or question. · Wordwall - Create better lessons quicker</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://wordwall.net/play/100630/963/756" target="_blank" rel="noopener noreferrer">Открыть <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="present perfect complete the table with the correct forms of the past simple and present perfect verbs.">
+                  <div class="resource-mark learningapps" aria-hidden="true">LA</div>
+                  <div class="resource-copy">
+                    <h4>Present Perfect</h4>
+                    <p>Complete the table with the correct forms of the past simple and present perfect verbs.</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://learningapps.org/watch?v=pspxt1jbn25" target="_blank" rel="noopener noreferrer">Открыть <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+            <section class="board-section" aria-labelledby="tab-27-grammar-revision-a2-section-12">
+              <h3 id="tab-27-grammar-revision-a2-section-12">Present Perfect with already/just/yet</h3>
+              <div class="resource-list">
+                <article class="resource-card" data-search="present perfect with already/just/yet shkola">
+                  <div class="resource-mark lesson" aria-hidden="true">LESSON</div>
+                  <div class="resource-copy">
+                    <h4>Present Perfect with already/just/yet</h4>
+                    <p>Shkola</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://student.vznaniya.com/home/assessment/9495760?slug=0WijPiah&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Взнания <span aria-hidden="true">↗</span></a><a class="open-link" href="https://student.shkola.app/home/assessment/9495760?slug=0WijPiah&amp;onlypreview=true" target="_blank" rel="noopener noreferrer">Школа <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="present perfect with already/just/yet quiz - a series of multiple choice questions. tap the correct answer to proceed. · wordwall - create better lessons quicker">
+                  <div class="resource-mark wordwall" aria-hidden="true">WW</div>
+                  <div class="resource-copy">
+                    <h4>Present Perfect with already/just/yet</h4>
+                    <p>Quiz - A series of multiple choice questions. Tap the correct answer to proceed. · Wordwall - Create better lessons quicker</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://wordwall.net/play/100632/761/943" target="_blank" rel="noopener noreferrer">Открыть <span aria-hidden="true">↗</span></a></div>
+                </article>
+                <article class="resource-card" data-search="present perfect with already/just/yet quiz - a series of multiple choice questions. tap the correct answer to proceed. · wordwall - create better lessons quicker">
+                  <div class="resource-mark wordwall" aria-hidden="true">WW</div>
+                  <div class="resource-copy">
+                    <h4>Present Perfect with already/just/yet</h4>
+                    <p>Quiz - A series of multiple choice questions. Tap the correct answer to proceed. · Wordwall - Create better lessons quicker</p>
+                  </div>
+                  <div class="resource-actions"><a class="open-link" href="https://wordwall.net/play/100632/268/963" target="_blank" rel="noopener noreferrer">Открыть <span aria-hidden="true">↗</span></a></div>
+                </article>
+              </div>
+            </section>
+        </section>
+    <p class="no-results" id="no-results">Ничего не найдено.</p>
+  </main>
+  <script>
+    const input=document.getElementById('board-search');
+    const cards=[...document.querySelectorAll('.resource-card')];
+    const panels=[...document.querySelectorAll('.tab-panel')];
+    const noResults=document.getElementById('no-results');
+    const navLinks=[...document.querySelectorAll('.nav-tab')];
+    function filterBoard(){
+      const q=input.value.trim().toLocaleLowerCase('ru');
+      let total=0;
+      panels.forEach(panel=>{
+        let panelTotal=0;
+        panel.querySelectorAll('.board-section').forEach(section=>{
+          let sectionTotal=0;
+          section.querySelectorAll('.resource-card').forEach(card=>{
+            const show=!q||card.dataset.search.includes(q);
+            card.hidden=!show;
+            if(show){ sectionTotal++; panelTotal++; total++; }
+          });
+          section.hidden=sectionTotal===0;
+        });
+        panel.hidden=panelTotal===0;
+      });
+      noResults.style.display=total?'none':'block';
+    }
+    input.addEventListener('input',filterBoard);
+    const observer=new IntersectionObserver(entries=>{
+      const current=entries.filter(entry=>entry.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];
+      if(!current)return;
+      navLinks.forEach(link=>link.classList.toggle('active',link.hash==='#'+current.target.id));
+      const active=document.querySelector('.nav-tab.active');
+      if(active)active.scrollIntoView({block:'nearest'});
+    },{rootMargin:'-10% 0px -70% 0px',threshold:[0,.1,.5]});
+    panels.forEach(panel=>observer.observe(panel));
+  </script>
+</body>
+</html>
