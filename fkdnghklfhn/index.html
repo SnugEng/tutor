@@ -5,219 +5,110 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="robots" content="noindex,nofollow,noarchive">
   <meta name="theme-color" content="#171716">
-  <title>SNUG Archive — все доски</title>
+  <title>SNUG Archive — доски</title>
   <style>
-    :root { --ink:#171716; --panel:#222220; --line:#3a3a36; --paper:#f1efe7; --muted:#a6a49a; --acid:#e8ff46; --coral:#ff6b56; }
+    :root { --bg:#171716; --card:#222220; --line:#3a3a36; --text:#f1efe7; --muted:#a6a49a; --accent:#e8ff46; }
     * { box-sizing:border-box; }
-    html { color-scheme:dark; background:var(--ink); }
-    body { margin:0; min-height:100vh; color:var(--paper); background:
-      radial-gradient(circle at 83% 12%,rgba(232,255,70,.08),transparent 24rem),
-      linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),
-      linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px),var(--ink);
-      background-size:auto,48px 48px,48px 48px,auto; font-family:Inter,Arial,sans-serif; }
+    html { color-scheme:dark; background:var(--bg); }
+    body { margin:0; min-height:100vh; color:var(--text); background:var(--bg); font-family:Inter,Arial,sans-serif; }
     a { color:inherit; }
-    .topbar { height:64px; border-bottom:1px solid var(--line); display:flex; align-items:center; justify-content:space-between; padding:0 clamp(20px,4vw,64px); position:sticky; top:0; z-index:5; background:rgba(23,23,22,.91); backdrop-filter:blur(14px); }
-    .brand { display:flex; align-items:center; gap:12px; font-weight:900; letter-spacing:.08em; }
-    .brand b { width:14px; height:14px; background:var(--acid); display:block; box-shadow:5px 5px 0 var(--coral); }
-    .status { color:var(--muted); font:700 11px/1.2 ui-monospace,SFMono-Regular,Consolas,monospace; letter-spacing:.1em; }
-    main { width:min(1440px,calc(100% - 40px)); margin:0 auto; padding:clamp(46px,7vw,100px) 0 80px; }
-    .hero { display:grid; grid-template-columns:minmax(0,1fr) minmax(260px,420px); align-items:end; gap:40px; margin-bottom:52px; }
-    .eyebrow { margin:0 0 18px; color:var(--acid); font:800 12px/1.2 ui-monospace,SFMono-Regular,Consolas,monospace; letter-spacing:.16em; text-transform:uppercase; }
-    h1 { margin:0; max-width:900px; font-size:clamp(48px,8.6vw,128px); line-height:.82; letter-spacing:-.065em; text-transform:uppercase; }
-    h1 span { color:var(--acid); }
-    .hero-copy { color:var(--muted); font-size:clamp(16px,1.4vw,20px); line-height:1.55; margin:0 0 24px; max-width:35ch; }
-    .search-wrap { position:relative; }
-    .search-wrap:before { content:'⌕'; position:absolute; left:16px; top:50%; transform:translateY(-52%); color:var(--acid); font-size:22px; }
-    #search { width:100%; height:50px; border:1px solid var(--line); border-radius:0; padding:0 16px 0 46px; color:var(--paper); background:var(--panel); font:700 14px/1 ui-monospace,SFMono-Regular,Consolas,monospace; outline:none; }
-    #search:focus { border-color:var(--acid); box-shadow:0 0 0 1px var(--acid); }
+    header { border-bottom:1px solid var(--line); }
+    .bar { width:min(1240px,calc(100% - 40px)); min-height:68px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:24px; }
+    .brand { flex:none; font-weight:900; letter-spacing:.08em; }
+    .search-wrap { width:min(340px,100%); }
+    #search { width:100%; height:40px; border:1px solid var(--line); border-radius:6px; padding:0 13px; color:var(--text); background:var(--card); font:700 13px/1 ui-monospace,SFMono-Regular,Consolas,monospace; outline:none; }
+    #search:focus { border-color:var(--accent); }
     #search::placeholder { color:#77766f; }
-    .grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); border-top:1px solid var(--line); border-left:1px solid var(--line); }
-    .board-card { min-height:300px; padding:24px; border-right:1px solid var(--line); border-bottom:1px solid var(--line); text-decoration:none; display:flex; flex-direction:column; position:relative; overflow:hidden; background:rgba(34,34,32,.74); transition:background .2s,color .2s,transform .2s; }
-    .board-card:hover { color:var(--ink); background:var(--acid); transform:translateY(-3px); z-index:2; }
-    .board-card:focus-visible { outline:3px solid var(--coral); outline-offset:-3px; z-index:3; }
-    .card-top { display:flex; justify-content:space-between; align-items:center; color:var(--muted); font:800 11px/1 ui-monospace,SFMono-Regular,Consolas,monospace; letter-spacing:.12em; }
-    .board-card:hover .card-top { color:#4e521c; }
-    .arrow { color:var(--acid); font-size:24px; transition:transform .2s; }
-    .board-card:hover .arrow { color:var(--ink); transform:translate(4px,-4px); }
-    .card-mark { width:92px; height:76px; margin:34px 0 auto; display:flex; align-items:flex-end; gap:6px; transform:skew(-8deg); }
-    .card-mark i { display:block; width:24px; background:var(--paper); border:1px solid var(--ink); }
-    .card-mark i:nth-child(1) { height:44px; } .card-mark i:nth-child(2) { height:68px; background:var(--acid); } .card-mark i:nth-child(3) { height:54px; background:var(--coral); }
-    .board-card:hover .card-mark i:nth-child(1) { background:var(--ink); }
-    .board-card h2 { margin:28px 0 10px; font-size:clamp(26px,2.5vw,40px); line-height:.95; letter-spacing:-.045em; text-transform:uppercase; }
-    .board-card p { margin:0; color:var(--muted); font:600 12px/1.45 ui-monospace,SFMono-Regular,Consolas,monospace; }
-    .board-card:hover p { color:#4e521c; }
-    .empty { display:none; padding:50px 0; color:var(--muted); font:700 14px ui-monospace,SFMono-Regular,Consolas,monospace; }
-    footer { display:flex; justify-content:space-between; gap:24px; margin-top:32px; color:#77766f; font:700 10px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace; letter-spacing:.1em; text-transform:uppercase; }
-    @media (max-width:920px) { .hero { grid-template-columns:1fr; } .grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
-    @media (max-width:600px) { main { width:min(100% - 24px,1440px); padding-top:44px; } .topbar { padding:0 16px; } .status { display:none; } h1 { font-size:clamp(50px,18vw,88px); } .grid { grid-template-columns:1fr; } .board-card { min-height:260px; } footer { flex-direction:column; } }
+    main { width:min(1240px,calc(100% - 40px)); margin:0 auto; padding:36px 0 52px; }
+    h1 { margin:0 0 22px; font-size:clamp(34px,4vw,52px); line-height:1; letter-spacing:-.04em; }
+    .grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; }
+    .board-card { min-height:126px; padding:17px; border:1px solid var(--line); border-radius:8px; text-decoration:none; display:flex; flex-direction:column; background:var(--card); transition:border-color .15s,background .15s; }
+    .board-card:hover { border-color:var(--accent); background:#282826; }
+    .board-card:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+    .board-card h2 { margin:0 0 24px; font-size:clamp(21px,2vw,27px); line-height:1.05; letter-spacing:-.035em; }
+    .meta { display:flex; flex-wrap:wrap; gap:7px; margin-top:auto; }
+    .meta span { padding:5px 8px; border:1px solid var(--line); border-radius:999px; color:var(--muted); font:700 11px/1 ui-monospace,SFMono-Regular,Consolas,monospace; white-space:nowrap; }
+    .meta .level { border-color:rgba(232,255,70,.45); color:var(--accent); }
+    .empty { display:none; margin:24px 0 0; color:var(--muted); font:700 13px ui-monospace,SFMono-Regular,Consolas,monospace; }
+    @media (max-width:1000px) { .grid { grid-template-columns:repeat(3,minmax(0,1fr)); } }
+    @media (max-width:720px) { .grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+    @media (max-width:520px) {
+      .bar { width:min(100% - 24px,1240px); padding:12px 0; align-items:stretch; flex-direction:column; gap:10px; }
+      .search-wrap { width:100%; }
+      main { width:min(100% - 24px,1240px); padding-top:28px; }
+      .grid { grid-template-columns:1fr; gap:9px; }
+      .board-card { min-height:112px; }
+    }
     @media (prefers-reduced-motion:reduce) { * { transition:none!important; } }
   </style>
 </head>
 <body>
-  <header class="topbar">
-    <div class="brand"><b aria-hidden="true"></b> SNUG / ARCHIVE</div>
-    <div class="status"><span id="visibleCount">15</span> ДОСОК · STATIC EDITION</div>
+  <header>
+    <div class="bar">
+      <div class="brand">SNUG ARCHIVE</div>
+      <label class="search-wrap"><span hidden>Поиск по доскам</span><input id="search" type="search" autocomplete="off" placeholder="НАЙТИ ДОСКУ…"></label>
+    </div>
   </header>
   <main>
-    <section class="hero">
-      <div>
-        <p class="eyebrow">Личный каталог материалов</p>
-        <h1>Все доски.<br><span>Одна ссылка.</span></h1>
-      </div>
-      <div>
-        <p class="hero-copy">Пятнадцать автономных досок без коллекций и лишних папок. Нажми на карточку — доска откроется в новой вкладке.</p>
-        <label class="search-wrap"><span hidden>Поиск по доскам</span><input id="search" type="search" autocomplete="off" placeholder="НАЙТИ ДОСКУ…"></label>
-      </div>
-    </section>
+    <h1>Доски</h1>
     <section class="grid" id="boards" aria-label="Все доски">
-<a class="board-card" href="b_d97b475f0195194f73c34e60/gg1_1d09bb12beb5dd0f213b5310827ec309.html" target="_blank" rel="noopener" data-search="go getter 1" aria-label="Открыть доску Go Getter 1">
-      <div class="card-top">
-        <span class="card-number">BOARD 01</span>
-        <span class="arrow" aria-hidden="true">↗</span>
-      </div>
-      <div class="card-mark" aria-hidden="true"><i></i><i></i><i></i></div>
-      <h2>Go Getter 1</h2>
-      <p>66 разделов · 435 материалов · 6 файлов</p>
-    </a>
-<a class="board-card" href="b_88195a2d6f1014f52ed528e1/gg2_f6ad6cf08c116e15f0b99563d98c8220.html" target="_blank" rel="noopener" data-search="go getter 2" aria-label="Открыть доску Go Getter 2">
-      <div class="card-top">
-        <span class="card-number">BOARD 02</span>
-        <span class="arrow" aria-hidden="true">↗</span>
-      </div>
-      <div class="card-mark" aria-hidden="true"><i></i><i></i><i></i></div>
-      <h2>Go Getter 2</h2>
-      <p>68 разделов · 460 материалов · 2 файлов</p>
-    </a>
-<a class="board-card" href="b_4de5ab8f0bbe716a28d98e76/gg3_48069a990273d7485cffd7361db55611.html" target="_blank" rel="noopener" data-search="go getter 3" aria-label="Открыть доску Go Getter 3">
-      <div class="card-top">
-        <span class="card-number">BOARD 03</span>
-        <span class="arrow" aria-hidden="true">↗</span>
-      </div>
-      <div class="card-mark" aria-hidden="true"><i></i><i></i><i></i></div>
-      <h2>Go Getter 3</h2>
-      <p>65 разделов · 369 материалов · 2 файлов</p>
-    </a>
-<a class="board-card" href="b_960aac4e319739d888cd23e0/f2_441e1875b63142712ddb.html" target="_blank" rel="noopener" data-search="focus 2" aria-label="Открыть доску Focus 2">
-      <div class="card-top">
-        <span class="card-number">BOARD 04</span>
-        <span class="arrow" aria-hidden="true">↗</span>
-      </div>
-      <div class="card-mark" aria-hidden="true"><i></i><i></i><i></i></div>
-      <h2>Focus 2</h2>
-      <p>76 разделов · 418 материалов</p>
-    </a>
-<a class="board-card" href="b_a7898798a3beece21a5ed430/f3_9dc6947d1fe711f0501ca57387c678c4.html" target="_blank" rel="noopener" data-search="focus 3" aria-label="Открыть доску Focus 3">
-      <div class="card-top">
-        <span class="card-number">BOARD 05</span>
-        <span class="arrow" aria-hidden="true">↗</span>
-      </div>
-      <div class="card-mark" aria-hidden="true"><i></i><i></i><i></i></div>
-      <h2>Focus 3</h2>
-      <p>75 разделов · 401 материалов</p>
-    </a>
-<a class="board-card" href="b_ee31cc387f68704b190ab232/f4_9653282f69104c4296dfccd563bb6cc3.html" target="_blank" rel="noopener" data-search="focus 4" aria-label="Открыть доску Focus 4">
-      <div class="card-top">
-        <span class="card-number">BOARD 06</span>
-        <span class="arrow" aria-hidden="true">↗</span>
-      </div>
-      <div class="card-mark" aria-hidden="true"><i></i><i></i><i></i></div>
-      <h2>Focus 4</h2>
-      <p>75 разделов · 358 материалов · 3 файлов</p>
-    </a>
-<a class="board-card" href="b_46fd2e1af24ad19400d3fac5/pu1_b69b0d508d65b2bb0731dd54aff568092da9eee7.html" target="_blank" rel="noopener" data-search="power up 1" aria-label="Открыть доску Power Up 1">
-      <div class="card-top">
-        <span class="card-number">BOARD 07</span>
-        <span class="arrow" aria-hidden="true">↗</span>
-      </div>
-      <div class="card-mark" aria-hidden="true"><i></i><i></i><i></i></div>
-      <h2>Power Up 1</h2>
-      <p>56 разделов · 390 материалов · 15 файлов</p>
-    </a>
-<a class="board-card" href="b_5c8b0fd29442e9919d6c0d1c/wid_8887fc3b9af52a1591f1356393584d.html" target="_blank" rel="noopener" data-search="wider world 3" aria-label="Открыть доску Wider World 3">
-      <div class="card-top">
-        <span class="card-number">BOARD 08</span>
-        <span class="arrow" aria-hidden="true">↗</span>
-      </div>
-      <div class="card-mark" aria-hidden="true"><i></i><i></i><i></i></div>
-      <h2>Wider World 3</h2>
-      <p>86 разделов · 555 материалов · 7 файлов</p>
-    </a>
-<a class="board-card" href="b_7cf58aa286a985421ca82907/wid_67f1f6e4bf6a795d5a28548004deb3.html" target="_blank" rel="noopener" data-search="wider world 4" aria-label="Открыть доску Wider World 4">
-      <div class="card-top">
-        <span class="card-number">BOARD 09</span>
-        <span class="arrow" aria-hidden="true">↗</span>
-      </div>
-      <div class="card-mark" aria-hidden="true"><i></i><i></i><i></i></div>
-      <h2>Wider World 4</h2>
-      <p>87 разделов · 516 материалов · 13 файлов</p>
-    </a>
-<a class="board-card" href="b_e455ae68a9214f2fe366e90d/you_5b686f0ad425dc8e86cddcf9f6e7e8.html" target="_blank" rel="noopener" data-search="young learners" aria-label="Открыть доску Young Learners">
-      <div class="card-top">
-        <span class="card-number">BOARD 10</span>
-        <span class="arrow" aria-hidden="true">↗</span>
-      </div>
-      <div class="card-mark" aria-hidden="true"><i></i><i></i><i></i></div>
-      <h2>Young Learners</h2>
-      <p>24 разделов · 208 материалов · 6 файлов</p>
-    </a>
-<a class="board-card" href="b_b480793e81da1acc280393b4/gr_3ff2e665c236a499f7538652739c2dc4a76022d8.html" target="_blank" rel="noopener" data-search="grammar" aria-label="Открыть доску Grammar">
-      <div class="card-top">
-        <span class="card-number">BOARD 11</span>
-        <span class="arrow" aria-hidden="true">↗</span>
-      </div>
-      <div class="card-mark" aria-hidden="true"><i></i><i></i><i></i></div>
-      <h2>Grammar</h2>
-      <p>42 разделов · 237 материалов · 4 файлов</p>
-    </a>
-<a class="board-card" href="b_11c717146be9d7799ffe319a/rd_6fc74a4ca5f89c5f665d0a9eb32d9cc1.html" target="_blank" rel="noopener" data-search="reading" aria-label="Открыть доску Reading">
-      <div class="card-top">
-        <span class="card-number">BOARD 12</span>
-        <span class="arrow" aria-hidden="true">↗</span>
-      </div>
-      <div class="card-mark" aria-hidden="true"><i></i><i></i><i></i></div>
-      <h2>Reading</h2>
-      <p>8 разделов · 25 материалов</p>
-    </a>
-<a class="board-card" href="b_dd0070d4d24f2fef0f90f8f3/vpr_b1670636eef1affb5200bdc8d1d380969357b574.html" target="_blank" rel="noopener" data-search="впр" aria-label="Открыть доску ВПР">
-      <div class="card-top">
-        <span class="card-number">BOARD 13</span>
-        <span class="arrow" aria-hidden="true">↗</span>
-      </div>
-      <div class="card-mark" aria-hidden="true"><i></i><i></i><i></i></div>
-      <h2>ВПР</h2>
-      <p>4 разделов · 74 материалов · 1 файлов</p>
-    </a>
-<a class="board-card" href="b_2cca80eeaa7d9865eaa691bf/oge_9da9d0936ecbfeaf8afb869c43511af7534ee8a4.html" target="_blank" rel="noopener" data-search="огэ" aria-label="Открыть доску ОГЭ">
-      <div class="card-top">
-        <span class="card-number">BOARD 14</span>
-        <span class="arrow" aria-hidden="true">↗</span>
-      </div>
-      <div class="card-mark" aria-hidden="true"><i></i><i></i><i></i></div>
-      <h2>ОГЭ</h2>
-      <p>16 разделов · 240 материалов · 8 файлов</p>
-    </a>
-<a class="board-card" href="b_e6750058af819819883b4c04/e_e86bc24f5b2be8f2e1d4426d48ad1c.html" target="_blank" rel="noopener" data-search="егэ" aria-label="Открыть доску ЕГЭ">
-      <div class="card-top">
-        <span class="card-number">BOARD 15</span>
-        <span class="arrow" aria-hidden="true">↗</span>
-      </div>
-      <div class="card-mark" aria-hidden="true"><i></i><i></i><i></i></div>
-      <h2>ЕГЭ</h2>
-      <p>34 разделов · 546 материалов · 139 файлов</p>
-    </a>
+      <a class="board-card" href="b_d97b475f0195194f73c34e60/gg1_1d09bb12beb5dd0f213b5310827ec309.html" target="_blank" rel="noopener" data-search="go getter 1 10 12 лет a1">
+        <h2>Go Getter 1</h2><div class="meta"><span>10–12 лет</span><span class="level">A1</span></div>
+      </a>
+      <a class="board-card" href="b_88195a2d6f1014f52ed528e1/gg2_f6ad6cf08c116e15f0b99563d98c8220.html" target="_blank" rel="noopener" data-search="go getter 2 10 13 лет a1 a2">
+        <h2>Go Getter 2</h2><div class="meta"><span>10–13 лет</span><span class="level">A1–A2</span></div>
+      </a>
+      <a class="board-card" href="b_4de5ab8f0bbe716a28d98e76/gg3_48069a990273d7485cffd7361db55611.html" target="_blank" rel="noopener" data-search="go getter 3 11 14 лет a2">
+        <h2>Go Getter 3</h2><div class="meta"><span>11–14 лет</span><span class="level">A2</span></div>
+      </a>
+      <a class="board-card" href="b_960aac4e319739d888cd23e0/f2_441e1875b63142712ddb.html" target="_blank" rel="noopener" data-search="focus 2 13 16 лет a2 b1">
+        <h2>Focus 2</h2><div class="meta"><span>13–16 лет</span><span class="level">A2+–B1</span></div>
+      </a>
+      <a class="board-card" href="b_a7898798a3beece21a5ed430/f3_9dc6947d1fe711f0501ca57387c678c4.html" target="_blank" rel="noopener" data-search="focus 3 14 17 лет b1">
+        <h2>Focus 3</h2><div class="meta"><span>14–17 лет</span><span class="level">B1–B1+</span></div>
+      </a>
+      <a class="board-card" href="b_ee31cc387f68704b190ab232/f4_9653282f69104c4296dfccd563bb6cc3.html" target="_blank" rel="noopener" data-search="focus 4 15 18 лет b1 b2">
+        <h2>Focus 4</h2><div class="meta"><span>15–18 лет</span><span class="level">B1+–B2</span></div>
+      </a>
+      <a class="board-card" href="b_46fd2e1af24ad19400d3fac5/pu1_b69b0d508d65b2bb0731dd54aff568092da9eee7.html" target="_blank" rel="noopener" data-search="power up 1 7 9 лет pre a1">
+        <h2>Power Up 1</h2><div class="meta"><span>7–9 лет</span><span class="level">Pre-A1–A1</span></div>
+      </a>
+      <a class="board-card" href="b_5c8b0fd29442e9919d6c0d1c/wid_8887fc3b9af52a1591f1356393584d.html" target="_blank" rel="noopener" data-search="wider world 3 12 15 лет a2 b1">
+        <h2>Wider World 3</h2><div class="meta"><span>12–15 лет</span><span class="level">A2+–B1</span></div>
+      </a>
+      <a class="board-card" href="b_7cf58aa286a985421ca82907/wid_67f1f6e4bf6a795d5a28548004deb3.html" target="_blank" rel="noopener" data-search="wider world 4 13 16 лет b1">
+        <h2>Wider World 4</h2><div class="meta"><span>13–16 лет</span><span class="level">B1–B1+</span></div>
+      </a>
+      <a class="board-card" href="b_e455ae68a9214f2fe366e90d/you_5b686f0ad425dc8e86cddcf9f6e7e8.html" target="_blank" rel="noopener" data-search="young learners 6 11 лет pre a1 a2">
+        <h2>Young Learners</h2><div class="meta"><span>6–11 лет</span><span class="level">Pre-A1–A2</span></div>
+      </a>
+      <a class="board-card" href="b_b480793e81da1acc280393b4/gr_3ff2e665c236a499f7538652739c2dc4a76022d8.html" target="_blank" rel="noopener" data-search="grammar грамматика 12 лет a1 a2 b1 b2">
+        <h2>Grammar</h2><div class="meta"><span>12+ лет</span><span class="level">A1–B2</span></div>
+      </a>
+      <a class="board-card" href="b_11c717146be9d7799ffe319a/rd_6fc74a4ca5f89c5f665d0a9eb32d9cc1.html" target="_blank" rel="noopener" data-search="reading чтение 10 лет a1 a2 b1 b2">
+        <h2>Reading</h2><div class="meta"><span>10+ лет</span><span class="level">A1–B2</span></div>
+      </a>
+      <a class="board-card" href="b_dd0070d4d24f2fef0f90f8f3/vpr_b1670636eef1affb5200bdc8d1d380969357b574.html" target="_blank" rel="noopener" data-search="впр 10 14 лет a1 a2">
+        <h2>ВПР</h2><div class="meta"><span>10–14 лет</span><span class="level">A1–A2</span></div>
+      </a>
+      <a class="board-card" href="b_2cca80eeaa7d9865eaa691bf/oge_9da9d0936ecbfeaf8afb869c43511af7534ee8a4.html" target="_blank" rel="noopener" data-search="огэ 14 16 лет a2 b1">
+        <h2>ОГЭ</h2><div class="meta"><span>14–16 лет</span><span class="level">A2–B1</span></div>
+      </a>
+      <a class="board-card" href="b_e6750058af819819883b4c04/e_e86bc24f5b2be8f2e1d4426d48ad1c.html" target="_blank" rel="noopener" data-search="егэ 16 18 лет b1 b2">
+        <h2>ЕГЭ</h2><div class="meta"><span>16–18 лет</span><span class="level">B1–B2</span></div>
+      </a>
     </section>
     <p class="empty" id="empty">Ничего не найдено.</p>
-    <footer><span>SNUG ARCHIVE · 15 BOARDS</span><span>NO COLLECTIONS · NO FOLDERS · JUST BOARDS</span></footer>
   </main>
   <script>
     const input=document.getElementById('search');
     const cards=[...document.querySelectorAll('.board-card')];
-    const count=document.getElementById('visibleCount');
     const empty=document.getElementById('empty');
     input.addEventListener('input',()=>{
-      const q=input.value.trim().toLocaleLowerCase('ru'); let visible=0;
+      const q=input.value.trim().toLocaleLowerCase('ru');
+      let visible=0;
       cards.forEach(card=>{ const show=card.dataset.search.includes(q); card.hidden=!show; if(show) visible++; });
-      count.textContent=visible; empty.style.display=visible?'none':'block';
+      empty.style.display=visible?'none':'block';
     });
   </script>
 </body>
