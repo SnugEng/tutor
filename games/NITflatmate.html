@@ -112,26 +112,26 @@ img.pxbg,img.pximg{image-rendering:pixelated;image-rendering:crisp-edges}
 .chip.gone{opacity:.25;text-decoration:line-through;box-shadow:none}
 .dimtxt{color:#999}
 
-.adwrap{display:flex;gap:26px;flex:1;min-height:0;align-items:center}
-.adstep{flex:1;display:flex;flex-direction:column;gap:22px}
-.adn{font:12px var(--px);color:var(--plum)}
-.adsent{font:44px var(--body)}
-.adgap{color:#999}
+.pfwrap{display:flex;gap:26px;flex:1;min-height:0;align-items:center}
+.pfstep{flex:1;display:flex;flex-direction:column;gap:22px}
+.pfn{font:12px var(--px);color:var(--plum)}
+.pfsent{font:44px var(--body)}
+.pfgap{color:#999}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .grid2 .opt{font-size:28px;text-align:center}
-.adl{display:inline}
-.adl.now{color:var(--yellow)}
-.adrows{flex:1;display:flex;flex-direction:column;gap:12px;justify-content:center}
-.adrow{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:6px 0;border-bottom:3px dashed #d9cfc4}
-.adrow.ok{opacity:.85}
-.adlead{font:26px var(--body);font-weight:700;min-width:60px}
-.adpick{font:26px var(--body);color:var(--dgreen)}
-.adrow .chip{font-size:22px;padding:5px 12px}
-.adcard{width:320px;flex:none;align-self:center;min-height:330px;background:var(--navy);color:var(--cream);border:4px solid #000;box-shadow:6px 6px 0 #000;padding:14px}
-.adtop{font:9px var(--px);color:var(--pink);margin-bottom:10px}
-.adhead{font:9px/1.7 var(--px);color:var(--yellow);margin-bottom:10px}
-.adtxt{font:21px/1.3 var(--body)}
-.adsig{font:18px var(--body);color:var(--lgrey);margin-top:8px}
+.pfl{display:inline}
+.pfl.now{color:var(--yellow)}
+.pfrows{flex:1;display:flex;flex-direction:column;gap:12px;justify-content:center}
+.pfrow{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:6px 0;border-bottom:3px dashed #d9cfc4}
+.pfrow.ok{opacity:.85}
+.pflead{font:26px var(--body);font-weight:700;min-width:60px}
+.pfpick{font:26px var(--body);color:var(--dgreen)}
+.pfrow .chip{font-size:22px;padding:5px 12px}
+.pfcard{width:320px;flex:none;align-self:center;min-height:330px;background:var(--navy);color:var(--cream);border:4px solid #000;box-shadow:6px 6px 0 #000;padding:14px}
+.pftop{font:9px var(--px);color:var(--pink);margin-bottom:10px}
+.pfhead{font:9px/1.7 var(--px);color:var(--yellow);margin-bottom:10px}
+.pftxt{font:21px/1.3 var(--body)}
+.pfsig{font:18px var(--body);color:var(--lgrey);margin-top:8px}
 
 .opts{display:flex;flex-direction:column;gap:12px;justify-content:center;flex:1}
 .opt{font:26px/1.25 var(--body);text-align:left;background:#fff;border:4px solid #000;box-shadow:4px 4px 0 #000;padding:12px 18px}
@@ -286,7 +286,7 @@ img.pxbg,img.pximg{image-rendering:pixelated;image-rendering:crisp-edges}
 .rw{box-shadow:none}
 .ra{border:2px solid var(--navy);background:#eee6dc}
 .topic.on{background:#fff7c2;border-color:var(--navy)}
-.adcard{min-height:260px;box-shadow:none;border:3px solid var(--navy)}
+.pfcard{min-height:260px;box-shadow:none;border:3px solid var(--navy)}
 .vm.panel{color:var(--cream)}
 .vport{display:flex;justify-content:center;overflow:hidden;background:var(--lav)}
 .vport .spr{width:72px;height:117px;margin-top:2px}
@@ -354,7 +354,7 @@ img.pxbg,img.pximg{image-rendering:pixelated;image-rendering:crisp-edges}
 .phimg{width:100%;height:150px;background:linear-gradient(#83769c,#5f574f);border:3px solid #000;display:flex;align-items:flex-end;justify-content:center;gap:10px;overflow:hidden}
 .phimg .spr{width:72px;height:117px}
 .phcap{font:22px/1.25 var(--body);text-align:center}
-.adgap.ok{color:var(--dgreen);font-weight:700}
+.pfgap.ok{color:var(--dgreen);font-weight:700}
 .dgrid{display:grid;grid-template-columns:1fr 1fr;gap:20px;flex:1}
 .dcol{display:flex;flex-direction:column;gap:10px;background:#fff;border:3px solid var(--navy);padding:12px}
 .dcol .pbtn{margin-top:auto;align-self:center}
@@ -1343,13 +1343,13 @@ function adTask(){
   var LBL={morning:"MORNINGS",work:"WORK",evening:"EVENINGS",food:"FOOD",family:"FAMILY"};
   function line(i){var r=AD.rows[i],pick=state.profile[r.key],o=r.o.filter(function(x){return x[1]===pick;})[0];return r.lead+" "+o[0]+".";}
   function draw(){
-    var prev=AD.rows.map(function(r,i){return ctx.it(i).done?'<span class="adl">'+line(i)+'</span>':(i===cur?'<span class="adl now">'+r.lead+' …</span>':'');}).join(" ");
+    var prev=AD.rows.map(function(r,i){return ctx.it(i).done?'<span class="pfl">'+line(i)+'</span>':(i===cur?'<span class="pfl now">'+r.lead+' …</span>':'');}).join(" ");
     var left;
     if(cur<AD.rows.length){var r=AD.rows[cur];ctx.cur(cur);
-      left='<div class="adstep"><div class="adn">'+(cur+1)+' / '+AD.rows.length+' · '+LBL[r.key]+'</div><div class="adsent">'+r.lead+' <span class="adgap">_______</span>.</div><div class="grid2">'+ord[cur].map(function(k){var o=r.o[k],g2=hid[cur]&&hid[cur][k];return '<button class="opt'+(g2?" gone":"")+'" data-k="'+k+'"'+(g2?" disabled":"")+'>'+o[0]+'</button>';}).join("")+'</div></div>';}
-    else{left='<div class="adstep"><div class="adsent">Your ad is ready!</div></div>';}
-    $("#wbody").innerHTML='<div class="adwrap">'+left+'<div class="adcard"><div class="adtop">GROUP-CHAT · ROOMS</div><p class="adhead">'+AD.pre+'</p><p class="adtxt">About me: '+prev+'</p><p class="adsig">— '+esc(state.name)+' &amp; Zoe</p></div></div>';
-    $$(".adstep .opt").forEach(function(b){b.onclick=function(){var k=+b.getAttribute("data-k"),o=AD.rows[cur].o[k];
+      left='<div class="pfstep"><div class="pfn">'+(cur+1)+' / '+AD.rows.length+' · '+LBL[r.key]+'</div><div class="pfsent">'+r.lead+' <span class="pfgap">_______</span>.</div><div class="grid2">'+ord[cur].map(function(k){var o=r.o[k],g2=hid[cur]&&hid[cur][k];return '<button class="opt'+(g2?" gone":"")+'" data-k="'+k+'"'+(g2?" disabled":"")+'>'+o[0]+'</button>';}).join("")+'</div></div>';}
+    else{left='<div class="pfstep"><div class="pfsent">Your ad is ready!</div></div>';}
+    $("#wbody").innerHTML='<div class="pfwrap">'+left+'<div class="pfcard"><div class="pftop">GROUP-CHAT · ROOMS</div><p class="pfhead">'+AD.pre+'</p><p class="pftxt">About me: '+prev+'</p><p class="pfsig">— '+esc(state.name)+' &amp; Zoe</p></div></div>';
+    $$(".pfstep .opt").forEach(function(b){b.onclick=function(){var k=+b.getAttribute("data-k"),o=AD.rows[cur].o[k];
       if(o[2]){state.profile[AD.rows[cur].key]=o[1];save();ctx.solve(cur);ctx.say("");cur++;draw();if(cur>=AD.rows.length){done();}}
       else{ctx.err(cur);hid[cur]=hid[cur]||{};hid[cur][k]=1;ctx.say("Look at the verb after <b>"+AD.rows[cur].lead+"</b>.","bad");draw();}};});
   }
@@ -1623,7 +1623,7 @@ function priyaVoice(){
   talkLines([["zoe","A voice message from Mia, Priya’s sister! Priya sends it to everybody. Let’s listen."]],function(){
     var ctx=win({id:"voice_priya",title:"MIA’S MESSAGE",step:"2 · ANSWER",instr:"Listen and complete the sentences. Then check.",rule:L.rule,items:L.gaps.length,voice:"mia"});
     $("#dlghost").innerHTML=player("mia");refreshTools();wirePlayer("mia");
-    sheetTask({ctx:ctx,voice:true,rows:L.gaps.map(function(g2){return {t:g2.s.replace("___",'<span class="adgap">_____</span>'),o:g2.o,a:g2.a};}),
+    sheetTask({ctx:ctx,voice:true,rows:L.gaps.map(function(g2){return {t:g2.s.replace("___",'<span class="pfgap">_____</span>'),o:g2.o,a:g2.a};}),
       hintText:function(i){return "Listen for this part: <i>"+bestSentence(A.text,L.gaps[i].s+" "+L.gaps[i].o[L.gaps[i].a])+"</i>";},
       onDone:function(){stopAudio();["wear headphones","cook every evening","Her sister@have loud parties at her flat"].forEach(function(f){S.heard.push({f:f,src:"true"});});save();ctx.finish(priyaZoe,"ZOE’S NOTES ▶");}});
   },"LISTEN ▶","center");
@@ -1765,7 +1765,7 @@ function arrange(i){if(i===1){arrangeChat(1);return;}
     h+='</div><div class="ctask">';
     if(stage===0){h+='<p class="qq">Write the first message:</p><div class="opts">'+qord.map(function(k){var g2=gone["0"+k];return '<button class="opt'+(g2?" gone":"")+'" data-k="'+k+'"'+(g2?" disabled":"")+'>'+ARRANGE.q.o[k]+'</button>';}).join("")+'</div>';}
     else if(stage===1){h+='<p class="qq">Listen to '+C.title+'. When does '+C.pron+' want to come?</p><div class="opts">'+word.map(function(k){var g2=gone["1"+k];return '<button class="opt'+(pickW===k?" sel":"")+(g2?" gone":"")+'" data-k="'+k+'"'+(g2?" disabled":"")+'>'+V.when[k]+'</button>';}).join("")+'</div>';$("#wact").innerHTML='<button class="pbtn" id="chkw"'+(pickW==null?" disabled":"")+'>CHECK ▶</button>';}
-    else if(stage===2&&gi<2){h+='<p class="qq">Reply: choose the missing word.</p><p class="gsent">'+V.gaps[gi][0].replace("___",'<span class="adgap">___</span>')+'</p><div class="chips cg">'+G.map(function(w){var g2=gone["2"+gi+w];return '<button class="chip'+(g2?" gone":"")+'" data-w="'+w+'"'+(g2?" disabled":"")+'>'+(w==="–"?"– (no word)":w)+'</button>';}).join("")+'</div>';}
+    else if(stage===2&&gi<2){h+='<p class="qq">Reply: choose the missing word.</p><p class="gsent">'+V.gaps[gi][0].replace("___",'<span class="pfgap">___</span>')+'</p><div class="chips cg">'+G.map(function(w){var g2=gone["2"+gi+w];return '<button class="chip'+(g2?" gone":"")+'" data-w="'+w+'"'+(g2?" disabled":"")+'>'+(w==="–"?"– (no word)":w)+'</button>';}).join("")+'</div>';}
     h+='</div>';$("#wbody").innerHTML=h;
     $$(".ctask .opt").forEach(function(b){b.onclick=function(){var k=+b.getAttribute("data-k");
       if(stage===0){ctx.cur(0);if(k===ARRANGE.q.a){ctx.solve(0);stage=1;ctx.say("Sent! "+C.title+" replies with a voice message.","good");$("#dlghost").innerHTML=player(V.audio);refreshTools();wirePlayer(V.audio);draw();}else{ctx.err(0);gone["0"+k]=1;ctx.say("Check the form after <b>Would you like</b>.","bad");draw();}}
@@ -1786,7 +1786,7 @@ function viewingPhotos(i){
   var ctx=win({id:"view_"+c,title:C.title.toUpperCase()+"’S PHOTOS",instr:"Complete the captions.",rule:VIEWRULE,items:V.photos.length}),gone={};
   dialog(c,"What a lovely flat! Look, these are my photos. My family and friends visit me a lot!","happy");
   function draw(){
-    $("#wbody").innerHTML='<div class="photos">'+V.photos.map(function(p,k){var s=ctx.it(k);return '<div class="ph8'+(s.done?" ok":"")+'"><div class="phimg">'+p.who.map(function(w){return sImg(w,"spr");}).join("")+(p.prop?'<img class="pximg pprop" src="'+propPx(p.prop)+'" alt="">':'')+'</div><p class="phcap">'+p.cap[0]+' <span class="adgap'+(s.done?" ok":"")+'">'+(s.done?p.o[p.a]:"_____")+'</span> '+p.cap[1]+'</p>'+(s.done?'':'<div class="chips xs">'+shuffleOnce(k,p.o.length).map(function(o){var g2=gone[k+"_"+o];return '<button class="chip'+(g2?" gone":"")+'" data-k="'+k+'" data-o="'+o+'"'+(g2?" disabled":"")+'>'+p.o[o]+'</button>';}).join("")+'</div>')+'</div>';}).join("")+'</div>';
+    $("#wbody").innerHTML='<div class="photos">'+V.photos.map(function(p,k){var s=ctx.it(k);return '<div class="ph8'+(s.done?" ok":"")+'"><div class="phimg">'+p.who.map(function(w){return sImg(w,"spr");}).join("")+(p.prop?'<img class="pximg pprop" src="'+propPx(p.prop)+'" alt="">':'')+'</div><p class="phcap">'+p.cap[0]+' <span class="pfgap'+(s.done?" ok":"")+'">'+(s.done?p.o[p.a]:"_____")+'</span> '+p.cap[1]+'</p>'+(s.done?'':'<div class="chips xs">'+shuffleOnce(k,p.o.length).map(function(o){var g2=gone[k+"_"+o];return '<button class="chip'+(g2?" gone":"")+'" data-k="'+k+'" data-o="'+o+'"'+(g2?" disabled":"")+'>'+p.o[o]+'</button>';}).join("")+'</div>')+'</div>';}).join("")+'</div>';
     $$(".photos .chip").forEach(function(b){b.onclick=function(){var k=+b.getAttribute("data-k"),o=+b.getAttribute("data-o"),p=V.photos[k];ctx.cur(k);
       if(o===p.a){ctx.solve(k);ctx.say("");draw();if(V.photos.every(function(_,j){return ctx.it(j).done;})){fin();}}else{ctx.err(k);gone[k+"_"+o]=1;ctx.say("One person or more? Family word right?","bad");draw();}};});
   }
@@ -1809,8 +1809,8 @@ function arrangeChat(i){
     h+='</div><div class="ctask">';
     if(stage===0){h+='<p class="qq">Write the first message:</p><div class="opts">'+qord.map(function(k){return '<button class="opt'+(gone["q"+k]?" gone":"")+'" data-k="'+k+'"'+(gone["q"+k]?" disabled":"")+'>'+ARRANGE.q.o[k]+'</button>';}).join("")+'</div>';}
     else if(stage===1){h+='<p class="qq">Read '+C.title+'’s message. When can '+C.pron+' come? (Tomorrow is Saturday.)</p><div class="cal3"><span></span>'+days.map(function(d){return '<b>'+d[1]+'</b>';}).join("")+parts.map(function(p){return '<span class="cp">'+p+'</span>'+days.map(function(d){var id=d[0]+"-"+p;return '<button class="cslot8'+(gone[id]?" no":"")+'" data-s="'+id+'"'+(gone[id]?" disabled":"")+'></button>';}).join("");}).join("")+'</div>';}
-    else if(stage===2){var dn=days.filter(function(x){return x[0]===pick.split("-")[0];})[0][1];h+='<p class="qq">Reply: choose the missing word.</p><p class="gsent">See you <span class="adgap">___</span> '+dn+' '+pick.split("-")[1]+'!</p><div class="chips cg">'+["at","on","in","–"].map(function(w){return '<button class="chip'+(gone["g"+w]?" gone":"")+'" data-w="'+w+'"'+(gone["g"+w]?" disabled":"")+'>'+(w==="–"?"– (no word)":w)+'</button>';}).join("")+'</div>';}
-    else if(stage===3){h+='<p class="qq">'+C.title+' asks: “What time?” Choose the missing word.</p><p class="gsent">Come <span class="adgap">___</span> two o’clock.</p><div class="chips cg">'+["at","on","in","–"].map(function(w){return '<button class="chip'+(gone["h"+w]?" gone":"")+'" data-w="'+w+'"'+(gone["h"+w]?" disabled":"")+'>'+(w==="–"?"– (no word)":w)+'</button>';}).join("")+'</div>';}
+    else if(stage===2){var dn=days.filter(function(x){return x[0]===pick.split("-")[0];})[0][1];h+='<p class="qq">Reply: choose the missing word.</p><p class="gsent">See you <span class="pfgap">___</span> '+dn+' '+pick.split("-")[1]+'!</p><div class="chips cg">'+["at","on","in","–"].map(function(w){return '<button class="chip'+(gone["g"+w]?" gone":"")+'" data-w="'+w+'"'+(gone["g"+w]?" disabled":"")+'>'+(w==="–"?"– (no word)":w)+'</button>';}).join("")+'</div>';}
+    else if(stage===3){h+='<p class="qq">'+C.title+' asks: “What time?” Choose the missing word.</p><p class="gsent">Come <span class="pfgap">___</span> two o’clock.</p><div class="chips cg">'+["at","on","in","–"].map(function(w){return '<button class="chip'+(gone["h"+w]?" gone":"")+'" data-w="'+w+'"'+(gone["h"+w]?" disabled":"")+'>'+(w==="–"?"– (no word)":w)+'</button>';}).join("")+'</div>';}
     h+='</div></div>';$("#wbody").innerHTML=h;
     $$(".ctask .opt").forEach(function(b){b.onclick=function(){var k=+b.getAttribute("data-k");ctx.cur(0);if(k===0){ctx.solve(0);stage=1;ctx.say("");draw();}else{ctx.err(0);gone["q"+k]=1;ctx.say("Check the form after <b>Would you like</b>.","bad");draw();}};});
     $$(".cslot8").forEach(function(b){b.onclick=function(){var id=b.getAttribute("data-s");ctx.cur(1);if(A.ok.indexOf(id)>=0){pick=id;ctx.solve(1);stage=2;ctx.say("");draw();}else{ctx.err(1);gone[id]=1;ctx.say("Read "+C.title+"’s message again: "+C.pron+" can’t come then.","bad");draw();}};});
