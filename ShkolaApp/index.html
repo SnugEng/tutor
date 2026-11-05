@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<title>Snugenglish — задания для ShkolaApp</title>
+<script>
+(function(){
+  var play = location.hash.length > 2 || /[?&]z=/.test(location.search);
+  document.documentElement.className = play ? "play" : "tool";
+})();
+</script>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0}
+
+/* Режим задания: на весь экран, без своего фона */
+html.play,html.play body{height:100%;overflow:hidden;background:transparent}
+html.play #tool{display:none}
+#stage{position:fixed;inset:0;width:100%;height:100%;border:0;display:block;background:transparent}
+#msg{display:none;max-width:460px;margin:24px auto;padding:20px 22px;border-radius:14px;background:#fff;border:1px solid #e3e8ef;
+  font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:#1c2433}
+#msg.show{display:block}
+#msg b{display:block;margin-bottom:6px;font-size:16px}
+
+/* Режим конвертера для учителя */
+html.tool{
+  --bg:#f4f6f9;--surface:#ffffff;--ink:#1c2433;--muted:#5f6b7d;--line:#d8e0ea;
+  --accent:#2f7fd8;--accent-ink:#ffffff;--ok:#1f8a4c;--warn:#a85a07;--warn-bg:#fff6e8;--field:#f8fafc;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  html.tool{
+    --bg:#0f141b;--surface:#18202a;--ink:#e5ebf3;--muted:#9aa7b8;--line:#2c3846;
+    --accent:#62a6f0;--accent-ink:#0b1420;--ok:#56c487;--warn:#f2ad62;--warn-bg:#2a2116;--field:#121921;
+    color-scheme:dark;
+  }
+}
+html.tool body{background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px)}
+#tool{max-width:780px;margin:0 auto;padding:36px 20px 64px}
+.mark{font-weight:700;color:var(--accent);font-size:15px}
+#tool h1{margin:6px 0 10px;font-size:28px;line-height:1.2;letter-spacing:-.01em}
+.lead{margin:0 0 28px;color:var(--muted);max-width:62ch}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin-bottom:16px}
+.step h2{margin:0 0 12px;font-size:17px;display:flex;gap:10px;align-items:baseline}
+.step h2 span{color:var(--accent)}
+textarea{width:100%;display:block;border:1px solid var(--line);border-radius:8px;background:var(--field);color:var(--ink);
+  font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;padding:12px;resize:vertical}
+#src{min-height:180px}
+#code{min-height:110px;word-break:break-all}
+textarea:focus,input:focus,button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:12px}
+.filebtn{position:relative;overflow:hidden}
+.filebtn input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.btn{font:inherit;font-size:15px;font-weight:600;border-radius:8px;padding:9px 18px;cursor:pointer;border:1px solid var(--accent);
+  background:var(--accent);color:var(--accent-ink);text-decoration:none;display:inline-block}
+.btn.ghost{background:transparent;color:var(--accent)}
+.btn:disabled{opacity:.6;cursor:wait}
+label.inline{display:flex;gap:8px;align-items:center;color:var(--muted);font-size:15px}
+#height{width:90px;font:inherit;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--field);color:var(--ink)}
+.small{font-size:14px;color:var(--muted)}
+#stats{margin:12px 0 0}
+.warn{margin:12px 0 0;padding:10px 14px;border-radius:8px;background:var(--warn-bg);color:var(--warn);font-size:14px}
+.err{color:#d14343}
+#copied{color:var(--ok);font-size:14px}
+#preview{margin-top:14px;border:1px dashed var(--line);border-radius:8px;overflow:hidden;background:#fff}
+#preview iframe{display:block;width:100%;border:0}
+</style>
+</head>
+<body>
+
+<div id="tool">
+  <div class="mark">Snugenglish</div>
+  <h1>Задание → код для ShkolaApp</h1>
+  <p class="lead">Вставьте HTML задания и получите короткий код для блока Embed. Сайт ничего не хранит: задание целиком упаковано в саму ссылку, поэтому для каждого нового задания ничего загружать не нужно.</p>
+
+  <section class="step">
+    <h2><span>1</span>Вставьте HTML задания</h2>
+    <textarea id="src" spellcheck="false" placeholder="&lt;!DOCTYPE html&gt; … или просто кусок HTML со стилями и скриптами"></textarea>
+    <div class="row">
+      <span class="btn ghost filebtn">Выбрать .html-файл<input id="file" type="file" accept=".html,.htm,text/html"></span>
+      <span id="fname" class="small"></span>
+    </div>
+  </section>
+
+  <section class="step">
+    <h2><span>2</span>Получите код</h2>
+    <div class="row" style="margin-top:0">
+      <label class="inline">Высота окна в ShkolaApp <input id="height" type="number" min="200" max="2000" step="10" value="650"> px</label>
+      <button id="go" class="btn" type="button">Получить код</button>
+    </div>
+    <p id="err" class="small err" hidden></p>
+  </section>
+
+  <section class="step" id="out" hidden>
+    <h2><span>3</span>Вставьте код в Embed-блок ShkolaApp</h2>
+    <textarea id="code" readonly spellcheck="false"></textarea>
+    <div class="row">
+      <button id="copy" class="btn" type="button">Скопировать код</button>
+      <a id="open" class="btn ghost" target="_blank" rel="noopener">Открыть задание в новой вкладке</a>
+      <span id="copied" hidden>Скопировано</span>
+    </div>
+    <p id="stats" class="small"></p>
+    <div id="warns"></div>
+    <div id="preview"></div>
+  </section>
+</div>
+
+<div id="msg" role="alert"></div>
+
+<script>
+(function(){
+  "use strict";
+  var FALLBACK_BASE = "https://snugenglish.ru/embed/";
+  var PAKO = "https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js";
+
+  /* ---------- общие функции ---------- */
+  function toB64u(bytes){
+    var s = "", CH = 0x8000;
+    for (var i = 0; i < bytes.length; i += CH) {
+      s += String.fromCharCode.apply(null, bytes.subarray(i, i + CH));
+    }
+    return btoa(s).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+  }
+  function fromB64u(str){
+    str = str.replace(/-/g, "+").replace(/_/g, "/");
+    while (str.length % 4) { str += "="; }
+    var bin = atob(str), out = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) { out[i] = bin.charCodeAt(i); }
+    return out;
+  }
+  var pakoPromise = null;
+  function loadPako(){
+    if (window.pako) { return Promise.resolve(window.pako); }
+    if (!pakoPromise) {
+      pakoPromise = new Promise(function(res, rej){
+        var s = document.createElement("script");
+        s.src = PAKO;
+        s.onload = function(){ res(window.pako); };
+        s.onerror = function(){ rej(new Error("не загрузился распаковщик")); };
+        document.head.appendChild(s);
+      });
+    }
+    return pakoPromise;
+  }
+  function streamBytes(bytes, stream){
+    var piped = new Blob([bytes]).stream().pipeThrough(stream);
+    return new Response(piped).arrayBuffer().then(function(b){ return new Uint8Array(b); });
+  }
+  function deflateRaw(text){
+    var bytes = new TextEncoder().encode(text);
+    try {
+      return streamBytes(bytes, new CompressionStream("deflate-raw"))
+        .catch(function(){ return loadPako().then(function(p){ return p.deflateRaw(bytes, {level: 9}); }); });
+    } catch (e) {
+      return loadPako().then(function(p){ return p.deflateRaw(bytes, {level: 9}); });
+    }
+  }
+  function inflateRaw(bytes){
+    function viaPako(){ return loadPako().then(function(p){ return p.inflateRaw(bytes, {to: "string"}); }); }
+    try {
+      return streamBytes(bytes, new DecompressionStream("deflate-raw"))
+        .then(function(b){ return new TextDecoder().decode(b); })
+        .catch(viaPako);
+    } catch (e) {
+      return viaPako();
+    }
+  }
+  function titleOf(html){
+    var m = /<title[^>]*>([\s\S]*?)<\/title>/i.exec(html);
+    if (!m) { return ""; }
+    var t = document.createElement("textarea");
+    t.innerHTML = m[1];
+    return t.value.replace(/\s+/g, " ").trim();
+  }
+
+  /* ---------- режим задания ---------- */
+  var SHIM = "<script>(function(){function M(){var d={};return{getItem:function(k){k=String(k);return Object.prototype.hasOwnProperty.call(d,k)?d[k]:null},setItem:function(k,v){d[String(k)]=String(v)},removeItem:function(k){delete d[String(k)]},clear:function(){d={}},key:function(i){var a=Object.keys(d);return i<a.length?a[i]:null},get length(){return Object.keys(d).length}}}[\"localStorage\",\"sessionStorage\"].forEach(function(n){try{window[n].getItem(\"x\")}catch(e){try{Object.defineProperty(window,n,{value:M(),configurable:true})}catch(_){}}})})();<\/script>";
+
+  function prepare(html){
+    if (!/<!doctype/i.test(html) && !/<html[\s>]/i.test(html)) {
+      html = "<!DOCTYPE html><html><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"></head><body>" + html + "</body></html>";
+    }
+    if (/<head[^>]*>/i.test(html)) { return html.replace(/<head[^>]*>/i, function(m){ return m + SHIM; }); }
+    if (/<html[^>]*>/i.test(html)) { return html.replace(/<html[^>]*>/i, function(m){ return m + SHIM; }); }
+    return SHIM + html;
+  }
+
+  function showMsg(title, text){
+    var box = document.getElementById("msg");
+    box.innerHTML = "";
+    var b = document.createElement("b"); b.textContent = title;
+    var p = document.createElement("div"); p.textContent = text;
+    box.appendChild(b); box.appendChild(p);
+    box.className = "show";
+  }
+
+  function readPayload(){
+    var raw = location.hash.slice(1);
+    if (!raw) {
+      var q = new URLSearchParams(location.search).get("z");
+      raw = q ? "z." + q : "";
+    }
+    try { raw = decodeURIComponent(raw); } catch (e) {}
+    raw = raw.replace(/\s+/g, "");
+    return /^([zt])\.([A-Za-z0-9_-]+)$/.exec(raw);
+  }
+
+  function play(){
+    var m = readPayload();
+    if (!m) { showMsg("Задание не открылось", "Ссылка обрезана или повреждена. Получите код заново в конвертере и вставьте его целиком."); return; }
+    var slow = setTimeout(function(){ showMsg("Loading…", ""); }, 600);
+    var bytes;
+    try { bytes = fromB64u(m[2]); } catch (e) { clearTimeout(slow); showMsg("Задание не открылось", "Ссылка повреждена. Получите код заново в конвертере."); return; }
+    var job = m[1] === "z" ? inflateRaw(bytes) : Promise.resolve(new TextDecoder().decode(bytes));
+    job.then(function(html){
+      clearTimeout(slow);
+      document.getElementById("msg").className = "";
+      var t = titleOf(html);
+      if (t) { document.title = t; }
+      var f = document.createElement("iframe");
+      f.id = "stage";
+      f.title = t || "English task";
+      f.setAttribute("sandbox", "allow-scripts allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox allow-downloads");
+      f.setAttribute("allow", "autoplay; fullscreen; clipboard-write");
+      f.srcdoc = prepare(html);
+      document.body.appendChild(f);
+    }).catch(function(){
+      clearTimeout(slow);
+      showMsg("Задание не открылось", "Ссылка обрезана или повреждена. Получите код заново в конвертере и вставьте его целиком.");
+    });
+  }
+
+  /* ---------- режим конвертера ---------- */
+  function tool(){
+    var $ = function(id){ return document.getElementById(id); };
+    var https = location.protocol === "https:";
+    var base = https ? location.origin + location.pathname : FALLBACK_BASE;
+
+    $("file").addEventListener("change", function(){
+      var f = this.files && this.files[0];
+      if (!f) { return; }
+      f.text().then(function(t){ $("src").value = t; $("fname").textContent = f.name; });
+    });
+
+    function kb(n){ return (n / 1024).toFixed(n < 10240 ? 1 : 0).replace(".", ",") + " КБ"; }
+    function num(n){ return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, "\u00a0"); }
+    function warn(text){ var d = document.createElement("p"); d.className = "warn"; d.textContent = text; $("warns").appendChild(d); }
+
+    $("go").addEventListener("click", function(){
+      var html = $("src").value.trim();
+      var err = $("err");
+      err.hidden = true;
+      if (!html) { err.textContent = "Вставьте HTML задания или выберите файл."; err.hidden = false; return; }
+      var btn = this;
+      btn.disabled = true; btn.textContent = "Упаковываю…";
+      deflateRaw(html).then(function(bytes){
+        var packed = "z." + toB64u(bytes);
+        var url = base + "#" + packed;
+        var h = Math.max(200, Math.min(2000, parseInt($("height").value, 10) || 650));
+        var title = (titleOf(html) || "English task").replace(/["<>&]/g, "");
+        var code = '<iframe src="' + url + '" width="100%" height="' + h + '" title="' + title + '"></iframe>';
+        $("code").value = code;
+        $("open").href = url;
+        var original = new TextEncoder().encode(html).length;
+        $("stats").textContent = "Длина кода: " + num(code.length) + " символов. HTML " + kb(original) + " сжат до " + kb(bytes.length) + ".";
+        $("warns").innerHTML = "";
+        if (!https) { warn("Страница открыта не с сайта, поэтому в код подставлен адрес " + FALLBACK_BASE + ". Если загрузчик лежит по другому адресу, откройте конвертер с сайта и получите код там."); }
+        if (/data:(image|audio|video|font|application\/font)/i.test(html)) { warn("В задании есть встроенные картинки, звуки или шрифты — из-за них код получается длинным. Большие игры с графикой удобнее загружать на сайт отдельно, как TWHU1."); }
+        if (code.length > 30000) { warn("Код длинный. Если ShkolaApp его не примет или задание откроется с ошибкой «ссылка обрезана», значит у редактора есть ограничение длины — тогда это задание лучше загрузить на сайт отдельно."); }
+        var pv = $("preview"); pv.innerHTML = "";
+        var fr = document.createElement("iframe");
+        fr.title = "Предпросмотр";
+        fr.height = h;
+        fr.src = https ? url : location.href.split("#")[0] + "#" + packed;
+        pv.appendChild(fr);
+        $("out").hidden = false;
+        $("copied").hidden = true;
+      }).catch(function(e){
+        err.textContent = "Не получилось упаковать задание: " + (e && e.message ? e.message : e);
+        err.hidden = false;
+      }).then(function(){
+        btn.disabled = false; btn.textContent = "Получить код";
+      });
+    });
+
+    $("copy").addEventListener("click", function(){
+      var ta = $("code");
+      function done(){ $("copied").hidden = false; }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(ta.value).then(done, function(){ ta.select(); document.execCommand("copy"); done(); });
+      } else { ta.select(); document.execCommand("copy"); done(); }
+    });
+  }
+
+  if (document.documentElement.className === "play") {
+    play();
+    window.addEventListener("hashchange", function(){ location.reload(); });
+  } else {
+    tool();
+  }
+})();
+</script>
+</body>
+</html>
