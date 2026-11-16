@@ -684,6 +684,22 @@ main { flex: 1; padding-bottom: 32px; }
 .fc__forms .sep { font-family: var(--font-ui); font-size: 20px; }
 .fc__face--back .fc__listen { margin-top: 20px; }
 
+
+/* ---------- present forms: one card per verb ---------- */
+.group__key { color: var(--accent-ink); font-weight: 700; }
+.group__title--flow { display: block; }
+.group__rule { display: inline-block; vertical-align: 3px; margin-left: 4px; white-space: nowrap; font-family: var(--font-ui); font-size: 14px; font-weight: 600; color: var(--muted); padding: 2px 10px; border-radius: 999px; background: var(--surface-2); }
+.vc-grid { display: grid; gap: 12px; margin-top: 6px; }
+.vc { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-m); overflow: hidden; }
+.vc__head { display: flex; align-items: baseline; gap: 10px; padding: 12px 16px 10px; }
+.vc__verb { font-family: var(--font-display); font-weight: 700; font-size: 24px; line-height: 1.15; }
+.vc__row { display: grid; grid-template-columns: 0.9fr 0.9fr 1.2fr; gap: 10px; align-items: baseline; padding: 10px 16px; border-top: 1px solid var(--line); font-size: 16.5px; line-height: 1.35; }
+.vc__who { font-size: 14.5px; color: var(--muted); }
+.vc__form { font-weight: 600; }
+.vc__row.is-third .vc__form { color: var(--accent-ink); }
+.vc__neg { color: var(--muted); }
+@media (min-width: 760px) { .vc-grid { grid-template-columns: 1fr 1fr; gap: 16px; } }
+
 /* ---------- footer ---------- */
 .foot { border-top: 1px solid var(--line); padding: 18px 0 calc(var(--nav-h) + 18px + env(safe-area-inset-bottom)); }
 .foot__in { display: flex; align-items: center; justify-content: center; gap: 10px 14px; flex-wrap: wrap; }

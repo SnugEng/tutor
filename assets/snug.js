@@ -1344,3 +1344,97 @@ const Snug = (() => {
     Snug.initTabs();
   };
 })();
+
+/* ---------------- present simple forms (be, have, do, go, -ies, -es) ---------------- */
+(() => {
+  const { esc, icon, shuffle } = Snug;
+  Snug.present = function (cfg) {
+    const GROUPS = cfg.groups || [], MCQ = cfg.mcq || [], GAPS = cfg.gaps || [];
+    const back = cfg.back ? `<a class="top__back" href="${esc(cfg.back)}" aria-label="Back" title="Back">${icon('left')}<span>Back</span></a>` : '';
+    const third = who => /he\/she\/it/.test(who);
+    document.body.insertAdjacentHTML('afterbegin', `
+<header class="top">
+  <div class="wrap top__in">
+    ${back}
+    <div class="title">
+      <p class="title__kicker">${esc(cfg.kicker || 'Present simple')}</p>
+      <h1 class="title__main">${esc(cfg.title || 'Irregular present forms')}</h1>
+    </div>
+    <nav class="tabs" role="tablist" aria-label="Sections">
+      <button type="button" role="tab" data-tab="forms">Forms</button>
+      <button type="button" role="tab" data-tab="practice">Practice</button>
+    </nav>
+    <button class="icon-btn" id="themeBtn" type="button"></button>
+  </div>
+</header>
+<main>
+  <section data-panel="forms">
+    <div class="wrap">
+      ${GROUPS.map(g => `
+        <section class="group">
+          <h2 class="group__title group__title--flow">${esc(g.title)}${g.ending ? ` <b class="group__key">${esc(g.ending)}</b>` : ''}${g.rule ? ` <span class="group__rule">${esc(g.rule)}</span>` : ''}</h2>
+          <div class="vc-grid">
+            ${g.verbs.map(v => `
+              <article class="vc">
+                <div class="vc__head"><span class="vc__verb">${esc(v.verb)}</span>${v.tag ? `<span class="pos">${esc(v.tag)}</span>` : ''}</div>
+                ${v.rows.map(([who, form, neg]) => `
+                  <div class="vc__row ${third(who) ? 'is-third' : ''}">
+                    <span class="vc__who">${esc(who).replace(/\//g, '/<wbr>')}</span><span class="vc__form">${esc(form)}</span><span class="vc__neg">${esc(neg)}</span>
+                  </div>`).join('')}
+              </article>`).join('')}
+          </div>
+        </section>`).join('')}
+    </div>
+  </section>
+  <section data-panel="practice" hidden>
+    <div class="wrap" id="practice"></div>
+  </section>
+</main>
+<footer class="foot">
+  <div class="wrap foot__in">
+    <span class="foot__brand">@<span>snugenglish</span></span>
+    <a href="https://vk.com/snugenglish" target="_blank" rel="noopener">VK</a>
+    <a href="https://t.me/+wiAl8ae-UoAxMDE6" target="_blank" rel="noopener">Telegram</a>
+  </div>
+</footer>
+<nav class="bottom-nav" aria-label="Sections">
+  <button type="button" data-tab="forms"><span class="pill"><i data-icon="table"></i></span>Forms</button>
+  <button type="button" data-tab="practice"><span class="pill"><i data-icon="pencil"></i></span>Practice</button>
+</nav>`);
+    Snug.init({ audioDir: cfg.audioDir || '' });
+
+    const split = s => { const i = s.indexOf('_____'); return [s.slice(0, i), s.slice(i + 5)]; };
+    Snug.practice({
+      root: document.getElementById('practice'),
+      pageId: cfg.id || 'irregular-present',
+      exercises: [
+        {
+          id: 'mcq', title: 'Choose the form', desc: 'Pick the verb form that fits the sentence.',
+          size: `${MCQ.length} questions`,
+          preview: `<p class="pv-s">He <span class="pv-gap">goes</span> to school.</p><div class="pv-grid"><span class="pv-btn">go</span><span class="pv-btn pv-ok">goes</span><span class="pv-btn">gos</span><span class="pv-btn">is go</span></div>`,
+          build: () => shuffle(MCQ).map(m => {
+            const [before, after] = split(m.q);
+            return {
+              type: 'choice', grid: true, label: 'Choose the form that fits',
+              prompt: `<p class="q__sentence">${esc(before)}<span class="blank">&nbsp;</span>${esc(after)}</p>`,
+              options: shuffle(m.opts), answer: m.ans,
+              reveal: q => { const b = q.querySelector('.blank'); b.textContent = m.ans; b.classList.add('is-filled'); },
+              review: m.q.replace('_____', '___')
+            };
+          })
+        },
+        {
+          id: 'gap', title: 'Fill in the verb', desc: 'Write the verb in brackets in the right form.',
+          size: `${GAPS.length} sentences`,
+          preview: `<p class="pv-s">She <span class="pv-gap">watches</span> (watch)<br>TV every night.</p>`,
+          build: () => shuffle(GAPS).map(g => ({
+            type: 'gap', label: 'Write the correct form',
+            html: `<p class="q__sentence">${esc(g.s).replace('_____', '{gap}')}</p>`,
+            parts: [{ ans: g.ans, review: g.s.replace('_____', '___') }]
+          }))
+        }
+      ]
+    });
+    Snug.initTabs();
+  };
+})();
