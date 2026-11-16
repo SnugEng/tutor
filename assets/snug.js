@@ -1352,6 +1352,12 @@ const Snug = (() => {
     const GROUPS = cfg.groups || [], MCQ = cfg.mcq || [], GAPS = cfg.gaps || [];
     const back = cfg.back ? `<a class="top__back" href="${esc(cfg.back)}" aria-label="Back" title="Back">${icon('left')}<span>Back</span></a>` : '';
     const third = who => /he\/she\/it/.test(who);
+    const VERBS = cfg.verbs || [];
+    const audioFor = verb => {
+      if (!cfg.audioDir) return '';
+      const v = VERBS.find(v => v[0] === verb);
+      return v ? Snug.speakBtn(v[0] === 'be' ? 'I am|you are|he is' : `I ${v[0]}|he ${v[1]}`) : '';
+    };
     document.body.insertAdjacentHTML('afterbegin', `
 <header class="top">
   <div class="wrap top__in">
@@ -1376,7 +1382,7 @@ const Snug = (() => {
           <div class="vc-grid">
             ${g.verbs.map(v => `
               <article class="vc">
-                <div class="vc__head"><span class="vc__verb">${esc(v.verb)}</span>${v.tag ? `<span class="pos">${esc(v.tag)}</span>` : ''}</div>
+                <div class="vc__head"><span class="vc__verb">${esc(v.verb)}</span>${v.tag ? `<span class="pos">${esc(v.tag)}</span>` : ''}${audioFor(v.verb)}</div>
                 ${v.rows.map(([who, form, neg]) => `
                   <div class="vc__row ${third(who) ? 'is-third' : ''}">
                     <span class="vc__who">${esc(who).replace(/\//g, '/<wbr>')}</span><span class="vc__form">${esc(form)}</span><span class="vc__neg">${esc(neg)}</span>
@@ -1403,15 +1409,98 @@ const Snug = (() => {
 </nav>`);
     Snug.init({ audioDir: cfg.audioDir || '' });
 
+    /* ---------- data helpers ---------- */
     const split = s => { const i = s.indexOf('_____'); return [s.slice(0, i), s.slice(i + 5)]; };
+    const pick = arr => arr[Math.floor(Math.random() * arr.length)];
+    // the audio always has a pronoun: "he does", "he lives", "I read" can't be misread
+    const sayHe = ([base, form]) => `he ${form}`;
+    // spelling rule a verb belongs to — used only to mix the rules evenly in a round
+    const kind = ([b, f]) => ['be', 'have', 'do', 'go'].includes(b) ? 'special'
+      : f.endsWith('ies') ? 'ies' : /[aeiou]y$/.test(b) ? 'ys' : f === b + 'es' ? 'es' : 's';
+    function mixed(n) {
+      const bins = {};
+      VERBS.forEach(v => (bins[kind(v)] ||= []).push(v));
+      const lists = shuffle(Object.values(bins).map(shuffle)), out = [];
+      for (let i = 0; out.length < Math.min(n, VERBS.length); i++) { const l = lists[i % lists.length]; if (l.length) out.push(l.pop()); }
+      return shuffle(out);
+    }
+    // a typical learner's mistake for the right form
+    function mistake(ans) {
+      const fixed = { am: ['is', 'are'], is: ['are', 'am'], are: ['is'], has: ['haves', 'have'], "hasn't": ["haven't", "don't have"],
+        "don't": ["doesn't"], "doesn't": ["don't"], does: ['dos', 'do'], goes: ['gos', 'go'] }[ans];
+      if (fixed) return pick(fixed);
+      if (ans.endsWith('ies')) return ans.slice(0, -3) + pick(['ys', 'y']);          // studies → studys / study
+      if (ans.endsWith('sses')) return ans.slice(0, -4) + 'ses';                      // misses → mises
+      if (ans.endsWith('es')) return ans.slice(0, -2) + pick(['s', '']);             // watches → watchs / watch
+      if (ans.endsWith('s')) return ans.slice(0, -1) + 'es';                          // reads → reades
+      return null;
+    }
+    // every sentence as before / right form / after, with the (verb) hint taken out
+    const SENT = [
+      ...MCQ.map(m => { const [before, after] = split(m.q); return { before, after, ans: m.ans }; }),
+      ...GAPS.map(g => { const [before, after] = g.s.split(/_____\s*\([^)]*\)/); return { before, after, ans: g.ans }; })
+    ];
+    // positive → negative, from the fill-in sentences ("She _____ (watch) TV" → "She doesn't watch TV")
+    const NEG = GAPS.map(g => {
+      const m = g.s.match(/_____\s*\(([^)]+)\)/); if (!m) return null;
+      const base = m[1].trim(), [before, after] = g.s.split(m[0]);
+      if (base === 'have') return null;   // "hasn't" vs "doesn't have" — leave out, both get used
+      const neg = base === 'be' ? { am: "am not/'m not", is: "isn't/is not", are: "aren't/are not" }[g.ans]
+        : g.ans === base ? `don't ${base}/do not ${base}` : `doesn't ${base}/does not ${base}`;
+      return neg && { before, after, pos: before + g.ans + after, neg };
+    }).filter(Boolean);
+
+    const JUDGE = [
+      { value: 'right', html: `${icon('check')} Right` },
+      { value: 'wrong', html: `${icon('x')} Wrong` }
+    ];
+    const heRow = base => `<div class="q__word-row"><span class="hint">he / she / it</span><span class="q__word">${esc(base)}</span></div>`;
+    const PV = {
+      make: `<span class="pv-ru">he / she / it</span><b class="pv-w">study</b><span class="pv-field pv-field--c">studies</span>`,
+      listen: `<span class="pv-speaker">${icon('speak')}</span><span class="pv-field pv-field--c">watches</span>`,
+      mcq: `<p class="pv-s">He <span class="pv-gap">goes</span> to school.</p><div class="pv-grid"><span class="pv-btn">go</span><span class="pv-btn pv-ok">goes</span><span class="pv-btn">gos</span><span class="pv-btn">is go</span></div>`,
+      gap: `<p class="pv-s">She <span class="pv-gap">watches</span> (watch)<br>TV every night.</p>`,
+      spot: `<p class="pv-s">She <span class="pv-mark">studys</span> English.</p><div class="pv-grid"><span class="pv-btn">${icon('check')}</span><span class="pv-btn pv-ok">${icon('x')}</span></div>`,
+      neg: `<p class="pv-s">He goes to school.<br>He <span class="pv-gap">doesn't go</span> to school.</p>`,
+      sprintType: `<span class="pv-time"><i></i></span><span class="pv-ru">he / she / it</span><b class="pv-w">fix</b><span class="pv-field pv-field--c">fixes</span>`
+    };
+
     Snug.practice({
       root: document.getElementById('practice'),
       pageId: cfg.id || 'irregular-present',
       exercises: [
+        /* ---------- the he/she/it form on its own ---------- */
         {
+          group: 'The he/she/it form',
+          available: VERBS.length >= 4,
+          id: 'make', title: 'Make the he/she/it form', desc: 'See the verb, write it with -s, -es or -ies.',
+          size: '12 verbs', preview: PV.make,
+          build: () => mixed(12).map(v => ({
+            type: 'gap', label: 'Write the he/she/it form',
+            html: `${heRow(v[0])}<div class="fields"><label class="field">{field}</label></div>`,
+            parts: [{ ans: v[1], ph: 'Type the form', review: `he / she / it + ${v[0]}` }]
+          }))
+        },
+        {
+          group: 'The he/she/it form',
+          available: VERBS.length >= 4 && !!cfg.audioDir,
+          id: 'listen', title: 'Listen and type', desc: 'Hear “he watches” and write the verb.',
+          size: '12 verbs', preview: PV.listen,
+          build: () => mixed(12).map(v => ({
+            type: 'gap', cls: 'q--center', label: 'Write the verb you hear',
+            html: `<button class="listen-big" type="button" data-say="${esc(sayHe(v))}" aria-label="Play again">${icon('speak')}</button>
+              <p class="q__hint">Tap to hear it again</p>
+              <div class="fields"><label class="field">{field}</label></div>`,
+            parts: [{ ans: `${v[1]}/he ${v[1]}`, ph: 'he …', review: `he ${v[1]}` }],
+            onShow: q => setTimeout(() => Snug.speak(sayHe(v), q.querySelector('.listen-big')), 250)
+          }))
+        },
+
+        /* ---------- in sentences ---------- */
+        {
+          group: 'In sentences',
           id: 'mcq', title: 'Choose the form', desc: 'Pick the verb form that fits the sentence.',
-          size: `${MCQ.length} questions`,
-          preview: `<p class="pv-s">He <span class="pv-gap">goes</span> to school.</p><div class="pv-grid"><span class="pv-btn">go</span><span class="pv-btn pv-ok">goes</span><span class="pv-btn">gos</span><span class="pv-btn">is go</span></div>`,
+          size: `${MCQ.length} questions`, preview: PV.mcq,
           build: () => shuffle(MCQ).map(m => {
             const [before, after] = split(m.q);
             return {
@@ -1424,14 +1513,62 @@ const Snug = (() => {
           })
         },
         {
+          group: 'In sentences',
           id: 'gap', title: 'Fill in the verb', desc: 'Write the verb in brackets in the right form.',
-          size: `${GAPS.length} sentences`,
-          preview: `<p class="pv-s">She <span class="pv-gap">watches</span> (watch)<br>TV every night.</p>`,
+          size: `${GAPS.length} sentences`, preview: PV.gap,
           build: () => shuffle(GAPS).map(g => ({
             type: 'gap', label: 'Write the correct form',
             html: `<p class="q__sentence">${esc(g.s).replace('_____', '{gap}')}</p>`,
             parts: [{ ans: g.ans, review: g.s.replace('_____', '___') }]
           }))
+        },
+        {
+          group: 'In sentences',
+          available: SENT.length >= 4,
+          id: 'spot', title: 'Right or wrong?', desc: 'Is the verb in the sentence spelled and used right?',
+          size: '15 sentences', preview: PV.spot,
+          build: () => shuffle(SENT).slice(0, 15).map(x => {
+            const wrong = Math.random() < .5 ? mistake(x.ans) : null;
+            const shown = wrong || x.ans, isRight = !wrong;
+            return {
+              type: 'choice', grid: true, label: 'Is the highlighted verb right?',
+              prompt: `<p class="q__sentence">${esc(x.before)}<span class="jform">${esc(shown)}</span>${esc(x.after)}</p>`,
+              options: JUDGE, answer: isRight ? 'right' : 'wrong',
+              reveal: q => {
+                const f = q.querySelector('.jform');
+                if (isRight) f.classList.add('is-right');
+                else { f.classList.add('is-wrong'); f.insertAdjacentHTML('afterend', ` <span class="fix">${esc(x.ans)}</span>`); }
+              },
+              review: x.before + shown + x.after,
+              miss: () => isRight ? { given: '', right: `${x.ans} is right here` } : { given: shown, right: x.ans }
+            };
+          })
+        },
+        {
+          group: 'In sentences',
+          available: NEG.length >= 4,
+          id: 'neg', title: 'Make it negative', desc: 'Turn the sentence into a negative one.',
+          size: `${Math.min(10, NEG.length)} sentences`, preview: PV.neg,
+          build: () => shuffle(NEG).slice(0, 10).map(x => ({
+            type: 'gap', label: 'Make it negative',
+            html: `<p class="q__from">${esc(x.pos)}</p><p class="q__sentence">${esc(x.before)}{gap}${esc(x.after)}</p>`,
+            parts: [{ ans: x.neg, review: x.pos }]
+          }))
+        },
+
+        /* ---------- speed ---------- */
+        {
+          group: 'Against the clock',
+          available: VERBS.length >= 4,
+          id: 'sprint-type', title: 'Type the form', desc: 'Write as many he/she/it forms as you can in a minute.',
+          size: '1 minute', preview: PV.sprintType, timed: 60,
+          build: () => {
+            let prev = null;
+            return Array.from({ length: 150 }, () => {
+              let v; do { v = pick(VERBS); } while (v === prev && VERBS.length > 1); prev = v;
+              return { type: 'type', label: 'he / she / it', prompt: `<div class="q__word-row"><span class="q__word">${esc(v[0])}</span></div>`, ans: v[1], review: `he / she / it + ${v[0]}` };
+            });
+          }
         }
       ]
     });

@@ -698,6 +698,8 @@ main { flex: 1; padding-bottom: 32px; }
 .vc__form { font-weight: 600; }
 .vc__row.is-third .vc__form { color: var(--accent-ink); }
 .vc__neg { color: var(--muted); }
+.vc__head .speak { margin-left: auto; margin-right: -8px; align-self: center; }
+.q__from { font-size: 16px; color: var(--muted); line-height: 1.45; margin-bottom: 8px; }
 @media (min-width: 760px) { .vc-grid { grid-template-columns: 1fr 1fr; gap: 16px; } }
 
 /* ---------- footer ---------- */

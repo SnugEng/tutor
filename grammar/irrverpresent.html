@@ -39,6 +39,24 @@ const GROUPS = [
   ] }
 ];
 
+// verb → he/she/it form. Used by the practice and for the audio (grammar/gen_pres_audio.py reads this list).
+const VERBS = [
+  ['be', 'is'], ['have', 'has'], ['do', 'does'], ['go', 'goes'],
+
+  ['fly', 'flies'], ['study', 'studies'], ['cry', 'cries'], ['try', 'tries'], ['carry', 'carries'],
+  ['worry', 'worries'], ['tidy', 'tidies'], ['copy', 'copies'], ['hurry', 'hurries'],
+
+  ['play', 'plays'], ['stay', 'stays'], ['enjoy', 'enjoys'], ['buy', 'buys'], ['say', 'says'], ['pay', 'pays'],
+
+  ['pass', 'passes'], ['miss', 'misses'], ['kiss', 'kisses'], ['guess', 'guesses'], ['buzz', 'buzzes'],
+  ['watch', 'watches'], ['catch', 'catches'], ['teach', 'teaches'], ['touch', 'touches'],
+  ['wish', 'wishes'], ['wash', 'washes'], ['finish', 'finishes'], ['brush', 'brushes'], ['push', 'pushes'],
+  ['mix', 'mixes'], ['fix', 'fixes'], ['relax', 'relaxes'],
+
+  ['work', 'works'], ['like', 'likes'], ['live', 'lives'], ['read', 'reads'], ['make', 'makes'], ['take', 'takes'],
+  ['sleep', 'sleeps'], ['drink', 'drinks'], ['swim', 'swims'], ['run', 'runs'], ['love', 'loves'], ['help', 'helps']
+];
+
 const MCQ = [
   {q:'He _____ to school every day.',            opts:['go','goes','gos','is go'],          ans:'goes'},
   {q:'She _____ not like coffee.',               opts:['do','is','does','has'],              ans:'does'},
@@ -76,8 +94,10 @@ const GAP = [
 
 Snug.present({
   groups: GROUPS,
+  verbs: VERBS,
   mcq: MCQ,
-  gaps: GAP
+  gaps: GAP,
+  audioDir: 'audio_pres/'   // "I watch.mp3"-style files: i_watch.mp3, he_watches.mp3 …
 });
 </script>
 </body>
