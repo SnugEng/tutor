@@ -1,17 +1,29 @@
-import asyncio, os
+import asyncio, os, re
 import edge_tts
 
 VOICE = "en-GB-SoniaNeural"   # the same voice as vocabulary/gen_all_audio.py
+
+def slug(t):
+    return re.sub(r"[^a-z0-9]+", "_", t.lower()).strip("_")
+
+# Words typed into "Какие слова переозвучить" when starting the workflow are deleted and made
+# again a cleaner way: as a one-word sentence ("be.") and a touch faster, so a short word on
+# its own doesn't come out drawn-out or wobbly ("biii"). Missing files are always added.
+REDO = {slug(w) for w in os.environ.get("REDO", "").split(",") if w.strip()}
 
 async def gen(out_dir, words):
     os.makedirs(out_dir, exist_ok=True)
     for fname, text in words.items():
         out = f"{out_dir}/{fname}.mp3"
-        if os.path.exists(out):
+        redo = fname in REDO
+        if os.path.exists(out) and not redo:
             continue
-        tts = edge_tts.Communicate(text, VOICE)
+        if redo:
+            tts = edge_tts.Communicate(text + ".", VOICE, rate="+10%")
+        else:
+            tts = edge_tts.Communicate(text, VOICE)
         await tts.save(out)
-        print(f"OK: {fname}")
+        print(f"{'REDO' if redo else 'OK'}: {fname}")
 
 async def main():
     # Irregular verbs: one file per form, used by grammar/irrverpast.html

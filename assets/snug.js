@@ -65,26 +65,33 @@ const Snug = (() => {
   /* ---------- audio ----------
      Plays <audioDir>/<slug>.mp3 next to the page (same naming as before: "board game" → board_game.mp3).
      Several words separated by "|" play one after another: "begin|began|begun".
-     No file → nothing plays (no browser voice).                                          */
-  let current = null, audioDir = '', seq = 0;
+     No file → nothing plays (no browser voice).
+     Returns a promise that settles when the sound has finished (or failed, or was cut off).  */
+  let current = null, audioDir = '', seq = 0, settleCurrent = null;
   const slug = t => t.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
   function speak(text, btn) {
     const id = ++seq;
     if (current) { current.pause(); current = null; }
+    settleCurrent?.(); settleCurrent = null;
     $$('.is-playing').forEach(b => b.classList.remove('is-playing'));
-    const list = String(text).split('|').map(t => t.trim()).filter(Boolean);
-    if (!audioDir || !list.length) return;
+    const list = String(text || '').split('|').map(t => t.trim()).filter(Boolean);
+    if (!audioDir || !list.length) return Promise.resolve();
     btn?.classList.add('is-playing');
-    const play = i => {
-      if (id !== seq) return;
-      if (i >= list.length) { btn?.classList.remove('is-playing'); return; }
-      const a = new Audio(audioDir + slug(list[i]) + '.mp3'), go = () => setTimeout(() => play(i + 1), 160);
-      current = a;
-      a.addEventListener('ended', go, { once: true });
-      a.addEventListener('error', go, { once: true });
-      a.play().catch(go);
-    };
-    play(0);
+    return new Promise(done => {
+      settleCurrent = done;
+      const play = i => {
+        if (id !== seq) return done();
+        if (i >= list.length) { btn?.classList.remove('is-playing'); settleCurrent = null; return done(); }
+        const a = new Audio(audioDir + slug(list[i]) + '.mp3');
+        let moved = false;
+        const go = () => { if (moved) return; moved = true; setTimeout(() => play(i + 1), 160); };
+        current = a;
+        a.addEventListener('ended', go, { once: true });
+        a.addEventListener('error', go, { once: true });
+        a.play().catch(go);
+      };
+      play(0);
+    });
   }
   document.addEventListener('click', e => {
     const b = e.target.closest('[data-say]');
@@ -128,7 +135,7 @@ const Snug = (() => {
   }
 
   /* ---------- flashcards ---------- */
-  function flashcards({ root, items, decks, front, back, defaultDeck = 0, randomCount = 15 }) {
+  function flashcards({ root, items, decks, front, back, sayFront, sayBack, defaultDeck = 0, randomCount = 15 }) {
     let deckIdx = defaultDeck, randomN = randomCount, shuffled = false, order = [], i = 0;
     root.innerHTML = `
       <div class="fc">
@@ -182,6 +189,7 @@ const Snug = (() => {
       } else {
         const it = order[i];
         fFace.innerHTML = front(it); bFace.innerHTML = back(it);
+        if (dir && sayFront) speak(sayFront(it));          // moved to this card → hear the word
       }
       const n = order.length;
       $('.fc__count', root).innerHTML = n ? `<b>${i + 1}</b> of ${n}` : '0 of 0';
@@ -193,7 +201,11 @@ const Snug = (() => {
       }
     }
     const move = d => { if (!order.length) return; i = (i + d + order.length) % order.length; render(d); };
-    const flip = () => order.length && card.classList.toggle('is-flipped');
+    const flip = () => {
+      if (!order.length) return;
+      const open = card.classList.toggle('is-flipped');
+      if (open && sayBack) speak(sayBack(order[i]));       // turned over → hear what is on the back
+    };
 
     root.addEventListener('click', e => {
       const t = e.target.closest('button'); if (!t || !root.contains(t)) return;
@@ -239,7 +251,10 @@ const Snug = (() => {
        scramble: { prompt, word } — build the word from shuffled letters
        type:   { prompt, ans } — one typed answer in a box that stays put (for speed rounds)
      exercise card in the hub: { preview (html mock-up), size ("20 questions") }
-     any item may have onShow(qEl) — runs after it appears (e.g. plays the audio)                   */
+     any item may have onShow(qEl) — runs after it appears (e.g. plays the audio)
+     sound: item.say — what is heard once it is answered (text, or a function of (ok, given));
+            match items: tileSay(tile) — heard when a tile is tapped.
+            Not in timed rounds: there the next word is already on screen.                       */
   function practice({ root, pageId, exercises, intro }) {
     exercises = exercises.filter(e => e.available !== false);   // nothing to build it from → not in the menu
     const bestKey = id => `snug:${pageId}:${id}`;
@@ -253,10 +268,28 @@ const Snug = (() => {
     const points = it => it.type === 'gap' ? it.parts.length : it.type === 'match' ? it.rows.length * colsOf(it).length : 1;
     const body = () => $('[data-body]', root);
     const act = () => $('[data-act]', root);
-    const later = (ms) => { clearTimeout(timer); timer = setTimeout(next, ex.timed ? ms * .6 : ms); };
+    // hear the answer; returns a promise (or null when there is nothing to hear)
+    const voice = (it, ...args) => {
+      if (ex.timed || !it.say) return null;
+      const t = typeof it.say === 'function' ? it.say(...args) : it.say;
+      return t ? speak(t) : null;
+    };
+    // move on by itself — after the pause, and not before the answer has been heard
+    const later = (ms, sound) => {
+      clearTimeout(timer);
+      const delay = ex.timed ? ms * .6 : ms;
+      if (!sound) { timer = setTimeout(next, delay); return; }
+      const at = idx, t0 = Date.now();
+      const go = () => {
+        if (idx !== at || !checked || !ex) return;
+        clearTimeout(timer); timer = setTimeout(next, Math.max(delay - (Date.now() - t0), 250));
+      };
+      timer = setTimeout(go, 6000);        // never wait for a sound longer than this
+      sound.then(go);
+    };
 
     function hub() {
-      stopClock(); setFocus(false); ex = null;
+      stopClock(); setFocus(false); ex = null; speak('');
       const groups = [];
       exercises.forEach(e => {
         let g = groups[groups.length - 1];
@@ -416,13 +449,14 @@ const Snug = (() => {
       it.reveal?.($('.q', root), ok);
       settle(ok ? 1 : 0, 1);
       if (!ok) mistakes.push({ q: it.review, ...(it.miss ? it.miss(chosen) : { given: chosen, right: it.answer }) });
-      later(ok ? 650 : 1700);
+      later(ok ? 650 : 1700, voice(it, ok, chosen));
     }
 
     /* typed answers */
     function checkGaps() {
       if (checked) return;
       const it = items[idx]; let right = 0;
+      const given = $$('.gap', body()).map(g => g.value);
       $$('.gap', body()).forEach((g, k) => {
         const p = it.parts[k];
         g.disabled = true;
@@ -434,7 +468,8 @@ const Snug = (() => {
       });
       settle(right, it.parts.length);
       setAction(nextLabel());
-      if (right === it.parts.length) later(800); else act().focus({ preventScroll: true });
+      const sound = voice(it, right === it.parts.length, given);
+      if (right === it.parts.length) later(800, sound); else act().focus({ preventScroll: true });
     }
 
     /* quick typing (sprint): Enter checks, then on to the next one by itself */
@@ -446,7 +481,7 @@ const Snug = (() => {
       inp.readOnly = true; inp.classList.add(ok ? 'is-right' : 'is-wrong');
       if (!ok) { $('.quick__fix', root).textContent = it.ans; mistakes.push({ q: it.review || '', given, right: it.ans }); }
       settle(ok ? 1 : 0, 1);
-      later(ok ? 450 : 1900);
+      later(ok ? 450 : 1900, voice(it, ok, given));
     }
 
     /* match: tap a form, it lands in the highlighted slot */
@@ -467,6 +502,8 @@ const Snug = (() => {
       if (!mt.active) mt.active = mt.order.find(id => mt.slots[id] === undefined);
       if (!mt.active) return;
       mt.slots[mt.active] = k;
+      const it = items[idx];
+      if (it.tileSay && !ex.timed) speak(it.tileSay(mt.tiles[k]));   // tapped a form → hear it
       const from = mt.order.indexOf(mt.active);
       mt.active = [...mt.order.slice(from + 1), ...mt.order.slice(0, from)].find(id => mt.slots[id] === undefined) || null;
       paintMatch();
@@ -504,12 +541,13 @@ const Snug = (() => {
         let k = 0; mistakes.push({ q: it.review || '', given: it.word.split(' ').map(w => given.slice(k, k += w.length)).join(' '), right: it.word });
       }
       settle(ok ? 1 : 0, 1);
-      later(ok ? 800 : 2000);
+      later(ok ? 800 : 2000, voice(it, ok, given));
     }
 
     function next() {
       if (!checked || !ex) return;
       clearTimeout(timer); timer = null;
+      speak('');                             // skipping ahead cuts the sound short
       idx++;
       if (idx < items.length) { renderItem(); if (!ex.timed) window.scrollTo({ top: 0 }); }
       else results();
@@ -785,6 +823,7 @@ const Snug = (() => {
         ...UNIT.categories.map(c => ({ label: c.label, filter: d => d.category === c.id })),
         { label: 'Random', random: true }
       ],
+      sayFront: d => d.w,
       front: d => `
         <div class="fc__word">${esc(d.w)}</div>
         <div class="fc__sub">${esc(posName(d.pos))}</div>
@@ -843,11 +882,12 @@ const Snug = (() => {
         const variants = f.w.includes('(') ? [f.w.replace(/[()]/g, ''), f.w.replace(/\(.*?\)/g, '')] : [f.w];
         f.pos.split('/').forEach(p => {
           if (!KIND[p] || (p === 'v' && baseIsVerb)) return;
-          const t = by[p] = by[p] || { ws: [], n: 0 };
+          const t = by[p] = by[p] || { ws: [], n: 0, file: {} };
           t.ws.push(...variants); t.n++;
+          variants.forEach(v => { t.file[v] ||= f.w; });
         });
       });
-      return Object.entries(by).map(([p, t]) => ({ d, p, ws: [...new Set(t.ws)], n: t.n }));
+      return Object.entries(by).map(([p, t]) => ({ d, p, ws: [...new Set(t.ws)], n: t.n, file: t.file }));
     });
 
     // small pictures of each task for the exercise menu
@@ -874,7 +914,7 @@ const Snug = (() => {
             type: 'choice', label: 'What does it mean?',
             prompt: `<div class="q__word-row"><span class="q__word">${esc(d.w)}</span><span class="pos">${esc(posName(d.pos))}</span>${speakBtn(d.w)}</div>`,
             options: shuffle([d.def, ...distractors(d, 3, 'def')]),
-            answer: d.def, review: `${d.w} (${d.pos})`
+            answer: d.def, review: `${d.w} (${d.pos})`, say: d.w
           }))
         },
         {
@@ -885,7 +925,7 @@ const Snug = (() => {
             type: 'choice', label: 'Which word or phrase is it?', grid: true,
             prompt: `<p class="q__text">${esc(d.def)}</p>`,
             options: shuffle([d.w, ...distractors(d, 3, 'w')]),
-            answer: d.w, review: d.def
+            answer: d.w, review: d.def, say: d.w
           }))
         },
         {
@@ -895,7 +935,8 @@ const Snug = (() => {
           build: () => rounds(3, 5).map(set => ({
             type: 'match', label: 'Tap a word, then it goes into the highlighted box',
             cols: [{ key: 'w', label: '' }],
-            rows: set.map(d => ({ head: `<span class="match__def">${esc(d.def)}</span>`, name: d.def, w: d.w }))
+            rows: set.map(d => ({ head: `<span class="match__def">${esc(d.def)}</span>`, name: d.def, w: d.w })),
+            tileSay: w => w
           }))
         },
 
@@ -908,7 +949,7 @@ const Snug = (() => {
           build: () => sample(letterOnly, 12).map(d => ({
             type: 'scramble', label: 'Put the letters in order',
             prompt: `<p class="q__text">${esc(d.def)}</p><p class="q__hint"><span class="pos">${esc(posName(d.pos))}</span></p>`,
-            word: d.w.toLowerCase(), review: d.def
+            word: d.w.toLowerCase(), review: d.def, say: d.w
           }))
         },
         {
@@ -921,7 +962,7 @@ const Snug = (() => {
             html: `<button class="listen-big" type="button" data-say="${esc(d.w)}" aria-label="Play again">${icon('speak')}</button>
               <p class="q__hint">Tap to hear it again</p>
               <div class="fields"><label class="field">{field}</label></div>`,
-            parts: [{ ans: d.w, ph: 'Type the word', review: `${d.def} (${d.pos})` }],
+            parts: [{ ans: d.w, ph: 'Type the word', review: `${d.def} (${d.pos})` }], say: d.w,
             onShow: q => setTimeout(() => Snug.speak(d.w, q.querySelector('.listen-big')), 250)
           }))
         },
@@ -935,7 +976,7 @@ const Snug = (() => {
           build: () => sample(DATA.map(d => ({ d, b: blankIn(d) })).filter(x => x.b), 12).map(({ d, b }) => ({
             type: 'gap', label: 'Write the missing word',
             html: `<p class="q__sentence">${esc(b.before)}{gap}${esc(b.after)}</p>${hint(d)}`,
-            parts: [{ ans: b.word, ph: b.word[0] + '…', review: b.before + '___' + b.after }]
+            parts: [{ ans: b.word, ph: b.word[0] + '…', review: b.before + '___' + b.after }], say: d.w
           }))
         },
         {
@@ -943,12 +984,13 @@ const Snug = (() => {
           available: formTasks.length > 0,
           id: 'forms', title: 'Make a new word', desc: 'Make a noun, adjective or adverb from a word.',
           size: '10 words', preview: PV.forms,
-          build: () => sample(formTasks, 10).map(({ d, p, ws, n }) => ({
+          build: () => sample(formTasks, 10).map(({ d, p, ws, n, file }) => ({
             type: 'gap', label: `Make ${KIND[p][0]} from`,
             html: `<div class="q__word-row"><span class="q__word">${esc(d.base)}</span><span class="pos">${esc(posName(d.pos))}</span>${speakBtn(d.base)}</div>
               ${n > 1 ? `<p class="q__hint">${n} answers are possible, write any one</p>` : ''}
               <div class="fields"><label class="field">{field}</label></div>`,
-            parts: [{ ans: ws.join(' / '), ph: KIND[p][1].toLowerCase(), review: `${KIND[p][1]} from ${d.base}` }]
+            parts: [{ ans: ws.join(' / '), ph: KIND[p][1].toLowerCase(), review: `${KIND[p][1]} from ${d.base}` }],
+            say: (ok, given) => file[ws.find(w => norm(w) === norm(given[0])) || ws[0]]
           }))
         }
       ]
@@ -1089,6 +1131,8 @@ const Snug = (() => {
         { label: 'Q–Z', filter: letters('qz') },
         { label: 'Random', random: true }
       ],
+      sayFront: v => v.inf,
+      sayBack: v => say(v),
       front: v => `
         <div class="fc__word">${esc(v.inf)}</div>
         <div class="fc__sub">infinitive</div>
@@ -1105,6 +1149,8 @@ const Snug = (() => {
 
     /* ----- practice ----- */
     const first = f => f.split(' / ')[0];
+    const KNOWN = new Set(IRR.flatMap(v => [v.inf, ...v.ps.split(' / '), ...v.pp.split(' / ')]));
+    const sayPast = f => String(f).split(' / ').filter(x => KNOWN.has(x)).map(x => x === 'read' ? 'read past' : x).join('|');
     const forms3 = v => [v.inf, v.ps, v.pp];
     const valid = v => new Set([v.inf, ...v.ps.split(' / '), ...v.pp.split(' / ')]);
     const byInf = Object.fromEntries(IRR.map(v => [v.inf, v]));
@@ -1181,7 +1227,7 @@ const Snug = (() => {
           group: 'Learn the forms',
           id: 'triples', title: 'Build the triples', desc: 'Put mixed-up past forms next to their verbs.',
           size: '5 rounds', preview: PV.triples,
-          build: () => distinctSets(5, 4).map(rows => ({ type: 'match', label: 'Tap a form, then it goes into the highlighted box', rows }))
+          build: () => distinctSets(5, 4).map(rows => ({ type: 'match', label: 'Tap a form, then it goes into the highlighted box', rows, tileSay: sayPast }))
         },
         {
           group: 'Learn the forms',
@@ -1195,7 +1241,7 @@ const Snug = (() => {
               label: ps ? 'Past simple of' : 'Past participle of',
               prompt: `<div class="q__word-row"><span class="q__word">${esc(v.inf)}</span><span class="hint">${esc(ru(v.inf))}</span></div>`,
               options: shuffle([right, ...sample((ps ? v.ps_w : v.pp_w).filter(w => w !== right), 3)]),
-              answer: right, review: `${ps ? 'Past simple' : 'Past participle'} of ${v.inf}`
+              answer: right, review: `${ps ? 'Past simple' : 'Past participle'} of ${v.inf}`, say: sayPast(right)
             };
           })
         },
@@ -1208,7 +1254,8 @@ const Snug = (() => {
             html: `${wordRow(v)}<div class="fields">
               <label class="field">Past simple{field}</label>
               <label class="field">Past participle{field}</label></div>`,
-            parts: [{ ans: v.ps, review: `${v.inf}: past simple` }, { ans: v.pp, review: `${v.inf}: past participle` }]
+            parts: [{ ans: v.ps, review: `${v.inf}: past simple` }, { ans: v.pp, review: `${v.inf}: past participle` }],
+            say: say(v)
           }))
         },
         {
@@ -1225,7 +1272,8 @@ const Snug = (() => {
               { ans: v.inf, ph: ambiguous(v) ? v.inf[0] + '…' : '', review: `${v.ru}: infinitive` },
               { ans: v.ps, review: `${v.ru}: past simple` },
               { ans: v.pp, review: `${v.ru}: past participle` }
-            ]
+            ],
+            say: say(v)
           }))
         },
 
@@ -1242,7 +1290,7 @@ const Snug = (() => {
               options: [opt(ps, ps, 'past simple'), opt(pp, pp, 'past participle')],
               answer: x.ans,
               reveal: q => { const b = q.querySelector('.blank'); b.textContent = x.ans; b.classList.add('is-filled'); },
-              review: x.before + '___' + x.after
+              review: x.before + '___' + x.after, say: sayPast(x.ans)
             };
           })
         },
@@ -1262,7 +1310,7 @@ const Snug = (() => {
                 if (isRight) f.classList.add('is-right');
                 else { f.classList.add('is-wrong'); f.insertAdjacentHTML('afterend', ` <span class="fix">${esc(x.ans)}</span>`); }
               },
-              review: x.before + shown + x.after,
+              review: x.before + shown + x.after, say: sayPast(x.ans),
               miss: () => isRight ? { given: '', right: `${x.ans} is right here` } : { given: shown, right: x.ans }
             };
           })
@@ -1274,7 +1322,7 @@ const Snug = (() => {
           build: () => sample(GAP_DATA, 20).map(g => ({
             type: 'gap', label: 'Write the correct form',
             html: `<p class="q__sentence">${esc(g.s).replace('_____', '{gap}')}</p>`,
-            parts: [{ ans: g.ans, review: g.s.replace('_____', '___') }]
+            parts: [{ ans: g.ans, review: g.s.replace('_____', '___') }], say: sayPast(g.ans)
           }))
         },
         {
@@ -1287,7 +1335,8 @@ const Snug = (() => {
             parts: t.gaps.map((p, k) => {
               const ctx = (p.before || (t.gaps[k - 1] && t.gaps[k - 1].after) || '').trim().split(/\s+/).slice(-4).join(' ');
               return { ans: p.ans, ph: `(${p.verb})`, review: `${t.title}: …${ctx} ___ (${p.verb})` };
-            })
+            }),
+            say: t.gaps.map(p => sayPast(p.ans)).filter(Boolean).join('|')      // only the irregular forms have files
           }))
         },
 
@@ -1414,6 +1463,8 @@ const Snug = (() => {
     const pick = arr => arr[Math.floor(Math.random() * arr.length)];
     // the audio always has a pronoun: "he does", "he lives", "I read" can't be misread
     const sayHe = ([base, form]) => `he ${form}`;
+    // a right answer as it is heard: "watches" → "he watches", "am" → "I am"; no file → nothing
+    const sayForm = ans => ans === 'am' ? 'I am' : ans === 'are' ? 'you are' : VERBS.some(v => v[1] === ans) ? `he ${ans}` : '';
     // spelling rule a verb belongs to — used only to mix the rules evenly in a round
     const kind = ([b, f]) => ['be', 'have', 'do', 'go'].includes(b) ? 'special'
       : f.endsWith('ies') ? 'ies' : /[aeiou]y$/.test(b) ? 'ys' : f === b + 'es' ? 'es' : 's';
@@ -1447,7 +1498,8 @@ const Snug = (() => {
       if (base === 'have') return null;   // "hasn't" vs "doesn't have" — leave out, both get used
       const neg = base === 'be' ? { am: "am not/'m not", is: "isn't/is not", are: "aren't/are not" }[g.ans]
         : g.ans === base ? `don't ${base}/do not ${base}` : `doesn't ${base}/does not ${base}`;
-      return neg && { before, after, pos: before + g.ans + after, neg };
+      const say = base === 'be' ? { am: "I'm not", is: "he isn't", are: "you aren't" }[g.ans] : g.ans === base ? '' : `he doesn't ${base}`;
+      return neg && { before, after, pos: before + g.ans + after, neg, say };
     }).filter(Boolean);
 
     const JUDGE = [
@@ -1478,7 +1530,7 @@ const Snug = (() => {
           build: () => mixed(12).map(v => ({
             type: 'gap', label: 'Write the he/she/it form',
             html: `${heRow(v[0])}<div class="fields"><label class="field">{field}</label></div>`,
-            parts: [{ ans: v[1], ph: 'Type the form', review: `he / she / it + ${v[0]}` }]
+            parts: [{ ans: v[1], ph: 'Type the form', review: `he / she / it + ${v[0]}` }], say: sayHe(v)
           }))
         },
         {
@@ -1491,7 +1543,7 @@ const Snug = (() => {
             html: `<button class="listen-big" type="button" data-say="${esc(sayHe(v))}" aria-label="Play again">${icon('speak')}</button>
               <p class="q__hint">Tap to hear it again</p>
               <div class="fields"><label class="field">{field}</label></div>`,
-            parts: [{ ans: `${v[1]}/he ${v[1]}`, ph: 'he …', review: `he ${v[1]}` }],
+            parts: [{ ans: `${v[1]}/he ${v[1]}`, ph: 'he …', review: `he ${v[1]}` }], say: sayHe(v),
             onShow: q => setTimeout(() => Snug.speak(sayHe(v), q.querySelector('.listen-big')), 250)
           }))
         },
@@ -1506,7 +1558,7 @@ const Snug = (() => {
             return {
               type: 'choice', grid: true, label: 'Choose the form that fits',
               prompt: `<p class="q__sentence">${esc(before)}<span class="blank">&nbsp;</span>${esc(after)}</p>`,
-              options: shuffle(m.opts), answer: m.ans,
+              options: shuffle(m.opts), answer: m.ans, say: sayForm(m.ans),
               reveal: q => { const b = q.querySelector('.blank'); b.textContent = m.ans; b.classList.add('is-filled'); },
               review: m.q.replace('_____', '___')
             };
@@ -1519,7 +1571,7 @@ const Snug = (() => {
           build: () => shuffle(GAPS).map(g => ({
             type: 'gap', label: 'Write the correct form',
             html: `<p class="q__sentence">${esc(g.s).replace('_____', '{gap}')}</p>`,
-            parts: [{ ans: g.ans, review: g.s.replace('_____', '___') }]
+            parts: [{ ans: g.ans, review: g.s.replace('_____', '___') }], say: sayForm(g.ans)
           }))
         },
         {
@@ -1539,7 +1591,7 @@ const Snug = (() => {
                 if (isRight) f.classList.add('is-right');
                 else { f.classList.add('is-wrong'); f.insertAdjacentHTML('afterend', ` <span class="fix">${esc(x.ans)}</span>`); }
               },
-              review: x.before + shown + x.after,
+              review: x.before + shown + x.after, say: sayForm(x.ans),
               miss: () => isRight ? { given: '', right: `${x.ans} is right here` } : { given: shown, right: x.ans }
             };
           })
@@ -1552,7 +1604,7 @@ const Snug = (() => {
           build: () => shuffle(NEG).slice(0, 10).map(x => ({
             type: 'gap', label: 'Make it negative',
             html: `<p class="q__from">${esc(x.pos)}</p><p class="q__sentence">${esc(x.before)}{gap}${esc(x.after)}</p>`,
-            parts: [{ ans: x.neg, review: x.pos }]
+            parts: [{ ans: x.neg, review: x.pos }], say: x.say
           }))
         },
 

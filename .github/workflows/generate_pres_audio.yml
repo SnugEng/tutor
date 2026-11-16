@@ -2,6 +2,11 @@ name: Generate Present Forms Audio
 
 on:
   workflow_dispatch:
+    inputs:
+      redo:
+        description: "Какие слова переозвучить (через запятую, например: he does, I am). Пусто — только добавить недостающие"
+        required: false
+        default: ""
 
 permissions:
   contents: write
@@ -10,12 +15,14 @@ jobs:
   generate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Install edge-tts
         run: pip install edge-tts
       - name: Generate MP3 files
+        env:
+          REDO: ${{ inputs.redo }}
         run: python3 grammar/gen_pres_audio.py
       - name: Commit audio files
         run: |
