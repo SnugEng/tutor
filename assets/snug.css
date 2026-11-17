@@ -328,7 +328,7 @@ main { flex: 1; padding-bottom: 32px; }
 .fc__stage { perspective: 1400px; }
 .fc__card {
   position: relative; width: 100%;
-  height: clamp(300px, 54vh, 430px);
+  height: clamp(250px, 46vh, 430px);
   cursor: pointer; touch-action: pan-y; user-select: none; -webkit-user-select: none;
   outline: none;
 }
@@ -713,12 +713,16 @@ main { flex: 1; padding-bottom: 32px; }
 }
 .foot a:hover { color: var(--text); border-color: var(--gold); }
 
+
 /* ---------- mobile focus mode (inside an exercise) ---------- */
 @media (max-width: 759px) {
   body.is-focus[data-tab="practice"] .bottom-nav,
   body.is-focus[data-tab="practice"] .foot,
   body.is-focus[data-tab="practice"] .top { display: none; }
   body.is-focus[data-tab="practice"] main { padding-bottom: calc(96px + env(safe-area-inset-bottom)); }
+  /* phone: the task sits in the middle of the screen, not stuck to the top */
+  body.is-focus[data-tab="practice"] .ex { display: flex; flex-direction: column; min-height: calc((100dvh - 96px - env(safe-area-inset-bottom)) / var(--z, 1)); }
+  body.is-focus[data-tab="practice"] .ex__stage { flex: 1; display: flex; flex-direction: column; justify-content: center; padding-bottom: 3vh; }
   body.is-focus[data-tab="practice"] .actionbar {
     position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; margin: 0;
     padding: 12px var(--gutter) calc(12px + env(safe-area-inset-bottom));
@@ -755,9 +759,18 @@ main { flex: 1; padding-bottom: 32px; }
   .family__forms { margin-top: 0; }
 
   .fc, .hub, .ex { max-width: 640px; margin: 0 auto; }
-  .hub { max-width: 780px; }
-  .hub__grid { grid-template-columns: repeat(3, 1fr); gap: 14px; }
-  .pv { height: 118px; }
+  .hub { max-width: 940px; padding-top: 12px; }
+  .hub__grid { grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .hub__group + .hub__group { margin-top: 14px; }
+  .hub .group__title { font-size: 19px; padding-bottom: 5px; }
+  .pv { height: 92px; }
+  .hub__name { padding-top: 6px; }
+  .ex__head { min-height: 42px; }
+  .ex__progress { margin: 2px 0 12px; }
+  .match__row { padding: 6px 0; }
+  .slot { min-height: 46px; }
+  .bank { margin-top: 10px; }
+  .tile { min-height: 42px; }
   .vt__head, .vt__row { grid-template-columns: 1fr 1fr 1fr 1.15fr 40px; gap: 0 24px; }
   .vt__row .speak { order: 2; }
   .vt__inf { display: contents; }
@@ -766,13 +779,38 @@ main { flex: 1; padding-bottom: 32px; }
   .vt__h .vt__toggle { display: none; }
   .vt__col-ru { display: inline-flex; }
   .fc .chips { flex-wrap: wrap; justify-content: center; margin: 0; padding: 2px 0; overflow: visible; }
-  .fc__card { height: 380px; }
+  .fc__card { height: 340px; }
   .q { padding: 28px; }
   .q__word { font-size: 40px; }
   .fields { grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); }
   .q--match { padding: 22px 24px 14px; }
   .match__row { gap: 12px; }
 }
+
+
+/* ---------- the exercise, the exercise menu and the cards are scaled as a whole ----------
+   --zx is the most they may grow at this screen width; the engine picks the actual scale (--z)
+   so that the page, header and footer included, fits in the window without scrolling.        */
+@media (min-width: 1100px) { #practice-box, #cards-box { max-width: none; } }   /* room to grow, still centred */
+@media (max-width: 759px) {
+  :root { --zx: 1.12; }
+  /* exercise menu on a phone: smaller previews, tighter cards, so it fits one screen */
+  .hub { padding-top: 12px; }
+  .hub__grid { gap: 8px; }
+  .hub__group + .hub__group { margin-top: 14px; }
+  .hub .group__title { font-size: 19px; padding-bottom: 4px; }
+  .pv { zoom: .74; }
+  .hub__card { padding: 5px 5px 8px; }
+  .hub__name { font-size: 14.5px; padding: 5px 4px 0; }
+  .hub__meta { font-size: 12.5px; padding: 1px 4px 0; }
+}
+@media (min-width: 1100px) { :root { --zx: 1.25; } }
+@media (min-width: 1300px) { :root { --zx: 1.4; } }
+@media (min-width: 1500px) { :root { --zx: 1.6; } }
+@media (min-width: 1800px) { :root { --zx: 1.75; } }
+.ex, .hub, .fc { zoom: var(--z, 1); }
+/* above a card, the set buttons and the counter stay at their normal size */
+.fc .chips, .fc__meta { zoom: calc(1 / var(--z, 1)); }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }

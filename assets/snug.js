@@ -112,12 +112,36 @@ const Snug = (() => {
       if (push) history.replaceState(null, '', '#' + id);
       handlers[id]?.();
       window.scrollTo({ top: 0 });
+      refitAll();                                             // a tab that was hidden is fitted now
     }
     btns.forEach(b => b.addEventListener('click', () => show(b.dataset.tab)));
     addEventListener('hashchange', () => show(location.hash.slice(1), false));
     show(location.hash.slice(1) || ids[0], false);
     return show;
   }
+
+  /* ---------- fit to the window ----------
+     The exercise, the exercise menu and the cards are scaled as a whole (--z → CSS zoom).
+     The scale is the biggest one, up to --zx (set by screen width in the CSS), at which the
+     whole page — header and footer included — fits in the window without scrolling. */
+  const fitters = new Set();
+  function fitZoom(el, cap = Infinity, floor = innerWidth < 760 ? .85 : .75) {
+    if (!el || !el.offsetParent) return 1;                     // hidden tab: done when it is shown
+    const doc = document.documentElement;
+    const zx = parseFloat(getComputedStyle(doc).getPropertyValue('--zx')) || 1;
+    const top = Math.max(floor, Math.min(zx, cap));
+    const fits = z => { el.style.setProperty('--z', z); return doc.scrollHeight <= innerHeight && doc.scrollWidth <= innerWidth; };
+    if (fits(top)) return top;
+    if (!fits(floor)) { const z = Math.min(1, top); fits(z); return z; }   // won't fit even small: normal size, it scrolls
+    let lo = floor, hi = top;
+    for (let k = 0; k < 8; k++) { const m = Math.floor((lo + hi) / 2 * 1000) / 1000; if (fits(m)) lo = m; else hi = m; }
+    fits(lo);
+    return lo;
+  }
+  const refitAll = () => fitters.forEach(f => f());
+  let fitFrame = 0;
+  addEventListener('resize', () => { cancelAnimationFrame(fitFrame); fitFrame = requestAnimationFrame(refitAll); });
+  document.fonts?.ready.then(refitAll);
 
   /* ---------- search box ---------- */
   function bindSearch(input, onChange) {
@@ -137,6 +161,8 @@ const Snug = (() => {
   /* ---------- flashcards ---------- */
   function flashcards({ root, items, decks, front, back, sayFront, sayBack, defaultDeck = 0, randomCount = 15 }) {
     let deckIdx = defaultDeck, randomN = randomCount, shuffled = false, order = [], i = 0;
+    const fitCards = () => fitZoom($('.fc', root));
+    fitters.add(fitCards);
     root.innerHTML = `
       <div class="fc">
         <div class="chips" role="tablist" aria-label="Choose a set">
@@ -178,6 +204,7 @@ const Snug = (() => {
       $$('[data-deck]', root).forEach(b => b.setAttribute('aria-selected', String(+b.dataset.deck === deckIdx)));
       stepper.hidden = !d.random; shuffleBtn.hidden = !!d.random;
       $('output', stepper).textContent = Math.min(randomN, items.length);
+      fitCards();
       render(0);
     }
     function render(dir) {
@@ -263,6 +290,9 @@ const Snug = (() => {
     let timer = null, tick = null, deadline = 0, mt = null;
 
     const setFocus = on => document.body.classList.toggle('is-focus', on);
+    let cap = Infinity;                       // inside one exercise the scale only goes down, so it doesn't jump
+    const fitEx = () => { const el = $('.ex', root) || $('.hub', root); if (el) cap = fitZoom(el, ex && $('.ex', root) ? cap : Infinity); };
+    fitters.add(() => { cap = Infinity; fitEx(); });
     const stopClock = () => { clearTimeout(timer); clearInterval(tick); timer = tick = null; };
     const colsOf = it => it.cols || COLS;
     const points = it => it.type === 'gap' ? it.parts.length : it.type === 'match' ? it.rows.length * colsOf(it).length : 1;
@@ -314,6 +344,7 @@ const Snug = (() => {
               </ul>
             </section>`).join('')}
         </div>`;
+      fitEx();
     }
 
     function start(id) {
@@ -330,16 +361,18 @@ const Snug = (() => {
             <span class="ex__score">Score <b data-score>0</b></span>
           </div>
           <div class="ex__progress"><div class="bar ${ex.timed ? 'bar--time' : ''}"><i></i></div><span data-step></span></div>
-          <div data-body></div>
-          <div class="quick" hidden>
-            <input class="gap gap--field quick__in" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="go" placeholder="Type the form" aria-label="Your answer">
-            <span class="quick__fix" aria-live="polite"></span>
+          <div class="ex__stage">
+            <div data-body></div>
+            <div class="quick" hidden>
+              <input class="gap gap--field quick__in" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="go" placeholder="Type the form" aria-label="Your answer">
+              <span class="quick__fix" aria-live="polite"></span>
+            </div>
+            <div class="actionbar"><button class="btn btn--primary" type="button" data-act></button></div>
           </div>
-          <div class="actionbar"><button class="btn btn--primary" type="button" data-act></button></div>
         </div>`;
       // tapping the button must not close the phone keyboard
       act().addEventListener('pointerdown', e => { if (items[idx]?.type === 'type') e.preventDefault(); });
-      renderItem(); window.scrollTo({ top: 0 });
+      cap = Infinity; renderItem(); fitEx(); window.scrollTo({ top: 0 });
       if (ex.timed) { deadline = Date.now() + ex.timed * 1000; tick = setInterval(clock, 200); clock(); }
     }
 
@@ -361,6 +394,7 @@ const Snug = (() => {
       score += right; done += of; checked = true;
       $('[data-score]', root).textContent = score;
       if (!ex.timed) $('.bar i', root).style.width = ((idx + 1) / items.length * 100) + '%';
+      requestAnimationFrame(fitEx);           // the answer may have made the task taller
     }
     const nextLabel = () => idx + 1 < items.length ? 'Next' : 'See results';
 
@@ -549,7 +583,7 @@ const Snug = (() => {
       clearTimeout(timer); timer = null;
       speak('');                             // skipping ahead cuts the sound short
       idx++;
-      if (idx < items.length) { renderItem(); if (!ex.timed) window.scrollTo({ top: 0 }); }
+      if (idx < items.length) { renderItem(); fitEx(); if (!ex.timed) window.scrollTo({ top: 0 }); }
       else results();
     }
 
@@ -577,6 +611,7 @@ const Snug = (() => {
             <li><div class="review__q">${esc(m.q)}</div>
               <div class="review__a">${m.given ? `<s>${esc(m.given)}</s>` : ''}<b>${esc(m.right)}</b></div></li>`).join('')}</ul></div>` : ''}
         </div>`;
+      cap = fitZoom($('.ex', root), Infinity, 1);   // a long list of mistakes may scroll, but never shrinks below normal
       window.scrollTo({ top: 0 });
     }
 
@@ -727,11 +762,11 @@ const Snug = (() => {
   </section>
 
   <section data-panel="cards" hidden>
-    <div class="wrap" id="cards"></div>
+    <div class="wrap" id="cards-box"></div>
   </section>
 
   <section data-panel="practice" hidden>
-    <div class="wrap" id="practice"></div>
+    <div class="wrap" id="practice-box"></div>
   </section>
 </main>
 
@@ -816,7 +851,7 @@ const Snug = (() => {
 
     /* ----- cards ----- */
     Snug.flashcards({
-      root: $('#cards'),
+      root: $("#cards-box"),
       items: DATA,
       decks: [
         { label: 'All words', filter: () => true },
@@ -902,7 +937,7 @@ const Snug = (() => {
     };
 
     Snug.practice({
-      root: $('#practice'),
+      root: $("#practice-box"),
       pageId: UNIT.id,
       exercises: [
         /* ---------- meaning ---------- */
@@ -1054,11 +1089,11 @@ const Snug = (() => {
   </section>
 
   <section data-panel="cards" hidden>
-    <div class="wrap" id="cards"></div>
+    <div class="wrap" id="cards-box"></div>
   </section>
 
   <section data-panel="practice" hidden>
-    <div class="wrap" id="practice"></div>
+    <div class="wrap" id="practice-box"></div>
   </section>
 </main>
 
@@ -1121,7 +1156,7 @@ const Snug = (() => {
     /* ----- cards ----- */
     const letters = l => v => v.inf[0] >= l[0] && v.inf[0] <= l[1];
     Snug.flashcards({
-      root: $('#cards'),
+      root: $("#cards-box"),
       items: IRR,
       randomCount: 20,
       decks: [
@@ -1219,7 +1254,7 @@ const Snug = (() => {
     ];
 
     Snug.practice({
-      root: $('#practice'),
+      root: $("#practice-box"),
       pageId: UNIT.id,
       exercises: [
         /* ---------- learn the forms ---------- */
@@ -1405,7 +1440,7 @@ const Snug = (() => {
     const audioFor = verb => {
       if (!cfg.audioDir) return '';
       const v = VERBS.find(v => v[0] === verb);
-      return v ? Snug.speakBtn(v[0] === 'be' ? 'I am|you are|he is' : `I ${v[0]}|he ${v[1]}`) : '';
+      return v ? Snug.speakBtn(v[0] === 'be' ? 'am|are|is' : `${v[0]}|${v[1]}`) : '';
     };
     document.body.insertAdjacentHTML('afterbegin', `
 <header class="top">
@@ -1442,7 +1477,7 @@ const Snug = (() => {
     </div>
   </section>
   <section data-panel="practice" hidden>
-    <div class="wrap" id="practice"></div>
+    <div class="wrap" id="practice-box"></div>
   </section>
 </main>
 <footer class="foot">
@@ -1461,10 +1496,11 @@ const Snug = (() => {
     /* ---------- data helpers ---------- */
     const split = s => { const i = s.indexOf('_____'); return [s.slice(0, i), s.slice(i + 5)]; };
     const pick = arr => arr[Math.floor(Math.random() * arr.length)];
-    // the audio always has a pronoun: "he does", "he lives", "I read" can't be misread
-    const sayHe = ([base, form]) => `he ${form}`;
-    // a right answer as it is heard: "watches" → "he watches", "am" → "I am"; no file → nothing
-    const sayForm = ans => ans === 'am' ? 'I am' : ans === 'are' ? 'you are' : VERBS.some(v => v[1] === ans) ? `he ${ans}` : '';
+    // the audio is the form on its own ("watches", "doesn't watch") — no pronoun, so it fits
+    // any sentence ("She…", "The baby…")
+    const sayHe = ([base, form]) => form;
+    // a right answer as it is heard; only forms that have a file ("hasn't", "don't" have none)
+    const sayForm = ans => ans === 'am' || ans === 'are' || VERBS.some(v => v[1] === ans) ? ans : '';
     // spelling rule a verb belongs to — used only to mix the rules evenly in a round
     const kind = ([b, f]) => ['be', 'have', 'do', 'go'].includes(b) ? 'special'
       : f.endsWith('ies') ? 'ies' : /[aeiou]y$/.test(b) ? 'ys' : f === b + 'es' ? 'es' : 's';
@@ -1498,7 +1534,7 @@ const Snug = (() => {
       if (base === 'have') return null;   // "hasn't" vs "doesn't have" — leave out, both get used
       const neg = base === 'be' ? { am: "am not/'m not", is: "isn't/is not", are: "aren't/are not" }[g.ans]
         : g.ans === base ? `don't ${base}/do not ${base}` : `doesn't ${base}/does not ${base}`;
-      const say = base === 'be' ? { am: "I'm not", is: "he isn't", are: "you aren't" }[g.ans] : g.ans === base ? '' : `he doesn't ${base}`;
+      const say = base === 'be' ? { am: 'am not', is: "isn't", are: "aren't" }[g.ans] : g.ans === base ? '' : `doesn't ${base}`;
       return neg && { before, after, pos: before + g.ans + after, neg, say };
     }).filter(Boolean);
 
@@ -1518,7 +1554,7 @@ const Snug = (() => {
     };
 
     Snug.practice({
-      root: document.getElementById('practice'),
+      root: document.getElementById("practice-box"),
       pageId: cfg.id || 'irregular-present',
       exercises: [
         /* ---------- the he/she/it form on its own ---------- */
@@ -1536,14 +1572,14 @@ const Snug = (() => {
         {
           group: 'The he/she/it form',
           available: VERBS.length >= 4 && !!cfg.audioDir,
-          id: 'listen', title: 'Listen and type', desc: 'Hear “he watches” and write the verb.',
+          id: 'listen', title: 'Listen and type', desc: 'Hear a he/she/it form and write it.',
           size: '12 verbs', preview: PV.listen,
           build: () => mixed(12).map(v => ({
             type: 'gap', cls: 'q--center', label: 'Write the verb you hear',
             html: `<button class="listen-big" type="button" data-say="${esc(sayHe(v))}" aria-label="Play again">${icon('speak')}</button>
               <p class="q__hint">Tap to hear it again</p>
               <div class="fields"><label class="field">{field}</label></div>`,
-            parts: [{ ans: `${v[1]}/he ${v[1]}`, ph: 'he …', review: `he ${v[1]}` }], say: sayHe(v),
+            parts: [{ ans: v[1], ph: 'Type the verb', review: `${v[0]} → ${v[1]}` }], say: sayHe(v),
             onShow: q => setTimeout(() => Snug.speak(sayHe(v), q.querySelector('.listen-big')), 250)
           }))
         },

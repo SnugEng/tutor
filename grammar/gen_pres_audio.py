@@ -4,8 +4,10 @@ import edge_tts
 VOICE = "en-GB-SoniaNeural"   # the same voice as the vocabulary and irregular verbs
 PAGE = "grammar/irrverpresent.html"
 OUT = "grammar/audio_pres"
-# words that could be read two ways get spelled the way they should sound
-SAY = {"I read": "I reed"}
+# Each form on its own, no pronoun ("watches", "doesn't watch"), so it fits any sentence.
+# Words the voice could read the wrong way on their own are spelled the way they sound:
+# read [ri:d], live [liv], lives [livz].
+SAY = {"read": "reed", "live": "liv", "lives": "livs"}
 
 def slug(t):
     return re.sub(r"[^a-z0-9]+", "_", t.lower()).strip("_")
@@ -21,15 +23,19 @@ def phrases():
     block = block[:block.index("\n];")]
     out = []
     for base, form in re.findall(r"\[\s*'([^']+)'\s*,\s*'([^']+)'\s*\]", block):
-        # always with a pronoun: "he does", "he lives", "I read" can't be misread
         if base == "be":
-            out += ["I am", "you are", "he is", "I'm not", "he isn't", "you aren't"]
+            out += ["am", "are", "is", "am not", "isn't", "aren't"]
         else:
-            out += [f"I {base}", f"he {form}", f"he doesn't {base}"]
+            out += [base, form, f"doesn't {base}"]
     return out
 
 async def main():
     os.makedirs(OUT, exist_ok=True)
+    wanted = {slug(t) + ".mp3" for t in phrases()}
+    for f in os.listdir(OUT):                       # files the page no longer uses
+        if f.endswith(".mp3") and f not in wanted:
+            os.remove(os.path.join(OUT, f))
+            print(f"removed: {f}")
     for text in phrases():
         out = f"{OUT}/{slug(text)}.mp3"
         redo = slug(text) in REDO
