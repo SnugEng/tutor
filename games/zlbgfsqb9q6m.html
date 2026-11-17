@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Who Searched This?</title>
+<link rel="icon" type="image/png" href="/assets/favicon.png">
 <link rel="stylesheet" href="../assets/fonts/fonts.css">
 <style>
-:root{color-scheme:light}img{max-width:100%}[hidden]{display:none!important}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-/* shared look: a saturated studio backdrop in the colour of each story, with the device lit like a product shot; dark theme turns it into a dark room lit by the screen */
+:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @property --bd{syntax:'<color>';inherits:true;initial-value:#7a5cff}
 @property --glow{syntax:'<color>';inherits:true;initial-value:#cdbfff}
 @property --ink{syntax:'<color>';inherits:true;initial-value:#ffffff}
@@ -66,7 +66,6 @@ body.is-tr .gl{display:block}
 .gp b{font-weight:600}
 @media (prefers-reduced-motion: reduce){html{transition:none}.th-knob,.qa-a{transition:none}}
 
-/* layout: headline row, then one browser window as the hero; search home on the left, "People also ask" panel on the right */
 :root{--pg:#ffffff;--fg:#17181c;--muted:#646b78;--line:#e3e6ec;--field:#f1f3f6;--chrome:#e4e7ed;--toolbar:#f8f9fb;--visited:#6a2fd0}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--pg:#16171b;--fg:#ecedf1;--muted:#9aa1ad;--line:#2c2f36;--field:#24262c;--chrome:#0d0e11;--toolbar:#1f2126;--visited:#c49bff}}
 :root[data-theme="dark"]{--pg:#16171b;--fg:#ecedf1;--muted:#9aa1ad;--line:#2c2f36;--field:#24262c;--chrome:#0d0e11;--toolbar:#1f2126;--visited:#c49bff}
@@ -128,7 +127,7 @@ body.is-tr .gl{display:block}
 .sbox.is-typing-q .ph{display:none}
 .recent{position:relative;border-top:1px solid var(--line);padding:10px 0}
 .rh{display:flex;justify-content:space-between;gap:12px;padding:2px 20px 6px;font-size:12px;color:var(--muted);font-weight:600;letter-spacing:.02em}
-#recent{list-style:none;margin:0;padding:0;min-height:132px;overflow:hidden}
+#recent{list-style:none;margin:0;padding:0;overflow:hidden}
 .ghost{position:absolute;left:0;right:0;top:0;visibility:hidden;pointer-events:none}
 .ghost ol{margin:0;padding:0;list-style:none}
 .ghost .gl{display:block}
@@ -235,7 +234,6 @@ body.is-tr .gl{display:block}
 (function(){
 const CLOCK='<svg class="i-cl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.500"/><path d="M12 7.500V12l3 2"/></svg><svg class="i-ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.400" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.500l4.500 4.500L19 7.500"/></svg>';
 const REST='Wonder';
-const MOODS=['violet','cobalt','rose','sun','tangerine','cobalt','tangerine','violet','teal','rose','teal','sun'];
 let typed,list,url,tabT,sbox,whenEl,clearBtn,api;
 function reserveAll(){
   const g=document.createElement('div');g.className='ghost';g.setAttribute('aria-hidden','true');
@@ -268,20 +266,20 @@ async function type(it,i,k,withTypo,cls){
   list.append(row(it,i,'is-new'+(cls?' '+cls:'')));
   await k.sleep(800);
 }
-const S=(t,q,key,w)=>({t:t,q:q,key:key,w:w||[]});
+const S=(t,q,w)=>({t:t,q:q,w:w||[]});
 window.GAME={id:'wonder',
 help:{
 a:[['Who is this person?','I think this is a… He / She is…'],['What is the problem?','He / She has… wants… can’t…'],['What happened?','First… Then… In the end…']],
 b:[['Who could this person be?','It must be someone who… It can’t be… because…'],['What happened before the first search?','They might have… They had just…'],['What will they search for next?','I bet they’ll look up…']]},
 stage:{
-init(a){api=a;GAME.cases.forEach((c,i)=>{c.mood=MOODS[i%MOODS.length]});typed=document.getElementById('typed');list=document.getElementById('recent');url=document.getElementById('url');tabT=document.getElementById('tabT');sbox=document.getElementById('sbox');whenEl=document.getElementById('when');clearBtn=document.getElementById('clearBtn');
+init(a){api=a;typed=document.getElementById('typed');list=document.getElementById('recent');url=document.getElementById('url');tabT=document.getElementById('tabT');sbox=document.getElementById('sbox');whenEl=document.getElementById('when');clearBtn=document.getElementById('clearBtn');
   list.addEventListener('click',e=>{const b=e.target.closest('.r-b');if(b)api.toggle(+b.dataset.i)});reserveAll()},
 relayout(){reserveAll()},
 mark(i,on){const b=list.querySelector('[data-i="'+i+'"]');if(b)b.setAttribute('aria-pressed',String(on))},
 done(all){clearBtn.classList.toggle('is-ready',all)},
 async leave(k){const rows=Array.from(list.children);for(const r of rows){r.classList.add('is-out');await k.sleep(90)}await k.sleep(240)},
 async show(c,animate,k){
-  document.documentElement.dataset.mood=c.mood;typed.textContent='';sbox.classList.remove('is-typing-q');list.innerHTML='';whenEl.textContent=c.when;rest();
+  document.documentElement.dataset.mood=c.mood||'violet';typed.textContent='';sbox.classList.remove('is-typing-q');list.innerHTML='';whenEl.textContent=c.when;rest();
   if(!animate){c.items.forEach((it,i)=>list.append(row(it,i)));return}
   const tr=Math.floor(Math.random()*3);
   for(let i=0;i<c.items.length;i++)await type(c.items[i],i,k,i===tr);
@@ -292,97 +290,66 @@ async twist(c,animate,k){
   await type(c.twist,3,k,false,'is-twist');rest();
 }},
 cases:[
-// 1. The IKEA Master (Самоуверенный сборщик мебели)
-// Лексика А1, но ситуация понятна любому взрослому.
-{when:'Saturday afternoon',items:[
- S('14:00','build IKEA bed fast without manual','build bed',[['to build','строить, собирать'],['without manual','без инструкции']]),
- S('15:30','IKEA bed extra parts is it normal','extra parts',[['extra parts','лишние детали']]),
- S('16:00','why does my bed make cracking sound','cracking sound',[['cracking sound','звук треска']])],
- twist:S('16:05','sleep on the floor health benefits','sleep on floor',[['benefits','польза']])},
-
-// 2. The Spicy Date (Опасный романтический ужин)
-// Идеально для темы Food / Cooking / Dates
-{when:'Friday evening',items:[
- S('19:00','cook romantic dinner fast','romantic dinner',[['to cook','готовить']]),
- S('19:30','how to make spicy food less spicy','spicy food',[['spicy','острый'],['less','менее']]),
- S('19:45','can you die from chili pepper','chili pepper',[['to die','умереть']])],
- twist:S('20:00','pizza delivery near me right now','pizza delivery',[['delivery','доставка']])},
-
-// 3. The Babysitter (Оставленный с племянниками)
-{when:'Sunday morning',items:[
- S('10:00','games to play with a 5 year old','play games',[]),
- S('10:30','how to remove slime from hair','remove slime',[['to remove','убрать, удалить'],['slime','слайм, лизун']]),
- S('11:00','is cat food safe for kids','cat food',[['safe','безопасный']])],
- twist:S('11:15','what time do parents usually come back','come back',[['usually','обычно'],['come back','возвращаться']])},
-
-// 4. The Night Visitor (Паника перед сном)
-// Микро-хоррор, который обожают все. Лексика простейшая.
-{when:'Tuesday night',items:[
- S('23:00','huge spider in bedroom','spider',[['huge','огромный'],['spider','паук']]),
- S('23:15','do house spiders jump','spiders jump',[['to jump','прыгать']]),
- S('23:30','where do spiders go when you lose them','lose them',[['to lose','потерять']])],
- twist:S('23:45','is it safe to sleep in a car in winter','sleep in car',[['safe','безопасно'],['winter','зима']])},
-
-// 5. The Bad Laundry (Стирка пошла не по плану)
-// Тема Clothes / Colors / Chores
-{when:'Monday morning',items:[
- S('08:00','how to wash a white shirt coffee stain','wash shirt',[['stain','пятно']]),
- S('08:30','why is my white shirt pink now','pink shirt',[]),
- S('08:45','how to un-pink clothes fast','un-pink',[['clothes','одежда']])],
- twist:S('09:00','buy pink tie to match shirt','pink tie',[['tie','галстук'],['to match','чтобы подходило/сочеталось']])},
-
-// 6. The "Tech Genius" (Классика с упавшим телефоном)
-{when:'Wednesday afternoon',items:[
- S('12:00','phone dropped in toilet what to do','dropped phone',[['dropped','упал'],['toilet','унитаз']]),
- S('12:10','put wet phone in rice','rice',[['wet','мокрый'],['rice','рис']]),
- S('12:30','phone very hot inside rice','very hot',[])],
- twist:S('12:45','is cooked phone dangerous','cooked phone',[['cooked','сваренный'],['dangerous','опасный']])},
-
-// 7. The Video Call Blunder (Удаленка)
-// Вспоминаем мемы времен ковида.
-{when:'Thursday morning',items:[
- S('09:55','zoom how to change background','change background',[['background','фон']]),
- S('10:05','how to turn off cat filter in zoom','cat filter',[['turn off','выключить']]),
- S('10:15','cat filter stuck help','stuck',[['stuck','застрял']])],
- twist:S('10:30','can a cat be fired from a job','fired',[['to be fired','быть уволенным']])},
-
-// 8. The New Year Resolution (Спортсмен одного дня)
-// Тема Body parts / Health / Sports
-{when:'January 2nd',items:[
- S('08:00','best morning workout for beginners','morning workout',[['workout','тренировка'],['beginners','новички']]),
- S('08:20','why do my legs hurt so much','legs hurt',[['to hurt','болеть']]),
- S('08:40','can not walk down the stairs','walk down',[['stairs','лестница']])],
- twist:S('09:00','how to work from bed all day','work from bed',[])},
-
-// 9. The Late Night Shopper (Шопоголик)
-{when:'Saturday night',items:[
- S('02:00','what is a life size dinosaur statue','life size',[['life size','в натуральную величину'],['statue','статуя']]),
- S('02:15','buy life size t-rex online free delivery','buy online',[['free delivery','бесплатная доставка']]),
- S('08:00','cancel order before shipping','cancel order',[['to cancel','отменить'],['shipping','отправка']])],
- twist:S('10:00','how to hide a 3 meter box from wife','hide box',[['to hide','спрятать']])},
-
-// 10. The DIY Plumber (Домашний мастер)
-// Тема Rooms / House / Problems
-{when:'Sunday evening',items:[
- S('18:00','how to fix kitchen sink water stop','fix sink',[['to fix','чинить'],['sink','раковина']]),
- S('18:15','why is tap water brown','tap water',[['tap water','вода из-под крана']]),
- S('18:30','how to dry carpet very fast','dry carpet',[['to dry','сушить'],['carpet','ковер']])],
- twist:S('18:45','cheap hotels near me for tonight','cheap hotels',[['cheap','дешевый']])},
-
-// 11. The Bad Translator (Трудности перевода в отпуске)
-// Тема Travel / Restaurants
-{when:'Tuesday evening',items:[
- S('19:00','how to order water in French','order water',[['to order','заказывать']]),
- S('19:10','what did I just order in French','just order',[['just','только что']]),
- S('19:20','is it safe to eat snails','eat snails',[['safe','безопасно'],['snails','улитки']])],
- twist:S('19:30','where is the nearest McDonalds','nearest',[['nearest','ближайший']])},
-
-// 12. The Anniversary Panic (Забывчивый партнер)
-{when:'Friday afternoon',items:[
- S('17:00','what day is it today','what day',[]),
- S('17:05','5 year anniversary gift ideas fast','gift ideas',[['anniversary','годовщина'],['gift','подарок']]),
- S('17:30','24 hour jewelry store near me','jewelry store',[['jewelry store','ювелирный магазин']])],
- twist:S('18:00','do women like gas station flowers','gas station',[['gas station','заправка']])}
+{when:'Saturday afternoon',mood:'sun',items:[
+ S('14:00','build IKEA bed fast without manual',[['to build','строить, собирать'],['without manual','без инструкции']]),
+ S('15:30','IKEA bed extra parts is it normal',[['extra parts','лишние детали']]),
+ S('16:00','why does my bed make cracking sound',[['cracking sound','звук треска']])],
+ twist:S('16:05','sleep on the floor health benefits',[['benefits','польза']])},
+{when:'Friday evening',mood:'tangerine',items:[
+ S('19:00','cook romantic dinner fast',[['to cook','готовить']]),
+ S('19:30','how to make spicy food less spicy',[['spicy','острый'],['less','менее']]),
+ S('19:45','can you die from chili pepper',[['to die','умереть']])],
+ twist:S('20:00','pizza delivery near me right now',[['delivery','доставка']])},
+{when:'Sunday morning',mood:'teal',items:[
+ S('10:00','games to play with a 5 year old',[]),
+ S('10:30','how to remove slime from hair',[['to remove','убрать, удалить'],['slime','слайм, лизун']]),
+ S('11:00','is cat food safe for kids',[['safe','безопасный']])],
+ twist:S('11:15','what time do parents usually come back',[['usually','обычно'],['come back','возвращаться']])},
+{when:'Tuesday night',mood:'violet',items:[
+ S('23:00','huge spider in bedroom',[['huge','огромный'],['spider','паук']]),
+ S('23:15','do house spiders jump',[['to jump','прыгать']]),
+ S('23:30','where do spiders go when you lose them',[['to lose','потерять']])],
+ twist:S('23:45','is it safe to sleep in a car in winter',[['safe','безопасно'],['winter','зима']])},
+{when:'Monday morning',mood:'rose',items:[
+ S('08:00','how to wash a white shirt coffee stain',[['stain','пятно']]),
+ S('08:30','why is my white shirt pink now',[]),
+ S('08:45','how to un-pink clothes fast',[['clothes','одежда']])],
+ twist:S('09:00','buy pink tie to match shirt',[['tie','галстук'],['to match','чтобы подходило/сочеталось']])},
+{when:'Wednesday afternoon',mood:'cobalt',items:[
+ S('12:00','phone dropped in toilet what to do',[['dropped','упал'],['toilet','унитаз']]),
+ S('12:10','put wet phone in rice',[['wet','мокрый'],['rice','рис']]),
+ S('12:30','phone very hot inside rice',[])],
+ twist:S('12:45','is cooked phone dangerous',[['cooked','сваренный'],['dangerous','опасный']])},
+{when:'Thursday morning',mood:'tangerine',items:[
+ S('09:55','zoom how to change background',[['background','фон']]),
+ S('10:05','how to turn off cat filter in zoom',[['turn off','выключить']]),
+ S('10:15','cat filter stuck help',[['stuck','застрял']])],
+ twist:S('10:30','can a cat be fired from a job',[['to be fired','быть уволенным']])},
+{when:'January 2nd',mood:'teal',items:[
+ S('08:00','best morning workout for beginners',[['workout','тренировка'],['beginners','новички']]),
+ S('08:20','why do my legs hurt so much',[['to hurt','болеть']]),
+ S('08:40','can not walk down the stairs',[['stairs','лестница']])],
+ twist:S('09:00','how to work from bed all day',[])},
+{when:'Saturday night',mood:'violet',items:[
+ S('02:00','what is a life size dinosaur statue',[['life size','в натуральную величину'],['statue','статуя']]),
+ S('02:15','buy life size t-rex online free delivery',[['free delivery','бесплатная доставка']]),
+ S('08:00','cancel order before shipping',[['to cancel','отменить'],['shipping','отправка']])],
+ twist:S('10:00','how to hide a 3 meter box from wife',[['to hide','спрятать']])},
+{when:'Sunday evening',mood:'cobalt',items:[
+ S('18:00','how to fix kitchen sink water stop',[['to fix','чинить'],['sink','раковина']]),
+ S('18:15','why is tap water brown',[['tap water','вода из-под крана']]),
+ S('18:30','how to dry carpet very fast',[['to dry','сушить'],['carpet','ковер']])],
+ twist:S('18:45','cheap hotels near me for tonight',[['cheap','дешевый']])},
+{when:'Tuesday evening',mood:'sun',items:[
+ S('19:00','how to order water in French',[['to order','заказывать']]),
+ S('19:10','what did I just order in French',[['just','только что']]),
+ S('19:20','is it safe to eat snails',[['safe','безопасно'],['snails','улитки']])],
+ twist:S('19:30','where is the nearest McDonalds',[['nearest','ближайший']])},
+{when:'Friday afternoon',mood:'rose',items:[
+ S('17:00','what day is it today',[]),
+ S('17:05','5 year anniversary gift ideas fast',[['anniversary','годовщина'],['gift','подарок']]),
+ S('17:30','24 hour jewelry store near me',[['jewelry store','ювелирный магазин']])],
+ twist:S('18:00','do women like gas station flowers',[['gas station','заправка']])}
 ]};
 })();
 
@@ -393,7 +360,6 @@ const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s);
 const reduced=!!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
 const store={get(k,d){try{const v=localStorage.getItem(G.id+':'+k);return v===null?d:v}catch(e){return d}},set(k,v){try{localStorage.setItem(G.id+':'+k,v)}catch(e){}}};
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const CHEV0='<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
 
 let ac=null,muted=store.get('mute','0')==='1',nbuf=null;
 function ctx(){if(muted)return null;if(!ac){const C=window.AudioContext||window.webkitAudioContext;if(!C)return null;try{ac=new C()}catch(e){return null}}if(ac.state==='suspended')ac.resume();return ac}

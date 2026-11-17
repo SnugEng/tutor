@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Whose Phone Is This?</title>
+<link rel="icon" type="image/png" href="/assets/favicon.png">
 <link rel="stylesheet" href="../assets/fonts/fonts.css">
 <style>
-:root{color-scheme:light}img{max-width:100%}[hidden]{display:none!important}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-/* shared look: a saturated studio backdrop in the colour of each story, with the device lit like a product shot; dark theme turns it into a dark room lit by the screen */
+:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @property --bd{syntax:'<color>';inherits:true;initial-value:#7a5cff}
 @property --glow{syntax:'<color>';inherits:true;initial-value:#cdbfff}
 @property --ink{syntax:'<color>';inherits:true;initial-value:#ffffff}
@@ -66,7 +66,6 @@ body.is-tr .gl{display:block}
 .gp b{font-weight:600}
 @media (prefers-reduced-motion: reduce){html{transition:none}.th-knob,.qa-a{transition:none}}
 
-/* layout: phone as the hero on a backdrop in the colour of its wallpaper; to its right brand + theme, headline, chat-bubble prompts, control tiles, actions */
 .l-wrap{width:100%;max-width:1080px;margin:0 auto;display:grid;grid-template-columns:auto minmax(0,430px);grid-template-areas:"phone top" "phone side";column-gap:clamp(48px,8vw,120px);row-gap:30px;justify-content:center}
 .l-wrap .top{grid-area:top;align-self:end;display:flex;justify-content:space-between;align-items:center;gap:16px}
 .side{grid-area:side;align-self:start;display:flex;flex-direction:column;gap:22px;min-width:0}
@@ -230,7 +229,6 @@ shop:{bg:'#7c3aed',c:'#fff',t:'b'},
 school:{bg:'#0d9488',c:'#fff',t:'C'}
 };
 const CK='<svg class="ck" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.500l4.500 4.500L19 7.500"/></svg>';
-const MOODS=['violet','sun','rose','teal','tangerine','cobalt','tangerine','cobalt','rose','sun','teal','violet'];
 let screen,phone,clockEl,dateEl,notifs,api,cal=['TUE','17'];
 function icon(app,title){
   if(app==='calendar')return '<span class="ic ic-cal"><em>'+cal[0]+'</em><b>'+cal[1]+'</b></span>';
@@ -240,13 +238,13 @@ function icon(app,title){
 }
 function card(it,i,cls){const d=document.createElement('button');d.type='button';d.className='n'+(cls?' '+cls:'');d.dataset.i=i;d.setAttribute('aria-pressed','false');d.innerHTML=icon(it.app,it.title)+'<span class="nb"><span class="nh"><b>'+api.esc(it.title)+'</b><time><span class="ago">'+api.esc(it.ago)+'</span>'+CK+'</time></span><p>'+api.esc(it.text)+'</p>'+api.gloss(it)+'</span>';return d}
 function push(it,i,k){notifs.append(card(it,i,'is-in'));k.play('ding');phone.classList.remove('is-buzz');void phone.offsetWidth;phone.classList.add('is-buzz')}
-const N=(app,title,text,ago,key,w)=>({app:app,title:title,text:text,ago:ago,key:key,w:w||[]});
+const N=(app,title,text,ago,w)=>({app:app,title:title,text:text,ago:ago,w:w||[]});
 window.GAME={id:'lockscreen',
 help:{
 a:[['Who is this person?','I think it is… He / She is…'],['What is happening?','Someone is… There is… He / She has…'],['What is he / she going to do now?','First he / she is going to… Then…']],
 b:[['Who could the owner be?','It must be… It can\u2019t be… because…'],['What happened before this moment?','They might have… They must have…'],['Pick one notification. What do they answer?','Sorry, I… / Don\u2019t worry, I\u2019ll…']]},
 stage:{
-init(a){api=a;GAME.cases.forEach((c,i)=>{c.mood=MOODS[i%MOODS.length]});screen=document.getElementById('screen');phone=document.getElementById('phone');clockEl=document.getElementById('clock');dateEl=document.getElementById('date');notifs=document.getElementById('notifs');
+init(a){api=a;screen=document.getElementById('screen');phone=document.getElementById('phone');clockEl=document.getElementById('clock');dateEl=document.getElementById('date');notifs=document.getElementById('notifs');
   notifs.addEventListener('click',e=>{const b=e.target.closest('.n');if(b)api.toggle(+b.dataset.i)})},
 mark(i,on){const b=notifs.querySelector('[data-i="'+i+'"]');if(b)b.setAttribute('aria-pressed',String(on))},
 done(all){screen.classList.toggle('is-open',all)},
@@ -254,7 +252,7 @@ async leave(k){screen.classList.add('is-leaving');await k.sleep(380)},
 async show(c,animate,k){
   const p=c.date.split(' ');cal=[p[0].slice(0,3).toUpperCase(),p[1]];
   if(animate)screen.classList.add('is-asleep');else screen.classList.remove('is-asleep');
-  screen.dataset.mood=c.mood;document.documentElement.dataset.mood=c.mood;clockEl.textContent=c.time;dateEl.textContent=c.date;notifs.innerHTML='';screen.classList.remove('is-leaving','has-twist');
+  screen.dataset.mood=c.mood||'violet';document.documentElement.dataset.mood=c.mood||'violet';clockEl.textContent=c.time;dateEl.textContent=c.date;notifs.innerHTML='';screen.classList.remove('is-leaving','has-twist');
   if(!animate){c.items.forEach((it,i)=>notifs.append(card(it,i)));return}
   await k.sleep(700);
   screen.classList.remove('is-asleep');
@@ -267,89 +265,66 @@ async twist(c,animate,k){
   await k.sleep(350);push(c.twist,3,k);await k.sleep(700);
 }},
 cases:[
-// 1. The Accidental Thief (Кого мы притащили домой?)
-{time:'20:15',date:'Monday 12 October',wp:1,items:[
- N('photos','Photos','New memory: "Cute stray cat!"','1h ago','stray cat',[['stray cat','уличный кот']]),
- N('cam','HomeCam','Movement in the kitchen. Trash is open.','10m ago','trash',[['trash','мусорка'],['movement','движение']]),
- N('bank','Northbank','You paid €50 at "Happy Vet Clinic".','5m ago','vet clinic',[['vet clinic','ветеринарная клиника']])],
- twist:N('messages','Vet Doctor','Please come back. That is not a cat. It is a raccoon.','now','raccoon',[['raccoon','енот']])},
-
-// 2. The Smart Home Rebellion (Попугай-шопоголик)
-{time:'14:30',date:'Tuesday 3 March',wp:2,items:[
- N('messages','Wife','Did you leave the tablet open in the living room?','20m ago','tablet',[['leave open','оставить включенным/открытым']]),
- N('shop','Bazaar','Order confirmed: 50 kg of bananas.','10m ago','50 kg',[['confirmed','подтвержден']]),
- N('bank','Northbank','You paid €150 at "FruitMarket".','9m ago','paid',[])],
- twist:N('messages','Wife','I think the parrot is talking to the voice assistant again.','now','parrot',[['parrot','попугай'],['voice assistant','голосовой помощник']])},
-
-// 3. The Fake Sick Day (Прямой эфир)
-{time:'20:45',date:'Friday 20 May',wp:4,items:[
- N('mail','Boss','Get well soon! Stay in bed and rest.','2h ago','stay in bed',[['get well soon','выздоравливай'],['stay in bed','оставайся в постели']]),
- N('cab','Zipcab','Drop-off at City Football Stadium.','1h ago','stadium',[['drop-off','высадка']]),
- N('bank','Northbank','You paid €12 at "Stadium Hotdogs".','30m ago','hotdogs',[])],
- twist:N('messages','Boss','I just saw you on TV catching the ball. Nice catch.','now','on TV',[['catching','как ты ловишь'],['catch','бросок/поимка мяча']])},
-
-// 4. The Blind Date Mix-up (Не тот столик)
-{time:'19:20',date:'Wednesday 7 July',wp:3,items:[
- N('date','Spark','Match: I am wearing a blue shirt. Sitting by the window.','30m ago','blue shirt',[['by the window','у окна']]),
- N('bank','Northbank','You paid €80 at "Fancy Pasta".','5m ago','paid',[]),
- N('messages','Bro','How is the date? Is she nice?','2m ago','date',[])],
- twist:N('date','Spark','Match: Sorry I am late! I am entering the restaurant now.','now','entering',[['entering','вхожу']])},
-
-// 5. The Bad Translator (Трудности перевода)
-{time:'15:05',date:'Thursday 14 February',wp:2,items:[
- N('fly','FlyNow','Welcome to Tokyo! Local time is 14:00.','1h ago','Tokyo',[]),
- N('photos','Photos','New photo saved: "Tattoo design".','45m ago','tattoo design',[['tattoo design','эскиз татуировки'],['saved','сохранено']]),
- N('bank','Northbank','You paid ¥15,000 at "Ink Master".','10m ago','Ink Master',[])],
- twist:N('messages','Kenji','Why does your new tattoo say "Chicken Noodle Soup"?','now','noodle soup',[['noodle soup','суп с лапшой']])},
-
-// 6. The Gym Show-Off (Слишком тяжелый вес)
-{time:'10:30',date:'Sunday 5 September',wp:5,items:[
- N('messages','Girlfriend','Good luck at the gym! Don’t lift too much.','1h ago','lift',[['lift','поднимать вес']]),
- N('photos','Photos','New memory: "Pushing 100 kg!"','20m ago','pushing',[['pushing','толкаю, жму']]),
- N('steps','Stride','Warning: Heart rate is 190 BPM. Are you okay?','15m ago','heart rate',[['heart rate','пульс'],['warning','предупреждение']])],
- twist:N('cab','Zipcab','Your taxi to the City Hospital is 2 minutes away.','now','hospital',[['hospital','больница']])},
-
-// 7. The Laundry Disaster (Розовое платье)
-{time:'18:40',date:'Saturday 11 November',wp:2,items:[
- N('messages','Wife','Can you wash my favorite white dress for tonight?','2h ago','white dress',[['favorite','любимый'],['wash','стирать']]),
- N('bank','Northbank','You paid €150 at "Express Clothes".','30m ago','paid',[]),
- N('shop','Bazaar','Order confirmed: Red dress size M, fast delivery.','25m ago','fast delivery',[['delivery','доставка']])],
- twist:N('messages','Wife','Why is there a pink dress for a 5-year-old in the washing machine?','now','washing machine',[['washing machine','стиральная машина']])},
-
-// 8. The Wedding DJ (Катастрофа на свадьбе)
-{time:'11:55',date:'Saturday 21 November',wp:4,items:[
- N('calendar','Sister’s Wedding','11:30 · Play romantic music for the bride.','25m ago','bride',[['bride','невеста']]),
- N('messages','Mom','The bride is walking in! Press play now!','5m ago','press play',[['press play','нажми "воспроизведение"']]),
- N('phone','Mom','Missed call (5)','2m ago','missed call',[])],
- twist:N('messages','Mom','WHY IS THE HALLOWEEN MONSTER SONG PLAYING?! TURN IT OFF!','now','turn it off',[['turn it off','выключи это']])},
-
-// 9. The Diet Cheat (Спортсмен сдался)
-{time:'22:15',date:'Thursday 12 November',wp:5,items:[
- N('calendar','Strict Diet','Day 3. No sugar, no bread.','14h ago','strict diet',[['strict','строгая']]),
- N('steps','Stride','Goal reached! 12,000 steps today. You are a machine!','2h ago','goal reached',[['goal reached','цель достигнута']]),
- N('messages','Coach','So proud of your discipline! Keep it up!','30m ago','proud',[['proud','горд'],['discipline','дисциплина']])],
- twist:N('food','Munch','Your courier is outside with 3 Double Cheese Burgers.','now','courier',[['courier','курьер']])},
-
-// 10. The Bad Babysitter (Где змея?)
-{time:'14:10',date:'Monday 23 November',wp:3,items:[
- N('messages','Mark','Just give the snake one mouse. Make sure the cage is closed.','2h ago','cage',[['snake','змея'],['cage','клетка']]),
- N('cam','HomeCam','Movement detected in the bedroom.','15m ago','detected',[['detected','обнаружено']]),
- N('phone','Animal Control','Missed call (1)','5m ago','Animal Control',[['animal control','служба отлова животных']])],
- twist:N('messages','Mark','Wait... did you say you can’t find the snake OR the cat?','now','OR the cat',[])},
-
-// 11. The Accidental Bidder (Телефон в руках ребенка)
-{time:'09:20',date:'Friday 20 November',wp:1,items:[
- N('messages','Wife','Can you watch Tommy for 10 mins? Give him your phone.','1h ago','watch Tommy',[['watch','присмотреть за']]),
- N('bank','Northbank','Payment accepted: €45,000.','10m ago','accepted',[['accepted','принят']]),
- N('shop','AutoStore','Order confirmed: Live Farm Tractor - Yellow.','5m ago','tractor',[['live','настоящий'],['tractor','трактор']])],
- twist:N('messages','Wife','Why is the bank calling me about a tractor?','now','calling me',[])},
-
-// 12. The Over-Prepared Traveler (В аэропорт заранее)
-{time:'07:45',date:'Tuesday 9 September',wp:1,items:[
- N('clock','Alarm','WAKE UP FOR THE AIRPORT (3:00 AM)!','4h ago','alarm',[]),
- N('cab','Zipcab','Drop-off at Airport Terminal 1.','3h ago','Drop-off',[['drop-off','высадка']]),
- N('messages','Wife','You are crazy. The flight is at 9 PM, not 9 AM.','1h ago','crazy',[['crazy','сумасшедший'],['flight','рейс']])],
- twist:N('bank','Northbank','You paid €12 for "Airport Coffee". Enjoy your 14 hours here.','now','enjoy',[['enjoy','наслаждайся']])}
+{time:'20:15',date:'Monday 12 October',mood:'violet',items:[
+ N('photos','Photos','New memory: "Cute stray cat!"','1h ago',[['stray cat','уличный кот']]),
+ N('cam','HomeCam','Movement in the kitchen. Trash is open.','10m ago',[['trash','мусорка'],['movement','движение']]),
+ N('bank','Northbank','You paid €50 at "Happy Vet Clinic".','5m ago',[['vet clinic','ветеринарная клиника']])],
+ twist:N('messages','Vet Doctor','Please come back. That is not a cat. It is a raccoon.','now',[['raccoon','енот']])},
+{time:'14:30',date:'Tuesday 3 March',mood:'sun',items:[
+ N('messages','Wife','Did you leave the tablet open in the living room?','20m ago',[['leave open','оставить включенным/открытым']]),
+ N('shop','Bazaar','Order confirmed: 50 kg of bananas.','10m ago',[['confirmed','подтвержден']]),
+ N('bank','Northbank','You paid €150 at "FruitMarket".','9m ago',[])],
+ twist:N('messages','Wife','I think the parrot is talking to the voice assistant again.','now',[['parrot','попугай'],['voice assistant','голосовой помощник']])},
+{time:'20:45',date:'Friday 20 May',mood:'teal',items:[
+ N('mail','Boss','Get well soon! Stay in bed and rest.','2h ago',[['get well soon','выздоравливай'],['stay in bed','оставайся в постели']]),
+ N('cab','Zipcab','Drop-off at City Football Stadium.','1h ago',[['drop-off','высадка']]),
+ N('bank','Northbank','You paid €12 at "Stadium Hotdogs".','30m ago',[])],
+ twist:N('messages','Boss','I just saw you on TV catching the ball. Nice catch.','now',[['catching','как ты ловишь'],['catch','бросок/поимка мяча']])},
+{time:'19:20',date:'Wednesday 7 July',mood:'rose',items:[
+ N('date','Spark','Match: I am wearing a blue shirt. Sitting by the window.','30m ago',[['by the window','у окна']]),
+ N('bank','Northbank','You paid €80 at "Fancy Pasta".','5m ago',[]),
+ N('messages','Bro','How is the date? Is she nice?','2m ago',[])],
+ twist:N('date','Spark','Match: Sorry I am late! I am entering the restaurant now.','now',[['entering','вхожу']])},
+{time:'15:05',date:'Thursday 14 February',mood:'violet',items:[
+ N('fly','FlyNow','Welcome to Tokyo! Local time is 14:00.','1h ago',[]),
+ N('photos','Photos','New photo saved: "Tattoo design".','45m ago',[['tattoo design','эскиз татуировки'],['saved','сохранено']]),
+ N('bank','Northbank','You paid ¥15,000 at "Ink Master".','10m ago',[])],
+ twist:N('messages','Kenji','Why does your new tattoo say "Chicken Noodle Soup"?','now',[['noodle soup','суп с лапшой']])},
+{time:'10:30',date:'Sunday 5 September',mood:'cobalt',items:[
+ N('messages','Girlfriend','Good luck at the gym! Don’t lift too much.','1h ago',[['lift','поднимать вес']]),
+ N('photos','Photos','New memory: "Pushing 100 kg!"','20m ago',[['pushing','толкаю, жму']]),
+ N('steps','Stride','Warning: Heart rate is 190 BPM. Are you okay?','15m ago',[['heart rate','пульс'],['warning','предупреждение']])],
+ twist:N('cab','Zipcab','Your taxi to the City Hospital is 2 minutes away.','now',[['hospital','больница']])},
+{time:'18:40',date:'Saturday 11 November',mood:'rose',items:[
+ N('messages','Wife','Can you wash my favorite white dress for tonight?','2h ago',[['favorite','любимый'],['wash','стирать']]),
+ N('bank','Northbank','You paid €150 at "Express Clothes".','30m ago',[]),
+ N('shop','Bazaar','Order confirmed: Red dress size M, fast delivery.','25m ago',[['delivery','доставка']])],
+ twist:N('messages','Wife','Why is there a pink dress for a 5-year-old in the washing machine?','now',[['washing machine','стиральная машина']])},
+{time:'11:55',date:'Saturday 21 November',mood:'tangerine',items:[
+ N('calendar','Sister’s Wedding','11:30 · Play romantic music for the bride.','25m ago',[['bride','невеста']]),
+ N('messages','Mom','The bride is walking in! Press play now!','5m ago',[['press play','нажми "воспроизведение"']]),
+ N('phone','Mom','Missed call (5)','2m ago',[])],
+ twist:N('messages','Mom','WHY IS THE HALLOWEEN MONSTER SONG PLAYING?! TURN IT OFF!','now',[['turn it off','выключи это']])},
+{time:'22:15',date:'Thursday 12 November',mood:'tangerine',items:[
+ N('calendar','Strict Diet','Day 3. No sugar, no bread.','14h ago',[['strict','строгая']]),
+ N('steps','Stride','Goal reached! 12,000 steps today. You are a machine!','2h ago',[['goal reached','цель достигнута']]),
+ N('messages','Coach','So proud of your discipline! Keep it up!','30m ago',[['proud','горд'],['discipline','дисциплина']])],
+ twist:N('food','Munch','Your courier is outside with 3 Double Cheese Burgers.','now',[['courier','курьер']])},
+{time:'14:10',date:'Monday 23 November',mood:'teal',items:[
+ N('messages','Mark','Just give the snake one mouse. Make sure the cage is closed.','2h ago',[['snake','змея'],['cage','клетка']]),
+ N('cam','HomeCam','Movement detected in the bedroom.','15m ago',[['detected','обнаружено']]),
+ N('phone','Animal Control','Missed call (1)','5m ago',[['animal control','служба отлова животных']])],
+ twist:N('messages','Mark','Wait... did you say you can’t find the snake OR the cat?','now',[])},
+{time:'09:20',date:'Friday 20 November',mood:'sun',items:[
+ N('messages','Wife','Can you watch Tommy for 10 mins? Give him your phone.','1h ago',[['watch','присмотреть за']]),
+ N('bank','Northbank','Payment accepted: €45,000.','10m ago',[['accepted','принят']]),
+ N('shop','AutoStore','Order confirmed: Live Farm Tractor - Yellow.','5m ago',[['live','настоящий'],['tractor','трактор']])],
+ twist:N('messages','Wife','Why is the bank calling me about a tractor?','now',[])},
+{time:'07:45',date:'Tuesday 9 September',mood:'cobalt',items:[
+ N('clock','Alarm','WAKE UP FOR THE AIRPORT (3:00 AM)!','4h ago',[]),
+ N('cab','Zipcab','Drop-off at Airport Terminal 1.','3h ago',[['drop-off','высадка']]),
+ N('messages','Wife','You are crazy. The flight is at 9 PM, not 9 AM.','1h ago',[['crazy','сумасшедший'],['flight','рейс']])],
+ twist:N('bank','Northbank','You paid €12 for "Airport Coffee". Enjoy your 14 hours here.','now',[['enjoy','наслаждайся']])}
 ]};
 })();
 
@@ -360,7 +335,6 @@ const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s);
 const reduced=!!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
 const store={get(k,d){try{const v=localStorage.getItem(G.id+':'+k);return v===null?d:v}catch(e){return d}},set(k,v){try{localStorage.setItem(G.id+':'+k,v)}catch(e){}}};
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const CHEV0='<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
 
 let ac=null,muted=store.get('mute','0')==='1',nbuf=null;
 function ctx(){if(muted)return null;if(!ac){const C=window.AudioContext||window.webkitAudioContext;if(!C)return null;try{ac=new C()}catch(e){return null}}if(ac.state==='suspended')ac.resume();return ac}
